@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="copyright_height">30dp</dimen>
+    <dimen name="launch_logo_marginTop">80dp</dimen>
+    <dimen name="launch_logo_size">180dp</dimen>
+
+
+    <dimen name="header_height">75dp</dimen>
+    <dimen name="header_title_marginTop">8dp</dimen>
+    <dimen name="header_title_textSize">18sp</dimen>
+
+    <dimen name="footer_icon_size">45dp</dimen>
+    <dimen name="footer_icon_padding">5dp</dimen>
+
+    <dimen name="sliding_padding">20dp</dimen>
+    <dimen name="sliding_paddingTop">40dp</dimen>
+    <dimen name="sliding_paddingBottom">5dp</dimen>
+    <dimen name="sliding_username_fontSize">15sp</dimen>
+    <dimen name="sliding_otherinfo_fontSize">12sp</dimen>
+    <dimen name="sliding_avatar_size">60dp</dimen>
+    <dimen name="sliding_icon_size">30dp</dimen>
+    <dimen name="sliding_marginStart">16dp</dimen>
+    <dimen name="sliding_behindOffset">60dp</dimen>
+    <dimen name="sliding_list_padding">10dp</dimen>
+    <dimen name="sliding_list_iconSize">35dp</dimen>
+    <dimen name="sliding_list_fontSize">18sp</dimen>
+    <dimen name="sliding_list_whitspace">10dp</dimen>
+    <dimen name="sliding_footer_fontSize">12sp</dimen>
+    <dimen name="sliding_footer_iconSize">30dp</dimen>
+    <dimen name="sliding_footer_padding">5dp</dimen>
+
+    <!-- 登陆部分-->
+    <dimen name="login_options_logo_marginTop">30dp</dimen>
+    <dimen name="login_padding">50dp</dimen>
+
+    <!-- ************************分工部分********************************* -->
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">0dp</dimen>
+    <dimen name="activity_vertical_margin">0dp</dimen>
+    <dimen name="corner_radius">20dp</dimen>
+
+    <!-- main_title -->
+    <dimen name="main_title_height">75dp</dimen>
+    <dimen name="main_title_text_size">18sp</dimen>
+    <dimen name="main_title_margin_top">8dp</dimen>
+
+    <!-- minor_title -->
+    <dimen name="minor_title_height">70dp</dimen>
+    <dimen name="minor_title_margin_top">4dp</dimen>
+
+    <!-- menu_icon_settings -->
+    <dimen name="menu_margin_left">16dp</dimen>
+    <dimen name="menu_entry_height">30dp</dimen>
+
+    <!-- menu_icon_settings -->
+    <dimen name="back_icon_width">50dp</dimen>
+    <dimen name="back_icon_height">18dp</dimen>
+    <dimen name="back_icon_margin_left">20dp</dimen>
+
+    <!--  menu item  -->
+    <dimen name="menu_item_height">50dp</dimen>
+    <dimen name="menu_item_icon_height">30dp</dimen>
+    <dimen name="menu_item_icon_width">30dp</dimen>
+    <dimen name="menu_item_icon_margin_left">20dp</dimen>
+    <dimen name="menu_item_text_margin_left_icon">10dp</dimen>
+    <dimen name="menu_item_text_size">15sp</dimen>
+
+    <!-- menu head -->
+    <dimen name="menu_head_height">100dp</dimen>
+    <dimen name="menu_head_icon_width">60dp</dimen>
+    <dimen name="menu_head_icon_height">60dp</dimen>
+    <dimen name="menu_head_icon_margin_left">30dp</dimen>
+    <dimen name="menu_head_icon_margin_bottom">30dp</dimen>
+    <dimen name="menu_head_text_margin_left_icon">20dp</dimen>
+    <dimen name="menu_head_name_text_size">15dp</dimen>
+    <dimen name="menu_head_id_text_size">14dp</dimen>
+    <dimen name="menu_head_under_line_height">1px</dimen>
+    <dimen name="menu_head_under_line_margin_left">25dp</dimen>
+    <dimen name="menu_behind_offset">60dp</dimen>
+
+    <!-- footer_navigation_fragment -->
+    <dimen name="footer_navigation_fragment_height">50dp</dimen>
+    <dimen name="buttons_icon_size">35dp</dimen>
+
+    <!-- health_item  -->
+    <dimen name="health_item_height">60dp</dimen>
+    <dimen name="health_item_icon_name_height">45dp</dimen>
+    <dimen name="health_item_icon_name_width">45dp</dimen>
+    <dimen name="health_item_icon_name_margin_left">20dp</dimen>
+    <dimen name="health_item_texts_container_height">35dp</dimen>
+    <dimen name="health_item_texts_container_margin_icon_left">10dp</dimen>
+    <dimen name="health_item_text_name_size">14sp</dimen>
+    <dimen name="health_item_text_details_size">10sp</dimen>
+    <dimen name="health_item_icon_arrow_height">12dp</dimen>
+    <dimen name="health_item_icon_arrow_width">12dp</dimen>
+    <dimen name="health_item_icon_arrow_margin_right">10dp</dimen>
+    <dimen name="health_item_dividing_line_height">1px</dimen>
+    <dimen name="health_item_dividing_line_margin_left">65dp</dimen>
+    <string-array name="health_item_name">
+        <item>宝宝信息</item>
+        <item>营养摄入</item>
+        <item>数据统计</item>
+        <item>健康提示</item>
+    </string-array>
+
+    <string-array name="health_item_doc">
+        <item>生日：2014-08-08/性别：女</item>
+        <item>蛋白质：14g/钙：12g</item>
+        <item>饮奶温度，饮奶量</item>
+        <item>我们错过了就没有回头</item>
+    </string-array>
+
+
+    <!-- health_item nutrition  -->
+    <dimen name="health_nutrition_time_navigation_height">40dp</dimen>
+    <dimen name="health_nutrition_time_now_text_size">15sp</dimen>
+
+
+    <!-- home fragment  -->
+    <dimen name="home_advise_layout_width">105dp</dimen>
+    <dimen name="home_advise_layout_height">120dp</dimen>
+    <dimen name="home_advise_margin_top">35dp</dimen>
+    <dimen name="home_advise_text_margin_top">6dp</dimen>
+    <dimen name="home_advise_text_size">14dp</dimen>
+    <dimen name="home_advise_num_size">20dp</dimen>
+    <dimen name="home_advise_text_margin_left">6dp</dimen>
+    <dimen name="home_advise_num_margin_bottom">-4dp</dimen>
+
+    <!-- tempreture_amount  -->
+    <dimen name="temperature_milk_title_height">40dp</dimen>
+    <dimen name="temperature_milk_date_text_size">20sp</dimen>
+    <dimen name="temperature_milk_date_layout_width">40dp</dimen>
+    <dimen name="temperature_milk_date_layout_height">40dp</dimen>
+    <dimen name="temperature_milk_time_line_height">2dp</dimen>
+    <dimen name="temperature_milk_up_excle_icon_height">20dp</dimen>
+
+    <!-- temepreture_amount unit -->
+    <dimen name="temperature_milk_excle_background_grid_height">25dp</dimen>
+    <dimen name="temperature_milk_excle_left_title_text_size">10sp</dimen>
+    <dimen name="temperature_milk_excle_right_title_text_size">15sp</dimen>
+    <dimen name="temperature_milk_excle_text_margin_bottom">4dp</dimen>
+    <dimen name="temperature_milk_excle_text_margin_left">6dp</dimen>
+    <dimen name="temperature_milk_excle_title_margin_top">30dp</dimen>
+    <dimen name="temperature_milk_excle_x_axis_start">30dp</dimen>
+    <dimen name="temperature_milk_excle_x_axis_margin_right">20dp</dimen>
+    <dimen name="temperature_milk_excle_line_width">1.3dp</dimen>
+    <dimen name="temperature_milk_excle_circle_r">2.7dp</dimen>
+    <dimen name="milk_circle_line_width">2sp</dimen>
+    <dimen name="milk_circle_line_to_circle">10dp</dimen>
+    <dimen name="temperature_circle_line_width">2sp</dimen>
+    <dimen name="temperature_circle_bottom_text_size">12sp</dimen>
+
+    <!-- temepreture_amount_details -->
+    <dimen name="details_content_margin_parent_left">15dp</dimen>
+    <dimen name="details_content_text_margin_bottom">5dp</dimen>
+    <dimen name="details_content_height">50dp</dimen>
+    <dimen name="details_content_header_dividing_line_height">1dp</dimen>
+    <dimen name="details_content_header_title_text_size">18dp</dimen>
+    <dimen name="details_content_icon_height">23dp</dimen>
+    <dimen name="details_content_amount_margin_icon_left">15dp</dimen>
+    <dimen name="details_content_amount_text_size">20dp</dimen>
+    <dimen name="details_content_time_text_margin_right">24dp</dimen>
+    <dimen name="details_content_time_text_size">18dp</dimen>
+    <dimen name="details_content_arrow_margin_right">10dp</dimen>
+    <dimen name="details_content_under_line_height">1dp</dimen>
+    <dimen name="details_content_under_line_margin_left">15dp</dimen>
+    <dimen name="details_once_dividing_height">1dp</dimen>
+    <dimen name="details_once_margin_parent_left">15dp</dimen>
+    <dimen name="details_once_icon_margin_parent_bottom">10dp</dimen>
+    <dimen name="details_once_text_margin_parent_bottom">13dp</dimen>
+    <dimen name="details_once_title_margin_icon_left">2dp</dimen>
+    <dimen name="details_once_title_size">15dp</dimen>
+    <dimen name="details_once_title_icon_width">25dp</dimen>
+    <dimen name="details_once_title_icon_height">25dp</dimen>
+    <dimen name="details_once_text_size">15dp</dimen>
+    <dimen name="details_once_margin_parent_right">13dp</dimen>
+
+    <!-- first lanunch -->
+    <dimen name="first_lanunch_bottom_height">60dp</dimen>
+    <dimen name="first_lanunch_title_height">100dp</dimen>
+    <dimen name="first_lanunch_title_text_size">20dp</dimen>
+    <dimen name="first_lanunch_title_text_width">150dp</dimen>
+    <dimen name="first_lanunch_title_text_height">40dp</dimen>
+    <dimen name="first_lanunch_small_bots_container_height">40dp</dimen>
+    <dimen name="first_lanunch_parents_icon_width">100dp</dimen>
+    <dimen name="first_lanunch_parents_name_width">40dp</dimen>
+    <dimen name="first_lanunch_parents_select_icon_width">40dp</dimen>
+    <dimen name="first_lanunch_babysex_text_icon_width">80dp</dimen>
+    <dimen name="first_lanunch_babysex_text_icon_height">30dp</dimen>
+    <dimen name="first_lanunch_babyinfo_text_size">20dp</dimen>
+    <dimen name="first_lanunch_babysex_edittext_height">50dp</dimen>
+    <dimen name="first_lanunch_babyinfo_icon_height">100dp</dimen>
+    <dimen name="first_lanunch_babyinfo_icon_width">100dp</dimen>
+    <dimen name="first_lanunch_selected_icon_height">30dp</dimen>
+    <dimen name="first_lanunch_weight_num_text_size">40dp</dimen>
+    <dimen name="first_lanunch_weight_unit_text_size">20dp</dimen>
+    <dimen name="first_lanunch_weight_girl_boy_icon_width">120dp</dimen>
+    <dimen name="first_lanunch_weight_girl_boy_icon_height">200dp</dimen>
+    <dimen name="first_lanunch_weight_ruler_height">80dp</dimen>
+    <dimen name="first_lanunch_weight_ruler_margin">10dp</dimen>
+    <dimen name="first_lanunch_weight_ruler_container_container_height">150dp</dimen>
+    <dimen name="first_lanunch_weight_ruler_jt_margin_bottom">-10dp</dimen>
+    <dimen name="first_lanunch_weight_ruler_jt_height">20dp</dimen>
+    <!-- 这个必须是 first_lanunch_weight_girl_boy_icon_height 和 first_lanunch_weight_ruler_container_container_height的和-->
+    <dimen name="first_lanunch_height_choose_height">350dp</dimen>
+    <dimen name="first_lanunch_height_ruler_width">80dp</dimen>
+    <dimen name="first_lanunch_height_ruler_jt_margin_left">-10dp</dimen>
+    <!-- 这下面的两个值的和必须是 first_lanunch_weight_ruler_container_container_height和first_lanunch_weight_girl_boy_icon_height的和-->
+    <dimen name="first_lanunch_head_up_part_height">120dp</dimen>
+    <dimen name="first_lanunch_head_down_part_height">230dp</dimen>
+    <dimen name="first_lanunch_milk_icon_width">80dp</dimen>
+    <dimen name="first_lanunch_milk_icon_height">110dp</dimen>
+    <dimen name="first_lanunch_milk_icon_margin">-30dp</dimen>
+    <dimen name="first_launch_milk_icons_container_height">160dp</dimen>
+    <dimen name="first_launch_milk_text_container_height">100dp</dimen>
+    <dimen name="first_launch_milk_text_height">60dp</dimen>
+    <dimen name="first_launch_milk_text_size">20dp</dimen>
+    <dimen name="first_launch_milk_doc_text_size">15dp</dimen>
+
+    <!-- utils BluetoothPaired -->
+    <dimen name="utils_BluetoothPaired_margin">10dp</dimen>
+    <dimen name="bluetooth_paired_listview_item_height">40dp</dimen>
+    <dimen name="bluetooth_paired_listview_item_leftmargin">10dp</dimen>
+    <dimen name="bluetooth_paired_listview_item_margin_right">3dp</dimen>
+    <dimen name="bluetooth_paired_listview_item_margin_left">3dp</dimen>
+    <dimen name="bluetooth_paired_listview_item_left_text_size">14dp</dimen>
+    <dimen name="bluetooth_paired_listview_item_right_text_size">16dp</dimen>
+    <dimen name="bluetooth_paired_title_height">80dp</dimen>
+    <dimen name="bluetooth_paired_text_margin_top">20dp</dimen>
+    <dimen name="bluetoot_paired_listview_item_margin_right_icon">5dp</dimen>
+
+    <!-- baby info activity -->
+    <dimen name="baby_info_activity_title_text_size">20sp</dimen>
+    <dimen name="baby_info_activity_icon_height">30dp</dimen>
+    <dimen name="baby_info_activity_icon_margin_left">40sp</dimen>
+    <dimen name="baby_info_activity_icon_container_height">60sp</dimen>
+    <dimen name="baby_info_activity_sex_textview_height">40dp</dimen>
+    <dimen name="baby_info_activity_sex_textview_width">80dp</dimen>
+    <dimen name="baby_info_activity_textview_height">40dp</dimen>
+    <dimen name="baby_info_activity_textview_text_size">20sp</dimen>
+    <dimen name="baby_info_activity_button_margin_bottom">30dp</dimen>
+
+    <!-- health  prompt -->
+    <dimen name="health_prompt_listview_item_top_height">40dp</dimen>
+    <dimen name="health_prompt_listview_item_circle_r">20dp</dimen>
+    <dimen name="health_prompt_listview_item_margin_left_icon">5dp</dimen>
+    <dimen name="health_prompt_listview_item_margin_right">5dp</dimen>
+    <dimen name="health_prompt_listview_text_size">20dp</dimen>
+    <dimen name="health_prompt_listview_item_doc_textsize">20dp</dimen>
+    <dimen name="health_prompt_listview_item_corner_radius">8dp</dimen>
+    <dimen name="health_prompt_listview_margin_left">10dp</dimen>
+    <dimen name="health_prompt_listview_item_num_text_width">80dp</dimen>
+    <dimen name="health_prompt_listview_item_long_text_margin_left_right">15dp</dimen>
+    <dimen name="health_prompt_listview_item_long_text_maring_top">10dp</dimen>
+
+    <!--milk_amount -->
+    <dimen name="milk_amount_title_divider">1dp</dimen>
+    <!--下面这个值有title高度和title_total高度的和-->
+    <dimen name="milk_amount_title_total_height">130dp</dimen>
+    <dimen name="milk_amount_advise_title_total_height">90dp</dimen>
+    <dimen name="milk_amount_advise_text_margin_left">10dp</dimen>
+    <dimen name="milk_amount_advise_text_size">13dp</dimen>
+    <dimen name="milk_amount_advise_ring_text_up_size">7dp</dimen>
+    <dimen name="milk_amount_advise_ring_text_down_size">20dp</dimen>
+    <dimen name="milk_amount_advise_ring_size_D">63dp</dimen>
+
+    <dimen name="milk_amount_advise_margin_right">20dp</dimen>
+    <dimen name="milk_amount_advise_bottom_height">15dp</dimen>
+    <dimen name="milk_amount_vertical_line_width">1.2dp</dimen>
+    <dimen name="milk_amount_line_margin_left">20dp</dimen>
+    <dimen name="millk_amount_listview_title_height">50dp</dimen>
+    <dimen name="milk_amount_listview_item_height">70dp</dimen>
+
+    <dimen name="milk_amount_circle_D">15dp</dimen>
+    <dimen name="milk_amount_circle_margin_left">7.5dp</dimen>
+    <dimen name="milk_amount_time_text_marging_left">15dp</dimen>
+    <dimen name="milk_amount_text_total_margin_right">15dp</dimen>
+    <dimen name="milk_amount_listview_title_text_size">13dp</dimen>
+
+
+    <dimen name="milk_amount_listview_item_margin_bottom">14dp</dimen>
+    <dimen name="milk_amount_listview_item_divider_marging_left">60dp</dimen>
+    <dimen name="milk_amount_listview_item_divider_height">0.5dp</dimen>
+    <dimen name="milk_amount_listview_item_time_text_size">12dp</dimen>
+    <dimen name="milk_amount_listview_item_time_margin_left">6dp</dimen>
+    <dimen name="milk_amount_listview_item_time_margin_bottom">11dp</dimen>
+    <dimen name="milk_amount_listview_list_progress_bar_margin_left">22dp</dimen>
+    <dimen name="milk_amount_listview_item_progress_bar_height">8dp</dimen>
+    <dimen name="milk_amount_listview_item_progress_bar_width">140dp</dimen>
+    <dimen name="milk_amount_listview_item_temperature_amount_parent_height">18dp</dimen>
+    <dimen name="milk_amount_listview_item_temperature_amount_parent_margin_bottom">10dp</dimen>
+    <dimen name="milk_amount_listview_item_temperature_amount_text_size">15dp</dimen>
+    <dimen name="milk_amount_listview_item_divider_temperature_amount_line_width">0.5dp</dimen>
+    <dimen name="milk_amount_listview_item_divider_temperature_amount_line_margin_left">6dp</dimen>
+    <dimen name="milk_amount_listview_item_temperature_amount_parent_width">90dp</dimen>
+    <dimen name="milk_amount_listview_item_circle_D">38dp</dimen>
+    <dimen name="milk_amount_listview_item_circle_up_text_size">18dp</dimen>
+    <dimen name="milk_amount_listview_item_circle_down_text_size">11dp</dimen>
+    <dimen name="milk_amount_listview_item_circle_margin_right">10dp</dimen>
+    <dimen name="milk_amount_listview_item_title_time_text_width">100dp</dimen>
+    <array name="milk_amount_listview_item_title_circle_weights">
+        <item>10</item>
+        <item>1</item>
+        <item>1</item>
+    </array>
+
+    <!--health_last_drink-->
+    <dimen name="health_last_drink_item_text_total_width">200dp</dimen>
+    <dimen name="health_last_drink_item_text_total_height">100dp</dimen>
+    <dimen name="last_drink_item_total_height">150dp</dimen>
+    <dimen name="last_drink_item_circle_r">20dp</dimen>
+    <dimen name="last_drink_item_up_doc_text_size">40dp</dimen>
+    <dimen name="health_last_drink_item_down_doc_text_size">10dp</dimen>
+    <dimen name="health_last_drink_item_ring_r">50dp</dimen>
+    <dimen name="health_last_drink_item_ring_text1_size">20dp</dimen>
+    <dimen name="health_last_drink_item_ring_text2_size">10dp</dimen>
+
+    <!--weight_fragment-->
+    <dimen name="weight_fragment_line_height">2dp</dimen>
+    <dimen name="weight_fragment_tab_height">40dp</dimen>
+    <dimen name="weight_fragment_excle_bottom_height">40dp</dimen>
+    <dimen name="weight_fragment_excle_left_line_margin">2dp</dimen>
+    <dimen name="weight_fragment_excle_down_divider_height">10dp</dimen>
+    <dimen name="weight_fragment_left_up_text_size">14dp</dimen>
+    <dimen name="weight_fragment_left_down_text_size">10dp</dimen>
+    <dimen name="weight_fragment_right_up_text_size">14dp</dimen>
+    <dimen name="weight_fragment_right_down_text_size">10dp</dimen>
+    <dimen name="weight_fragment_text_space_size">2dp</dimen>
+    <dimen name="weight_fragment_bottom_text_size">10dp</dimen>
+    <dimen name="weight_fragment_adder_text_size">8dp</dimen>
+    <dimen name="weight_fragment_adder_width">150dp</dimen>
+    <dimen name="weight_fragment_adder_height">40dp</dimen>
+    <dimen name="weight_fragment_adder_title_height">30dp</dimen>
+    <dimen name="weight_fragment_adder_title_text_size">10dp</dimen>
+    <dimen name="weight_fragment_adder_title_line_height">1dp</dimen>
+    <dimen name="weight_fragment_adder_bottome_icon_width">100dp</dimen>
+    <dimen name="weight_fragment_adder_doc_text_size">17dp</dimen>
+    <dimen name="weight_fragment_adder_doc_text_width">130dp</dimen>
+    <dimen name="weight_fragment_adder_num_text_size">30dp</dimen>
+    <dimen name="weight_fragment_adder_num_text_width">100dp</dimen>
+    <dimen name="weight_fragment_adder_ruler_jt_height">20dp</dimen>
+    <dimen name="weight_fragment_adder_ruler_container_margin_top">10dp</dimen>
+    <dimen name="weight_fragment_adder_ruler_margin_left_right">10dp</dimen>
+    <dimen name="weight_fragment_adder_ruler_margin_top">10dp</dimen>
+    <dimen name="weight_fragment_adder_ruler_container_width">250dp</dimen>
+
+
+</resources>

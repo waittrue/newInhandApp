@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="@dimen/bluetooth_paired_listview_item_height">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/bluetooth_paired_listview_name_text"
+        android:layout_marginLeft="@dimen/bluetooth_paired_listview_item_margin_left"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="false"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentStart="false"
+        android:textSize="@dimen/bluetooth_paired_listview_item_left_text_size"
+        android:singleLine="true"
+        android:textColor="@color/color_white" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/bluetooth_paired_listview_status_text"
+        android:layout_marginRight="@dimen/bluetoot_paired_listview_item_margin_right_icon"
+        android:layout_alignParentRight="false"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/bluetooth_paired_listview_item_right_text_size"
+        android:textColor="@color/color_white"
+        android:layout_toLeftOf="@+id/bluetooth_paired_listview_icon" />
+
+    <ImageView
+        android:layout_width="@dimen/bluetooth_paired_listview_item_right_text_size"
+        android:layout_height="@dimen/bluetooth_paired_listview_item_right_text_size"
+        android:id="@+id/bluetooth_paired_listview_icon"
+        android:layout_marginRight="@dimen/bluetooth_paired_listview_item_margin_right"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/bluetooth_link_no_ico" />
+</RelativeLayout>

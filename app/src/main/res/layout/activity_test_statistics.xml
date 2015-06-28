@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="数据测试"
+        android:textSize="24sp"
+        android:gravity="center" />
+    <EditText
+        android:id="@+id/high_temperature_num_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="饮奶温度过高次数"
+        android:inputType="number"
+        />
+    <EditText
+        android:id="@+id/low_temperature_num_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="饮奶温度过低次数"
+        android:inputType="number"
+        />
+    <EditText
+        android:id="@+id/over_time_num_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="饮奶超时次数"
+        android:inputType="number"
+        />
+    <Button
+        android:id="@+id/save_statistic_test_bth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="存储"
+        />
+    <Button
+        android:id="@+id/sync_statistic_test_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="同步"
+        />
+</LinearLayout>

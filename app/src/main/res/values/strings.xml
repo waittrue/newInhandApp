@@ -1,0 +1,198 @@
+<resources>
+    <string name="app_name">嘟嘟喝奶</string>
+    <string name="action_settings">Settings</string>
+    <!--默认-->
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="settings">设置</string>
+    <string name="skin">皮肤</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <!--各个Fragment标题-->
+    <string name="fragment_title_volume">奶量统计</string>
+    <string name="fragment_title_temperature">温度统计</string>
+    <string name="fragment_title_home">综合评分</string>
+    <string name="fragment_title_statistics">健康数据</string>
+    <string name="fragment_title_babyinfo">宝宝信息</string>
+    <!--登陆部分-->
+    <string name="login_divide_tip">第三方登录</string>
+    <string name="login_name_hint">输入您的手机号</string>
+    <string name="login_to_reg">注册账号</string>
+    <string name="login_pwd_hint">密码</string>
+    <string name="login_forget_pwd">忘记密码</string>
+    <string name="username_null">用户名不能为空</string>
+    <string name="password_null">密码不能为空</string>
+    <string name="login_error">用户名或密码错误</string>
+    <string name="app_weixin_login">微信登录</string>
+    <string name="app_weibo_login">微博登录</string>
+    <string name="app_qq_login">QQ登录</string>
+    <string name="other_login">其他方式登录</string>
+    <!--注册部分字符串常量-->
+    <string name="reg_ac_btn">点击获取</string>
+    <string name="reg_phone_hint">请填写11位手机号</string>
+    <string name="reg_pwd_hint">请输入密码</string>
+    <string name="reg_repwd_hint">请重复输入密码</string>
+    <string name="reg_ac_hint">验证码</string>
+    <string name="phone_error">手机格式不正确</string>
+    <string name="phone_exist">该手机已被注册</string>
+    <string name="vc_reget">重新获取</string>
+    <string name="vc_wait">秒后重发</string>
+    <string name="vc_error">验证码错误</string>
+    <string name="pwd_hint">密码最少长6位，由数字或字符组成</string>
+    <string name="pwd_error">密码格式错误</string>
+    <string name="pwd_mismatch">两次输入密码不一致</string>
+    <string name="family_name_hint">输入您的家庭名称(如：阳阳一家)</string>
+    <string name="family_name_error">输入您的家庭名称(如：阳阳一家)</string>
+    <string name="register_phone_error">手机格式不正确</string>
+    <string name="register_phone_exist">该手机已被注册</string>
+    <string name="register_pwd_error">密码格式错误</string>
+    <string name="register_pwd_mismatch">两次输入密码不一致</string>
+    <string name="register_ac_error">验证码错误</string>
+    <!--Sliding 菜单项-->
+    <string name="sliding_list_device">我的设备</string>
+    <string name="sliding_list_settings">奶瓶设置</string>
+    <string name="sliding_list_family">家庭成员</string>
+    <string name="sliding_list_advice">建议反馈</string>
+
+    <!-- ************************分工部分********************************* -->
+
+    <!-- health nutrition -->
+    <string name="health_nutrition_title">饮奶营养成分</string>
+
+    <!-- health  -->
+    <string name="health_title_text">健康信息</string>
+
+    <!-- home fragment -->
+    <string name="home_circle_doc">查看更多历史分数</string>
+    <string name="home_title_text">饮奶综合评分</string>
+    <string name="home_advise_left_title">上次用量： </string>
+    <string name="home_advise_right_title">建议用量： </string>
+    <string name="home_advise_second_title">奶量： </string>
+    <string name="home_advise_third_title">温度： </string>
+
+    <!-- menu  -->
+    <string-array name="menu_item_texts">
+        <item>家庭成员</item>
+        <item>奶瓶设置</item>
+        <item>个人意见</item>
+    </string-array>
+
+    <!-- tempreture_amount   -->
+    <string name="temperature_milk_day_text">日</string>
+    <string name="temperature_milk_week_text">周</string>
+    <string name="temperature_milk_month_text">月</string>
+    <string name="temperature_title_text">饮奶温度统计</string>
+    <string name="temperature_excle_day_right_title">今天</string>
+    <string name="temperature_excle_day_left_title">饮奶温度/°C</string>
+    <string name="temperature_excle_week_right_title">本周</string>
+    <string name="temperature_excle_week_left_title">饮奶温度/°C</string>
+    <string name="temperature_excle_month_right_title">本月</string>
+    <string name="temperature_excle_month_left_title">饮奶温度/°C</string>
+    <string name="milk_title_text">饮奶奶量统计</string>
+    <string name="milk_excle_day_right_title">今天</string>
+    <string name="milk_excle_day_left_title">饮奶奶量/ml</string>
+    <string name="milk_excle_week_right_title">本周</string>
+    <string name="milk_excle_week_left_title">饮奶奶量/ml</string>
+    <string name="milk_excle_month_right_title">本月</string>
+    <string name="milk_excle_month_left_title">饮奶奶量/ml</string>
+    <string name="temerature_circle_bottome_left_title">饮奶开始温度</string>
+    <string name="temerature_circle_bottome_right_title">饮奶结束温度</string>
+
+    <!-- tempreture_amount details -->
+    <string name="details_milk_title_string">饮奶奶量详情</string>
+    <string name="details_temperature_title_string">饮奶温度详情</string>
+    <string name="details_once_title_string">饮奶详情</string>
+    <string name="details_once_real_amount_string">实际饮奶量</string>
+    <string name="details_once_advise_amount_string">建议饮奶量</string>
+    <string name="details_once_temperature_start">开始饮奶温度</string>
+    <string name="details_once_temperature_end">结束饮奶温度</string>
+    <string name="details_once_health">本次健康指数</string>
+    <string name="details_once_end_time">饮奶结束时间</string>
+
+    <!-- first launch -->
+    <string name="first_launch_choose_parents">选择你的性别</string>
+    <string name="first_launch_choose_babysex_date">选择宝宝的生日</string>
+    <string name="first_launch_choose_babysex_name">填写宝宝的昵称</string>
+    <string name="first_launch_choose_baby_info">宝宝基础信息</string>
+    <string name="first_launch_choose_weight_info">宝宝的体重</string>
+    <string name="first_launch_choose_height_info">宝宝的身高</string>
+    <string name="first_launch_choose_head_info">宝宝的头围</string>
+    <string name="first_launch_choose_milk_info">宝宝的奶粉</string>
+    <string name="first_launch_choose_milk_text">请选择宝宝的奶粉</string>
+    <string name="first_launch_choose_milk_doc">选择奶粉的重要性，点这里</string>
+
+    <!-- baby info activity -->
+    <string name="baby_info_activity_baby_title_text">宝宝信息</string>
+    <string name="baby_info_activity_baby_sex">宝宝性别：</string>
+    <string name="baby_info_activity_baby_sex_boy">男孩</string>
+    <string name="baby_info_activity_baby_sex_girl">女孩</string>
+    <string name="baby_info_activity_baby_date">宝宝生日：</string>
+    <string name="baby_info_activity_baby_date_hint_text">请选择日期</string>
+    <string name="baby_info_activity_baby_name">宝宝昵称：</string>
+    <string name="baby_info_activity_baby_name_hint_text">请输入宝宝名称</string>
+
+    <!--health prompt-->
+    <string name="health_prompt_title">健康提示</string>
+    <string-array name="health_prompt_listview_item_doc">
+        <item>高温冲调奶粉</item>
+        <item>宝宝高温饮奶</item>
+        <item>宝宝低温饮奶</item>
+    </string-array>
+    <string-array name="health_prompt_listview_item_long_doc">
+        <item>如果水温过高，回使奶粉结块，无法充分溶解，还会是奶粉中的蛋白质凝结，如果水温过高，回使奶粉结块，无法充分溶解，还会是奶粉中的蛋白质凝结如果水温过高，回使奶粉结块，无法充分溶解，还会是奶粉中的蛋白质凝结</item>
+        <item>宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶宝宝高奶宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶</item>
+        <item>宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶</item>
+    </string-array>
+    <string name="health_prompt_listview_item_total">你共有</string>
+
+    <!--milk amount -->
+    <string name="milk_amount_title">饮奶统计</string>
+    <string name="milk_amount_drink_num_doc">宝宝今天喝奶：</string>
+    <string name="milk_amount_advise_num_doc">小兜建议喝奶：</string>
+    <string name="milk_amount_advise_ring_up_doc">今天已经完成</string>
+    <string name="milk_amount_drink_total_num_doc">饮奶次数:</string>
+
+    <!--health last drink -->
+    <string name="health_last_drink_title">上次饮奶</string>
+    <string name="health_last_drink_duration">持续饮奶时间</string>
+    <string name="health_last_drink_duration_more_doc">偏长：单次饮奶20分钟最合适</string>
+    <string name="health_last_drink_duration_less_doc">太快：单次饮奶20分钟最合适</string>
+    <string name="health_last_drink_duration_suit_doc">合适：单次饮奶20分钟最合适</string>
+    <string name="health_last_drink_amount">饮奶奶量</string>
+    <string name="health_last_drink_amount_more_doc">过多:请下次注意</string>
+    <string name="health_last_drink_amount_less_doc">太少:请下次注意</string>
+    <string name="health_last_drink_amount_suit_doc">合适:请继续保持</string>
+    <string name="health_last_drink_begin_temperature">饮奶开始温度</string>
+    <string name="health_last_drink_begin_temperature_more_doc">偏高：请注意哦，这样对宝宝不好</string>
+    <string name="health_last_drink_begin_temperature_less_doc">偏低：小心宝宝喝了对胃不好</string>
+    <string name="health_last_drink_begin_temperature_suit_doc">合适：很好请继续保持</string>
+    <string name="health_last_drink_end_temperature">饮奶结束温度</string>
+    <string name="health_last_drink_end_temperature_less_doc">偏低：注意低温注意低温</string>
+    <string name="health_last_drink_end_temperature_more_doc">偏高：注意注意注意</string>
+    <string name="health_last_drink_end_temperature_suit_doc">合适：很好很好很好</string>
+
+    <!-- weight fragment-->
+    <string name="weight_fragment_title">发育评估</string>
+    <array name="weight_excle_left_texts">
+        <item>偏重区</item>
+        <item>标准区</item>
+        <item>偏轻区</item>
+    </array>
+    <array name="weight_excle_bottom_texts">
+        <item>第一周</item>
+        <item>第二周</item>
+        <item>第三周</item>
+        <item>第四周</item>
+    </array>
+    <string name="weight_ring_text_up">体重情况</string>
+    <string-array name="weight_ring_text_status">
+        <item>过低</item>
+        <item>正常</item>
+        <item>过高</item>
+    </string-array>
+    <string name="weight_left_down_text">当前体重/kg</string>
+    <string name="weight_fragment_bottome_text">你最后一次输入的时间为</string>
+    <string name="weight_fragment_adder_text">添加宝宝体重</string>
+    <string name="weight_fragment_adder_doc_text">宝宝体重(kg):</string>
+</resources>

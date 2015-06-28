@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/first_launch_bckground"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/first_launch_title_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/first_lanunch_title_height"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/first_launch_title_text"
+            android:layout_width="@dimen/first_lanunch_title_text_width"
+            android:layout_height="@dimen/first_lanunch_title_text_height"
+            android:layout_gravity="center"
+            android:background="@drawable/first_launch_title_textview_corner"
+            android:gravity="center"
+            android:text="选择"
+            android:textSize="@dimen/first_lanunch_title_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Activity_fragments_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/first_launch_small_bots_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/first_lanunch_small_bots_container_height"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/first_lanunch_bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/first_lanunch_bottom_height"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+
+</LinearLayout>

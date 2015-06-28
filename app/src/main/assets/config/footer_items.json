@@ -1,0 +1,28 @@
+[
+    {
+        "name":"milk",
+        "icon":"footer_icon_milk",
+        "fragment":"com.inhand.milk.fragment.VolumeFragment"
+    },
+    {
+        "name":"temperature",
+        "icon":"footer_icon_temperature",
+        "fragment":"com.inhand.milk.fragment.TemperatureFragment"
+    },
+    {
+        "name":"home",
+        "icon":"footer_icon_home",
+        "fragment":"com.inhand.milk.fragment.HomeFragment"
+    },
+    {
+        "name":"statistics",
+        "icon":"footer_icon_statistics",
+        "fragment":"com.inhand.milk.fragment.StatisticsFragment"
+    },
+    {
+        "name":"uc",
+        "icon":"footer_icon_uc",
+        "fragment":"com.inhand.milk.fragment.LoginFragment"
+    }
+
+]

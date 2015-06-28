@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/details_content_header_background_color"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+    
+      
+    <com.inhand.milk.fragment.temperature_amount.details.PinnedHeaderListView
+        android:id="@+id/detals_listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight = "1"
+        android:background="#ffffffff"
+        android:divider="#ffffffff"
+        android:headerDividersEnabled="true" >
+    </com.inhand.milk.fragment.temperature_amount.details.PinnedHeaderListView>
+
+</LinearLayout>

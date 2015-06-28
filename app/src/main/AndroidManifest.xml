@@ -1,0 +1,79 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.inhand.milk">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <application
+        android:name="App"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.inhand.milk.activity.LaunchActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.WelcomeActivity">
+        </activity>
+        <activity android:name=".activity.FamilyActivity" />
+        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.SyncTestActivity" />
+
+        <activity
+            android:name="com.inhand.milk.activity.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity
+            android:name="com.inhand.milk.activity.HealthNutritionActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity
+            android:name="com.inhand.milk.activity.StaticsDetailsActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity
+            android:name="com.inhand.milk.activity.FirstLanunchActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity
+            android:name="com.inhand.milk.activity.BluetoothPairedAcivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.inhand.milk.activity.HealthBabyInfoActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.inhand.milk.activity.HealthPromptActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!-- 下面是测试Activity -->
+        <activity android:name=".test.BabyInfoTestActivity"/>
+        <activity android:name=".test.DeviceTestActivity"/>
+        <activity android:name=".test.MainActivity"/>
+        <activity android:name=".test.StatisticsTestActivity"/>
+        <activity android:name=".test.SyncTestActivity"/>
+    </application>
+
+</manifest>

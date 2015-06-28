@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"></LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/first_lanunch_height_choose_height">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/first_lanunch_weight_girl_boy_icon_height">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"></RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4">
+
+                    <TextView
+                        android:id="@+id/first_launch_weight_num_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="false"
+                        android:layout_alignParentTop="false"
+                        android:gravity="bottom"
+                        android:text="0.0"
+                        android:textSize="@dimen/first_lanunch_weight_num_text_size" />
+
+                    <TextView
+                        android:id="@+id/first_launch_weight_unit_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@+id/first_launch_weight_num_textview"
+                        android:text="kg"
+                        android:textSize="@dimen/first_lanunch_weight_unit_text_size" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/first_lanunch_weight_ruler_container_container_height">
+
+                <LinearLayout
+                    android:id="@+id/first_launch_choose_head_ruler_container_linearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.125"
+                        android:orientation="vertical"></LinearLayout>
+
+                    <com.inhand.milk.utils.ObservableHorizonScrollView
+                        android:id="@+id/first_launch_choose_head_scrollView"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/first_lanunch_weight_ruler_height"
+                        android:layout_weight="0.75"
+                        android:background="@drawable/first_launch_ruler_v_bg"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/first_launch_choose_head_ruler_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal"></LinearLayout>
+                    </com.inhand.milk.utils.ObservableHorizonScrollView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.125"
+                        android:orientation="vertical"></LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_above="@id/first_launch_choose_head_ruler_container_linearlayout"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="@dimen/first_lanunch_weight_ruler_jt_margin_bottom"
+                    android:gravity="bottom|center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/first_launch_choose_head_ruler_jt_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/first_launch_weight_ruler_jt_ico" />
+                </LinearLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6">
+
+                <ImageView
+                    android:id="@+id/first_launch_weight_girl_boy_icon"
+                    android:layout_width="@dimen/first_lanunch_weight_girl_boy_icon_width"
+                    android:layout_height="@dimen/first_lanunch_weight_girl_boy_icon_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/first_launch_weight_girl_icon" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"></RelativeLayout>
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"></LinearLayout>
+
+</LinearLayout>

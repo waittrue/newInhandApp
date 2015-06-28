@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/buttons_background"
+    android:orientation="horizontal" >
+
+		<RelativeLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="match_parent"
+		    android:layout_gravity="right|center_horizontal"
+		   	android:layout_weight = "1" >
+
+			<ImageButton
+			    android:id="@+id/buttons_milk_icon"
+			    android:layout_width="@dimen/buttons_icon_size"
+			    android:layout_height="wrap_content"
+			    android:layout_centerHorizontal="true"
+			    android:layout_centerVertical="true"
+			    android:background="#00000000"
+			    android:scaleType="centerInside"
+			    android:src="@drawable/buttons_amount_icon" />
+		</RelativeLayout>
+
+		<RelativeLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="match_parent"
+		    android:layout_weight = "1" >
+
+			<ImageButton
+			    android:id="@+id/buttons_temperature_icon"
+			    android:layout_width="@dimen/buttons_icon_size"
+			    android:layout_height="wrap_content"
+			    android:background="#00000000"
+			    android:layout_centerHorizontal="true"
+			    android:layout_centerVertical="true"
+			    android:scaleType="centerInside"
+			    android:src="@drawable/buttons_temperature_icon" />
+
+		</RelativeLayout>
+
+		<RelativeLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="match_parent"
+		    android:layout_weight = "1" >
+
+			<ImageButton
+			    android:id="@+id/buttons_home"
+			 	android:layout_width="@dimen/buttons_icon_size"
+			    android:layout_height="wrap_content"
+			    android:background="#00000000"
+			    android:layout_centerHorizontal="true"
+			    android:layout_centerVertical="true"
+			 	android:scaleType="centerInside"
+			    android:src="@drawable/buttons_home_icon" />
+
+		</RelativeLayout>
+
+		<RelativeLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="match_parent"
+		    android:layout_weight = "1"
+		  >
+
+			<ImageButton
+			    android:id="@+id/buttons_health"
+			   android:layout_width="@dimen/buttons_icon_size"
+			    android:layout_height="wrap_content"
+			    android:background="#00000000"
+			    android:layout_centerHorizontal="true"
+			    android:layout_centerVertical="true"
+			   android:scaleType="centerInside"
+			    android:src="@drawable/buttons_health_icon" />
+
+		</RelativeLayout>
+
+		<RelativeLayout
+		   android:layout_width="fill_parent"
+		    android:layout_height="match_parent"
+		    android:layout_weight="1" >
+
+			<ImageButton
+			    android:id="@+id/buttons_person_center"
+			    android:layout_width="@dimen/buttons_icon_size"
+			    android:layout_height="wrap_content"
+			    android:background="#00000000"
+			    android:layout_centerHorizontal="true"
+			    android:layout_centerVertical="true"
+			    android:scaleType="centerInside"
+			    android:src="@drawable/buttons_person_center_icon" />
+
+		</RelativeLayout>
+
+	</LinearLayout>    
+
+

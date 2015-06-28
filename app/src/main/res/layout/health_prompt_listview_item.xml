@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/health_prompt_listview_item_top_height">
+
+        <ImageView
+            android:layout_width="@dimen/health_prompt_listview_item_circle_r"
+            android:layout_height="@dimen/health_prompt_listview_item_circle_r"
+            android:id="@+id/health_prompt_listview_item_circle_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="0dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/health_prompt_listview_item_text_doc"
+            android:layout_marginLeft="@dimen/health_prompt_listview_item_margin_left_icon"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/health_prompt_listview_item_circle_icon"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/health_prompt_listview_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/health_prompt_listview_item_text_total"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:layout_toLeftOf="@+id/health_prompt_listview_item_text_num"
+            android:layout_marginRight="@dimen/health_prompt_listview_item_margin_right"
+            android:textSize="@dimen/health_prompt_listview_text_size"
+            android:text="@string/health_prompt_listview_item_total" />
+
+        <TextView
+            android:layout_width="@dimen/health_prompt_listview_item_num_text_width"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="16次"
+            android:id="@+id/health_prompt_listview_item_text_num"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/health_prompt_corner_background"
+            android:textSize="@dimen/health_prompt_listview_text_size"
+            android:textColor="@color/color_white"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/health_prompt_listview_item_text_long_doc"
+        android:background="@drawable/health_prompt_corner_background"
+        android:textSize="@dimen/health_prompt_listview_item_doc_textsize"
+        android:paddingLeft="@dimen/health_prompt_listview_item_long_text_margin_left_right"
+        android:paddingTop="@dimen/health_prompt_listview_item_long_text_maring_top"
+        android:paddingRight="@dimen/health_prompt_listview_item_long_text_margin_left_right"
+        android:paddingBottom="@dimen/health_prompt_listview_item_long_text_maring_top" />
+</LinearLayout>

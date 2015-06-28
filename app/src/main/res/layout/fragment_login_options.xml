@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/login_container">
+
+    <ImageView
+        android:id="@+id/logo"
+        style="@style/login_logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:id="@+id/login_options_container"
+        android:layout_below="@id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutAnimation="@anim/login_options_layout_in"
+        android:animateLayoutChanges="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/by_weixin"
+            style="@style/login_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <ImageView
+                style="@style/login_options_icon"
+                android:src="@drawable/app_weixin_fast_login" />
+
+            <TextView
+                style="@style/login_options_font"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_weixin_login" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/other"
+            style="@style/login_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/login_options_font"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/other_login" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/copyright"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/copyright_height"
+        android:src="@drawable/common_copyright" />
+</RelativeLayout>

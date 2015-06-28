@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/login_container"
+    android:padding="0dp">
+
+    <!-- 注册表单部分 -->
+    <LinearLayout
+        android:id="@+id/register_form_container"
+        style="@style/log_reg_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/register_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="20dp"
+            android:src="@drawable/register_title" />
+
+        <EditText
+            android:id="@+id/username"
+            style="@style/log_reg_form"
+            android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/register_icon_phone"
+            android:drawableStart="@drawable/register_icon_phone"
+            android:inputType="phone"
+            android:hint="@string/login_name_hint"
+            android:gravity="left" />
+
+        <EditText
+            android:id="@+id/password"
+            style="@style/log_reg_form"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@drawable/login_details_icon_password"
+            android:drawableLeft="@drawable/login_details_icon_password"
+            android:inputType="textPassword"
+            android:hint="@string/reg_pwd_hint"
+            android:gravity="left" />
+
+        <EditText
+            android:id="@+id/re_password"
+            style="@style/log_reg_form"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@drawable/login_details_icon_password"
+            android:drawableLeft="@drawable/login_details_icon_password"
+            android:inputType="textPassword"
+            android:hint="@string/reg_repwd_hint"
+            android:gravity="left" />
+
+        <FrameLayout
+            android:id="@+id/register_auth_code_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/auth_code"
+                style="@style/log_reg_form"
+                android:drawableStart="@drawable/register_icon_auth_code"
+                android:drawableLeft="@drawable/register_icon_auth_code"
+                android:inputType="textPassword"
+                android:hint="@string/reg_ac_hint"
+                android:gravity="left" />
+
+            <Button
+                android:id="@+id/get_auth_code_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/common_bandage"
+                android:padding="15dp"
+                android:textSize="18sp"
+                android:textColor="@color/common_bandage_font"
+                android:text="@string/reg_ac_btn" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/register_options_container"
+        style="@style/log_reg_options_footer">
+
+        <ImageView
+            android:id="@+id/to_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/register_btn_to_login"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp" />
+
+        <ImageView
+            android:id="@+id/submit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/register_btn_submit" />
+
+    </LinearLayout>
+</RelativeLayout>

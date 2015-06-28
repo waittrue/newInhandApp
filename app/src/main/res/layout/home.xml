@@ -1,0 +1,210 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight = "3" >
+
+            <LinearLayout
+                android:id="@+id/temperature_milk_circle_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+           android:layout_width="fill_parent"
+           android:layout_height="0dp"
+           android:layout_weight = "2"
+           
+           android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+
+                <RelativeLayout
+                    android:layout_width="@dimen/home_advise_layout_width"
+                    android:layout_height="@dimen/home_advise_layout_height"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/home_advise_margin_top"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/home_left_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/home_advise_left_title"
+                        android:textColor="@color/home_advise_text_color"
+                        android:textSize="@dimen/home_advise_text_size" />
+
+                    <TextView
+                        android:id="@+id/home_left_second_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/home_left_title"
+                        android:layout_marginTop="@dimen/home_advise_text_margin_top"
+                        android:text="@string/home_advise_second_title"
+                        android:textColor="@color/home_advise_text_color"
+                        android:textSize="@dimen/home_advise_text_size" />
+
+                    <TextView
+                        android:id="@+id/home_left_third_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/home_left_second_title"
+                        android:layout_marginTop="@dimen/home_advise_text_margin_top"
+                        android:text="@string/home_advise_third_title"
+                        android:textColor="@color/home_advise_text_color"
+                        android:textSize="@dimen/home_advise_text_size" />
+
+                    <TextView
+                        android:id="@+id/home_left_temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/home_left_third_title"
+                        android:layout_marginBottom="@dimen/home_advise_num_margin_bottom"
+                        android:layout_toRightOf="@id/home_left_third_title"
+                        android:text="36.5°C"
+                        android:textColor="@color/home_advise_left_num_color"
+                        android:textSize="@dimen/home_advise_num_size" />
+
+                    <TextView
+                        android:id="@+id/home_left_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/home_left_second_title"
+                        android:layout_marginBottom="@dimen/home_advise_num_margin_bottom"
+                        android:layout_toRightOf="@id/home_left_second_title"
+                        android:text="160ML"
+                        android:textColor="@color/home_advise_left_num_color"
+                        android:textSize="@dimen/home_advise_num_size" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout1"
+                    android:layout_width="@dimen/home_advise_layout_width"
+                    android:layout_height="@dimen/home_advise_layout_height"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/home_advise_margin_top"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/home_right_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/home_advise_right_title"
+                        android:textColor="@color/home_advise_text_color"
+                        android:textSize="@dimen/home_advise_text_size" />
+
+                    <TextView
+                        android:id="@+id/home_right_second_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/home_right_title"
+                        android:layout_marginTop="@dimen/home_advise_text_margin_top"
+                        android:text="@string/home_advise_second_title"
+                        android:textColor="@color/home_advise_text_color"
+                        android:textSize="@dimen/home_advise_text_size" />
+
+                    <TextView
+                        android:id="@+id/home_right_third_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/home_right_second_title"
+                        android:layout_marginTop="@dimen/home_advise_text_margin_top"
+                        android:text="@string/home_advise_third_title"
+                        android:textColor="@color/home_advise_text_color"
+                        android:textSize="@dimen/home_advise_text_size" />
+
+                    <TextView
+                        android:id="@+id/home_right_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/home_right_second_title"
+                        android:layout_marginBottom="@dimen/home_advise_num_margin_bottom"
+                        android:layout_toRightOf="@id/home_right_second_title"
+                        android:text="100ML"
+                        android:textColor="@color/home_advise_right_num_color"
+                        android:textSize="@dimen/home_advise_num_size" />
+
+                    <TextView
+                        android:id="@+id/home_right_temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/home_right_third_title"
+                        android:layout_marginBottom="@dimen/home_advise_num_margin_bottom"
+                        android:layout_toRightOf="@id/home_right_third_title"
+                        android:gravity="bottom|left"
+                        android:text="40.6°C"
+                        android:textColor="@color/home_advise_right_num_color"
+                        android:textSize="@dimen/home_advise_num_size" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#ffffffff"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tuisong"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:text="喝牛奶建议不要放太多糖，这样对身体的发育不好,请好好注意这点。。。。"
+            android:textColor="#777777"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</LinearLayout>

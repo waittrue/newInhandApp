@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyCircle">
+        <attr name="r" format="dimension"/>
+        <attr name="CircleColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="RingWithText">
+        <attr name="RingWidth" format="dimension"/>
+        <attr name="R" format="dimension"    />
+        <attr name="textColor" format="color"/>
+        <attr name="textSizes1" format="dimension"/>
+        <attr name="textSizes2" format="dimension"/>
+        <attr name="textSizes3" format="dimension"/>
+
+    </declare-styleable>
+</resources>

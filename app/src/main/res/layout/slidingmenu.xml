@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jeremyfeinstein.slidingmenu.lib.SlidingMenu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/slidingmenu">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/sliding_paddingBottom">
+
+        <RelativeLayout
+            android:id="@+id/base_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/avatar"
+                style="@style/sliding_avatar"
+                android:layout_width="@dimen/sliding_avatar_size"
+                android:layout_height="@dimen/sliding_avatar_size"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/default_avatar" />
+
+            <LinearLayout
+                android:id="@+id/sliding_userinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/avatar"
+                android:padding="@dimen/sliding_padding">
+
+                <TextView
+                    android:id="@+id/username"
+                    style="@style/sliding_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="宝宝妈妈" />
+
+                <TextView
+                    android:id="@+id/otherinfo"
+                    style="@style/sliding_otherinfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="其他信息" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/base_info"
+            android:background="#88ffffff" />
+
+        <LinearLayout
+            android:id="@+id/sliding_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/sliding_footer_padding">
+
+                <ImageView
+                    android:layout_width="@dimen/sliding_footer_iconSize"
+                    android:layout_height="@dimen/sliding_footer_iconSize"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/common_settings"
+                    android:scaleType="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/settings"
+                    android:textSize="@dimen/sliding_footer_fontSize"
+                    android:textColor="@color/default_ftg" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/skin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/sliding_footer_padding">
+
+                <ImageView
+                    android:layout_width="@dimen/sliding_footer_iconSize"
+                    android:layout_height="@dimen/sliding_footer_iconSize"
+                    android:src="@drawable/common_settings"
+                    android:gravity="center_vertical"
+                    android:scaleType="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/skin"
+                    android:textSize="@dimen/sliding_footer_fontSize"
+                    android:textColor="@color/default_ftg" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list"
+            style="@style/sliding_list"
+            android:layout_below="@id/divider"
+            android:layout_above="@id/sliding_footer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent" />
+
+    </RelativeLayout>
+
+</com.jeremyfeinstein.slidingmenu.lib.SlidingMenu>

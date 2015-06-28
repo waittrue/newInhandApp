@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ************************默认部分********************************* -->
+    <!--基本前景色-->
+    <color name="default_ftg">#ffffff</color>
+    <!--基本背景色-->
+    <color name="default_bkg">#03ADAC</color>
+    <!--基本字色-->
+    <color name="default_font">#ffffff</color>
+    <!--基本边框色-->
+    <color name="default_border">#ffffff</color>
+    <!--默认按钮按下色-->
+    <color name="default_btn_clicked">#ff009bad</color>
+    <!-- 绷带按钮字色 -->
+    <color name="common_bandage_font">#4dcd87</color>
+    <color name="common_bandage_font_light">#ff00ffcc</color>
+    <!-- ************************登陆部分********************************* -->
+    <!--表单输入框背景色-->
+    <color name="login_form_bkg">#ffffff</color>
+    <!-- 登录选项字色-->
+    <color name="login_options">#4dcd87</color>
+    <!--登陆提示字-->
+    <color name="login_tip">#e0ffffff</color>
+    <!--登陆分界线-->
+    <color name="login_divide">#62ffffff</color>
+    <!-- ************************Health部分********************************* -->
+    <color name="health_list_divider">#ffc8c8c8</color>
+
+    <!-- ************************分工部分********************************* -->
+
+    <!-- main title -->
+    <color name="main_title_text_color">#ffffffff</color>
+
+    <!-- health colors -->
+    <color name="health_item_name_text_color">#ff000000</color>
+    <color name="health_item_details_text_color">#ff888888</color>
+    <color name="health_item_dividing_line_color">#ffc8c8c8</color>
+    <color name="health_listview_color">#ffffffff</color>
+
+    <!-- health nutrition-->
+    <color name="health_nutrition_time_now_text_color">#ff000000</color>
+
+    <!-- home fragment -->
+    <color name="home_circle_outermost">#e5e9e9</color>
+    <color name="home_circle_inner_outermost">#ffffff</color>
+    <color name="home_circle_inner_outer_second">#f7fdfc</color>
+    <color name="home_circle_inner_outer_third">#e6f8f5</color>
+    <color name="home_low_score_color">#fd7272</color>
+    <color name="home_high_score_color">#058da6</color>
+    <color name="home_fen_color">#666666</color>
+    <color name="home_doc_color">#089f9f</color>
+    <color name="home_advise_text_color">#555555</color>
+    <color name="home_advise_left_num_color">#fd7272</color>
+    <color name="home_advise_right_num_color">#02bdb4</color>
+
+    <!-- menu  -->
+    <color name="menu_item_text_color">#ffffff</color>
+    <color name="menu_head_text_color">#ffffff</color>
+    <color name="menu_head_under_line_color">#ffffff</color>
+
+    <!-- temperature_amount -->
+    <color name="temperature_milk_checked_color">#b2ebf9</color>
+    <color name="temperature_milk_unchecked_color">#02b4ba</color>
+    <color name="temperature_milk_title_text_color">#ffffff</color>
+    <color name="temperature_milk_excle_background_color">#ffffff</color>
+    <color name="temperature_milk_excle_title_text_color">#000000</color>
+    <color name="temperature_milk_excle_grid_first_background_color">#edfaf9</color>
+    <color name="temperature_milk_excle_grid_second_background_color">#ffffff</color>
+    <color name="temperature_milk_excle_line_color">#0196a0</color>
+    <color name="milk_circle_double_line_color">#209297</color>
+    <color name="temperature_circle_line_background_color">#209297</color>
+    <color name="temperature_circle_left_line_color">#eef966</color>
+    <color name="temperature_circle_right_line_color">#00f5fe</color>
+
+    <!-- tempreture_amount details -->
+    <color name="details_content_header_background_color">#fff0eff5</color>
+    <color name="details_content_header_dividing_line_color">#c8c8c8</color>
+    <color name="details_content_header_text_color">#6d6c72</color>
+    <color name="details_content_amount_text_color">#000000</color>
+    <color name="details_content_time_text_color">#929294</color>
+    <color name="details_content_under_line_color">#c8c8c8</color>
+    <color name="details_content_background_color">#ffffff</color>
+    <color name="details_once_title_color">#c8c8c8</color>
+    <color name="details_once_item_background_color">#ffffff</color>
+    <color name="details_once_text_color">#000000</color>
+    <color name="details_once_title_background_color">#fff0eff5</color>
+
+    <!-- utils firet lanunch -->
+    <color name="small_dots_select_color">#ffffff</color>
+    <color name="small_dots_noselect_color">#c8c8c8</color>
+    <color name="ruler_color">#61e5b8</color>
+
+    <!-- first launch  -->
+    <color name="first_launch_title_color">#f1f16b</color>
+    <color name="first_launch_text_bakcground_color">#77ffff</color>
+    <color name="first_launch_text_color">#00ff00</color>
+
+    <!-- baby info activity -->
+    <color name="baby_info_activity_select_sex_color">#ff0000</color>
+    <color name="baby_info_activity_noselect_sex_color">#00ff00</color>
+    <color name="baby_info_activity_textview_background_color">#c8c8c8</color>
+
+    <!-- health prompt-->
+    <array name="health_prompt_listview_item_text_doc_colors">
+        <item>#ff0000</item>
+        <item>#00ff00</item>
+        <item>#c8c8c8</item>
+    </array>
+    <array name="health_prompt_listview_item_num_doc_colors">
+        <item>#ff00ff</item>
+        <item>#00ffff</item>
+        <item>#c8c8ff</item>
+    </array>
+    <array name="health_prompt_listview_item_num_long_doc_colors">
+        <item>#3300ff</item>
+        <item>#443322</item>
+        <item>#33c8ff</item>
+    </array>
+
+    <!--milk_amount -->
+    <color name="milk_amount_title_divider_color">#661ae86f</color>
+    <color name="milk_amount_advise_text_color">#ffffff</color>
+    <color name="milk_amount_line_color">#dddddd</color>
+    <color name="milk_amount_ring_bg_color">#24e1ba</color>
+    <color name="milk_amount_ring_color">#ffffff</color>
+    <color name="milk_amount_listview_item_title_bg_color">#f6f6f6</color>
+    <color name="milk_amount_ring_text_color">#ffffff</color>
+    <color name="milk_amount_time_text_color">#16cfa9</color>
+    <color name="milk_amount_total_num_text_color">#999999</color>
+    <color name="milk_amount_listview_item_time_text_color">#bbbbbb</color>
+    <color name="milk_amount_listview_item_progress_bar_background_color">#eeeeee</color>
+    <color name="milk_amount_listview_list_tempereture_amount_text_color">#777777</color>
+    <color name="milk_amount_listview_list_divider_color">#bbbbbb</color>
+    <color name="milk_amount_listview_list_warining_high_tempreature_color">#ff6600</color>
+    <color name="milk_amount_listview_list_warining_low_tempreature_color">#4dd3f5</color>
+    <color name="milk_amount_listview_list_normal_tempreature_color">#88cc44</color>
+    <array name="milk_amount_listview_list_item_circle_colors">
+        <item>#16cfa9</item>
+        <item>#f6f6f6</item>
+        <item>#16cfa9</item>
+    </array>
+
+    <!--health_drink_last -->
+    <color name="health_drink_last_warning_color">#fd7272</color>
+    <color name="health_drink_last_normal_color">#88cc44</color>
+    <color name="health_drink_last_down_text_color">#9e9e9e</color>
+
+    <!--weight_fragment -->
+    <color name="weight_fragment_ring_text_color">#88cc44</color>
+    <color name="weight_fragment_ring_bg_color">#00ee00</color>
+    <color name="weight_fragment_ring_inner_bg_color">#ffffff</color>
+    <color name="weight_fragment_left_text_color">#00ff00</color>
+    <color name="weight_fragment_right_text_color">#0000ff</color>
+
+    <color name="weight_fragment_bottom_text_color">#b3b3b3</color>
+    <color name="weight_fragment_adder_text_color">#ffffff</color>
+    <color name="weight_fragment_adder_title_text_color">#19d1a8</color>
+    <color name="weight_fragment_adder_title_line_color">#d0d0d0</color>
+    <color name="weight_fragment_adder_bg_color">#f0f0f0</color>
+    <color name="weight_fragment_adder_doc_text_color">#a6a6a6</color>
+    <color name="weight_fragment_adder_num_text_color">#19d1a8</color>
+
+</resources>

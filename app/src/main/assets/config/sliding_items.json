@@ -1,0 +1,22 @@
+[
+    {
+        "name":"sliding_list_device",
+        "icon":"sliding_list_icon_device",
+        "redirect":""
+    },
+    {
+        "name":"sliding_list_settings",
+        "icon":"sliding_list_icon_settings",
+        "redirect":""
+    },
+    {
+        "name":"sliding_list_family",
+        "icon":"sliding_list_icon_family",
+        "redirect":""
+    },
+    {
+        "name":"sliding_list_advice",
+        "icon":"sliding_list_icon_advice",
+        "redirect":""
+    },
+]

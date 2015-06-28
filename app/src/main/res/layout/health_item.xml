@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/health_item_height" >
+
+        <ImageView
+            android:id="@+id/health_item_icon_container"
+            android:layout_width="@dimen/health_item_icon_name_width"
+            android:layout_height="@dimen/health_item_icon_name_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/health_item_icon_name_margin_left"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_launcher" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/health_item_texts_container_height"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/health_item_texts_container_margin_icon_left"
+            android:layout_toRightOf="@id/health_item_icon_container"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/health_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:singleLine="true"
+                android:text="宝宝信息"
+                android:textColor="@color/health_item_name_text_color"
+                android:textSize="@dimen/health_item_text_name_size" />
+
+            <TextView
+                android:id="@+id/health_item_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:singleLine="true"
+                android:text="生日：2014-05-06/性别：女"
+                android:textColor="@color/health_item_details_text_color"
+                android:textSize="@dimen/health_item_text_details_size" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/health_item_arrow"
+            android:layout_width="@dimen/health_item_icon_arrow_width"
+            android:layout_height="@dimen/health_item_icon_arrow_height"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/health_item_icon_arrow_margin_right"
+            android:scaleType="centerInside"
+            android:src="@drawable/arrow_icon" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/health_item_dividing_line_height"
+            android:layout_alignParentBottom="true" >
+
+            <ImageView
+                android:layout_width="@dimen/health_item_dividing_line_margin_left"
+                android:layout_height="fill_parent"
+                android:src="@color/health_listview_color" />
+
+            <ImageView
+               	android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:src="@color/health_item_dividing_line_color" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

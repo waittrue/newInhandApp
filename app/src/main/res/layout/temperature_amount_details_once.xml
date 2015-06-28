@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/details_once_title_background_color"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+ 	<ScrollView
+ 	    android:scrollbars="none"
+ 	    android:layout_width="match_parent"
+ 	    android:layout_height="wrap_content" >
+
+ 	    <LinearLayout
+ 	        android:layout_width="match_parent"
+ 	        android:layout_height="match_parent"
+ 	        android:orientation="vertical" >
+
+ 	        <TableRow
+ 	            android:id="@+id/tableRow1"
+ 	            android:layout_width="match_parent"
+ 	            android:layout_height="wrap_content" >
+
+ 	            <RelativeLayout
+ 	                android:layout_width="fill_parent"
+ 	                android:layout_height="@dimen/details_content_height"
+ 	                android:background="@color/details_once_title_background_color" >
+
+ 	                <ImageView
+ 	                    android:id="@+id/details_once_amount_icon"
+ 	                    android:layout_width="@dimen/details_once_title_icon_width"
+ 	                    android:layout_height="@dimen/details_once_title_icon_height"
+ 	                    android:layout_alignParentBottom="true"
+ 	                    android:layout_centerHorizontal="false"
+ 	                    android:layout_centerVertical="false"
+ 	                    android:layout_marginBottom="@dimen/details_once_icon_margin_parent_bottom"
+ 	                    android:layout_marginLeft="@dimen/details_once_margin_parent_left"
+ 	                    android:src="@drawable/details_amount_normal" />
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_amount_title_text"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_alignParentBottom="true"
+ 	                    android:layout_centerVertical="false"
+ 	                    android:layout_marginBottom="@dimen/details_once_text_margin_parent_bottom"
+ 	                    android:layout_marginLeft="@dimen/details_once_title_margin_icon_left"
+ 	                    android:layout_toRightOf="@id/details_once_amount_icon"
+ 	                    android:text="饮奶量信息:"
+ 	                    android:textColor="@color/details_once_title_color"
+ 	                    android:textSize="@dimen/details_once_title_size" />
+ 	            </RelativeLayout>
+ 	        </TableRow>
+
+ 	        <TableRow
+ 	            android:id="@+id/tableRow2"
+ 	            android:layout_width="match_parent"
+ 	            android:layout_height="wrap_content" >
+
+ 	            <RelativeLayout
+ 	                android:layout_width="fill_parent"
+ 	                android:layout_height="@dimen/details_content_height"
+ 	                android:background="@color/details_once_item_background_color" >
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_real_amount"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginLeft="@dimen/details_once_margin_parent_left"
+ 	                    android:text="@string/details_once_real_amount_string"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_real_amount_num"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_alignParentRight="true"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginRight="@dimen/details_once_margin_parent_right"
+ 	                    android:text="TextView"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+ 	            </RelativeLayout>
+ 	        </TableRow>
+
+ 	        <ImageView
+ 	            android:layout_width="fill_parent"
+ 	            android:layout_height="@dimen/details_once_dividing_height"
+ 	            android:src="@color/details_once_title_background_color" />
+
+ 	        <TableRow
+ 	            android:id="@+id/tableRow3"
+ 	            android:layout_width="match_parent"
+ 	            android:layout_height="wrap_content" >
+
+ 	            <RelativeLayout
+ 	                android:layout_width="fill_parent"
+ 	                android:layout_height="@dimen/details_content_height"
+ 	                android:background="@color/details_once_item_background_color" >
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_advise_amount"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginLeft="@dimen/details_once_margin_parent_left"
+ 	                    android:text="@string/details_once_advise_amount_string"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_advise_amount_num"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_alignParentRight="true"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginRight="@dimen/details_once_margin_parent_right"
+ 	                    android:text="TextView"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+ 	            </RelativeLayout>
+ 	        </TableRow>
+
+ 	        <ImageView
+ 	            android:layout_width="fill_parent"
+ 	            android:layout_height="@dimen/details_once_dividing_height"
+ 	            android:src="@color/details_once_title_background_color" />
+
+ 	        <TableRow
+ 	            android:id="@+id/tableRow4"
+ 	            android:layout_width="match_parent"
+ 	            android:layout_height="wrap_content" >
+
+ 	            <RelativeLayout
+ 	                android:layout_width="fill_parent"
+ 	                android:layout_height="@dimen/details_content_height"
+ 	                android:background="@color/details_once_title_background_color" >
+
+ 	                <ImageView
+ 	                    android:id="@+id/details_once_temperature_icon"
+ 	                    android:layout_width="@dimen/details_once_title_icon_width"
+ 	                    android:layout_height="@dimen/details_once_title_icon_height"
+ 	                    android:layout_alignParentBottom="true"
+ 	                    android:layout_marginBottom="@dimen/details_once_icon_margin_parent_bottom"
+ 	                    android:layout_marginLeft="@dimen/details_once_margin_parent_left"
+ 	                    android:src="@drawable/details_temperature_normal" />
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_temperature_title_text"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_alignParentBottom="true"
+ 	                    android:layout_centerVertical="false"
+ 	                    android:layout_marginBottom="@dimen/details_once_text_margin_parent_bottom"
+ 	                    android:layout_marginLeft="@dimen/details_once_title_margin_icon_left"
+ 	                    android:layout_toRightOf="@id/details_once_temperature_icon"
+ 	                    android:text="饮奶温度信息:"
+ 	                    android:textColor="@color/details_once_title_color"
+ 	                    android:textSize="@dimen/details_once_title_size" />
+ 	            </RelativeLayout>
+ 	        </TableRow>
+
+ 	        <TableRow
+ 	            android:id="@+id/tableRow5"
+ 	            android:layout_width="match_parent"
+ 	            android:layout_height="wrap_content" >
+
+ 	            <RelativeLayout
+ 	                android:layout_width="fill_parent"
+ 	                android:layout_height="@dimen/details_content_height"
+ 	                android:background="@color/details_once_item_background_color" >
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_temperature_start"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginLeft="@dimen/details_once_margin_parent_left"
+ 	                    android:text="@string/details_once_temperature_start"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_temperature_start_num"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_alignParentRight="true"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginRight="@dimen/details_once_margin_parent_right"
+ 	                    android:text="TextView"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+ 	            </RelativeLayout>
+ 	        </TableRow>
+
+ 	        <ImageView
+ 	            android:layout_width="fill_parent"
+ 	            android:layout_height="@dimen/details_once_dividing_height"
+ 	            android:src="@color/details_once_title_background_color" />
+
+ 	        <TableRow
+ 	            android:id="@+id/tableRow6"
+ 	            android:layout_width="match_parent"
+ 	            android:layout_height="wrap_content" >
+
+ 	            <RelativeLayout
+ 	                android:layout_width="fill_parent"
+ 	                android:layout_height="@dimen/details_content_height"
+ 	                android:background="@color/details_once_item_background_color" >
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_temperature_end"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginLeft="@dimen/details_once_margin_parent_left"
+ 	                    android:text="@string/details_once_temperature_end"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_temperature_end_num"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_alignParentRight="true"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginRight="@dimen/details_once_margin_parent_right"
+ 	                    android:text="TextView"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+ 	            </RelativeLayout>
+ 	        </TableRow>
+
+ 	        <TableRow
+ 	            android:id="@+id/tableRow7"
+ 	            android:layout_width="match_parent"
+ 	            android:layout_height="wrap_content" >
+
+ 	            <RelativeLayout
+ 	                android:layout_width="fill_parent"
+ 	                android:layout_height="@dimen/details_content_height"
+ 	                android:background="@color/details_once_title_background_color" >
+
+ 	                <ImageView
+ 	                    android:id="@+id/details_once_others_icon"
+ 	                    android:layout_width="@dimen/details_once_title_icon_width"
+ 	                    android:layout_height="@dimen/details_once_title_icon_height"
+ 	                    android:layout_alignParentBottom="true"
+ 	                    android:layout_marginBottom="@dimen/details_once_icon_margin_parent_bottom"
+ 	                    android:layout_marginLeft="@dimen/details_once_margin_parent_left"
+ 	                    android:src="@drawable/details_others" />
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_others_text"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_alignParentBottom="true"
+ 	                    android:layout_centerVertical="false"
+ 	                    android:layout_marginBottom="@dimen/details_once_text_margin_parent_bottom"
+ 	                    android:layout_marginLeft="@dimen/details_once_title_margin_icon_left"
+ 	                    android:layout_toRightOf="@id/details_once_others_icon"
+ 	                    android:text="饮奶其他信息:"
+ 	                    android:textColor="@color/details_once_title_color"
+ 	                    android:textSize="@dimen/details_once_title_size" />
+ 	            </RelativeLayout>
+ 	        </TableRow>
+
+ 	        <TableRow
+ 	            android:id="@+id/tableRow8"
+ 	            android:layout_width="match_parent"
+ 	            android:layout_height="wrap_content" >
+
+ 	            <RelativeLayout
+ 	                android:layout_width="fill_parent"
+ 	                android:layout_height="@dimen/details_content_height"
+ 	                android:background="@color/details_once_item_background_color" >
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_health"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginLeft="@dimen/details_once_margin_parent_left"
+ 	                    android:text="@string/details_once_health"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_health_num"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_alignParentRight="true"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginRight="@dimen/details_once_margin_parent_right"
+ 	                    android:text="TextView"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+ 	            </RelativeLayout>
+ 	        </TableRow>
+
+ 	        <ImageView
+ 	            android:layout_width="fill_parent"
+ 	            android:layout_height="@dimen/details_once_dividing_height"
+ 	            android:src="@color/details_once_title_background_color" />
+
+ 	        <TableRow
+ 	            android:id="@+id/tableRow9"
+ 	            android:layout_width="match_parent"
+ 	            android:layout_height="wrap_content" >
+
+ 	            <RelativeLayout
+ 	                android:layout_width="fill_parent"
+ 	                android:layout_height="@dimen/details_content_height"
+ 	                android:background="@color/details_once_item_background_color" >
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_end_time"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginLeft="@dimen/details_once_margin_parent_left"
+ 	                    android:text="@string/details_once_end_time"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+
+ 	                <TextView
+ 	                    android:id="@+id/details_once_end_time_num"
+ 	                    android:layout_width="wrap_content"
+ 	                    android:layout_height="wrap_content"
+ 	                    android:layout_alignParentRight="true"
+ 	                    android:layout_centerVertical="true"
+ 	                    android:layout_marginRight="@dimen/details_once_margin_parent_right"
+ 	                    android:text="TextView"
+ 	                    android:textColor="@color/details_once_text_color"
+ 	                    android:textSize="@dimen/details_once_text_size" />
+ 	            </RelativeLayout>
+ 	        </TableRow>
+
+ 	        <ImageView
+ 	            android:layout_width="fill_parent"
+ 	            android:layout_height="@dimen/details_once_dividing_height"
+ 	            android:src="@color/details_once_title_background_color" />
+
+ 	        <TableLayout
+ 	            android:layout_width="match_parent"
+ 	            android:layout_height="wrap_content" >
+
+ 	            <TableRow
+ 	                android:id="@+id/tableRow12"
+ 	                android:layout_width="wrap_content"
+ 	                android:layout_height="wrap_content" >
+ 	            </TableRow>
+
+ 	            <TableRow
+ 	                android:id="@+id/tableRow13"
+ 	                android:layout_width="wrap_content"
+ 	                android:layout_height="wrap_content" >
+ 	            </TableRow>
+ 	        </TableLayout>
+ 	    </LinearLayout>
+
+ 	</ScrollView>
+ 	
+</LinearLayout>
+

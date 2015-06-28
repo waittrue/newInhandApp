@@ -1,0 +1,190 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!--默认样式-->
+    <style name="light_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">#ddffffff</item>
+    </style>
+
+    <style name="top">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/common_top_bkg</item>
+    </style>
+
+    <style name="top_title">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/default_font</item>
+    </style>
+
+    <style name="footer_button">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/default_font</item>
+    </style>
+
+    <style name="form_input">
+        <item name="android:background">@drawable/login_form_text_bkg</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="default_button">
+        <item name="android:background">@drawable/default_btn</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/default_ftg</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!--SlidingMenu-->
+    <style name="slidingmenu">
+        <item name="android:paddingStart">@dimen/sliding_padding</item>
+        <item name="android:paddingEnd">@dimen/sliding_padding</item>
+        <item name="android:paddingTop">@dimen/sliding_paddingTop</item>
+        <item name="android:paddingBottom">@dimen/sliding_paddingBottom</item>
+        <item name="android:background">@drawable/common_sliding_bkg</item>
+    </style>
+
+    <style name="sliding_avatar"></style>
+
+    <style name="sliding_username">
+        <item name="android:textColor">@color/default_ftg</item>
+        <item name="android:textSize">@dimen/sliding_username_fontSize</item>
+    </style>
+
+    <style name="sliding_otherinfo">
+        <item name="android:textColor">@color/default_ftg</item>
+        <item name="android:textSize">@dimen/sliding_otherinfo_fontSize</item>
+    </style>
+
+    <style name="sliding_list">
+
+    </style>
+    <!--  启动界面样式 -->
+    <style name="launch_logo">
+        <item name="android:layout_width">@dimen/launch_logo_size</item>
+        <item name="android:layout_height">@dimen/launch_logo_size</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:src">@drawable/logo_large</item>
+        <item name="android:layout_marginTop">@dimen/launch_logo_marginTop</item>
+    </style>
+
+
+    <!--登陆界面样式-->
+    <style name="login_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">@dimen/login_padding</item>
+        <item name="android:paddingRight">@dimen/login_padding</item>
+        <item name="android:paddingTop">@dimen/login_padding</item>
+        <item name="android:background">@drawable/launch_bkg</item>
+    </style>
+
+
+    <style name="login_logo">
+        <item name="android:layout_width">180dp</item>
+        <item name="android:layout_height">180dp</item>
+        <item name="android:layout_marginTop">50dp</item>
+        <item name="android:src">@drawable/logo_large</item>
+    </style>
+
+    <style name="login_options">
+        <item name="android:background">@drawable/common_bandage</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="login_options_icon">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_marginEnd" tools:ignore="NewApi">5dp</item>
+    </style>
+
+    <style name="login_options_font">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/common_bandage_font</item>
+    </style>
+
+    <!-- 登陆细节部分style-->
+    <style name="log_reg_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/login_padding</item>
+        <item name="android:paddingRight">@dimen/login_padding</item>
+        <item name="android:paddingBottom">@dimen/login_padding</item>
+        <item name="android:paddingTop">30dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="login_details_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+    </style>
+
+    <!-- 登陆注册表单-->
+    <style name="log_reg_form">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/login_details_form</item>
+        <item name="android:textColorHint">#73fcc2</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:ellipsize">start</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="log_reg_options_footer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_alignParentBottom">true</item>"
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/log_reg_footer_bkg</item>
+    </style>
+
+
+    <style name="app_list">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_weight">5</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="app_icon">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <!-- ************************分工部分********************************* -->
+
+    <color name="color_white">#ffffff</color>
+
+    <style name="AnimationPopupwindow">
+        <item name="android:windowEnterAnimation">@anim/popupwindow_in</item>
+        <item name="android:windowExitAnimation">@anim/popupwindow_out</item>
+    </style>
+</resources>
