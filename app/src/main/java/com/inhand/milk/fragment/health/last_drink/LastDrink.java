@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,7 +22,6 @@ import com.inhand.milk.utils.Circle;
 import com.inhand.milk.utils.RingWithText;
 import com.inhand.milk.utils.ViewHolder;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +40,9 @@ public class LastDrink extends TitleFragment {
     private SimpleDateFormat simpleDateFormat;
     private int warningColor,normalColor;
     private static final String TAG ="LAST DRINK";
-    private static final int DrinkDuration = 0,DrinkBeginTp=1,DrinkEndTp=2,DrinkAmount=3,ItemUpColor =5,ItemDownColor=6,
+    private static final int AnimationDuration = 500,AnimationSpace = 50;
+    private List<RingWithText> ringWithTexts = new ArrayList<>();
+    private static final int DrinkScore = 0, DrinkDuration = 1,DrinkBeginTp=2,DrinkEndTp=3,DrinkAmount=4,ItemUpColor =5,ItemDownColor=6,
                 ItemLeftColor =7,ItemRightColor=8,ItemNum=9,ItemUnit=10,ItemUpText=11,ItempDownText=12;
     @Nullable
     @Override
@@ -51,6 +54,15 @@ public class LastDrink extends TitleFragment {
        normalColor = getResources().getColor(R.color.health_drink_last_normal_color);
        initViews(mView);
        return mView;
+    }
+    public void start(){
+        int len = ringWithTexts.size();
+        for(int i=0;i<len;i++){
+            RingWithText ringWithText = ringWithTexts.get(i);
+            Animation animation = AnimationUtils.loadAnimation(getActivity(),R.anim.right_in);
+            animation.setDuration(AnimationDuration+i*AnimationSpace);
+            ringWithText.startAnimation(animation);
+        }
     }
     private void initViews(View v){
         listView = (ListView)v.findViewById(R.id.health_last_drink_listview);
@@ -76,7 +88,11 @@ public class LastDrink extends TitleFragment {
             public View getView(int position, View convertView, ViewGroup parent) {
                 if (convertView == null){
                     convertView = mInflater.inflate(R.layout.health_last_drink_listview_item,null);
+                    RingWithText ringWithText = (RingWithText)convertView.findViewById(R.id.health_drink_last_item_ringWithText);
+                    ringWithTexts.add(ringWithText);
                 }
+                if(position<0 || position> mData.size()-1)
+                    return null;
                 Map<Integer,Object> data  = mData.get(position);
                 Circle circle = ViewHolder.get(convertView, R.id.health_drink_last_circle);
                 circle.setColor((int)data.get(ItemLeftColor));
@@ -89,12 +105,14 @@ public class LastDrink extends TitleFragment {
                 textView.setText((String)data.get(ItempDownText));
 
                 RingWithText ringWithText = ViewHolder.get(convertView,R.id.health_drink_last_item_ringWithText);
-                ringWithText.setRingColor((int)data.get(ItemRightColor));
+                ringWithText.setRingBgColor((int)data.get(ItemRightColor));
+               // ringWithText.setRingWidth(ringWithText.getR());
+
                 String[] strs = new String[2];
                 strs[0] = (String) data.get(ItemNum);
                 strs[1] = (String) data.get(ItemUnit);
                 ringWithText.setTexts(strs);
-                return null;
+                return convertView;
             }
         };
         listView.setAdapter(baseAdapter);
@@ -104,124 +122,194 @@ public class LastDrink extends TitleFragment {
     private void initData(){
         mData = new ArrayList<>();
         OneDayDao oneDayDao = new OneDayDao(this.getActivity().getApplication());
-        OneDay oneDay= oneDayDao.findAllFromDB(1).get(0);
-        Record record = oneDay.getRecords().get(0);
+        List<OneDay> list  = oneDayDao.findAllFromDB(1);
+        if(list == null || list.size() == 0) {
+            Record record = new Record();
+            mData.add(DrinkScore,getScore(record));
+            mData.add(DrinkDuration,getDurationFromRecord(record));
+            mData.add(DrinkBeginTp,getBeginTp(record));
+            mData.add(DrinkEndTp,getEndTp(record));
+            mData.add(DrinkAmount,getAmount(record));
+            return;
+        }
+        OneDay oneDay= list.get(0);
+        List<Record> records = oneDay.getRecords();
+        if(records == null || records.size() == 0)
+            return;
+        Record record = records.get(0);
         if (record == null){
             Log.i(TAG,"record null");
             return ;
         }
-        mData.add(DrinkDuration,getDurationFromRecord(record));
-        mData.add(DrinkAmount,getAmount(record));
-        mData.add(DrinkBeginTp,getBeginTp(record));
-        mData.add(DrinkEndTp,getBeginTp(record));
+        mData.add(DrinkScore,getScore(record));
+        mData.add(DrinkDuration, getDurationFromRecord(record));
+        mData.add(DrinkBeginTp, getBeginTp(record));
+        mData.add(DrinkEndTp, getEndTp(record));
+        mData.add(DrinkAmount, getAmount(record));
+
+    }
+    private Map<Integer,Object> getScore(Record record){
+        Map<Integer,Object> data  = new HashMap<>();
+        long diff;
+        int score;
+        Date endtime,startTime;
+        /*
+        try{
+            endtime = simpleDateFormat.parse(record.getBeginTime());
+            startTime = simpleDateFormat.parse(record.getBeginTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+        diff = endtime.getTime() - startTime.getTime();
+        */
+        //duration = (int)diff/(1000*60);
+        score = 100;
+        data.put(ItemNum,String.valueOf( score));
+        data.put(ItemUnit, "分");
+        data.put(ItemUpText,getResources().getString(R.string.health_last_drink_score));
+
+        if (score < Standar.drinkMinScore) {
+            data.put(ItempDownText,getResources().getString(R.string.health_last_drink_score_less_doc) );
+            data.put(ItemRightColor,warningColor);
+            data.put(ItemLeftColor,warningColor);
+            data.put(ItemUpColor,warningColor);
+        }
+
+        else {
+            data.put(ItempDownText,getResources().getString(R.string.health_last_drink_score_suit_doc) );
+            data.put(ItemRightColor,normalColor);
+            data.put(ItemLeftColor,normalColor);
+            data.put(ItemUpColor,normalColor);
+        }
+        return data;
     }
     private Map<Integer,Object> getDurationFromRecord(Record record)  {
         Map<Integer,Object> data  = new HashMap<>();
         long diff;
         int duration;
         Date endtime,startTime;
-        try{ endtime = simpleDateFormat.parse(record.getBeginTime());
-             startTime = simpleDateFormat.parse(record.getBeginTime());
+        /*
+        try{
+            endtime = simpleDateFormat.parse(record.getBeginTime());
+            startTime = simpleDateFormat.parse(record.getBeginTime());
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
         diff = endtime.getTime() - startTime.getTime();
-        duration = (int)diff/(1000*60);
-        data.put(ItemNum,duration);
+        */
+        //duration = (int)diff/(1000*60);
+        duration = 100;
+        data.put(ItemNum,String.valueOf( duration));
         data.put(ItemUnit, "分钟");
 
-        data.put(ItemLeftColor,0x213244);
+
         data.put(ItemUpText,getResources().getString(R.string.health_last_drink_duration));
 
         if (duration > Standar.drinkMaxDuration) {
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_duration_more_doc) );
             data.put(ItemRightColor,warningColor);
+            data.put(ItemLeftColor,warningColor);
             data.put(ItemUpColor,warningColor);
         }
         else if (duration < Standar.drinkMinDuration){
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_duration_less_doc) );
             data.put(ItemRightColor,warningColor);
+            data.put(ItemLeftColor,warningColor);
             data.put(ItemUpColor,warningColor);
         }
         else {
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_duration_suit_doc) );
             data.put(ItemRightColor,normalColor);
+            data.put(ItemLeftColor,normalColor);
             data.put(ItemUpColor,normalColor);
         }
         return data;
     }
     private Map<Integer,Object> getAmount(Record record){
         Map<Integer,Object> data = new HashMap<>();
-        int volume = record.getVolume();
-        data.put(ItemNum,volume);
+       // int volume = record.getVolume();
+        int volume = 100;
+        data.put(ItemNum, String.valueOf( volume));
         data.put(ItemUnit,"毫升");
-        data.put(ItemLeftColor,0xee3424);
+
         data.put(ItemUpText,getResources().getString(R.string.health_last_drink_amount));
         if ( volume> Standar.drinkMaxAmount) {
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_amount_more_doc) );
             data.put(ItemRightColor,warningColor);
+            data.put(ItemLeftColor,warningColor);
             data.put(ItemUpColor,warningColor);
         }
         else if (volume < Standar.drinkMinAmount){
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_amount_less_doc) );
             data.put(ItemRightColor,warningColor);
+            data.put(ItemLeftColor,warningColor);
             data.put(ItemUpColor,warningColor);
         }
         else {
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_amount_suit_doc) );
             data.put(ItemRightColor,normalColor);
+            data.put(ItemLeftColor,normalColor);
             data.put(ItemUpColor,normalColor);
         }
         return data;
     }
     private Map<Integer,Object> getBeginTp(Record record){
         Map<Integer,Object> data = new HashMap<>();
-        float beginTp = (float)record.getBeginTemperature();
-        data.put(ItemNum,beginTp);
+       // float beginTp = record.getBeginTemperature();
+        float beginTp = 20;
+        data.put(ItemNum,String.valueOf( beginTp));
         data.put(ItemUnit,"°C");
-        data.put(ItemLeftColor,0xee3424);
         data.put(ItemUpText,getResources().getString(R.string.health_last_drink_begin_temperature));
         if ( beginTp> Standar.drinkBeginMaxTp) {
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_begin_temperature_more_doc) );
             data.put(ItemRightColor,warningColor);
+            data.put(ItemLeftColor,warningColor);
             data.put(ItemUpColor,warningColor);
         }
         else if (beginTp < Standar.drinkBeginMinTp){
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_begin_temperature_less_doc) );
             data.put(ItemRightColor,warningColor);
+            data.put(ItemLeftColor,warningColor);
             data.put(ItemUpColor,warningColor);
         }
         else {
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_begin_temperature_suit_doc) );
             data.put(ItemRightColor,normalColor);
+            data.put(ItemLeftColor,normalColor);
             data.put(ItemUpColor,normalColor);
         }
         return data;
     }
     private Map<Integer,Object> getEndTp(Record record){
         Map<Integer,Object> data = new HashMap<>();
-        float endTp = (float)record.getEndTemperature();
-        data.put(ItemNum, endTp);
+        //float endTp = record.getEndTemperature();
+        float endTp = 40;
+        data.put(ItemNum, String.valueOf( endTp));
         data.put(ItemUnit,"°C");
-        data.put(ItemLeftColor,0xee3424);
         data.put(ItemUpText,getResources().getString(R.string.health_last_drink_end_temperature));
         if ( endTp> Standar.drinkEndMaxTp) {
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_end_temperature_more_doc) );
             data.put(ItemRightColor,warningColor);
+            data.put(ItemLeftColor,warningColor);
             data.put(ItemUpColor,warningColor);
         }
         else if (endTp < Standar.drinkEndMinTp){
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_end_temperature_less_doc) );
             data.put(ItemRightColor,warningColor);
+            data.put(ItemLeftColor,warningColor);
             data.put(ItemUpColor,warningColor);
         }
         else {
             data.put(ItempDownText,getResources().getString(R.string.health_last_drink_end_temperature_suit_doc) );
             data.put(ItemRightColor,normalColor);
+            data.put(ItemLeftColor,normalColor);
             data.put(ItemUpColor,normalColor);
         }
         return data;
     }
+
+
 
 }
