@@ -1,2 +1,2 @@
-include ':app'
-include ':App'
+include ':app', ':virtuilmilk'
+include ":ThirdParty:SlidingMenu", ':App'
