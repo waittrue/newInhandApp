@@ -31,7 +31,11 @@ public class Ring extends View{
 	private int[]   color;
 	private float[] fixedColorWeight ;
 	private int[]   fixedRGB;
-	
+	public Ring(Context context){
+        super(context);
+        fixColor();
+        sortWeight();
+    }
 	public Ring(Context context,float rr,int color) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -50,14 +54,14 @@ public class Ring extends View{
 		fixColor();
 		sortWeight();
 	}
-	
+
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		// TODO Auto-generated method stub
 		setMeasuredDimension( (int) (wr+wr+paintWidth*2 + 0.5f), (int)(wr+wr+paintWidth*2 + 0.5f));
 	}
 	
-	
+
 	public void setColors(int[] colors , float[] colorsWeight){
 		if (colors.length/3 != colorsWeight.length)
 			return;

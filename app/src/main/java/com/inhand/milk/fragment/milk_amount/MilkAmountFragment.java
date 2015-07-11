@@ -1,16 +1,23 @@
 package com.inhand.milk.fragment.milk_amount;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.inhand.milk.R;
+import com.inhand.milk.STANDAR.Standar;
+import com.inhand.milk.activity.HealthDrinkLastActivity;
+import com.inhand.milk.activity.MilkAmountCurveActivity;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.utils.MultiLayerCircle;
 import com.inhand.milk.utils.PinnerListView;
@@ -37,6 +44,7 @@ public class MilkAmountFragment extends TitleFragment {
     private int[] multiLayerCircleColors, multiLayerCircleWeights;
     private List<ProgressBar> progressBarList;
     private PinnerListView headlistView;
+    private  PinnerListViewAdapter adpter;
     private int warningHighColor, warningLowColor, normalColor, progressBgColor;
     private DecimalFormat decimalFormat;
 
@@ -45,17 +53,28 @@ public class MilkAmountFragment extends TitleFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_milk_amount, container, false);
-        setTitleview(getResources().getString(R.string.milk_amount_title), 1, null, null);
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(getActivity(), MilkAmountCurveActivity.class);
+               getActivity().startActivity(intent);
+            }
+        };
+        setTitleView( getResources().getDrawable(R.drawable.header_curve_ico),listener);
         initVarables();
         initViews();
         return mView;
     }
-
+    private void setTitleView(Drawable drawable,View.OnClickListener listener){
+        ImageView imageView = (ImageView)mView.findViewById(R.id.title_right_icon);
+        imageView.setImageDrawable(drawable);
+        imageView.setOnClickListener(listener);
+    }
     private void initVarables() {
         decimalFormat = new DecimalFormat("###.#");
-        warningHighColor = getResources().getColor(R.color.milk_amount_listview_list_warining_high_tempreature_color);
-        warningLowColor = getResources().getColor(R.color.milk_amount_listview_list_warining_low_tempreature_color);
-        normalColor = getResources().getColor(R.color.milk_amount_listview_list_normal_tempreature_color);
+        warningHighColor = getResources().getColor(R.color.public_high_color);
+        warningLowColor = getResources().getColor(R.color.public_low_color);
+        normalColor = getResources().getColor(R.color.public_nor_color);
         progressBgColor = getResources().getColor(R.color.milk_amount_listview_item_progress_bar_background_color);
         multiLayerCircleColors = getResources().getIntArray(R.array.milk_amount_listview_list_item_circle_colors);
         multiLayerCircleWeights = getResources().getIntArray(R.array.milk_amount_listview_item_title_circle_weights);
@@ -77,10 +96,11 @@ public class MilkAmountFragment extends TitleFragment {
         LinearLayout linearLayout = (LinearLayout) mView.findViewById(R.id.milk_amount_advise_ring_container);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(getResources().getDimensionPixelOffset(R.dimen.milk_amount_advise_ring_size_D),
                 getResources().getDimensionPixelOffset(R.dimen.milk_amount_advise_ring_size_D));
-        ringWithText = new RingWithText(getActivity().getApplicationContext(),
-                getResources().getDimension(R.dimen.milk_amount_advise_ring_size_D) / 2);
+        float r =  getResources().getDimension(R.dimen.milk_amount_advise_ring_size_D) / 2;
+        ringWithText = new RingWithText(getActivity().getApplicationContext(),r);
+        ringWithText.setRingWidth(r/30);
         linearLayout.addView(ringWithText, lp);
-        ringWithText.setRingBgColor(getResources().getColor(R.color.milk_amount_ring_bg_color));
+        ringWithText.setRingBgColor(getResources().getColor(R.color.public_darkin_littlelight_color));
         ringWithText.setRingColor(getResources().getColor(R.color.milk_amount_ring_color));
         ringWithText.setTextColor(getResources().getColor(R.color.milk_amount_ring_text_color));
         ringWithText.setMaxSweepAngle(drinkAmount / adviseAmount * 360);
@@ -107,8 +127,17 @@ public class MilkAmountFragment extends TitleFragment {
         headlistView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         headlistView.setDividerHeight(0);
         headlistView.setHead(R.layout.fragment_milk_amount_listview_head);
+        headlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map<String,Object> map = adpter.getHead(position);
+                String str = ((String) map.get(HEAD_DATA));
+                Intent intent = new Intent(getActivity(), HealthDrinkLastActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
-        final PinnerListViewAdapter adpter = new PinnerListViewAdapter(this.getActivity());
+        adpter = new PinnerListViewAdapter(this.getActivity());
         adpter.setConfigureView(new PinnerListViewAdapter.ConfigureView() {
             @Override
             public View configureHead(Map<String, Object> map, View convertView, int position) {
@@ -168,8 +197,8 @@ public class MilkAmountFragment extends TitleFragment {
                 progressBar.setMaxNum((float) map.get(CONTENT_SCORE));
 
 
-                linearLayout = ViewHolder.get(convertView, R.id.milk_amount_listview_item_divide_temperature_amount);
-                linearLayout.setBackgroundColor((int) map.get(CONTENT_COLOR));
+                //linearLayout = ViewHolder.get(convertView, R.id.milk_amount_listview_item_divide_temperature_amount);
+                //linearLayout.setBackgroundColor((int) map.get(CONTENT_COLOR));
 
                 linearLayout = ViewHolder.get(convertView, R.id.milk_amount_listview_item_divider);
                 if (adpter.hasHead(position + 1)) {
@@ -216,7 +245,7 @@ public class MilkAmountFragment extends TitleFragment {
         map.put(CONTENT_TP, format.format(mTemperature[1]) + "°C");
         map.put(CONTENT_AMOUNT, format.format(amount) + "ml");
 
-        score = getRecord(getAdviseAmount(), amount, mTemperature[0], mTemperature[1], getDrinkTime());
+        score = Standar.getRecord(getAdviseAmount(), amount, mTemperature[0], mTemperature[1], getDrinkTime());
         color = selectColor(mTemperature[0], mTemperature[1]);
         map.put(CONTENT_COLOR, color);
         map.put(CONTENT_SCORE, score);
@@ -332,33 +361,9 @@ public class MilkAmountFragment extends TitleFragment {
         return 300;
     }
 
-    final static float AMOUNTSCORE = 55;
-    final static float TEMPERATURESCORE = 35;
-    final static float TIMESCORE = 10, TEMPREATUREHIGH = 40, TEMPREATURELOW = 37, STANDARTIME = 30;
 
-    private float getRecord(float advise, float amount, float temperatureHigh, float temperatureLow, float time) {
-        float ratio, sum = 0;
-        if (advise > amount)
-            ratio = amount / advise;
-        else
-            ratio = advise / amount;
-        sum += AMOUNTSCORE * ratio;
-        //Log.i("amount " ,String.valueOf(sum));
-        ratio = 0;
-        if (temperatureHigh > TEMPREATUREHIGH)
-            ratio += (temperatureHigh - TEMPREATUREHIGH) / TEMPREATUREHIGH;
-        if (temperatureLow < TEMPREATURELOW)
-            ratio += (TEMPREATURELOW - temperatureLow) / TEMPREATURELOW;
-        ratio = ratio > 1 ? 1 : ratio;
-        sum += TEMPERATURESCORE * (1 - ratio);
-        //Log.i("amount tempreature " ,String.valueOf(sum));
-        if (STANDARTIME > time)
-            ratio = time / STANDARTIME;
-        else
-            ratio = STANDARTIME / time;
-        sum += TIMESCORE * ratio;
-        //Log.i("amount tempreature time" ,String.valueOf(sum));
-        return sum;
-    }
+    final static float TEMPREATUREHIGH = 40, TEMPREATURELOW = 37;
+
+
 
 }

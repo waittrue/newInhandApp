@@ -3,13 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/App.iml" filepath="$PROJECT_DIR$/app/App.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/App.iml" filepath="$PROJECT_DIR$/app/App.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/App.iml" filepath="$PROJECT_DIR$/app/App.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/App.iml" filepath="$PROJECT_DIR$/app/App.iml" />
       <module fileurl="file://$PROJECT_DIR$/InhandMilk.iml" filepath="$PROJECT_DIR$/InhandMilk.iml" />
       <module fileurl="file://$PROJECT_DIR$/ThirdParty/SlidingMenu/SlidingMenu.iml" filepath="$PROJECT_DIR$/ThirdParty/SlidingMenu/SlidingMenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/inhandAPP-master.iml" filepath="$PROJECT_DIR$/inhandAPP-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/inhandApp.iml" filepath="$PROJECT_DIR$/inhandApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/virtuilmilk/virtuilmilk.iml" filepath="$PROJECT_DIR$/virtuilmilk/virtuilmilk.iml" />
     </modules>
   </component>
 </project>

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/home_fen_color"
+    android:background="@drawable/launch_bg"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -113,7 +113,7 @@
                 android:layout_below="@+id/bloothPairedViewGroup"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/bluetooth_paired_text_margin_top"
-                android:textColor="@color/home_fen_color"
+                android:textColor="#ffffff"
                 android:gravity="center_vertical" />
 
         </RelativeLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">嘟嘟喝奶</string>
+    <string name="app_name">嘟嘟</string>
     <string name="action_settings">Settings</string>
     <!--默认-->
     <string name="login">登录</string>
@@ -58,13 +58,13 @@
     <!-- ************************分工部分********************************* -->
 
     <!-- health nutrition -->
-    <string name="health_nutrition_title">饮奶营养成分</string>
+    <string name="health_nutrition_title">非健康汇总</string>
 
     <!-- health  -->
     <string name="health_title_text">健康信息</string>
 
     <!-- home fragment -->
-    <string name="home_circle_doc">查看更多历史分数</string>
+    <string name="home_circle_doc">查看饮奶详情</string>
     <string name="home_title_text">饮奶综合评分</string>
     <string name="home_advise_left_title">上次用量： </string>
     <string name="home_advise_right_title">建议用量： </string>
@@ -144,17 +144,20 @@
         <item>宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶宝宝高奶宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶宝宝高温饮奶</item>
         <item>宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶宝宝低温饮奶</item>
     </string-array>
-    <string name="health_prompt_listview_item_total">你共有</string>
+    <string name="health_prompt_listview_item_total">共有</string>
 
     <!--milk amount -->
     <string name="milk_amount_title">饮奶统计</string>
     <string name="milk_amount_drink_num_doc">宝宝今天喝奶：</string>
     <string name="milk_amount_advise_num_doc">小兜建议喝奶：</string>
-    <string name="milk_amount_advise_ring_up_doc">今天已经完成</string>
+    <string name="milk_amount_advise_ring_up_doc">今天已完成</string>
     <string name="milk_amount_drink_total_num_doc">饮奶次数:</string>
 
     <!--health last drink -->
     <string name="health_last_drink_title">上次饮奶</string>
+    <string name="health_last_drink_score">饮奶综合得分</string>
+    <string name="health_last_drink_score_less_doc">偏低：请注意饮奶过程</string>
+    <string name="health_last_drink_score_suit_doc">合适：请继续加油</string>
     <string name="health_last_drink_duration">持续饮奶时间</string>
     <string name="health_last_drink_duration_more_doc">偏长：单次饮奶20分钟最合适</string>
     <string name="health_last_drink_duration_less_doc">太快：单次饮奶20分钟最合适</string>
@@ -192,7 +195,45 @@
         <item>过高</item>
     </string-array>
     <string name="weight_left_down_text">当前体重/kg</string>
+    <string name="weight_right_down_text">标准体重/kg</string>
     <string name="weight_fragment_bottome_text">你最后一次输入的时间为</string>
     <string name="weight_fragment_adder_text">添加宝宝体重</string>
     <string name="weight_fragment_adder_doc_text">宝宝体重(kg):</string>
+    <!--user_info-->
+    <string name="user_info_title">用户信息</string>
+    <string name="user_info_head_doc">头像</string>
+    <string name="user_info_name">昵称</string>
+    <string name="user_info_sex">性别</string>
+    <string name="user_info_city">城市</string>
+    <string name="user_info_telephone">电话</string>
+    <string name="user_info_email">邮箱</string>
+    <string name="user_info_log_out">退出登录</string>
+    <string name="user_info_popupwindow_choose_photo">相册选择</string>
+    <string name="user_info_popupwindow_create_photo">重新拍照</string>
+    <string name="user_info_popupwindow_sex_man">男性</string>
+    <string name="user_info_popupwindow_sex_woman">女性</string>
+    <string name="user_info_fix_right_text">完成</string>
+    <string name="user_info_fix_no_data">尚未设置</string>
+    <string name="user_info_fix_name_left_text">昵称</string>
+    <string name="user_info_fix_name_hint_text">请输入您的昵称</string>
+    <string name="user_info_fix_name_title_text">修改昵称</string>
+    <string name="user_info_fix_Email_left_text">邮箱</string>
+    <string name="user_info_fix_Email_hint_text">请输入您的邮箱</string>
+    <string name="user_info_fix_Email_title_text">邮箱修改</string>
+    <string name="user_info_settings_telephone_left_textview">电话号码</string>
+    <string name="user_info_settings_telephone_hint">请输入你的电话号码</string>
+    <string name="user_info_settings_telephone_seconde_left_textview">验证码</string>
+    <string name="user_info_settings_telephone_seconde_hint">请输入你的验证码</string>
+    <string name="user_info_settings_telephone_right_text">获取验证码</string>
+    <string name="user_info_settings_telephone_title">手机号码修改</string>
+
+    <!--person center-->
+    <string name="person_center_fragment_title">个人中心</string>
+    <string name="person_center_fragment_title_right_text">设置</string>
+    <string name="person_center_baby_info">宝宝信息</string>
+    <string name="person_center_baby_record">宝宝档案</string>
+    <string name="person_center_baby_milk">宝宝奶粉</string>
+    <string name="person_center_baby_device">我的奶瓶</string>
+    <string name="person_center_baby_syn">云端同步</string>
+    <string name="person_center_baby_info_birth">宝宝生日</string>
 </resources>

@@ -32,7 +32,7 @@ public class AdderPupupWindow {
 
     private static final String TAG = "FloatADDERwindow";
     private WindowManager windowManager;
-    private View view;
+    private View mView;
     private Activity activity;
     private LinearLayout outerLayer, rulerContainer;
     private TextView numTextView;
@@ -47,10 +47,10 @@ public class AdderPupupWindow {
         windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
 
 
-        view = LayoutInflater.from(activity).inflate(R.layout.fragment_weight_ruler, null);
-        initPopupWindow(view);
+        mView = LayoutInflater.from(activity).inflate(R.layout.fragment_weight_ruler, null);
+        initPopupWindow(mView);
         this.activity = activity;
-        initOuter(view);
+        initOuter(mView);
     }
 
     private void initPopupWindow(View view) {
@@ -76,7 +76,8 @@ public class AdderPupupWindow {
 
         // windowManager.addView(view, mParams);
         Log.i(TAG, "show");
-        popupWindow.showAsDropDown(view);
+        popupWindow.showAsDropDown(mView
+        );
         int height = App.getWindowHeight(activity);
         Animation animation = new TranslateAnimation(0, 0, height / 2, 0);
         animation.setDuration(AnimationDuration);
@@ -142,6 +143,8 @@ public class AdderPupupWindow {
                 xx = xx / space * spacenum / 10f;
                 String str = decimalFormat.format(xx);
                 numTextView.setText(str);
+                popupWindow.showAsDropDown(mView);
+                Log.i(TAG,String.valueOf(popupWindow.isShowing()));
             }
         });
     }

@@ -37,9 +37,9 @@ public class DetailsFragment  extends TitleFragment{
 		// TODO Auto-generated method stub
 		mView  = inflater.inflate(R.layout.temperature_amount_details,container, false);
 		if (!isTemperature)
-			setTitleview(getString(R.string.details_milk_title_string), 2,null,null);
+			setTitleview(getString(R.string.details_milk_title_string), 2);
 		else 
-			setTitleview(getString(R.string.details_temperature_title_string), 2,null,null);
+			setTitleview(getString(R.string.details_temperature_title_string), 2);
 		listView = (PinnedHeaderListView)mView.findViewById(R.id.detals_listView);
 		listView.setHeadView(getHeadView());
 		getData();

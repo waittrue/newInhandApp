@@ -21,7 +21,7 @@ public class HomeFragment extends TitleFragment{
             Bundle savedInstanceState) {  
         // ---Inflate the layout for this fragment---  
         mView = inflater.inflate(R.layout.home, container, false);
-        setTitleview(getString(R.string.home_title_text), 0,null,null);
+        setTitleview(getString(R.string.home_title_text), 0);
         setHome(mView);
         return mView;
     }  
@@ -32,7 +32,7 @@ public class HomeFragment extends TitleFragment{
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         width= dm.widthPixels;
      
-	    float r =width/4;
+	    float r =width/4.15f;
 		circle= new Circle(this.getActivity().getApplicationContext(),r);
 		LinearLayout linearCircle = (LinearLayout)view.findViewById(R.id.temperature_milk_circle_container);
 		linearCircle.addView(circle);
@@ -52,7 +52,4 @@ public class HomeFragment extends TitleFragment{
 	public void refresh(){
 		circle.start();
 	}
-	
-	
-	
 }

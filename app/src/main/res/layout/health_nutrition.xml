@@ -10,9 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/health_nutrition_time_navigation_height" >
@@ -45,5 +49,30 @@
         </LinearLayout>
 
     </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_height="fill_parent"
+           android:layout_weight="0.15"></LinearLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/health_nutrition_total_num_text"
+            android:layout_weight="0.7"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="非健康总次数：168次"
+            android:id="@+id/health_nutrition_total_num_text"
+            android:textColor="#00ff00"
+            android:background="@drawable/health_nutrition_corner_bg"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.15"></LinearLayout>
+        </LinearLayout>
 
 </LinearLayout>

@@ -23,7 +23,7 @@ public class DetailsOnceFragment extends TitleFragment{
 		mView =  inflater.inflate(R.layout.temperature_amount_details_once, null);
         record=(Record)getArguments().getSerializable("record");
 		//setBack();
-		setTitleview(getString(R.string.details_once_title_string), 2,null,null);
+		setTitleview(getString(R.string.details_once_title_string), 2);
 		setInfo();
 		return mView;
 	}

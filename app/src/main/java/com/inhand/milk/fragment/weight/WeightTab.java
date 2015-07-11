@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.inhand.milk.R;
 import com.inhand.milk.utils.ObservableHorizonScrollView;
 
 /**
@@ -22,7 +23,7 @@ import com.inhand.milk.utils.ObservableHorizonScrollView;
 public class WeightTab extends ObservableHorizonScrollView {
     private int num = 0;
     private int textViewWidth;
-    private int textColor = Color.WHITE;
+    private int textColor = Color.WHITE,unUsedTextColor = getResources().getColor(R.color.public_darkin_littlelight_color);
     private int lastX;
     private float textSize;
     private ViewGroup.LayoutParams lp;
@@ -150,18 +151,23 @@ public class WeightTab extends ObservableHorizonScrollView {
         position = position+2;
         child  = linearLayout.getChildAt(position);
         child.setAlpha(Alpha_Center);
+        ((TextView)child).setTextColor(textColor);
 
         child  = linearLayout.getChildAt(position-1);
         child.setAlpha(Alpha_Minor);
+        ((TextView)child).setTextColor(unUsedTextColor);
 
         child = linearLayout.getChildAt(position + 1);
         child.setAlpha(Alpha_Minor);
+        ((TextView)child).setTextColor(unUsedTextColor);
 
         child = linearLayout.getChildAt(position - 2);
         child.setAlpha(Alpha_Most);
+        ((TextView)child).setTextColor(unUsedTextColor);
 
         child = linearLayout.getChildAt(position + 2);
         child.setAlpha(Alpha_Most);
+        ((TextView)child).setTextColor(unUsedTextColor);
 
     }
 

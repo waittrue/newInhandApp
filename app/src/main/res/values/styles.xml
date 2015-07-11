@@ -187,4 +187,39 @@
         <item name="android:windowEnterAnimation">@anim/popupwindow_in</item>
         <item name="android:windowExitAnimation">@anim/popupwindow_out</item>
     </style>
+
+
+
+    <style name="AdderWindowStyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="common_settings_item_left_text">
+        <item name="android:textSize">@dimen/common_settings_item_text_size</item>
+        <item name="android:textColor">@color/common_settings_item_left_text_color</item>
+        <item name="android:layout_marginLeft">@dimen/common_settings_item_margin_left</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">left|center_vertical</item>
+    </style>
+    <style name="common_settings_item_right_arrow">
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:src">@drawable/arrow_icon</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">@dimen/common_settings_item_margin_right</item>
+    </style>
+    <style name="person_center_icon">
+        <item name="android:layout_width">@dimen/person_center_icon_width_height</item>
+        <item name="android:layout_height">@dimen/person_center_icon_width_height</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_marginLeft">@dimen/common_settings_item_margin_left</item>
+    </style>
 </resources>

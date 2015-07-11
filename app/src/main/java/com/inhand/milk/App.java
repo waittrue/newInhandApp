@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 
 import com.alibaba.fastjson.JSON;
@@ -25,7 +26,7 @@ public class App extends Application {
     public static final String BABY_CACHE_KEY = "current_baby";
     public static Baby currentBaby = null;
     private static Context context = null;
-
+    public static Typeface Typeface_arial;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -33,6 +34,7 @@ public class App extends Application {
         LeanCloudHelper.initLeanCloud(this);
         initCurrentBaby();
         context = getApplicationContext();
+        Typeface_arial =Typeface.createFromAsset(context.getAssets(),"ttf/arial.ttf");
     }
 
 

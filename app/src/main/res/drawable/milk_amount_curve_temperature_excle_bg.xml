@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+<stroke android:color="@color/milk_amount_curve_temperature_excle_title_text_color"
+         android:width="@dimen/milk_amount_curve_excle_stoke_width"></stroke>
+<solid android:color="@color/milk_amount_curve_temperature_excle_seconde_bg_color"></solid>
+<corners android:radius="10dp" />
+<padding android:left="0dp" android:top="0dp"
+    android:right="0dp" android:bottom="0dp" />
+</shape>

@@ -38,7 +38,8 @@
 
         <activity
             android:name="com.inhand.milk.activity.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
         </activity>
 
         <activity
@@ -68,6 +69,27 @@
             android:name="com.inhand.milk.activity.HealthPromptActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.inhand.milk.activity.HealthDrinkLastActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.inhand.milk.activity.MilkAmountCurveActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.inhand.milk.activity.UserInfoSettingsActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.inhand.milk.activity.PersonCenterBabyInfoActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.inhand.milk.fragment.weight.AdderWindow"
+            android:theme="@style/AdderWindowStyle">
+            </activity>
+
         <!-- 下面是测试Activity -->
         <activity android:name=".test.BabyInfoTestActivity"/>
         <activity android:name=".test.DeviceTestActivity"/>

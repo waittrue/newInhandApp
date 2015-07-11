@@ -1,9 +1,8 @@
 package com.inhand.milk.fragment.weight;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,6 +18,13 @@ public class Adder extends ViewGroup {
     private float height, width;
     private static final String TAG = "ADDER";
     private static final float scaleX = 0.8f;
+    private ProgressBar progressBar;
+    private int bgColor;
+
+    public void setBgColor(int bgColor) {
+        this.bgColor = bgColor;
+        progressBar.setBgColor(bgColor);
+    }
 
     public Adder(Context context, float width, float height) {
         super(context);
@@ -42,14 +48,14 @@ public class Adder extends ViewGroup {
 
     private void init() {
 
-        ProgressBar progressBar = new ProgressBar(getContext());
-        progressBar.setBgColor(Color.RED);
+        progressBar = new ProgressBar(getContext());
+        progressBar.setBgColor(bgColor);
         this.addView(progressBar, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         TextView textview = new TextView(getContext());
         textview.setText(getResources().getString(R.string.weight_fragment_adder_text));
         textview.setTextColor(getResources().getColor(R.color.weight_fragment_adder_text_color));
-        textview.setTextSize(getResources().getDimension(R.dimen.weight_fragment_adder_text_size));
+        textview.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.weight_fragment_adder_text_size));
         this.addView(textview, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
         ImageView imageView = new ImageView(getContext());
@@ -63,8 +69,7 @@ public class Adder extends ViewGroup {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int wideSize = getMeasuredWidth();
         int heightSize = getMeasuredHeight();
-        Log.i(TAG + " onmeasure", String.valueOf(wideSize));
-        Log.i(TAG + " onmeasure", String.valueOf(heightSize));
+
 
         View child;
         for (int i = 0; i < 2; i++) {
@@ -75,8 +80,6 @@ public class Adder extends ViewGroup {
         child = getChildAt(2);
         measureChild(child, MeasureSpec.makeMeasureSpec((int) (heightSize * scaleX), MeasureSpec.AT_MOST),
                 MeasureSpec.makeMeasureSpec((int) (heightSize * scaleX), MeasureSpec.AT_MOST));
-
-
     }
 
     @Override
@@ -92,15 +95,15 @@ public class Adder extends ViewGroup {
                 height / 2 + child.getMeasuredWidth(),
                 (height - child.getMeasuredHeight()) / 2 + child.getMeasuredHeight());
 
-        Log.i(TAG, String.valueOf(child.getMeasuredWidth()));
-        Log.i(TAG, String.valueOf(child.getMeasuredHeight()));
+
 
         float space = height - height * scaleX;
         space = space / 2;
         child = getChildAt(2);
-        child.layout((int) (width - child.getMeasuredWidth() - space),
+        child.layout((int) (width - child.getMeasuredWidth() - space-space
+                ),
                 (int) (space),
-                (int) (width - space),
+                (int) (width - space - space ),
                 (int) (space + child.getMeasuredHeight()));
 
     }

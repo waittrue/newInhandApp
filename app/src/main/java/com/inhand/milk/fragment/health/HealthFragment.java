@@ -12,7 +12,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.inhand.milk.R;
-import com.inhand.milk.activity.HealthNutritionActivity;
+import com.inhand.milk.activity.HealthDrinkLastActivity;
+import com.inhand.milk.activity.HealthPromptActivity;
 import com.inhand.milk.fragment.TitleFragment;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class HealthFragment extends TitleFragment{
 		// TODO Auto-generated method stub
 		mView  = inflater.inflate(R.layout.health,null);
 		
-		setTitleview(getString(R.string.health_title_text), 0,null,null);
+		setTitleview(getString(R.string.health_title_text), 0);
 		setListView();
 		setListViewClick();
 		return mView;
@@ -71,8 +72,19 @@ public class HealthFragment extends TitleFragment{
 				case 0:
 					break;
 				case 1:
-					intent.setClass(HealthFragment.this.getActivity(), HealthNutritionActivity.class);
+                    /*
+					intent.setClass(getActivity(), HealthNutritionActivity.class);
 					startActivity(intent);
+					*/
+                    break;
+                case 2:
+                    intent.setClass(getActivity(), HealthDrinkLastActivity.class);
+                    startActivity(intent);
+                    break;
+                case 3:
+                    intent.setClass(getActivity(), HealthPromptActivity.class);
+                    startActivity(intent);
+                    break;
 				default:
 					break;
 				}

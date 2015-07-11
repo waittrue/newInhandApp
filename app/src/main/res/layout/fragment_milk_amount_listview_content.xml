@@ -14,7 +14,7 @@
             android:layout_width="@dimen/milk_amount_vertical_line_width"
             android:layout_height="fill_parent"
             android:layout_marginLeft="@dimen/milk_amount_line_margin_left"
-            android:background="@color/milk_amount_listview_item_title_bg_color"></LinearLayout>
+            android:background="@color/milk_amount_listview_item_time_line_text_color"></LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,7 +46,8 @@
             android:layout_height="@dimen/milk_amount_listview_item_temperature_amount_parent_height"
             android:layout_marginBottom="@dimen/milk_amount_listview_item_temperature_amount_parent_margin_bottom"
             android:layout_alignLeft="@+id/milk_amount_listview_item_progress_bar"
-            android:layout_above="@+id/milk_amount_listview_item_progress_bar">
+            android:layout_above="@+id/milk_amount_listview_item_progress_bar"
+            android:layout_marginLeft="@dimen/milk_amount_listview_item_temperature_amount_parent_margin_left">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -65,7 +66,7 @@
                 android:orientation="horizontal"
                 android:layout_width="@dimen/milk_amount_listview_item_divider_temperature_amount_line_width"
                 android:layout_height="fill_parent"
-                android:background="#000000"
+                android:background="#bbbbbb"
                 android:id="@+id/milk_amount_listview_item_divide_temperature_amount"
                 android:layout_toRightOf="@+id/milk_amount_listview_item_amount_text"
                 android:layout_marginLeft="@dimen/milk_amount_listview_item_divider_temperature_amount_line_margin_left"></LinearLayout>
@@ -91,8 +92,10 @@
             android:id="@+id/milk_amount_listview_item_circle_container"
             android:layout_marginRight="@dimen/milk_amount_listview_item_circle_margin_right"
             android:layout_marginBottom="@dimen/milk_amount_listview_item_margin_bottom"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"></LinearLayout>
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="false"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imageView23"></LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -104,6 +107,16 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:id="@+id/milk_amount_listview_item_divider"></LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/milk_amount_listview_item_arrow_height_width"
+            android:layout_height="@dimen/milk_amount_listview_item_arrow_height_width"
+            android:scaleType="centerInside"
+            android:id="@+id/imageView23"
+            android:src="@drawable/arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/milk_amount_listview_item_arrow_margin_right"
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 

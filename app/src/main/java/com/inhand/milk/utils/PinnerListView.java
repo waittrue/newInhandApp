@@ -15,7 +15,7 @@ import android.widget.ListView;
 public class PinnerListView extends ListView{
     private static final String TAG = "PinnerListView";
     private PinnerListViewAdapter myAdapter;
-    private View head;
+    private View head = null;
     public PinnerListView(Context context) {
         super(context);
     }
@@ -72,7 +72,7 @@ public class PinnerListView extends ListView{
                     if ( child.getBottom() > height){
                         if (myAdapter.hasHead(i+getFirstVisiblePosition())){
                             offset = getChildAt(i-1).getBottom();
-                          //  Log.i(TAG,String.valueOf(offset)+" offset" + String.valueOf(height));
+                          // Log.i(TAG,String.valueOf(offset)+" offset" + String.valueOf(height));
                             head.layout(0, offset - height, width, offset);
                         }
                         else
@@ -95,6 +95,7 @@ public class PinnerListView extends ListView{
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
+        Log.i("pinnerListView","onlayout");
         if(head != null)
             layoutHead();
     }

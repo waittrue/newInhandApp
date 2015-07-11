@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/ThirdParty" />
             <option value="$PROJECT_DIR$/ThirdParty/SlidingMenu" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/virtuilmilk" />
           </set>
         </option>
       </GradleProjectSettings>

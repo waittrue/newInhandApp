@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/health_last_drink_item_bg_corner_radius"></corners>
+    <solid android:color="@color/health_drink_last_bg_color"></solid>
+
+</shape>

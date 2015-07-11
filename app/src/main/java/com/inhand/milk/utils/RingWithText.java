@@ -8,12 +8,15 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.inhand.milk.App;
 import com.inhand.milk.R;
 
 
@@ -23,11 +26,12 @@ public class RingWithText extends View {
     private int ringBgColor = 0,ringColor=0,textColor= Color.BLACK;
     private float maxSweepAngle=0,sweepAngle=0;
     private String[] texts;
-    private float[] textSizes;
+    private float[] textSizes,textsSpace =null;
     private int[] textColors;
     private int timeRing;
     private updateListener listener;
     private android.os.Handler handler;
+    private int sweepStartColor = -1,sweepEndColor = -1;
 
     /*
     *这里因为这个view的大小是2*r的int，而我们画的过程中是一2*r来画的，所以这里会出现画的地方大于了实际地方，
@@ -45,7 +49,9 @@ public class RingWithText extends View {
     public float getR() {
         return mR;
     }
-
+    public void setTextsSpace(float [] spaces){
+        textsSpace = spaces;
+    }
     public RingWithText(Context context) {
         super(context);
         mR = 0;
@@ -101,8 +107,11 @@ public class RingWithText extends View {
         this.ringColor = ringColor;
     }
 
-    public void
-    setRingWidth(float paintWidth) {
+    public void setSweepColor(int startColor,int endColor){
+        sweepStartColor = startColor;
+        sweepEndColor = endColor;
+    }
+    public void setRingWidth(float paintWidth) {
         this.paintWidth = paintWidth;
         circleR = mR - paintWidth/2 >0? mR-paintWidth/2:0;
     }
@@ -110,7 +119,6 @@ public class RingWithText extends View {
         maxSweepAngle = a;
         sweepAngle = maxSweepAngle;
     }
-
     public void setTexts(String[] strings,float[] sizes){
         if (strings.length != sizes.length)
              return;
@@ -123,6 +131,11 @@ public class RingWithText extends View {
         texts = strings;
         textSizes = sizes;
         textColors = colors;
+    }
+    public void setR(float r){
+        mR = ((int) (r * 2)) / 2;
+        paintWidth = mR/15;
+        circleR = mR - paintWidth/2 >0? mR-paintWidth/2:0;
     }
     public void setTexts(String[] strings){
         texts = strings;
@@ -158,6 +171,11 @@ public class RingWithText extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(paintWidth);
         paint.setColor(ringBgColor);
+        if( sweepEndColor != -1 && sweepStartColor != -1) {
+            Shader shader = new LinearGradient(mR- circleR,mR+circleR,mR+circleR,mR-circleR,
+                            sweepStartColor,sweepEndColor, Shader.TileMode.REPEAT);
+            paint.setShader(shader);
+        }
         canvas.drawCircle(mR,mR,circleR,paint);
     }
     private void drawRing(Canvas canvas){
@@ -177,16 +195,23 @@ public class RingWithText extends View {
         int i,count;
         Paint paint = new Paint();
         paint.setAntiAlias(true);
+        paint.setTypeface(App.Typeface_arial);
         paint.setStrokeWidth(paintWidth);
         if (texts == null)
             return;
-        for(i=0;i<texts.length;i++){
-            height+= textSizes[i];
-        }
-        currentHeight = mR - height/2;
         count = texts.length;
         if (count > textSizes.length)
             count = textSizes.length;
+        for(i=0;i<count;i++){
+            height += textSizes[i];
+        }
+        if(textsSpace != null){
+            int len = Math.min(count-1, textsSpace.length);
+            for(i=0;i<len;i++)
+                height+= textsSpace[i];
+        }
+        currentHeight = mR - height/2;
+
         for(i=0;i<count;i++){
             if (textColors == null || i >textColors.length-1) {
                 paint.setColor(textColor);
@@ -196,6 +221,10 @@ public class RingWithText extends View {
             paint.setTextSize(textSizes[i]);
             width = paint.measureText(texts[i]);
             currentHeight += textSizes[i];
+            if(textsSpace !=null)
+                 if(i-1>=0 && i-1<textsSpace.length){
+                      currentHeight += textsSpace[i-1];
+                 }
             canvas.drawText(texts[i],mR - width/2,currentHeight,paint);
         }
     }

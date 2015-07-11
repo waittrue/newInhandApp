@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:background="@color/milk_amount_listview_item_title_bg_color">
 
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -13,8 +15,49 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/title"></LinearLayout>
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/title_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/milk_amount_title_height"
+                >
+                <TextView
+                    android:id="@+id/title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/main_title_margin_top"
+                    android:text="@string/milk_amount_title"
+                    android:textColor="@color/main_title_text_color"
+                    android:textSize="@dimen/main_title_text_size" />
+
+                <ImageView
+                    android:id="@+id/title_left_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/menu_entry_height"
+                    android:layout_alignTop="@+id/title_text"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/menu_margin_left"
+                    android:scaleType="centerInside"
+                    />
+                <ImageView
+                    android:id="@+id/title_right_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/main_title_right_icon_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/main_title_right_icon_margin_top"
+                    android:layout_marginRight="@dimen/menu_margin_left"
+                    android:scaleType="centerInside" />
+
+            </RelativeLayout>
+         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/milk_amount_title_divider"
+            android:background="@color/public_darkin_littlelight_color"></LinearLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -40,11 +83,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="小兜建议宝宝喝：800ml"
                     android:id="@+id/milk_amount_advise_num"
                     android:gravity="center_vertical"
                     android:singleLine="true"
+                    android:layout_marginTop="@dimen/milk_amount_advise_texts_margin_top"
                     android:textSize="@dimen/milk_amount_advise_text_size"
                     android:textColor="@color/milk_amount_advise_text_color" />
 

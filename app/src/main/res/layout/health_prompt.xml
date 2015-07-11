@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/color_white"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -8,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-
     </LinearLayout>
 
     <ListView
@@ -19,6 +19,11 @@
         android:headerDividersEnabled="false"
         android:layout_marginLeft="@dimen/health_prompt_listview_margin_left"
         android:scrollbars="none"
+        android:overScrollMode="never"
+        android:listSelector="@android:color/transparent"
+        android:divider="#00000000"
+        android:dividerHeight="0dip"
         android:layout_marginRight="@dimen/health_prompt_listview_margin_left"
+        android:layout_marginBottom="@dimen/health_prompt_listview_margin_left"
         android:clickable="false" />
 </LinearLayout>

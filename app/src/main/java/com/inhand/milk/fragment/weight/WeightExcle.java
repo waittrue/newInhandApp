@@ -30,8 +30,8 @@ public class WeightExcle extends View {
     private final static int MAXDATE = 40, MINDATE = -1, CLICKLARGER = 10;
     private static float bottomHeight;
     private int leftTextColor = Color.GREEN, standerAreaColor = Color.BLACK, lineColor = Color.WHITE,
-            shaderStartColor = 0xff00ff00, shaderEndColor = 0x0000ff00, bottomTextColor = Color.WHITE,
-            pointShowColor = Color.WHITE;
+            shaderStartColor = 0xff41fb98, shaderEndColor = 0x0041fb98, bottomTextColor = Color.WHITE,
+            pointShowColor = Color.WHITE,pointBgColor = Color.WHITE,pointInnerColor = Color.GREEN;
     private static String[] leftTexts, bottomText;
     private float[] standerLeft, standerRight;
     private int MonthDays, showPoint;
@@ -50,15 +50,32 @@ public class WeightExcle extends View {
     public WeightExcle(Context context) {
         super(context);
         init();
-    }
 
+    }
+    private int colorAddAlpha(float alpha,int color){
+        int result ;
+        result = Color.argb((int)(alpha*256),Color.red(color),Color.green(color),Color.blue(color));
+        return result;
+    }
+    private void initColors(){
+        standerAreaColor = colorAddAlpha(0.5f,getResources().getColor(R.color.public_darkin_dark_color));
+        lineColor = getResources().getColor(R.color.public_darkin_highlight_a_color);
+        leftTextColor = colorAddAlpha(0.9f,getResources().getColor(R.color.public_darkin_highlight_a_color));
+        bottomTextColor = colorAddAlpha(0.9f,getResources().getColor(R.color.public_darkin_highlight_a_color));
+        shaderStartColor =colorAddAlpha(0.8f,getResources().getColor(R.color.record_curve_shadow_color));
+        shaderEndColor = colorAddAlpha(0.0f,getResources().getColor(R.color.record_curve_shadow_color));
+        pointBgColor = lineColor;
+        pointInnerColor = getResources().getColor(R.color.public_main_a_color);
+        pointShowColor = Color.WHITE;
+    }
     private void init() {
         bottomText = this.getResources().getStringArray(R.array.weight_excle_bottom_texts);
         leftTexts = this.getResources().getStringArray(R.array.weight_excle_left_texts);
         bottomHeight = this.getResources().getDimension(R.dimen.weight_fragment_excle_bottom_height);
         leftLineMargin = this.getResources().getDimension(R.dimen.weight_fragment_excle_left_line_margin);
-        bottomTextSize = bottomHeight / 3;
-        bottomTextMargin = bottomHeight / 8;
+        bottomTextSize = bottomHeight / 2.4f;
+        bottomTextMargin = bottomHeight / 7;
+        initColors();
         setLisetner();
     }
 
@@ -326,9 +343,9 @@ public class WeightExcle extends View {
     }
 
     private void drawPoint(Canvas canvas, float x, float y, Paint paint) {
-        paint.setColor(Color.WHITE);
+        paint.setColor(pointBgColor);
         canvas.drawCircle(x, y, circleR, paint);
-        paint.setColor(Color.RED);
+        paint.setColor(pointInnerColor);
         canvas.drawCircle(x, y, circleR / 2, paint);
     }
 

@@ -8,6 +8,8 @@ import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,18 +40,29 @@ public class BluetoothPairedAcivity extends BaseActivity {
     private static final int SEARCHTIME = 12000;
     private static final int TIMESCALE = 1000;
     private static final float SCALE = 0.8f;
+    private static final int MessagWhat = 4;
     private List<BluetoothDevice> devices ;
     private View currentChild;
+    private Handler handler;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bluetooth_paired);
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                //super.handleMessage(msg);
+                if(msg.what == MessagWhat){
+                    pairedSuccess();
+                }
+            }
+        };
         initViews();
 	}
 
     private void initViews(){
-        devices = new ArrayList<BluetoothDevice>();
+        devices = new ArrayList<>();
         bluetoothPairedViewGroup =  (BluetoothPairedViewGroup)findViewById(R.id.bloothPairedViewGroup);
         bluetoothPairedViewGroup.setOnClickListener(listener);
 
@@ -59,7 +72,7 @@ public class BluetoothPairedAcivity extends BaseActivity {
         bluetoothText = (TextView)findViewById(R.id.bluetoot_paired_unable_text);
 
         listview = (ListView)findViewById(R.id.bluetooth_paired_listview);
-        listItems = new ArrayList<Map<String,Object>>();
+        listItems = new ArrayList<>();
         SimpleAdapter adapter = new SimpleAdapter(this,listItems,R.layout.bluetooth_paired_listview_items,
                 new String[]{"left","right"},
                 new int[]{R.id.bluetooth_paired_listview_name_text,R.id.bluetooth_paired_listview_status_text});
@@ -111,11 +124,12 @@ public class BluetoothPairedAcivity extends BaseActivity {
                     listview.setVisibility(View.VISIBLE);
                     animatorAlpha(listview);
                 }
-                HashMap<String,Object> map = new HashMap<String, Object>();
+                HashMap<String,Object> map = new HashMap<>();
                 map.put("left",device.getName());
                 map.put("right","未连接");
                 listItems.add(map);
                 devices.add(device);
+                listview.setAdapter(listview.getAdapter());
             }
 
             @Override
@@ -123,34 +137,42 @@ public class BluetoothPairedAcivity extends BaseActivity {
                 bluetoothPairedViewGroup.animatorSmoothEnd();
                 if(devices.size() == 0)
                     Toast.makeText(getApplicationContext(),"请将奶瓶靠近，点击图标重新搜索",Toast.LENGTH_LONG).show();
+                bluetoothPairedViewGroup.setInnerTextView("开始");
             }
 
             @Override
             public void discoverStarted() {
                 devices.clear();
                 listItems.clear();
+                listview.setAdapter(listview.getAdapter());
                 bluetoothPairedViewGroup.start(SEARCHTIME);
-
-
+                bluetoothPairedViewGroup.setInnerTextView("搜索中");
             }
 
             @Override
             public void pairedSuccess() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(BluetoothPairedAcivity.this);
-                builder.setTitle("配对成功");
-                builder.setMessage("点击确定完成配对，点击取消重新配对");
-                builder.setPositiveButton("确定",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        enterNextAcitivity();
-                    }
-                });
-                builder.setNegativeButton("取消",null);
-                AlertDialog alertDialog  = builder.create();
-                alertDialog.show();
-                ( (ImageView)currentChild.findViewById(R.id.bluetooth_paired_listview_icon)).setBackgroundResource(R.drawable.bluetooth_link_yes_ico);
+                Message message = new Message();
+                message.what = MessagWhat;
+                handler.sendMessage(message);
+            }
+
+        });
+    }
+    private void pairedSuccess(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(BluetoothPairedAcivity.this);
+        builder.setTitle("配对成功");
+        builder.setMessage("点击确定完成配对，点击取消重新配对");
+        builder.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                enterNextAcitivity();
             }
         });
+        builder.setNegativeButton("取消",null);
+        AlertDialog alertDialog  = builder.create();
+        alertDialog.show();
+        ( (ImageView)currentChild.findViewById(R.id.bluetooth_paired_listview_icon)).setBackgroundResource(R.drawable.bluetooth_link_yes_ico);
+
     }
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
@@ -164,6 +186,7 @@ public class BluetoothPairedAcivity extends BaseActivity {
     };
     private void refreshViews(){
         bluetoothPairedViewGroup.setBlueOn(bluetooth.isEnabled());
+        bluetoothPairedViewGroup.changIcon();
         if(bluetooth.isEnabled())
             bluetoothText.setVisibility(View.GONE);
         else
@@ -232,6 +255,7 @@ public class BluetoothPairedAcivity extends BaseActivity {
     private void enterNextAcitivity(){
         Intent intent = new Intent();
         intent.setClass(this,MainActivity.class);
+       // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }

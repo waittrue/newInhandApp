@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#00ff00"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/user_info_settings_city_listview_item_title_height"
+        android:background="@color/user_info_settings_listview_item_title_background"
+        android:id="@+id/user_info_settings_city_listview_title_container">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Large Text"
+            android:textStyle="bold"
+            android:id="@+id/user_info_settings_city_listview_item_title_textview"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/user_info_settings_city_listview_item_margin_left"
+            android:autoText="false"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/user_info_settings_listview_item_title_text_color"
+            android:textSize="@dimen/user_info_settings_city_title_text_size" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/user_info_settings_city_listview_item_height"
+        android:background="@color/color_white"
+        android:id="@+id/user_info_settings_city_listview_content_container">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/user_info_settings_city_listview_item_content_textview"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/user_info_settings_city_listview_item_margin_left"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="false"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:textColor="@color/user_info_settings_city_listview_item_content_text_color"
+            android:textSize="@dimen/user_info_settings_city_listview_item_content_textsize" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/common_settings_item_line_smaller_height"
+            android:id="@+id/user_info_settings_city_listview_content_divider"
+            android:layout_alignParentLeft="false"
+            android:layout_marginLeft="@dimen/user_info_settings_city_listview_item_margin_left"
+            android:layout_alignParentBottom="true"
+            android:background="@color/common_settings_item_line_color" />
+    </RelativeLayout>
+</LinearLayout>

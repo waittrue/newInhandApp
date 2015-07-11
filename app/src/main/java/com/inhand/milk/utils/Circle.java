@@ -27,7 +27,6 @@ public class Circle extends View {
         a = context.obtainStyledAttributes(attri, R.styleable.MyCircle);
         r = a.getDimensionPixelOffset(R.styleable.MyCircle_r, 0);
         mColor = a.getColor(R.styleable.MyCircle_CircleColor, 0x000000);
-
     }
 
     @Override

@@ -89,6 +89,7 @@ public class LastDrink extends TitleFragment {
                 if (convertView == null){
                     convertView = mInflater.inflate(R.layout.health_last_drink_listview_item,null);
                     RingWithText ringWithText = (RingWithText)convertView.findViewById(R.id.health_drink_last_item_ringWithText);
+                    ringWithText.setTextsSpace(new float[]{getResources().getDimension(R.dimen.health_last_drink_item_ring_texts_space)});
                     ringWithTexts.add(ringWithText);
                 }
                 if(position<0 || position> mData.size()-1)
@@ -106,6 +107,7 @@ public class LastDrink extends TitleFragment {
 
                 RingWithText ringWithText = ViewHolder.get(convertView,R.id.health_drink_last_item_ringWithText);
                 ringWithText.setRingBgColor((int)data.get(ItemRightColor));
+                ringWithText.setTextColor(getResources().getColor(R.color.color_white));
                // ringWithText.setRingWidth(ringWithText.getR());
 
                 String[] strs = new String[2];
@@ -164,7 +166,7 @@ public class LastDrink extends TitleFragment {
         diff = endtime.getTime() - startTime.getTime();
         */
         //duration = (int)diff/(1000*60);
-        score = 100;
+        score = 83;
         data.put(ItemNum,String.valueOf( score));
         data.put(ItemUnit, "分");
         data.put(ItemUpText,getResources().getString(R.string.health_last_drink_score));

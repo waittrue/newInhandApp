@@ -4,13 +4,16 @@ import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.app.AlertDialog.Builder;
 import com.inhand.milk.R;
@@ -47,9 +50,18 @@ public class MainActivity extends BaseActivity {
         fragmentTransaction.commit();
 
 
-        // bluetooth = new Bluetooth(this);
-        // bluetooth.openBlue();
-        //bluetooth.startSearch();
+
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                bluetooth = Bluetooth.getInstance();
+                bluetooth.setActivity(MainActivity.this);
+                bluetooth.openBlue();
+                bluetooth.asClient();
+            }
+        };
+        handler.postDelayed(runnable,3000);
         setSlidingMenu();
         onClickListener = new OnClickListener() {
             @Override
@@ -58,9 +70,8 @@ public class MainActivity extends BaseActivity {
                 menu.toggle();
             }
         };
-
-
     }
+
 
     private void setSlidingMenu(){
         menu = new SlidingMenu(this);
@@ -72,14 +83,23 @@ public class MainActivity extends BaseActivity {
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 
         View view = getLayoutInflater().inflate(R.layout.menu, null);
+        RelativeLayout userInfo = (RelativeLayout)view.findViewById(R.id.menu_user_info);
+        userInfo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,UserInfoSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
         menu.setMenu(view );
 
 
         ListView listView = (ListView)view.findViewById(R.id.detals_listView);
         List< Map<String,Object> > listitems = new ArrayList<Map<String,Object>>();
-        Map<String, Object> map1 = new HashMap<String, Object>();
-        Map<String, Object> map2 = new HashMap<String, Object>();
-        Map<String, Object> map3 = new HashMap<String, Object>();
+        Map<String, Object> map1 = new HashMap<>();
+        Map<String, Object> map2 = new HashMap<>();
+        Map<String, Object> map3 = new HashMap<>();
         String string[]  = getResources().getStringArray(R.array.menu_item_texts);
         map1.put("image", R.drawable.menu_family_icon);
         map1.put("text",string[0]);

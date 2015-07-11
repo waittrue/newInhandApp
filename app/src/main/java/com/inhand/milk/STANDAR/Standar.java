@@ -13,5 +13,35 @@ public class Standar {
     public  final static float drinkBeginMinTp = (float) 38.4;
     public  final static float drinkEndMaxTp = (float) 34.5;
     public  final static float drinkEndMinTp = (float) 30.4;
+    public  final static int drinkMinScore =60;
 
+
+    final static float AMOUNTSCORE = 55;
+    final static float TEMPERATURESCORE = 35;
+    final static float TIMESCORE = 10, TEMPREATUREHIGH = 40, TEMPREATURELOW = 37, STANDARTIME = 30;
+
+    public static float getRecord(float advise, float amount, float temperatureHigh, float temperatureLow, float time) {
+        float ratio, sum = 0;
+        if (advise > amount)
+            ratio = amount / advise;
+        else
+            ratio = advise / amount;
+        sum += AMOUNTSCORE * ratio;
+        //Log.i("amount " ,String.valueOf(sum));
+        ratio = 0;
+        if (temperatureHigh > TEMPREATUREHIGH)
+            ratio += (temperatureHigh - TEMPREATUREHIGH) / TEMPREATUREHIGH;
+        if (temperatureLow < TEMPREATURELOW)
+            ratio += (TEMPREATURELOW - temperatureLow) / TEMPREATURELOW;
+        ratio = ratio > 1 ? 1 : ratio;
+        sum += TEMPERATURESCORE * (1 - ratio);
+        //Log.i("amount tempreature " ,String.valueOf(sum));
+        if (STANDARTIME > time)
+            ratio = time / STANDARTIME;
+        else
+            ratio = STANDARTIME / time;
+        sum += TIMESCORE * ratio;
+        //Log.i("amount tempreature time" ,String.valueOf(sum));
+        return sum;
+    }
 }

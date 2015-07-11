@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.TitleFragment;
@@ -23,8 +24,7 @@ public class Nutrition extends TitleFragment{
 		// TODO Auto-generated method stub
 		mView =  inflater.inflate(R.layout.health_nutrition, container, false);
 		addRing();
-		setTitleview(getResources().getString(R.string.health_nutrition_title), 2,null,null);
-		//setBackEvent();
+		setTitleview(getResources().getString(R.string.health_nutrition_title), 2);
 		return mView;
 	}
     public Nutrition(float[] weight) {
@@ -42,9 +42,11 @@ public class Nutrition extends TitleFragment{
         float width= dm.widthPixels * 0.35f;
 		LinearLayout linearLayout = (LinearLayout)mView.findViewById(R.id.health_nutrition_sector);
 		HealthNutritionDisk ring = new HealthNutritionDisk(getActivity().getApplicationContext(),width,mWeight,mText);
-
 		linearLayout.addView(ring);
-		
+
+        TextView bottomTextView = (TextView)mView.findViewById(R.id.health_nutrition_total_num_text);
+        //等待数据加入
+        //bottomTextView.setText();
 	}
 	
 }

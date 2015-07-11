@@ -12,11 +12,15 @@ import android.content.IntentFilter;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
 import com.inhand.milk.App;
+import com.inhand.milk.dao.DeviceDao;
+import com.inhand.milk.entity.Device;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -133,6 +137,11 @@ public class Bluetooth {
             activity.registerReceiver(mReceiver, filter3);
             Toast.makeText(activity, "准备发现模块", Toast.LENGTH_SHORT).show();
         };
+         if(bluetoothAdapter.isDiscovering() == true){
+             if(activity != null)
+                 Toast.makeText(activity,"正在搜索中",Toast.LENGTH_SHORT).show();
+             return false;
+         }
          result = bluetoothAdapter.startDiscovery();
          if (result == false && activity != null) {
                 Toast.makeText(activity, "蓝牙没有开启", Toast.LENGTH_SHORT).show();
@@ -141,16 +150,25 @@ public class Bluetooth {
         return result;
     }
 
-    public void setPaired(BluetoothDevice device){
+    public void setPaired(BluetoothDevice BlueDevice){
         bluetoothAdapter.cancelDiscovery();
-        paired = device;
+        paired = BlueDevice;
+        Device device = new Device();
+        device.setMac(BlueDevice.getAddress());
+       // device.saveInDB(App.getAppContext(), null);
+        try {
+            device.save();
+        } catch (AVException e) {
+            e.printStackTrace();
+        }
         Log.i("device_name", paired.getName());
+        Log.i("device_addres", paired.getAddress());
     }
     public void setActivity(Activity act){
         activity = act;
 
         if(paired == null){
-            Toast.makeText(App.getAppContext(),"请去配对蓝牙",1000).show();
+            Toast.makeText(App.getAppContext(),"请去配对蓝牙",Toast.LENGTH_SHORT).show();
         }
     }
     public boolean hasPaired(){
@@ -159,30 +177,37 @@ public class Bluetooth {
         return true;
     }
     private BluetoothDevice selectFromBonded(){
+
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
         // If there are paired devices
         if (pairedDevices.size() > 0) {
             // Loop through paired devices
             for (BluetoothDevice device : pairedDevices) {
                 // Add the name and address to an array adapter to show in a ListView
-
                 if  (device.getAddress().equals( getDefaultMac() ) ) {
+                    Log.i("bluetooth","xuanzhong de   "+device.getName());
                     return device;
                 }
-                if (device.getName().equals( "HUAWEI MT7-TL10")){
+                if (device.getName().equals( "小米手机")){
                     Log.i(" find device",device.getName());
                     return device;
                 }
-
             }
         }
-        Log.i("no find device","null");
+
         return null;
     }
     /*返回默认存储的蓝牙地址，当没有的时候返回null
     * **/
     private String getDefaultMac(){
-        return "fadfsaf";
+        DeviceDao deviceDao = new DeviceDao(App.getAppContext());
+        List<Device> devices = deviceDao.findAllFromDB(1);
+        if(devices == null)
+            return null;
+        Device device = devices.get(0);
+        if(device == null)
+            return null;
+        return device.getMac();
     }
 
 

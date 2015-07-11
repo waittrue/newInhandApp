@@ -3,6 +3,7 @@ package com.inhand.milk.utils;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,22 +25,27 @@ public class BluetoothPairedViewGroup extends ViewGroup {
 	
 	public BluetoothPairedViewGroup(Context context) {
 		super(context);
+        init();
 		// TODO Auto-generated constructor stub
 		
 	}
 	public  BluetoothPairedViewGroup(Context context ,AttributeSet attrs){
 		// TODO Auto-generated constructor stub
 		super(context,attrs);
+        init();
 		//this.setBackgroundColor(Color.BLACK);
 	}
 	
-	
+    private void init(){
+
+    }
 	
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		// TODO Auto-generated method stub
 
 		View child;
+        /*
 		int i;
 		for (i=0;i<1;i++){
 			child = getChildAt(i);
@@ -47,10 +53,14 @@ public class BluetoothPairedViewGroup extends ViewGroup {
 					width/2 -child.getMeasuredHeight()/2, 
 					width/2 +child.getMeasuredWidth()/2, 
 						width/2 + child.getMeasuredHeight()/2 );	
-		}
-		
-		
-		ring.layout(width/2 - ring.getMeasuredWidth()/2,
+		}*/
+		child  = circle;
+        child.layout(width/2 - child.getMeasuredWidth()/2,
+                width/2 -child.getMeasuredHeight()/2,
+                width/2 +child.getMeasuredWidth()/2,
+                width/2 + child.getMeasuredHeight()/2 );
+
+        ring.layout(width/2 - ring.getMeasuredWidth()/2,
 				width/2 -ring.getMeasuredHeight()/2, 
 				width/2 +ring.getMeasuredWidth()/2, 
 					width/2 + ring.getMeasuredHeight()/2 );	
@@ -80,11 +90,11 @@ public class BluetoothPairedViewGroup extends ViewGroup {
 					width + (bluetoothBg.getMeasuredHeight()- (int)margin-bluetoothBg.getMeasuredHeight()/3)/2 + bluetoothStateIcon.getMeasuredHeight()/2);
 		
 	}
-	
+
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		// TODO Auto-generated method stub
-		
+		Log.i("onmeasure","bluetooth------------");
 		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 		int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
@@ -92,46 +102,55 @@ public class BluetoothPairedViewGroup extends ViewGroup {
 		
 		width = sizeWidth;
 		height = sizeHeight;
-		
-		circle = new Circle(getContext());
-		circle.setR(sizeWidth/2);
-		addView(circle);
+		if(circle == null) {
+            circle = new Circle(getContext());
+            circle.setR(sizeWidth/2);
+            addView(circle);
+        }
 		measureChild(circle, widthMeasureSpec, heightMeasureSpec);
 		
-		
-		ring = new Ring(getContext(), sizeWidth/2*0.9f, Color.WHITE);
-		addView(ring);
+		if(ring == null) {
+            ring = new Ring(getContext(), sizeWidth / 2 * 0.9f, Color.WHITE);
+            addView(ring);
+        }
 		measureChild(ring, 0, 0);
 		
-		
-		icon = new ImageView(getContext());
-		icon.setBackgroundDrawable(getResources().getDrawable(R.drawable.bluetooth_switch_ico));
-		icon.setScaleType(ScaleType.CENTER_INSIDE);
-		LayoutParams lp = new LayoutParams(sizeWidth/4, sizeWidth/4);
-		addView(icon,lp);
+		if(icon == null){
+		    icon = new ImageView(getContext());
+		    icon.setBackgroundDrawable(getResources().getDrawable(R.drawable.bluetooth_switch_ico));
+		    icon.setScaleType(ScaleType.CENTER_INSIDE);
+		    LayoutParams lp = new LayoutParams(sizeWidth/4, sizeWidth/4);
+		    addView(icon,lp);
+        }
 		measureChild(icon, widthMeasureSpec, heightMeasureSpec);
-		
-		textView = new TextView(getContext());
-		textView.setText("开始");
-		textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, sizeWidth/10);
-		addView(textView);
+
+        if(textView == null) {
+            textView = new TextView(getContext());
+            textView.setText("开始");
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, sizeWidth / 10);
+            addView(textView);
+        }
 		measureChild(textView, widthMeasureSpec, heightMeasureSpec);
-		
-		bluetoothBg = new ImageView(getContext());
-		bluetoothBg.setBackgroundDrawable(getResources().getDrawable(R.drawable.bluetooth_state_bg));
-		bluetoothBg.setScaleType(ScaleType.CENTER_INSIDE);
-		LayoutParams bluetoothlp = new LayoutParams(sizeWidth/4, sizeWidth/4);
-		addView(bluetoothBg,bluetoothlp);
+
+        if(bluetoothBg == null) {
+            bluetoothBg = new ImageView(getContext());
+            bluetoothBg.setBackgroundDrawable(getResources().getDrawable(R.drawable.bluetooth_state_bg));
+            bluetoothBg.setScaleType(ScaleType.CENTER_INSIDE);
+            LayoutParams bluetoothlp = new LayoutParams(sizeWidth / 4, sizeWidth / 4);
+            addView(bluetoothBg, bluetoothlp);
+        }
 		measureChild(bluetoothBg, widthMeasureSpec, heightMeasureSpec);
-		
-		bluetoothStateIcon = new ImageView(getContext());
+
+        if(bluetoothStateIcon == null){
+		    bluetoothStateIcon = new ImageView(getContext());
+		    bluetoothStateIcon.setScaleType(ScaleType.CENTER_INSIDE);
+		    LayoutParams bluetoothIconlp = new LayoutParams( (int)( sizeWidth/4/3.5f),(int)( sizeWidth/4/3.5f*2));
+		    addView(bluetoothStateIcon, bluetoothIconlp);
+        }
         if (blueStatus == false)
             bluetoothStateIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.bluetooth_state_off_ico));
         else
             bluetoothStateIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.bluetooth_state_on_ico));
-		bluetoothStateIcon.setScaleType(ScaleType.CENTER_INSIDE);
-		LayoutParams bluetoothIconlp = new LayoutParams( (int)( sizeWidth/4/3.5f),(int)( sizeWidth/4/3.5f*2));
-		addView(bluetoothStateIcon, bluetoothIconlp);
 		measureChild(bluetoothStateIcon, widthMeasureSpec,heightMeasureSpec);
 		
 		setMeasuredDimension(sizeWidth, sizeHeight);
@@ -141,7 +160,9 @@ public class BluetoothPairedViewGroup extends ViewGroup {
 	public void start(){
 		ring.start();
 	}
-
+    public void setInnerTextView(String str){
+        textView.setText(str);
+    }
     public void start(int time){
         ring.setAnimalTime(time);
         ring.start();
@@ -154,6 +175,8 @@ public class BluetoothPairedViewGroup extends ViewGroup {
 	}
 
     public void changIcon(){
+        if(bluetoothStateIcon == null)
+            return;
         if (blueStatus == false)
             bluetoothStateIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.bluetooth_state_off_ico));
         else

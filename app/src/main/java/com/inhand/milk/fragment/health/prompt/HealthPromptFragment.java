@@ -1,11 +1,6 @@
 package com.inhand.milk.fragment.health.prompt;
 
 import android.app.Fragment;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,6 +30,7 @@ public class HealthPromptFragment extends TitleFragment {
     private float[] mWeight;
     private List<String[]> text;
     private View.OnClickListener rightListener;
+    private int textColor;
 
     @Nullable
     @Override
@@ -48,7 +44,7 @@ public class HealthPromptFragment extends TitleFragment {
             }
         };
         initViews(mView);
-        setTitleview(getResources().getString(R.string.health_prompt_title),2,getResources().getDrawable(R.drawable.back_icon),rightListener);
+        setTitleview(getResources().getString(R.string.health_prompt_title),2,getResources().getDrawable(R.drawable.header_sector_ico),rightListener);
         return mView;
     }
     private void initViews(View v){
@@ -60,6 +56,7 @@ public class HealthPromptFragment extends TitleFragment {
     }
     private void initConfigures(){
         int i,temp=0;
+        textColor = getResources().getColor(R.color.health_prompt_listview_item_long_doc_text_color);
         String[] strings = getResources().getStringArray(R.array.health_prompt_listview_item_doc);
         String[] docStrings = getResources().getStringArray(R.array.health_prompt_listview_item_long_doc);
         int[] textColors = getResources().getIntArray(R.array.health_prompt_listview_item_text_doc_colors);
@@ -118,8 +115,8 @@ public class HealthPromptFragment extends TitleFragment {
     }
     private void itemSettings(View view,List<Object> item){
         ImageView  imageView = (ImageView)view.findViewById(R.id.health_prompt_listview_item_circle_icon);
-        CircleDrawable circle  = new CircleDrawable(getResources().getDimension(R.dimen.health_prompt_listview_item_circle_r)/2,
-                (int)item.get(1));
+        CircleDrawable circle  = new CircleDrawable( getResources().getDimension(R.dimen.health_prompt_listview_item_circle_r)/2,
+                (int)item.get(1) );
         imageView.setImageDrawable(circle);
 
         TextView textView = (TextView)view.findViewById(R.id.health_prompt_listview_item_text_doc);
@@ -136,6 +133,7 @@ public class HealthPromptFragment extends TitleFragment {
 
         textView = (TextView)view.findViewById(R.id.health_prompt_listview_item_text_long_doc);
         textView.setText((String)item.get(4));
+        textView.setTextColor(textColor);
         myGrad = (GradientDrawable)textView.getBackground();
         myGrad.setColor((int)item.get(5));
     }

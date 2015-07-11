@@ -34,7 +34,7 @@ public class BabyInfoFragment extends TitleFragment{
 		// TODO Auto-generated method stub
 		mView =  inflater.inflate(R.layout.health_baby_info, container, false);
 		initViews(mView);
-		setTitleview(getResources().getString(R.string.baby_info_activity_baby_title_text), 2,null,null);
+		setTitleview(getResources().getString(R.string.baby_info_activity_baby_title_text), 2);
 		return mView;
 	}
 	

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.view.View;
 
 import com.inhand.milk.R;
-import com.inhand.milk.activity.MainActivity;
 
 public class MainTitle extends BaseTitle{
 
@@ -16,9 +15,10 @@ public class MainTitle extends BaseTitle{
 	}
 	public View getView(Activity activity) {
 		// TODO Auto-generated method stu
-		return setView(activity, R.layout.title_main,
+		return setView(activity, R.layout.title_main,null,mTitle,null);
+        /*
 				activity.getResources().getDrawable( R.drawable.menu_entry),mTitle,
-				((MainActivity)activity).getMyOnclickListener());
+				((MainActivity)activity).getMyOnclickListener());*/
 	}
 	
 }

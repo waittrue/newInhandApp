@@ -7,8 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/menu_head_height" >
-
-        <ImageView
+        <view
             android:id="@+id/menu_image_container"
             android:layout_width="@dimen/menu_head_icon_width"
             android:layout_height="@dimen/menu_head_icon_height"
@@ -17,15 +16,21 @@
             android:layout_marginBottom="@dimen/menu_head_icon_margin_bottom"
             android:layout_marginLeft="@dimen/menu_head_icon_margin_left"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_launcher" />
-
+            android:src="@drawable/ic_launcher"
+            class="com.inhand.milk.utils.CircleImageView"
+           />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/menu_user_info"
+            android:layout_marginLeft="@dimen/menu_head_text_margin_left_icon"
+            android:layout_toRightOf="@+id/menu_image_container">
         <TextView
             android:id="@+id/menu_title_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/menu_head_text_margin_left_icon"
-            android:layout_toRightOf="@+id/menu_image_container"
+            android:layout_alignParentTop="true"
             android:text="宝宝妈妈"
             android:textColor="@color/menu_head_text_color"
             android:textSize="@dimen/menu_head_name_text_size" />
@@ -34,12 +39,14 @@
             android:id="@+id/menu_title_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/menu_image_container"
+            android:layout_below="@+id/menu_title_name"
+            android:layout_marginTop="10dp"
             android:layout_alignLeft="@+id/menu_title_name"
             android:singleLine="true"
             android:text="奶瓶账号:JJD22446"
             android:textColor="@color/menu_head_text_color"
             android:textSize="@dimen/menu_head_id_text_size" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -59,6 +66,8 @@
                 android:layout_weight="1"
                 android:background="@color/menu_head_under_line_color" />
         </LinearLayout>
+
+
 
     </RelativeLayout>
 

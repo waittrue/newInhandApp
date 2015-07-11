@@ -33,8 +33,8 @@ public class BackTitle extends BaseTitle{
 				}
 			}
 		};
-		return setView(activity, R.layout.title_minor,
-				activity.getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha),mTitle,
+		return setView(activity, R.layout.title_back,
+				activity.getResources().getDrawable(R.drawable.header_return_ico),mTitle,
 				 listener);
 
 	}

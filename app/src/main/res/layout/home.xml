@@ -21,15 +21,15 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight = "3" >
+            android:layout_weight = "4" >
 
             <LinearLayout
                 android:id="@+id/temperature_milk_circle_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:orientation="vertical" >
+                android:layout_alignParentBottom="false"
+                android:orientation="vertical"
+                android:layout_centerInParent="true">
             </LinearLayout>
 
         </RelativeLayout>
@@ -42,17 +42,18 @@
            android:orientation="horizontal" >
 
             <RelativeLayout
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/home_advise_container_margin_left_right">
 
                 <RelativeLayout
-                    android:layout_width="@dimen/home_advise_layout_width"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/home_advise_layout_height"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/home_advise_margin_top"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                  >
 
                     <TextView
                         android:id="@+id/home_left_title"
@@ -94,7 +95,7 @@
                         android:layout_marginBottom="@dimen/home_advise_num_margin_bottom"
                         android:layout_toRightOf="@id/home_left_third_title"
                         android:text="36.5°C"
-                        android:textColor="@color/home_advise_left_num_color"
+                        android:textColor="@color/public_caution_color"
                         android:textSize="@dimen/home_advise_num_size" />
 
                     <TextView
@@ -105,24 +106,24 @@
                         android:layout_marginBottom="@dimen/home_advise_num_margin_bottom"
                         android:layout_toRightOf="@id/home_left_second_title"
                         android:text="160ML"
-                        android:textColor="@color/home_advise_left_num_color"
+                        android:textColor="@color/public_caution_color"
                         android:textSize="@dimen/home_advise_num_size" />
 
                 </RelativeLayout>
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/home_advise_container_margin_left_right">
 
                 <RelativeLayout
                     android:id="@+id/relativeLayout1"
-                    android:layout_width="@dimen/home_advise_layout_width"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/home_advise_layout_height"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/home_advise_margin_top"
                     android:orientation="vertical" >
 
                     <TextView
@@ -165,7 +166,7 @@
                         android:layout_marginBottom="@dimen/home_advise_num_margin_bottom"
                         android:layout_toRightOf="@id/home_right_second_title"
                         android:text="100ML"
-                        android:textColor="@color/home_advise_right_num_color"
+                        android:textColor="@color/public_nor_color"
                         android:textSize="@dimen/home_advise_num_size" />
 
                     <TextView
@@ -177,11 +178,12 @@
                         android:layout_toRightOf="@id/home_right_third_title"
                         android:gravity="bottom|left"
                         android:text="40.6°C"
-                        android:textColor="@color/home_advise_right_num_color"
+                        android:textColor="@color/public_nor_color"
                         android:textSize="@dimen/home_advise_num_size" />
 
                 </RelativeLayout>
             </RelativeLayout>
+
         </LinearLayout>
     </LinearLayout>
 
@@ -203,8 +205,8 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:singleLine="true"
             android:text="喝牛奶建议不要放太多糖，这样对身体的发育不好,请好好注意这点。。。。"
-            android:textColor="#777777"
-            android:textSize="12sp" />
+            android:textColor="#888888"
+            android:textSize="12dp" />
     </LinearLayout>
 
 </LinearLayout>

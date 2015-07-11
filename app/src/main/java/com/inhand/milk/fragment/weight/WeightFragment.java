@@ -1,7 +1,7 @@
 package com.inhand.milk.fragment.weight;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -33,11 +33,11 @@ public class WeightFragment extends TitleFragment {
     private RingWithText ringWithText;
     private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
     private Adder adder;
+    private int sweepStartColor,sweepEndColor;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_weight, container, false);
-        setTitleview(getResources().getString(R.string.weight_fragment_title), 1);
         initViews(mView);
         return mView;
     }
@@ -51,6 +51,7 @@ public class WeightFragment extends TitleFragment {
 
     private void initAdder(View view) {
         adder = (Adder) view.findViewById(R.id.weight_fragment_adder);
+        adder.setBgColor(getResources().getColor(R.color.weight_fragment_adder_color));
         adder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +62,8 @@ public class WeightFragment extends TitleFragment {
 
     }
     private void inAnimation() {
-        AdderPupupWindow floatAdderWindow = new AdderPupupWindow(getActivity());
-        floatAdderWindow.show();
+        //floatAdderWindow.show();
+        this.startActivity(new Intent(getActivity(),AdderWindow.class));
     }
 
 
@@ -71,8 +72,10 @@ public class WeightFragment extends TitleFragment {
         initRingWithText();
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         lp.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-        relativeLayout.addView(initRingWithText(), lp);
+       // relativeLayout.addView(initRingWithText(), lp);
+        initRingWithText().setLayoutParams(lp);
         initRelativeLeftTexts(relativeLayout);
         initRelativeRightTexts(relativeLayout);
         initBottomTextView(view);
@@ -96,7 +99,7 @@ public class WeightFragment extends TitleFragment {
         String downString = getResources().getString(R.string.weight_left_down_text);
 
         float upLeftMargin, downLeftMargin, upTopMargin, downTopMargin;
-        int color = getResources().getColor(R.color.weight_fragment_left_text_color);
+        int color = sweepStartColor;
         float upTextSize = getResources().getDimension(R.dimen.weight_fragment_left_up_text_size);
         float downTextSize = getResources().getDimension(R.dimen.weight_fragment_left_down_text_size);
         float space = getResources().getDimension(R.dimen.weight_fragment_text_space_size);
@@ -126,7 +129,8 @@ public class WeightFragment extends TitleFragment {
         upLp.topMargin = (int) upTopMargin;
         downLp.leftMargin = (int) downLeftMargin;
         downLp.topMargin = (int) downTopMargin;
-
+        upLp.addRule(RelativeLayout.ALIGN_TOP,R.id.weight_fragment_ring_withtext);
+        downLp.addRule(RelativeLayout.ALIGN_TOP,R.id.weight_fragment_ring_withtext);
         relativeLayout.addView(leftUp, upLp);
         relativeLayout.addView(leftDown, downLp);
     }
@@ -135,10 +139,10 @@ public class WeightFragment extends TitleFragment {
         TextView rightUp = new TextView(getActivity());
         TextView rightDown = new TextView(getActivity());
         String upString = getCurrentStander();
-        String downString = getResources().getString(R.string.weight_left_down_text);
+        String downString = getResources().getString(R.string.weight_right_down_text);
 
         float upRightMargin, downRightMargin, upTopMargin, downTopMargin;
-        int color = getResources().getColor(R.color.weight_fragment_right_text_color);
+        int color = sweepEndColor;
         float upTextSize = getResources().getDimension(R.dimen.weight_fragment_right_up_text_size);
         float downTextSize = getResources().getDimension(R.dimen.weight_fragment_right_down_text_size);
         float space = getResources().getDimension(R.dimen.weight_fragment_text_space_size);
@@ -168,8 +172,9 @@ public class WeightFragment extends TitleFragment {
         upLp.leftMargin = (int) (width - upRightMargin - rightUp.getPaint().measureText(upString));
         upLp.topMargin = (int) upTopMargin;
         downLp.leftMargin = (int) (width - downRightMargin - rightDown.getPaint().measureText(downString));
-        ;
         downLp.topMargin = (int) downTopMargin;
+        upLp.addRule(RelativeLayout.ALIGN_TOP,R.id.weight_fragment_ring_withtext);
+        downLp.addRule(RelativeLayout.ALIGN_TOP,R.id.weight_fragment_ring_withtext);
 
         relativeLayout.addView(rightUp, upLp);
         relativeLayout.addView(rightDown, downLp);
@@ -186,23 +191,26 @@ public class WeightFragment extends TitleFragment {
 
     private RingWithText initRingWithText() {
         float r;
+        sweepStartColor = getResources().getColor(R.color.weight_fragment_ring_sweepangle_start_color);
+        sweepEndColor = getResources().getColor(R.color.weight_fragment_ring_sweepangle_end_color);
         int height = App.getWindowHeight(getActivity());  // 屏幕高度（像素）
-        r = height - getResources().getDimension(R.dimen.weight_fragment_tab_height) -
-                getResources().getDimension(R.dimen.weight_fragment_line_height) -
+        r = height - getResources().getDimension(R.dimen.weight_fragment_up_total_height) -
                 getResources().getDimension(R.dimen.weight_fragment_excle_down_divider_height) -
                 getResources().getDimension(R.dimen.footer_navigation_fragment_height) -
-                getResources().getDimension(R.dimen.temperature_milk_title_height) -
-                getResources().getDimension(R.dimen.milk_amount_title_divider) - App.getStatusHeight(getActivity());
-        r = r / 2 / 5 * 3 / 2;//这里要跟布局图里面的那个权重对应好;
-
-
-        ringWithText = new RingWithText(this.getActivity(), r);
-
-        ringWithText.setTexts(getRingWithTextStrings(0), getRingWithTextSizes(r));
-        // ringWithText.setRingWidth(r/6);
-        ringWithText.setTextColor(getResources().getColor(R.color.weight_fragment_ring_text_color));
+                  App.getStatusHeight(getActivity());
+        //r = r / 2 / 5 * 3 / 2;//这里要跟布局图里面的那个权重对应好;
+        r = r /2 - getResources().getDimension(R.dimen.weight_fragment_bottom_text_height) - getResources().getDimension(R.dimen.weight_fragment_adder_height);
+        r = r /2;
+        r = r * 7/10;
+        //ringWithText = new RingWithText(this.getActivity(), r);
+        ringWithText = (RingWithText)mView.findViewById(R.id.weight_fragment_ring_withtext);
+        ringWithText.setR(r);
+        ringWithText.setSweepColor(sweepStartColor,sweepEndColor);
+        ringWithText.setTexts(getRingWithTextStrings(), getRingWithTextSizes(r));
+        ringWithText.setRingWidth(r/6);
+        ringWithText.setTexts(new int[]{getResources().getColor(R.color.weight_fragment_ring_text_color),
+                getResources().getColor(R.color.public_main_a_color),});
         ringWithText.setRingBgColor(getResources().getColor(R.color.weight_fragment_ring_bg_color));
-        ringWithText.setBackgroundColor(getResources().getColor(R.color.weight_fragment_ring_inner_bg_color));
         return ringWithText;
     }
 
@@ -213,7 +221,7 @@ public class WeightFragment extends TitleFragment {
         return result;
     }
 
-    private String[] getRingWithTextStrings(int weight) {
+    private String[] getRingWithTextStrings() {
         String[] result = new String[2];
         result[0] = getResources().getString(R.string.weight_ring_text_up);
         //这里要根据实际情况反馈出最后的结果
@@ -266,7 +274,8 @@ public class WeightFragment extends TitleFragment {
 
         int lineWidth = wm.getDefaultDisplay().getWidth() /4;
         imageView.setLayoutParams(new LinearLayout.LayoutParams(lineWidth, ViewGroup.LayoutParams.MATCH_PARENT));
-        imageView.setBackgroundColor(Color.RED);
+        imageView.setBackgroundColor(getResources().getColor(R.color.public_darkin_highlight_a_color));
+        //imageView.setImageDrawable(new ColorDrawable(getResources().getColor(R.color.color_white)));
         linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
         linearLayout.addView(imageView);
 

@@ -3,20 +3,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="#77000000"
     android:id="@+id/weigth_fragment_outest_layer">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"></LinearLayout>
+        android:layout_weight="2"></LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:id="@+id/weight_fragment_ruler_container"
         android:background="@color/weight_fragment_adder_bg_color">
 
@@ -28,12 +27,13 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="2015-10-30"
                 android:id="@+id/weight_fragment_adder_title_text"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:textColor="@color/weight_fragment_adder_title_text_color"
+                android:textColor="@color/public_main_a_color"
                 android:textSize="@dimen/weight_fragment_adder_title_text_size" />
 
             <ImageView
@@ -42,47 +42,45 @@
                 android:background="@color/weight_fragment_adder_title_line_color" />
         </LinearLayout>
 
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/weight_fragment_adder_doc_num_container_height"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:layout_width="@dimen/weight_fragment_adder_doc_text_width"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weight_fragment_adder_doc_text"
+                    android:id="@+id/weight_fragment_adder_doc_text"
+                    android:gravity="center_vertical|right"
+                    android:textColor="@color/weight_fragment_adder_doc_text_color"
+                    android:textSize="@dimen/weight_fragment_adder_doc_text_size"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:layout_width="@dimen/weight_fragment_adder_num_text_width"
+                    android:layout_height="wrap_content"
+                    android:text="0.0"
+                    android:id="@+id/weight_fragment_adder_num_text"
+                    android:layout_toRightOf="@+id/weight_fragment_adder_doc_text"
+                    android:gravity="left|center_vertical"
+                    android:textSize="@dimen/weight_fragment_adder_num_text_size"
+                    android:textColor="@color/public_main_a_color"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2">
-
-            <RelativeLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true">
-
-                    <TextView
-                        android:layout_width="@dimen/weight_fragment_adder_doc_text_width"
-                        android:layout_height="wrap_content"
-                        android:text="@string/weight_fragment_adder_doc_text"
-                        android:id="@+id/weight_fragment_adder_doc_text"
-                        android:gravity="center_vertical|right"
-                        android:textColor="@color/weight_fragment_adder_doc_text_color"
-                        android:textSize="@dimen/weight_fragment_adder_doc_text_size"
-                        android:layout_centerVertical="true" />
-
-                    <TextView
-                        android:layout_width="@dimen/weight_fragment_adder_num_text_width"
-                        android:layout_height="wrap_content"
-                        android:text="0.0"
-                        android:id="@+id/weight_fragment_adder_num_text"
-                        android:layout_toRightOf="@+id/weight_fragment_adder_doc_text"
-                        android:gravity="left|center_vertical"
-                        android:textSize="@dimen/weight_fragment_adder_num_text_size"
-                        android:textColor="@color/weight_fragment_adder_num_text_color"
-                        android:layout_centerVertical="true" />
-                </RelativeLayout>
-
-            </RelativeLayout>
-
+            android:layout_height="@dimen/weight_fragment_adder_ruler_height">
             <RelativeLayout
                 android:orientation="vertical"
                 android:layout_width="@dimen/weight_fragment_adder_ruler_container_width"
@@ -114,7 +112,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:gravity="center"
-                            android:orientation="horizontal"></LinearLayout>
+                            android:orientation="horizontal">
+                        </LinearLayout>
                     </view>
 
 
@@ -127,10 +126,8 @@
                     android:id="@+id/imageView2"
                     android:src="@drawable/weight_fragment_adder_ruler_jt"
                     android:scaleType="centerInside"
-                    android:layout_alignParentBottom="false"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_alignParentLeft="false"
                     android:layout_alignParentTop="true" />
 
             </RelativeLayout>
@@ -140,8 +137,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="@dimen/weight_fragment_adder_ruler_button_container_height">
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -155,21 +151,25 @@
 
                 <ImageView
                     android:layout_width="@dimen/weight_fragment_adder_bottome_icon_width"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/weight_fragment_adder_bottome_icon_height"
                     android:id="@+id/weight_fragment_adder_cancle_icon"
                     android:src="@drawable/weight_fragment_adder_cancle_ico"
                     android:scaleType="centerInside"
+                    android:layout_marginTop="@dimen/weight_fragment_adder_ruler_button_margin_top"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_alignParentTop="true"
+                     />
 
                 <ImageView
                     android:layout_width="@dimen/weight_fragment_adder_bottome_icon_width"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/weight_fragment_adder_bottome_icon_height"
                     android:id="@+id/weight_fragment_adder_ok_icon"
                     android:src="@drawable/weight_fragment_adder_ok_ico"
                     android:scaleType="centerInside"
+                    android:layout_marginTop="@dimen/weight_fragment_adder_ruler_button_margin_top"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_alignParentTop="true"
+                    />
             </RelativeLayout>
 
             <RelativeLayout
