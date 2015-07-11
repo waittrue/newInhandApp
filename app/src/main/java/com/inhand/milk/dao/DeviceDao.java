@@ -84,8 +84,8 @@ public class DeviceDao
                 Cursor cursor = DeviceDao.this.db.query(
                         Device.DEVICE_CLASS,
                         null,
-                        whereClause,
-                        whereArgs,
+                        null,
+                        null,
                         null, null, null);
                 while (cursor.moveToNext()) {
                     String json = cursor.getString(cursor.getColumnIndex(
@@ -93,7 +93,8 @@ public class DeviceDao
                     ));
                     json=json.replace("_","");
                     Device device = JSON.parseObject(json, Device.class);
-                    devices.add(device);
+                    if(device.getUser().equals(App.getCurrentUser()))
+                        devices.add(device);
                 }
                 cursor.close();
                 return super.doInBackground(params);
@@ -120,8 +121,8 @@ public class DeviceDao
         Cursor cursor = DeviceDao.this.db.query(
                 Device.DEVICE_CLASS,
                 null,
-                whereClause,
-                whereArgs,
+                null,
+                null,
                 null, null, null);
         while (cursor.moveToNext()) {
             String json = cursor.getString(cursor.getColumnIndex(
