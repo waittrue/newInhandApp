@@ -10,8 +10,11 @@ import android.widget.LinearLayout;
 
 import com.inhand.milk.R;
 
+import java.text.DecimalFormat;
+
 public class TitleFragment extends Fragment{
 	protected View mView;
+
 	private static LinearLayout.LayoutParams lp =new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
 	public void refresh(){

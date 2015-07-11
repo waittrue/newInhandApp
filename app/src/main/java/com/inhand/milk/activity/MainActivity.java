@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
                 bluetooth.asClient();
             }
         };
-        handler.postDelayed(runnable,3000);
+        handler.postDelayed(runnable,300);
         setSlidingMenu();
         onClickListener = new OnClickListener() {
             @Override
@@ -71,7 +71,17 @@ public class MainActivity extends BaseActivity {
             }
         };
     }
-
+/*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Bluetooth.REQUEST_ENABLE_BT){
+            if(resultCode == RESULT_OK){
+                bluetooth.asClient();
+            }
+        }
+    }
+    */
 
     private void setSlidingMenu(){
         menu = new SlidingMenu(this);

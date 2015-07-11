@@ -2,6 +2,10 @@ package com.inhand.milk.fragment.bluetooth;
 
 import android.util.Log;
 
+import com.avos.avoscloud.AVException;
+import com.inhand.milk.App;
+import com.inhand.milk.STANDAR.Standar;
+import com.inhand.milk.entity.Base;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 
@@ -15,10 +19,10 @@ import java.util.List;
  */
 public class RecieveRecordMessage extends BaseRecieveMessage {
    private static final String TAG = "recordMessage";
-   private static SimpleDateFormat simpleDateFormat;
-
+   private static SimpleDateFormat oneDayDateFormat= new SimpleDateFormat("yyyy-MM-dd");;
+    private static SimpleDateFormat recordDateFormat = new SimpleDateFormat("HH:MM");
     public RecieveRecordMessage() {
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:MM");
+
     }
     public  int  isRecordMessage(byte[] bytes,int len){
         if (isMessage(bytes, len) == true)
@@ -28,7 +32,7 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
    }
     //暂时处理成，数据只有全部有效的时候存储，不存储错误信息,false 代表不是这个报文，true 代表是这类报文，并处理了。
     private boolean isMessage(byte[] buf,int len){
-        float temp,continuTime,interval;
+        float advice,amount,startT,endT,continuTime,interval,score;
         Record record ;
         List<Record> records  = new ArrayList<>();
         OneDay oneDay  = new OneDay();
@@ -40,40 +44,57 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
             return true;
         }
         record = new Record();
-        temp = getDataValue(buf,1);
-        record.setBeginTemperature(temp);
+        startT = getDataValue(buf,1);
+        record.setBeginTemperature(startT);
 
-        temp = getDataValue(buf,5);
-        record.setEndTemperature(temp);
+        endT = getDataValue(buf,5);
+        record.setEndTemperature(endT);
 
-        temp = getDataValue(buf,9);
-        record.setVolume((int)temp);
+        amount = getDataValue(buf,9);
+        record.setVolume((int)amount);
 
         continuTime = getDataValue(buf,13);
-        interval = getDataValue(buf,17);
-        setRecordTime(record,continuTime,interval);
+        record.setDuration((int)continuTime);
 
-        /*temp = getDataValue(21);
-        * 建议量存储没有写
-        */
+        interval = getDataValue(buf,17);
+        setRecordTime(record,continuTime,interval,oneDay);
+
+        advice = getDataValue(buf,21);
+        record.setAdviceVolumn((int)advice);
+
+        score = Standar.getRecord(advice,amount,startT,endT,continuTime);
+        record.setScore((int)score);
+
         records.add(record);
         printRecord(record);
-        /*
+
+
+        //oneDay.setDate();
         oneDay.setRecords(records);
+
         oneDay.saveInDB(App.getAppContext(),new Base.DBSavingCallback() {
             @Override
             public void done() {
-
+                Log.i("record recive save","ok");
             }
         });
-        */
+
+
+        try {
+            oneDay.save();
+        } catch (AVException e) {
+            Log.i("record recive save in cloud","ok");
+            e.printStackTrace();
+        }
+
         return true;
     }
-    private void setRecordTime(Record record,float continuTime,float interva ){
+    private void setRecordTime(Record record,float continuTime,float interva,OneDay oneDay ){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, -(int) interva);
         calendar.add(Calendar.MINUTE, -(int)continuTime);
-        record.setBeginTime(simpleDateFormat.format(calendar.getTime()));
+        record.setBeginTime(recordDateFormat.format(calendar.getTime()));
+        oneDay.setDate(calendar.getTime());
     }
     private boolean messageCheck(byte[] buf){
         if (checkData(buf,1) != DATASTATUS.DATAVAILD)
@@ -96,10 +117,13 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
     }
     private void printRecord(Record record){
         String str = new String();
-        str += "开始时间:"+ record.getBeginTime()+"\n";
+        str += "\n"+"开始时间:"+ record.getBeginTime()+"\n";
         str += "开始温度:"+ String.valueOf( record.getBeginTemperature())+"\n";
         str +="结束温度："+ String.valueOf(record.getEndTemperature())+"\n";
         str +="饮奶量"+ String.valueOf( record.getVolume())+"\n";
+        str +="建议量"+ String.valueOf( record.getAdviceVolumn())+"\n";
+        str +="持续时间"+ String.valueOf( record.getDuration())+"\n";
+        str +="分数"+ String.valueOf( record.getScore())+"\n";
         Log.i(TAG,str);
     }
 }

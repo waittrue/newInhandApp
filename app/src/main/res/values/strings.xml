@@ -56,7 +56,8 @@
     <string name="sliding_list_advice">建议反馈</string>
 
     <!-- ************************分工部分********************************* -->
-
+    <!--common string-->
+    <string name="public_no_data">无数据</string>
     <!-- health nutrition -->
     <string name="health_nutrition_title">非健康汇总</string>
 

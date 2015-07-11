@@ -22,6 +22,7 @@ public class Bluetooth {
     private BluetoothAdapter  bluetoothAdapter;
     public static final int  REQUEST_ENABLE_BT = 1;
     private static final int MESSAGE_READ = 88;
+    private boolean stopAcceptFlag,stopConnectFlag,stopConnectedFlag;
     private static BluetoothDevice paired = null;
     private Activity activity =null;
    // private BluetoothData bluetoothData;
@@ -92,6 +93,7 @@ public class Bluetooth {
                  Toast.makeText(activity.getApplicationContext(), "你没有蓝牙设备,无法传输数据", Toast.LENGTH_LONG).show();
         }
         paired = selectFromBonded();
+        stopAcceptFlag = stopConnectedFlag = stopConnectFlag = false;
     }
     private static synchronized void synInit(){
         if (instance == null)
@@ -215,7 +217,7 @@ public class Bluetooth {
 
         connectedThread = new ConnectedThread(socket);
         connectedThread.start();
-        Log.i(  "连入", String.valueOf(  socket.isConnected() )  );
+       // Log.i(  "连入", String.valueOf(  socket.isConnected() )  );
         return socket.isConnected();
     }
 
@@ -239,7 +241,11 @@ public class Bluetooth {
                 connectThread.interrupt();
                  connectThread = null;
         }
-
+        if(acceptThread != null){
+            acceptThread.cancel();
+            acceptThread.interrupt();
+            acceptThread = null;
+        }
         if (connectedThread != null){
             connectedThread.cancel();
             connectedThread.interrupt();
@@ -282,12 +288,6 @@ public class Bluetooth {
                     break;
                 } catch (IOException connectException) {
                     Log.i("bluetooth", "连入" + paired.getName() + "失败");
-                    /*
-                    try {
-                        socket.close();
-                    } catch (IOException closeException) {
-                    }
-                    */
                 }
             }
             Log.i("bluetooth", "连入"+paired.getName()+":成功创建了socket");
@@ -328,17 +328,8 @@ public class Bluetooth {
         }
 
         public void run() {
-
-
             // Keep listening to the InputStream until an exception occurs
             while (true) {
-	        	/*
-	        	if(mmSocket.isConnected() == false){
-	        		Log.i("bluetooth","关闭了连接");
-	        		ShutConnect();
-	        		break;
-	        	}
-	        	*/
                 Log.i(  "连入", String.valueOf(  mmSocket.isConnected() )  );
                 try {
                     Log.i("bluetooth", "连入成功—等待数据");
@@ -358,9 +349,7 @@ public class Bluetooth {
                 }
             }
             Log.i("连接失败","抛出异常");
-
-           connectThread = new ConnectThread(paired);
-           connectThread.start();
+            asServer();
         }
 
         /* Call this from the main activity to send data to the remote device */
@@ -402,6 +391,7 @@ public class Bluetooth {
                         Log.i("bluetooth","listening ......");
                         socket = mmServerSocket.accept();
                     } catch (IOException e) {
+                        Log.i("bluetooth","listening-----shibai");
                         break;
                     }
                     // If a connection was accepted

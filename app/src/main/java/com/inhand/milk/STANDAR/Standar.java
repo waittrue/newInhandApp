@@ -1,10 +1,13 @@
 package com.inhand.milk.STANDAR;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by Administrator on 2015/6/3.
  * 提供整个app中的标准值。
  */
 public class Standar {
+    public static DecimalFormat TeamperatureFormat  = new DecimalFormat("##.#");
     public  final static int drinkMaxDuration =20;
     public  final static int drinkMinDuration =10;
     public  final static int drinkMaxAmount =200;

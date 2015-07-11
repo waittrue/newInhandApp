@@ -1,12 +1,14 @@
 package com.inhand.milk.fragment.bluetooth;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
@@ -14,13 +16,14 @@ import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.inhand.milk.App;
+import com.inhand.milk.activity.BluetoothPairedAcivity;
 import com.inhand.milk.dao.DeviceDao;
+import com.inhand.milk.entity.Base;
 import com.inhand.milk.entity.Device;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -107,16 +110,19 @@ public class Bluetooth {
     public static Bluetooth getInstance(){
         if (instance == null)
             synInit();
+        instance.ShutConnect();
         return instance;
     }
 
-    public void openBlue(){
+    public boolean openBlue(){
         if(!bluetoothAdapter.isEnabled()){
             if (activity !=null) {
                 Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 activity.startActivityForResult(enableBluetooth, REQUEST_ENABLE_BT);
             }
+            return false;
         }
+        return true;
     }
     public boolean isEnabled(){
         return bluetoothAdapter.isEnabled();
@@ -155,7 +161,12 @@ public class Bluetooth {
         paired = BlueDevice;
         Device device = new Device();
         device.setMac(BlueDevice.getAddress());
-       // device.saveInDB(App.getAppContext(), null);
+        device.saveInDB(App.getAppContext(), new Base.DBSavingCallback() {
+            @Override
+            public void done() {
+                Log.i("blutooth","device_save");
+            }
+        });
         try {
             device.save();
         } catch (AVException e) {
@@ -166,10 +177,6 @@ public class Bluetooth {
     }
     public void setActivity(Activity act){
         activity = act;
-
-        if(paired == null){
-            Toast.makeText(App.getAppContext(),"请去配对蓝牙",Toast.LENGTH_SHORT).show();
-        }
     }
     public boolean hasPaired(){
         if (paired == null )
@@ -188,10 +195,12 @@ public class Bluetooth {
                     Log.i("bluetooth","xuanzhong de   "+device.getName());
                     return device;
                 }
+                /*
                 if (device.getName().equals( "小米手机")){
                     Log.i(" find device",device.getName());
                     return device;
                 }
+                */
             }
         }
 
@@ -200,13 +209,12 @@ public class Bluetooth {
     /*返回默认存储的蓝牙地址，当没有的时候返回null
     * **/
     private String getDefaultMac(){
+
         DeviceDao deviceDao = new DeviceDao(App.getAppContext());
-        List<Device> devices = deviceDao.findAllFromDB(1);
-        if(devices == null)
-            return null;
-        Device device = devices.get(0);
+        Device device = deviceDao.findFromDBByCurrentUser();
+        Log.i("bluetooth_get_dev", String.valueOf(device == null));
         if(device == null)
-            return null;
+            return  null;
         return device.getMac();
     }
 
@@ -214,15 +222,27 @@ public class Bluetooth {
     public void asClient(){
         if(paired == null){
             Log.i("paired", "null");
-            if (activity != null)
-                Toast.makeText(activity.getApplicationContext(), "没有配对对象",
-                     Toast.LENGTH_LONG).show();
+            if (activity != null){
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setTitle("配对信息");
+                builder.setMessage("你的蓝牙没有绑定配对的奶瓶，请去配对蓝牙");
+                builder.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent();
+                        intent.setClass(activity,BluetoothPairedAcivity.class);
+                        activity.startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("取消",null);
+                AlertDialog alertDialog  = builder.create();
+                alertDialog.show();
+            }
+
             return ;
         }
 
-        if(connectThread == null){
-            ShutConnect();
-        }
+        ShutConnect();
         connectThread = new ConnectThread(paired);
         connectThread.start();
     }
@@ -305,12 +325,6 @@ public class Bluetooth {
                     break;
                 } catch (IOException connectException) {
                     Log.i("bluetooth", "连入" + paired.getName() + "失败");
-                    /*
-                    try {
-                        socket.close();
-                    } catch (IOException closeException) {
-                    }
-                    */
                 }
             }
             Log.i("bluetooth", "连入"+paired.getName()+":成功创建了socket");
@@ -351,17 +365,8 @@ public class Bluetooth {
         }
 
         public void run() {
-
-
-            // Keep listening to the InputStream until an exception occurs
             while (true) {
-	        	/*
-	        	if(mmSocket.isConnected() == false){
-	        		Log.i("bluetooth","关闭了连接");
-	        		ShutConnect();
-	        		break;
-	        	}
-	        	*/
+
                 Log.i(  "连入", String.valueOf(  mmSocket.isConnected() )  );
                 try {
                     Log.i("bluetooth", "连入成功—等待数据");
@@ -379,9 +384,8 @@ public class Bluetooth {
                 }
             }
             Log.i("连接失败","抛出异常");
-
-           connectThread = new ConnectThread(paired);
-           connectThread.start();
+            connectThread = new ConnectThread(paired);
+            connectThread.start();
         }
 
         /* Call this from the main activity to send data to the remote device */

@@ -360,10 +360,5 @@ public class MilkAmountFragment extends TitleFragment {
     private float getOnceAmount() {
         return 300;
     }
-
-
     final static float TEMPREATUREHIGH = 40, TEMPREATURELOW = 37;
-
-
-
 }

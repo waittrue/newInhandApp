@@ -18,7 +18,7 @@
             android:id="@+id/textView" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/start_temperature" />
 
@@ -37,7 +37,7 @@
             android:id="@+id/textView2" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/end_temperature" />
     </LinearLayout>
@@ -55,7 +55,7 @@
             android:id="@+id/textView3" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/amount" />
     </LinearLayout>
@@ -73,7 +73,7 @@
             android:text="饮奶持续时间 分钟" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/time" />
 
@@ -92,7 +92,7 @@
             android:text="建议量" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/advise" />
     </LinearLayout>

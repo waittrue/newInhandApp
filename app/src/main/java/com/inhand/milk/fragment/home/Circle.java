@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.graphics.Typeface;
 import android.os.Handler;
 import android.view.View;
 
@@ -301,7 +300,10 @@ public class Circle extends View{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				scoreString = String.valueOf(score);
+                if(maxScore == -1 || maxScore == 0)
+                    scoreString = "无";
+				else
+                    scoreString = String.valueOf(score);
 				invalidate();
 				if (sweepAngle == maxSweepAngle)
 					handler.removeCallbacks(this);

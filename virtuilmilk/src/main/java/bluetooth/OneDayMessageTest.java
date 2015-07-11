@@ -69,6 +69,10 @@ public class OneDayMessageTest extends BaseSendMessages {
         setByte(bytes,4,21);
     }
     public int message2Bytes(byte[] buffer){
+
+        setCRC(25);
+
+        setEnd(27);
         return getBytes(buffer);
     }
     private void setTitle(){
