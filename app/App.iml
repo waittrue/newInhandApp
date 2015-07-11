@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
-        <option name="GRADLE_PROJECT_PATH" value=":virtuilmilk" />
+        <option name="GRADLE_PROJECT_PATH" value=":App" />
       </configuration>
     </facet>
     <facet type="android" name="Android">
@@ -84,9 +84,22 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
+    <orderEntry type="library" exported="" name="fastjson" level="project" />
+    <orderEntry type="library" exported="" name="httpmime-4.2.4" level="project" />
+    <orderEntry type="library" exported="" name="avospush-v2.6.10.2" level="project" />
+    <orderEntry type="library" exported="" name="weibo.sdk.android.sso" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
+    <orderEntry type="library" exported="" name="picasso-2.5.0" level="project" />
+    <orderEntry type="library" exported="" name="avosstatistics-v2.6.10.2" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="avoscloud-sdk-v3.0" level="project" />
+    <orderEntry type="library" exported="" name="easyandroidanimationslibrary-v0.5" level="project" />
+    <orderEntry type="library" exported="" name="android-async-http-1.4.6" level="project" />
+    <orderEntry type="library" exported="" name="qq.sdk.1.6.1" level="project" />
+    <orderEntry type="module" module-name="SlidingMenu" exported="" />
   </component>
 </module>
 

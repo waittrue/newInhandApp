@@ -5,7 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.inhand.milk.dao.BabyDao;
+import com.inhand.milk.entity.Device;
 import com.inhand.milk.entity.OneDay;
+import com.inhand.milk.entity.Statistics;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,7 +35,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_COMP = "comp";
     //数据表列表
     private static final String[] TB_NAMES = new String[]{
-            OneDay.ONEDAY_CLASS
+            OneDay.ONEDAY_CLASS,
+            Device.DEVICE_CLASS,
+            Statistics.STATISTICS_CLASS,
     };
     //数据库对象
     private SQLiteDatabase db;

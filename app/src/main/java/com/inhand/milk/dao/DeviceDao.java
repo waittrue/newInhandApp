@@ -82,7 +82,7 @@ public class DeviceDao
             @Override
             protected Object doInBackground(Object[] params) {
                 Cursor cursor = DeviceDao.this.db.query(
-                        OneDay.ONEDAY_CLASS,
+                        Device.DEVICE_CLASS,
                         null,
                         whereClause,
                         whereArgs,
@@ -120,8 +120,8 @@ public class DeviceDao
         Cursor cursor = DeviceDao.this.db.query(
                 Device.DEVICE_CLASS,
                 null,
-                null,
-                null,
+                whereClause,
+                whereArgs,
                 null, null, null);
         while (cursor.moveToNext()) {
             String json = cursor.getString(cursor.getColumnIndex(
