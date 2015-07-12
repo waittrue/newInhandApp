@@ -12,10 +12,11 @@ import android.widget.ListView;
 /**
  * Created by Administrator on 2015/6/4.
  */
-public class PinnerListView extends ListView{
+public class PinnerListView extends ListView {
     private static final String TAG = "PinnerListView";
     private PinnerListViewAdapter myAdapter;
     private View head = null;
+
     public PinnerListView(Context context) {
         super(context);
     }
@@ -33,50 +34,56 @@ public class PinnerListView extends ListView{
     }
 
 
-    public void setHead(int resoure){
-        head = LayoutInflater.from(this.getContext()).inflate(resoure,this,false);
+    public void setHead(int resoure) {
+        head = LayoutInflater.from(this.getContext()).inflate(resoure, this, false);
     }
+
+    @Override
+    public PinnerListViewAdapter getAdapter() {
+        return (PinnerListViewAdapter) super.getAdapter();
+    }
+
     @Override
     public void setAdapter(ListAdapter adapter) {
-        myAdapter =	 (PinnerListViewAdapter)adapter;
+        myAdapter = (PinnerListViewAdapter) adapter;
         adapteHead();
         super.setAdapter(adapter);
 
     }
-    private void adapteHead(){
-        if(myAdapter != null) {
+
+    private void adapteHead() {
+        if (myAdapter != null) {
             head = myAdapter.getListViewHead(getFirstVisiblePosition(), head);
             if (head == null)
                 return;
         }
     }
-    private void layoutHead(){
+
+    private void layoutHead() {
         int width = head.getMeasuredWidth();
         int height = head.getMeasuredHeight();
         int offset;
         View child;
-        if(myAdapter.hasHead(getFirstVisiblePosition()) ){
+        if (myAdapter.hasHead(getFirstVisiblePosition())) {
             //Log.i(TAG,"hasHead");
-            head.layout(0,0,width,height);
-        }
-        else{
+            head.layout(0, 0, width, height);
+        } else {
             child = getChildAt(0);
-            if ( child.getBottom() > height)
-                head.layout(0,0,width,height);
+            if (child.getBottom() > height)
+                head.layout(0, 0, width, height);
             else {
-               // Log.i(TAG,"bottom < height");
-                int i =1,count;
+                // Log.i(TAG,"bottom < height");
+                int i = 1, count;
                 count = getChildCount();
-                while(i+1 <count){
+                while (i + 1 < count) {
                     child = getChildAt(i);
-                    if ( child.getBottom() > height){
-                        if (myAdapter.hasHead(i+getFirstVisiblePosition())){
-                            offset = getChildAt(i-1).getBottom();
-                          // Log.i(TAG,String.valueOf(offset)+" offset" + String.valueOf(height));
+                    if (child.getBottom() > height) {
+                        if (myAdapter.hasHead(i + getFirstVisiblePosition())) {
+                            offset = getChildAt(i - 1).getBottom();
+                            // Log.i(TAG,String.valueOf(offset)+" offset" + String.valueOf(height));
                             head.layout(0, offset - height, width, offset);
-                        }
-                        else
-                            head.layout(0,0,width,height);
+                        } else
+                            head.layout(0, 0, width, height);
                         break;
                     }
                     i++;
@@ -84,19 +91,20 @@ public class PinnerListView extends ListView{
             }
         }
     }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         adapteHead();
-        if(head != null)
-            measureChild(head,widthMeasureSpec,heightMeasureSpec);
+        if (head != null)
+            measureChild(head, widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-        Log.i("pinnerListView","onlayout");
-        if(head != null)
+        Log.i("pinnerListView", "onlayout");
+        if (head != null)
             layoutHead();
     }
 
@@ -104,9 +112,9 @@ public class PinnerListView extends ListView{
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         adapteHead();
-        if(head != null)
+        if (head != null)
             layoutHead();
-        if(head != null)
+        if (head != null)
             drawChild(canvas, head, getDrawingTime());
     }
 }

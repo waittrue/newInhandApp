@@ -18,19 +18,13 @@ import java.util.Map;
  * 提供判断是否head需要移动；
  */
 public class PinnerListViewAdapter extends BaseAdapter {
-    protected List<List<Map>> mData;
-    protected Context context;
     private static final int HEAD = 0, CONTENT = 1;
-    private ConfigureView configureView;
     private static final String TAG = "PinnerListViewAdapter";
     private static LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
-
-    public interface ConfigureView {
-        View configureHead(Map<String, Object> map, View convertView, int position);
-
-        View configureContent(Map<String, Object> map, View convertView, int position);
-    }
+    protected List<List<Map>> mData;
+    protected Context context;
+    private ConfigureView configureView;
 
     public PinnerListViewAdapter(Context context) {
         this.mData = new ArrayList<>();
@@ -40,16 +34,23 @@ public class PinnerListViewAdapter extends BaseAdapter {
     public void setConfigureView(ConfigureView configureView) {
         this.configureView = configureView;
     }
-    public Map<String,Object> getHead(int position){
-        if(position < 0)
+
+    public Map<String, Object> getHead(int position) {
+        if (position < 0)
             return null;
-        if(position > mData.size()+1)
+        if (position > mData.size() + 1)
             return null;
         return mData.get(position).get(0);
     }
-    public Map<String,Object> getContent(int position){
+
+    public Map<String, Object> getContent(int position) {
         return mData.get(position).get(1);
     }
+
+    public void clearData() {
+        mData.clear();
+    }
+
     public void addMap(Map<String, Object> head, Map<String, Object> content, int postion) {
         if (head == null && content == null)
             return;
@@ -59,7 +60,7 @@ public class PinnerListViewAdapter extends BaseAdapter {
         Map<String, Object> mHead = new HashMap<>();
         Map<String, Object> mContent = new HashMap<>();
         mContent.putAll(content);
-        if(head != null)
+        if (head != null)
             mHead.putAll(head);
         list.add(mHead);
         list.add(mContent);
@@ -118,6 +119,8 @@ public class PinnerListViewAdapter extends BaseAdapter {
 
     public View getListViewHead(int position, View view) {
         Map<String, Object> map = null;
+        if (mData.size() == 0)
+            return null;
         for (int i = position; i >= 0; i--) {
             map = mData.get(i).get(HEAD);
             if (map == null || map.isEmpty())
@@ -134,7 +137,7 @@ public class PinnerListViewAdapter extends BaseAdapter {
         return needHead(position);
     }
 
-    public  boolean needHead(int postion) {
+    public boolean needHead(int postion) {
         if (postion >= mData.size())
             return false;
         Map<String, Object> currentHead = mData.get(postion).get(HEAD);
@@ -173,5 +176,11 @@ public class PinnerListViewAdapter extends BaseAdapter {
 
         }
         return false;
+    }
+
+    public interface ConfigureView {
+        View configureHead(Map<String, Object> map, View convertView, int position);
+
+        View configureContent(Map<String, Object> map, View convertView, int position);
     }
 }

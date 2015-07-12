@@ -1,27 +1,69 @@
 package com.inhand.milk.activity;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
+import com.inhand.milk.App;
+import com.inhand.milk.STANDAR.Standar;
+import com.inhand.milk.dao.OneDayDao;
+import com.inhand.milk.entity.OneDay;
+import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.health.last_drink.LastDrink;
+import com.inhand.milk.utils.ACache;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/6/3.
  */
 public class HealthDrinkLastActivity extends SubActivity {
     private LastDrink fragment;
+
+    public HealthDrinkLastActivity() {
+        super();
+        this.fragment = new LastDrink();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        Intent intent = this.getIntent();
+        Record record;
+        record = (Record) intent.getSerializableExtra(Standar.LastDrinkIntentKey);
+        if (record != null) {
+            fragment.setRecord(record);
+            Log.i("healthdringk", String.valueOf(record.getScore()));
+            return;
+        }
+        ACache aCache = ACache.get(App.getAppContext());
+        record = (Record) aCache.getAsObject(Standar.LastRecord);
+        if (record == null) {
+            List<OneDay> oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(0);
+            if (oneDays == null || oneDays.size() == 0) {
+                fragment.setRecord(null);
+            } else {
+                List<Record> records = oneDays.get(oneDays.size() - 1).getRecords();
+                if (records == null || records.size() == 0) {
+                    fragment.setRecord(null);
+                } else {
+                    record = records.get(records.size() - 1);
+                    fragment.setRecord(record);
+                }
+            }
+        }
+        fragment.setRecord(record);
+
     }
 
     @Override
     protected Fragment initFragment() {
         // TODO Auto-generated method stub
-        fragment = new LastDrink();
-        return  fragment;
+        return fragment;
     }
 
     @Override

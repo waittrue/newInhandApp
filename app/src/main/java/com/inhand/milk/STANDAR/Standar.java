@@ -7,21 +7,23 @@ import java.text.DecimalFormat;
  * 提供整个app中的标准值。
  */
 public class Standar {
-    public static DecimalFormat TeamperatureFormat  = new DecimalFormat("##.#");
-    public  final static int drinkMaxDuration =20;
-    public  final static int drinkMinDuration =10;
-    public  final static int drinkMaxAmount =200;
-    public  final static int drinkMinAmount =100;
-    public  final static float drinkBeginMaxTp = (float) 40.5;
-    public  final static float drinkBeginMinTp = (float) 38.4;
-    public  final static float drinkEndMaxTp = (float) 34.5;
-    public  final static float drinkEndMinTp = (float) 30.4;
-    public  final static int drinkMinScore =60;
-
-
+    public static final String LastRecord = "lastRecord";
+    public static final String MilkAmountRecord = "milkamountrecord";
+    public static final String LastDrinkIntentKey = "lastDrinkintentkey";
+    public final static int drinkMaxDuration = 20;
+    public final static int drinkMinDuration = 10;
+    public final static int drinkMaxAmount = 200;
+    public final static int drinkMinAmount = 100;
+    public final static float drinkBeginMaxTp = (float) 40.5;
+    public final static float drinkBeginMinTp = (float) 38.4;
+    public final static float drinkEndMaxTp = (float) 34.5;
+    public final static float drinkEndMinTp = (float) 30.4;
+    public final static int drinkMinScore = 60;
     final static float AMOUNTSCORE = 55;
     final static float TEMPERATURESCORE = 35;
     final static float TIMESCORE = 10, TEMPREATUREHIGH = 40, TEMPREATURELOW = 37, STANDARTIME = 30;
+    public static DecimalFormat TeamperatureFormat = new DecimalFormat("##.#");
+    public static DecimalFormat AmountFormat = new DecimalFormat("###");
 
     public static float getRecord(float advise, float amount, float temperatureHigh, float temperatureLow, float time) {
         float ratio, sum = 0;

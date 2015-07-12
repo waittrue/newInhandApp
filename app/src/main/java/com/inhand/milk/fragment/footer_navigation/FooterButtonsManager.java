@@ -14,47 +14,46 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FooterButtonsManager {
-	private View  mCurrent;
-	private HashMap<View, Fragment> map = new HashMap<>();
-	private List<View> buttons = new ArrayList<>();
-	private FragmentManager mFragmentManager;
-	
-	public FooterButtonsManager(FragmentManager fragmentManager){
-		mFragmentManager = fragmentManager;
-	}
-	
-	public void addButtons( View  button , Fragment fragment){
-		if (button == null || fragment == null)
-			throw new NullPointerException();
-		map.put(button, fragment);
-		buttons.add(button);
+    private View mCurrent;
+    private HashMap<View, Fragment> map = new HashMap<>();
+    private List<View> buttons = new ArrayList<>();
+    private FragmentManager mFragmentManager;
+
+    public FooterButtonsManager(FragmentManager fragmentManager) {
+        mFragmentManager = fragmentManager;
+    }
+
+    public void addButtons(View button, Fragment fragment) {
+        if (button == null || fragment == null)
+            throw new NullPointerException();
+        map.put(button, fragment);
+        buttons.add(button);
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.Activity_fragments_container,fragment);
+        fragmentTransaction.add(R.id.Activity_fragments_container, fragment);
         fragmentTransaction.hide(fragment);
         fragmentTransaction.commit();
-		button.setOnClickListener(new OnClickListener() {
+        button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v == mCurrent)
+                if (v == mCurrent)
                     return;
                 FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                 Fragment fragment = map.get(v);
                 fragmentTransaction.hide(map.get(mCurrent));
-                fragmentTransaction.show( fragment);
+                fragmentTransaction.show(fragment);
                 fragmentTransaction.commit();
-                ( (TitleFragment)fragment ).refresh();
+                ((TitleFragment) fragment).refresh();
                 mCurrent = v;
             }
         });
 
-	}
-	
-	public void setStartFragment(View button){
-		mCurrent = button;
-		FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-		fragmentTransaction.show( map.get(mCurrent));
-		fragmentTransaction.commit();
-	}
-	
+    }
+
+    public void setStartFragment(View button) {
+        mCurrent = button;
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        fragmentTransaction.show(map.get(mCurrent));
+        fragmentTransaction.commit();
+    }
 
 }

@@ -18,61 +18,68 @@ import com.inhand.milk.fragment.weight.WeightFragment;
 
 public class FooterNavigation extends Fragment {
 
-	private View view;
-	private HomeFragment home;
-	private HealthFragment health;
+    private View view;
+    private HomeFragment home;
+    private HealthFragment health;
     private MilkAmountFragment milkAmountFragment;
     private WeightFragment weight;
     private PersonCenterFragment personCenterFragment;
-	private FooterButtonsManager buttonsManager ;
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		view  = inflater.inflate(R.layout.buttons, null);
-		Log.i("buttons", "oncreateview");
-		initButtons();
-		return view;
-	}
-	@Override
-	public void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-		Log.i("buttons", "onStart");
-		//attachHome();
-	}
+    private FooterButtonsManager buttonsManager;
+    private FragmentManager fragmentManager;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        view = inflater.inflate(R.layout.buttons, null);
+        Log.i("buttons", "oncreateview");
+        initButtons();
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        // TODO Auto-generated method stub
+        super.onStart();
+        Log.i("buttons", "onStart");
+        //attachHome();
+    }
 
 
-	private void initButtons(){
-		FragmentManager fragmentManager = getFragmentManager();
-		buttonsManager = new FooterButtonsManager( fragmentManager);
-        milkAmountFragment = new MilkAmountFragment();
-        weight = new WeightFragment();
-		health = new HealthFragment();
-		home = new HomeFragment();
-		//bluetooth = new bluetooth_fragment(((MainActivity)FooterNavigation.this.getActivity() ).getBluetooth() );
-        personCenterFragment = new PersonCenterFragment();
+    private void initButtons() {
+        fragmentManager = getFragmentManager();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                buttonsManager = new FooterButtonsManager(fragmentManager);
+                milkAmountFragment = new MilkAmountFragment();
+                weight = new WeightFragment();
+                health = new HealthFragment();
+                personCenterFragment = new PersonCenterFragment();
 
-		RelativeLayout button ;
-		button = (RelativeLayout)view.findViewById(R.id.buttons_temperature_icon);
-		buttonsManager.addButtons(button,weight);
-		
-		button = (RelativeLayout)view.findViewById(R.id.buttons_milk_icon);
-		buttonsManager.addButtons(button,milkAmountFragment);
-		
-		button = (RelativeLayout)view.findViewById(R.id.buttons_health);
-		buttonsManager.addButtons(button,health);	
-		
-		button = (RelativeLayout)view.findViewById(R.id.buttons_person_center);
-	    buttonsManager.addButtons(button,personCenterFragment);
+                RelativeLayout button;
+                button = (RelativeLayout) view.findViewById(R.id.buttons_temperature_icon);
+                buttonsManager.addButtons(button, weight);
 
-        button = (RelativeLayout)view.findViewById(R.id.buttons_home);
-        buttonsManager.addButtons(button,home);
+                button = (RelativeLayout) view.findViewById(R.id.buttons_milk_icon);
+                buttonsManager.addButtons(button, milkAmountFragment);
+
+                button = (RelativeLayout) view.findViewById(R.id.buttons_health);
+                buttonsManager.addButtons(button, health);
+
+                button = (RelativeLayout) view.findViewById(R.id.buttons_person_center);
+                buttonsManager.addButtons(button, personCenterFragment);
+            }
+        });
+        thread.start();
+        RelativeLayout button;
+        home = new HomeFragment();
+        button = (RelativeLayout) view.findViewById(R.id.buttons_home);
+        buttonsManager.addButtons(button, home);
         buttonsManager.setStartFragment(button);
-	}
+    }
 
 }
-	
+
 	
 
