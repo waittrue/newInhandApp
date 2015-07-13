@@ -9,6 +9,7 @@
     <facet type="android" name="Android">
       <configuration>
         <option name="SELECTED_BUILD_VARIANT" value="debug" />
+        <option name="SELECTED_TEST_ARTIFACT" value="_android_test_" />
         <option name="ASSEMBLE_TASK_NAME" value="assembleDebug" />
         <option name="COMPILE_JAVA_TASK_NAME" value="compileDebugSources" />
         <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleDebugAndroidTest" />
@@ -80,25 +81,24 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="fastjson" level="project" />
-    <orderEntry type="library" exported="" name="httpmime-4.2.4" level="project" />
-    <orderEntry type="library" exported="" name="avospush-v2.6.10.2" level="project" />
-    <orderEntry type="library" exported="" name="weibo.sdk.android.sso" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-22.2.0" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-22.2.0" level="project" />
-    <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.0" level="project" />
-    <orderEntry type="library" exported="" name="avosstatistics-v2.6.10.2" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="qq.sdk.1.6.1" level="project" />
+    <orderEntry type="library" exported="" name="android-async-http-1.4.6" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="avoscloud-sdk-v3.0" level="project" />
     <orderEntry type="library" exported="" name="easyandroidanimationslibrary-v0.5" level="project" />
-    <orderEntry type="library" exported="" name="android-async-http-1.4.6" level="project" />
-    <orderEntry type="library" exported="" name="qq.sdk.1.6.1" level="project" />
+    <orderEntry type="library" exported="" name="avosstatistics-v2.6.10.2" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="avospush-v2.6.10.2" level="project" />
+    <orderEntry type="library" exported="" name="weibo.sdk.android.sso" level="project" />
+    <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
+    <orderEntry type="library" exported="" name="httpmime-4.2.4" level="project" />
     <orderEntry type="module" module-name="SlidingMenu" exported="" />
   </component>
 </module>

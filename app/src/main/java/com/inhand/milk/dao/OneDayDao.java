@@ -21,6 +21,7 @@ import com.inhand.milk.utils.Calculator;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import java.util.List;
 public class OneDayDao extends BaseDao {
     private static final String SORT_BY = "createdAt";
     private static final String RECORDS_COMP_FORMAT = "HH:mm";
+    public static final int FIND_LIMIT_LATEST = 1; // 获得最近一天的
     private AVQuery<OneDay> query;
 
     public OneDayDao(Context ctx) {
@@ -121,13 +123,12 @@ public class OneDayDao extends BaseDao {
      * @param oneDay
      */
     public void updateOrSaveInCloud(OneDay oneDay) throws AVException {
-        OneDay src = oneDay;
-        OneDay old = findOneDayFromCloud(src.getDate());
+        OneDay old = findOneDayFromCloud(oneDay.getDate());
         if (old == null) {
             //不存在则新建
-            src.save();
+            oneDay.save();
         } else {
-            merge(src, old);
+            merge(oneDay, old);
             //云端更新
             old.save();
         }
@@ -144,7 +145,7 @@ public class OneDayDao extends BaseDao {
         String count = limit > 0 ? "0," + String.valueOf(limit) : null;
         final String whereClause = DBHelper.COLUMN_COMP + " like ?";
         final String[] whereArgs = new String[]{"%" + App.getCurrentBaby().getObjectId() + "%"};
-        String orderBy = "_id";
+        String orderBy = "_id desc";
         Cursor cursor = this.db.query(
                 OneDay.ONEDAY_CLASS,
                 new String[]{DBHelper.COLUMN_JSON},
@@ -166,6 +167,44 @@ public class OneDayDao extends BaseDao {
         return oneDays;
     }
 
+    @Override
+    public void fidnAllFromDB(int limit, final DBFindCallback callback) {
+        final List<OneDay> oneDays = new ArrayList<>();
+        final String count = limit > 0 ? "0," + String.valueOf(limit) : null;
+        final String whereClause = DBHelper.COLUMN_COMP + " like ?";
+        final String[] whereArgs = new String[]{"%" + App.getCurrentBaby().getObjectId() + "%"};
+        final String orderBy = "_id desc";
+        DBFindTask task = new DBFindTask(){
+            @Override
+            protected Object doInBackground(Object[] params) {
+                Cursor cursor = OneDayDao.this.db.query(
+                        OneDay.ONEDAY_CLASS,
+                        new String[]{DBHelper.COLUMN_JSON},
+                        whereClause,
+                        whereArgs,
+                        null,
+                        null,
+                        orderBy,
+                        count
+                );
+                while (cursor.moveToNext()) {
+                    String json = cursor.getString(cursor.getColumnIndex(
+                            DBHelper.COLUMN_JSON
+                    ));
+                    OneDay oneDay = JSON.parseObject(json, OneDay.class);
+                    oneDays.add(oneDay);
+                }
+                cursor.close();
+                return super.doInBackground(params);
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                callback.done(oneDays);
+            }
+        };
+    }
 
     /**
      * 根据日期异步地从数据库中获取OneDay
@@ -234,6 +273,100 @@ public class OneDayDao extends BaseDao {
         }
         cursor.close();
         return null;
+    }
+
+
+    /**
+     * 同步地获得两天之间的所有记录
+     * @param start 开始日期
+     * @param end 结束日期
+     * @return 该期间内的天数
+     */
+    public List<OneDay> findDaysBetween(String start,String end){
+        List<OneDay> oneDays = new ArrayList<>();
+        SimpleDateFormat sdf=new SimpleDateFormat(OneDay.DATE_FORMAT);
+        Cursor cursor = OneDayDao.this.db.query(
+                OneDay.ONEDAY_CLASS,
+                null,
+                null,
+                null,
+                null, null, null);
+        // 逐条遍历
+        while(cursor.moveToNext()){
+            //根据列名获取列索引
+            int compColIndex = cursor.getColumnIndex(DBHelper.COLUMN_COMP);
+            String comStr = cursor.getString(compColIndex);
+            String[] arr = comStr.split(":");
+            String date = arr[0];
+            String baby = arr[1];
+            // 如果是当前宝宝的记录，且处于两个日期之间
+            if(baby.equals(App.getCurrentBaby().getObjectId())) {
+                if(isOver(date,end))
+                    break;
+                else if(isBetween(date,start,end)){
+                    String json = cursor.getString(cursor.getColumnIndex(
+                            DBHelper.COLUMN_JSON
+                    ));
+                    OneDay oneDay = JSON.parseObject(json, OneDay.class);
+                    oneDays.add(oneDay);
+                }
+
+            }
+        }
+        cursor.close();
+        return oneDays;
+    }
+
+    /**
+     * 异步地获得两天之间的记录
+     * @param start 开始日期
+     * @param end 结束日期
+     * @param callback 回调函数
+     */
+    public void findDaysBetween(final String start,final String end, final DBFindCallback callback){
+        final List<OneDay> oneDays = new ArrayList<>();
+        SimpleDateFormat sdf=new SimpleDateFormat(OneDay.DATE_FORMAT);
+        DBFindTask task = new DBFindTask(){
+            @Override
+            protected Object doInBackground(Object[] params) {
+                Cursor cursor = OneDayDao.this.db.query(
+                        OneDay.ONEDAY_CLASS,
+                        null,
+                        null,
+                        null,
+                        null, null, null);
+                // 逐条遍历
+                while(cursor.moveToNext()){
+                    //根据列名获取列索引
+                    int compColIndex = cursor.getColumnIndex(DBHelper.COLUMN_COMP);
+                    String comStr = cursor.getString(compColIndex);
+                    String[] arr = comStr.split(":");
+                    String date = arr[0];
+                    String baby = arr[1];
+                    // 如果是当前宝宝的记录，且处于两个日期之间
+                    if(baby.equals(App.getCurrentBaby().getObjectId())) {
+                        if(isOver(date,end))
+                            break;
+                        else if(isBetween(date,start,end)){
+                            String json = cursor.getString(cursor.getColumnIndex(
+                                    DBHelper.COLUMN_JSON
+                            ));
+                            OneDay oneDay = JSON.parseObject(json, OneDay.class);
+                            oneDays.add(oneDay);
+                        }
+
+                    }
+                }
+                cursor.close();
+                return super.doInBackground(params);
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                callback.done(oneDays);
+            }
+        };
     }
 
     /**
@@ -403,6 +536,55 @@ public class OneDayDao extends BaseDao {
         //更新分数，奶量
         dst.setScore(src.getScore() + dst.getScore());
         dst.setVolume(Calculator.calcVolume(records));
+    }
+
+
+    /**
+     * 判断日期是否处于两日期间
+     * @param src 源日期
+     * @param start 起始日期
+     * @param end 截止日期
+     * @return 源日期是否两日期间
+     */
+    private boolean isBetween(String src,String start,String end){
+        SimpleDateFormat sdf = new SimpleDateFormat(OneDay.DATE_FORMAT);
+        Date sdt = null;
+        Date edt = null;
+        Date dt = null;
+        try {
+            sdt = sdf.parse(start);
+            edt = sdf.parse(end);
+            dt = sdf.parse(src);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        assert dt != null;
+        if(dt.compareTo(sdt)>=0
+                && dt.compareTo(edt)<=0)
+            return true;
+        return false;
+    }
+
+    /**
+     * 判断日期是否过界
+     * @param src 源日期
+     * @param end 界限日期
+     * @return 是否过界
+     */
+    private boolean isOver(String src,String end){
+        SimpleDateFormat sdf = new SimpleDateFormat(OneDay.DATE_FORMAT);
+        Date edt = null;
+        Date dt = null;
+        try {
+            edt = sdf.parse(end);
+            dt = sdf.parse(src);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        assert dt != null;
+        if(dt.compareTo(edt)>0)
+            return true;
+        return false;
     }
 
 }
