@@ -164,7 +164,7 @@ public class BaseDao<T extends Base> {
      * @param limit    最大数量，如果为0，代表传入所有
      * @param callback 回调接口
      */
-    public void fidnAllFromDB(int limit, FindCallback<T> callback) {
+    public void fidnAllFromDB(int limit, DBFindCallback callback) {
 
     }
 
@@ -197,7 +197,7 @@ public class BaseDao<T extends Base> {
      *
      * @param <T>
      */
-    public interface DBFindCallback<T> {
+    public interface DBFindCallback<T extends Base> {
         public void done(List<T> results);
     }
 
