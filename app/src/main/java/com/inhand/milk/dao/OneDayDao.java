@@ -53,7 +53,7 @@ public class OneDayDao extends BaseDao {
         query = AVQuery.getQuery(OneDay.class);
         // 按照更新时间降序排序
         query.whereEqualTo(OneDay.BABY_KEY, App.getCurrentBaby());
-        query.orderByDescending(SORT_BY);
+        query.orderBy(SORT_BY);
         // 最大返回1000条
         if (limit > 0)
             query.limit(limit);
