@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/weigth_fragment_outest_layer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#77000000"
-    android:id="@+id/weigth_fragment_outest_layer">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"></LinearLayout>
+        android:layout_weight="2"
+        android:orientation="vertical"></LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/weight_fragment_ruler_container"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/weight_fragment_ruler_container"
-        android:background="@color/weight_fragment_adder_bg_color">
+        android:background="@color/weight_fragment_adder_bg_color"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/weight_fragment_adder_title_height"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/weight_fragment_adder_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="2015-10-30"
-                android:id="@+id/weight_fragment_adder_title_text"
                 android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
                 android:gravity="center"
+                android:text="2015-10-30"
                 android:textColor="@color/public_main_a_color"
                 android:textSize="@dimen/weight_fragment_adder_title_text_size" />
 
@@ -43,10 +43,9 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/weight_fragment_adder_doc_num_container_height"
-            >
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -54,66 +53,66 @@
                 android:layout_centerInParent="true">
 
                 <TextView
+                    android:id="@+id/weight_fragment_adder_doc_text"
                     android:layout_width="@dimen/weight_fragment_adder_doc_text_width"
                     android:layout_height="wrap_content"
-                    android:text="@string/weight_fragment_adder_doc_text"
-                    android:id="@+id/weight_fragment_adder_doc_text"
+                    android:layout_centerVertical="true"
                     android:gravity="center_vertical|right"
+                    android:text="@string/weight_fragment_adder_doc_text"
                     android:textColor="@color/weight_fragment_adder_doc_text_color"
-                    android:textSize="@dimen/weight_fragment_adder_doc_text_size"
-                    android:layout_centerVertical="true" />
+                    android:textSize="@dimen/weight_fragment_adder_doc_text_size" />
 
                 <TextView
+                    android:id="@+id/weight_fragment_adder_num_text"
                     android:layout_width="@dimen/weight_fragment_adder_num_text_width"
                     android:layout_height="wrap_content"
-                    android:text="0.0"
-                    android:id="@+id/weight_fragment_adder_num_text"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/weight_fragment_adder_doc_text"
                     android:gravity="left|center_vertical"
-                    android:textSize="@dimen/weight_fragment_adder_num_text_size"
+                    android:text="0.0"
                     android:textColor="@color/public_main_a_color"
-                    android:layout_centerVertical="true" />
+                    android:textSize="@dimen/weight_fragment_adder_num_text_size" />
             </RelativeLayout>
 
         </RelativeLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/weight_fragment_adder_ruler_height">
+            android:layout_height="@dimen/weight_fragment_adder_ruler_height"
+            android:orientation="vertical">
+
             <RelativeLayout
-                android:orientation="vertical"
                 android:layout_width="@dimen/weight_fragment_adder_ruler_container_width"
                 android:layout_height="@dimen/weight_fragment_adder_ruler_jt_height"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:layout_gravity="center_horizontal">
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:orientation="vertical"
                     android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_marginTop="@dimen/weight_fragment_adder_ruler_container_margin_top"
                     android:background="@drawable/weight_fragment_adder_ruler_bg"
-                    android:layout_height="fill_parent">
+                    android:orientation="vertical">
 
                     <view
+                        android:id="@+id/weight_fragment_adder_observableHorizonScorollView"
+                        class="com.inhand.milk.ui.ObservableHorizonScrollView"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        class="com.inhand.milk.utils.ObservableHorizonScrollView"
-                        android:id="@+id/weight_fragment_adder_observableHorizonScorollView"
                         android:layout_gravity="center_horizontal"
-                        android:overScrollMode="never"
-                        android:scrollbars="none"
-                        android:layout_marginTop="@dimen/weight_fragment_adder_ruler_margin_top"
+                        android:layout_marginLeft="@dimen/weight_fragment_adder_ruler_margin_left_right"
                         android:layout_marginRight="@dimen/weight_fragment_adder_ruler_margin_left_right"
-                        android:layout_marginLeft="@dimen/weight_fragment_adder_ruler_margin_left_right">
+                        android:layout_marginTop="@dimen/weight_fragment_adder_ruler_margin_top"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
 
                         <LinearLayout
                             android:id="@+id/weight_fragment_adder_really_ruler_container"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:gravity="center"
-                            android:orientation="horizontal">
-                        </LinearLayout>
+                            android:orientation="horizontal"></LinearLayout>
                     </view>
 
 
@@ -121,23 +120,23 @@
 
 
                 <ImageView
+                    android:id="@+id/imageView2"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/weight_fragment_adder_ruler_jt_height"
-                    android:id="@+id/imageView2"
-                    android:src="@drawable/weight_fragment_adder_ruler_jt"
-                    android:scaleType="centerInside"
+                    android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_alignParentTop="true" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/weight_fragment_adder_ruler_jt" />
 
             </RelativeLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/weight_fragment_adder_ruler_button_container_height">
+            android:layout_height="@dimen/weight_fragment_adder_ruler_button_container_height"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -150,26 +149,24 @@
                 android:layout_weight="5">
 
                 <ImageView
+                    android:id="@+id/weight_fragment_adder_cancle_icon"
                     android:layout_width="@dimen/weight_fragment_adder_bottome_icon_width"
                     android:layout_height="@dimen/weight_fragment_adder_bottome_icon_height"
-                    android:id="@+id/weight_fragment_adder_cancle_icon"
-                    android:src="@drawable/weight_fragment_adder_cancle_ico"
-                    android:scaleType="centerInside"
-                    android:layout_marginTop="@dimen/weight_fragment_adder_ruler_button_margin_top"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                     />
+                    android:layout_marginTop="@dimen/weight_fragment_adder_ruler_button_margin_top"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/weight_fragment_adder_cancle_ico" />
 
                 <ImageView
+                    android:id="@+id/weight_fragment_adder_ok_icon"
                     android:layout_width="@dimen/weight_fragment_adder_bottome_icon_width"
                     android:layout_height="@dimen/weight_fragment_adder_bottome_icon_height"
-                    android:id="@+id/weight_fragment_adder_ok_icon"
-                    android:src="@drawable/weight_fragment_adder_ok_ico"
-                    android:scaleType="centerInside"
-                    android:layout_marginTop="@dimen/weight_fragment_adder_ruler_button_margin_top"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    />
+                    android:layout_marginTop="@dimen/weight_fragment_adder_ruler_button_margin_top"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/weight_fragment_adder_ok_ico" />
             </RelativeLayout>
 
             <RelativeLayout

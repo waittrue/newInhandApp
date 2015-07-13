@@ -26,11 +26,11 @@ import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.utils.ACache;
-import com.inhand.milk.utils.MultiLayerCircle;
-import com.inhand.milk.utils.PinnerListView;
-import com.inhand.milk.utils.PinnerListViewAdapter;
-import com.inhand.milk.utils.ProgressBar;
-import com.inhand.milk.utils.RingWithText;
+import com.inhand.milk.ui.MultiLayerCircle;
+import com.inhand.milk.ui.PinnerListView;
+import com.inhand.milk.ui.PinnerListViewAdapter;
+import com.inhand.milk.ui.ProgressBar;
+import com.inhand.milk.ui.RingWithText;
 import com.inhand.milk.utils.ViewHolder;
 
 import java.text.SimpleDateFormat;
@@ -250,7 +250,7 @@ public class MilkAmountFragment extends TitleFragment {
         if (lastTime != null && record != null && lastTime.equals(record.getBeginTime())) {
             return false;
         }
-        if (lastTime == null) {
+        if (lastTime == null || record == null) {
             getData(adapter, aCache);
             return true;
         }

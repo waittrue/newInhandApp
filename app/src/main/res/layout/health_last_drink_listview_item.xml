@@ -1,74 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:myView ="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:myView="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-<LinearLayout
-    android:layout_margin="@dimen/health_last_listview_margin"
-    android:background="@drawable/health_last_drink_listview_item_corner_bg"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <RelativeLayout
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/last_drink_item_total_height"
-        android:layout_marginLeft="@dimen/last_drink_item_margin_left"
-        >
+        android:layout_height="fill_parent"
+        android:layout_margin="@dimen/health_last_listview_margin"
+        android:background="@drawable/health_last_drink_listview_item_corner_bg">
 
         <RelativeLayout
-            android:layout_width="@dimen/health_last_drink_item_text_total_width"
-            android:layout_height="@dimen/health_last_drink_item_text_total_height"
-            android:layout_centerVertical="true">
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            <view
-                android:layout_width="@dimen/last_drink_item_circle_r"
-                android:layout_height="@dimen/last_drink_item_circle_r"
-                class="com.inhand.milk.utils.Circle"
-                myView:r = "@dimen/last_drink_item_circle_r"
-                myView:color = "@color/color_white"
-                android:id="@+id/health_drink_last_circle"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true" />
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/last_drink_item_total_height"
+            android:layout_marginLeft="@dimen/last_drink_item_margin_left">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/health_last_drink_amount"
-                android:id="@+id/health_drink_last_up_doc_text"
-                android:layout_toRightOf="@+id/health_drink_last_circle"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/last_drink_item_up_doc_text_margin_left"
-                android:textSize="@dimen/last_drink_item_up_doc_text_size" />
+            <RelativeLayout
+                android:layout_width="@dimen/health_last_drink_item_text_total_width"
+                android:layout_height="@dimen/health_last_drink_item_text_total_height"
+                android:layout_centerVertical="true">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <view
+                        android:id="@+id/health_drink_last_circle"
+                        class="com.inhand.milk.ui.Circle"
+                        android:layout_width="@dimen/last_drink_item_circle_r"
+                        android:layout_height="@dimen/last_drink_item_circle_r"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerVertical="true"
+                        myView:color="@color/color_white"
+                        myView:r="@dimen/last_drink_item_circle_r" />
+
+                    <TextView
+                        android:id="@+id/health_drink_last_up_doc_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/last_drink_item_up_doc_text_margin_left"
+                        android:layout_toRightOf="@+id/health_drink_last_circle"
+                        android:text="@string/health_last_drink_amount"
+                        android:textSize="@dimen/last_drink_item_up_doc_text_size" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/health_drink_last_down_text_doc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/health_last_drink_amount_less_doc"
+                    android:textColor="@color/health_drink_last_down_text_color"
+                    android:textSize="@dimen/health_last_drink_item_down_doc_text_size" />
+
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/health_last_drink_amount_less_doc"
-                android:id="@+id/health_drink_last_down_text_doc"
-                android:textColor="@color/health_drink_last_down_text_color"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:textSize="@dimen/health_last_drink_item_down_doc_text_size" />
-
+            <view
+                android:id="@+id/health_drink_last_item_ringWithText"
+                class="com.inhand.milk.ui.RingWithText"
+                android:layout_width="@dimen/health_last_drink_item_ring_2r"
+                android:layout_height="@dimen/health_last_drink_item_ring_2r"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/health_last_drinke_item_ring_margin_left"
+                myView:R="@dimen/health_last_drink_item_ring_r"
+                myView:RingWidth="@dimen/health_last_drink_item_ring_r"
+                myView:textSizes1="@dimen/health_last_drink_item_ring_text1_size"
+                myView:textSizes2="@dimen/health_last_drink_item_ring_text2_size" />
         </RelativeLayout>
-
-        <view
-            class="com.inhand.milk.utils.RingWithText"
-            android:id="@+id/health_drink_last_item_ringWithText"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/health_last_drinke_item_ring_margin_left"
-            android:layout_height="@dimen/health_last_drink_item_ring_2r"
-            android:layout_width="@dimen/health_last_drink_item_ring_2r"
-            myView:textSizes1="@dimen/health_last_drink_item_ring_text1_size"
-            myView:textSizes2="@dimen/health_last_drink_item_ring_text2_size"
-            myView:R="@dimen/health_last_drink_item_ring_r"
-            myView:RingWidth="@dimen/health_last_drink_item_ring_r"
-            android:layout_centerVertical="true"
-            />
-    </RelativeLayout>
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>

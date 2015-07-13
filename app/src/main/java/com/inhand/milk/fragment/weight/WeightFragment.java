@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.TitleFragment;
-import com.inhand.milk.utils.RingWithText;
+import com.inhand.milk.ui.RingWithText;
 
 import java.text.DecimalFormat;
 
@@ -27,13 +27,14 @@ import java.text.DecimalFormat;
  * Created by Administrator on 2015/6/6.
  */
 public class WeightFragment extends TitleFragment {
-    private WeightExcle weightExcle;
     private static final String TAG = "weightFragment";
+    private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
+    private WeightExcle weightExcle;
     private int lastPositon = -1;
     private RingWithText ringWithText;
-    private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
     private Adder adder;
-    private int sweepStartColor,sweepEndColor;
+    private int sweepStartColor, sweepEndColor;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +42,8 @@ public class WeightFragment extends TitleFragment {
         initViews(mView);
         return mView;
     }
-    private void initViews(View view){
+
+    private void initViews(View view) {
         initWeightTab(view);
         initLine(view);
         initWeightExcle(view);
@@ -61,9 +63,10 @@ public class WeightFragment extends TitleFragment {
         });
 
     }
+
     private void inAnimation() {
         //floatAdderWindow.show();
-        this.startActivity(new Intent(getActivity(),AdderWindow.class));
+        this.startActivity(new Intent(getActivity(), AdderWindow.class));
     }
 
 
@@ -74,7 +77,7 @@ public class WeightFragment extends TitleFragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         lp.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-       // relativeLayout.addView(initRingWithText(), lp);
+        // relativeLayout.addView(initRingWithText(), lp);
         initRingWithText().setLayoutParams(lp);
         initRelativeLeftTexts(relativeLayout);
         initRelativeRightTexts(relativeLayout);
@@ -129,8 +132,8 @@ public class WeightFragment extends TitleFragment {
         upLp.topMargin = (int) upTopMargin;
         downLp.leftMargin = (int) downLeftMargin;
         downLp.topMargin = (int) downTopMargin;
-        upLp.addRule(RelativeLayout.ALIGN_TOP,R.id.weight_fragment_ring_withtext);
-        downLp.addRule(RelativeLayout.ALIGN_TOP,R.id.weight_fragment_ring_withtext);
+        upLp.addRule(RelativeLayout.ALIGN_TOP, R.id.weight_fragment_ring_withtext);
+        downLp.addRule(RelativeLayout.ALIGN_TOP, R.id.weight_fragment_ring_withtext);
         relativeLayout.addView(leftUp, upLp);
         relativeLayout.addView(leftDown, downLp);
     }
@@ -173,8 +176,8 @@ public class WeightFragment extends TitleFragment {
         upLp.topMargin = (int) upTopMargin;
         downLp.leftMargin = (int) (width - downRightMargin - rightDown.getPaint().measureText(downString));
         downLp.topMargin = (int) downTopMargin;
-        upLp.addRule(RelativeLayout.ALIGN_TOP,R.id.weight_fragment_ring_withtext);
-        downLp.addRule(RelativeLayout.ALIGN_TOP,R.id.weight_fragment_ring_withtext);
+        upLp.addRule(RelativeLayout.ALIGN_TOP, R.id.weight_fragment_ring_withtext);
+        downLp.addRule(RelativeLayout.ALIGN_TOP, R.id.weight_fragment_ring_withtext);
 
         relativeLayout.addView(rightUp, upLp);
         relativeLayout.addView(rightDown, downLp);
@@ -197,17 +200,17 @@ public class WeightFragment extends TitleFragment {
         r = height - getResources().getDimension(R.dimen.weight_fragment_up_total_height) -
                 getResources().getDimension(R.dimen.weight_fragment_excle_down_divider_height) -
                 getResources().getDimension(R.dimen.footer_navigation_fragment_height) -
-                  App.getStatusHeight(getActivity());
+                App.getStatusHeight(getActivity());
         //r = r / 2 / 5 * 3 / 2;//这里要跟布局图里面的那个权重对应好;
-        r = r /2 - getResources().getDimension(R.dimen.weight_fragment_bottom_text_height) - getResources().getDimension(R.dimen.weight_fragment_adder_height);
-        r = r /2;
-        r = r * 7/10;
+        r = r / 2 - getResources().getDimension(R.dimen.weight_fragment_bottom_text_height) - getResources().getDimension(R.dimen.weight_fragment_adder_height);
+        r = r / 2;
+        r = r * 7 / 10;
         //ringWithText = new RingWithText(this.getActivity(), r);
-        ringWithText = (RingWithText)mView.findViewById(R.id.weight_fragment_ring_withtext);
+        ringWithText = (RingWithText) mView.findViewById(R.id.weight_fragment_ring_withtext);
         ringWithText.setR(r);
-        ringWithText.setSweepColor(sweepStartColor,sweepEndColor);
+        ringWithText.setSweepColor(sweepStartColor, sweepEndColor);
         ringWithText.setTexts(getRingWithTextStrings(), getRingWithTextSizes(r));
-        ringWithText.setRingWidth(r/6);
+        ringWithText.setRingWidth(r / 6);
         ringWithText.setTexts(new int[]{getResources().getColor(R.color.weight_fragment_ring_text_color),
                 getResources().getColor(R.color.public_main_a_color),});
         ringWithText.setRingBgColor(getResources().getColor(R.color.weight_fragment_ring_bg_color));
@@ -228,6 +231,7 @@ public class WeightFragment extends TitleFragment {
         result[1] = getResources().getStringArray(R.array.weight_ring_text_status)[1];
         return result;
     }
+
     private void initWeightExcle(View view) {
         weightExcle = (WeightExcle) view.findViewById(R.id.weight_fragment_excle);
         addPoints(weightExcle);
@@ -242,7 +246,7 @@ public class WeightFragment extends TitleFragment {
     }
 
     private void initWeightTab(View view) {
-        WeightTab weightTab = (WeightTab)view.findViewById(R.id.weight_tabs);
+        WeightTab weightTab = (WeightTab) view.findViewById(R.id.weight_tabs);
         weightTab.setTabNum(10);
         lastPositon = 9;
         weightTab.initTabs();
@@ -266,13 +270,14 @@ public class WeightFragment extends TitleFragment {
         //weightExcle.setStanderRight();
         weightExcle.setMonthDays(6);
     }
-    private void initLine(View view){
+
+    private void initLine(View view) {
         ImageView imageView = new ImageView(this.getActivity());
-        LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.weight_fragment_line_container);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.weight_fragment_line_container);
         WindowManager wm = (WindowManager) getActivity()
                 .getSystemService(Context.WINDOW_SERVICE);
 
-        int lineWidth = wm.getDefaultDisplay().getWidth() /4;
+        int lineWidth = wm.getDefaultDisplay().getWidth() / 4;
         imageView.setLayoutParams(new LinearLayout.LayoutParams(lineWidth, ViewGroup.LayoutParams.MATCH_PARENT));
         imageView.setBackgroundColor(getResources().getColor(R.color.public_darkin_highlight_a_color));
         //imageView.setImageDrawable(new ColorDrawable(getResources().getColor(R.color.color_white)));

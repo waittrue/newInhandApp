@@ -1,6 +1,7 @@
 package com.inhand.milk.STANDAR;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Administrator on 2015/6/3.
@@ -24,6 +25,7 @@ public class Standar {
     final static float TIMESCORE = 10, TEMPREATUREHIGH = 40, TEMPREATURELOW = 37, STANDARTIME = 30;
     public static DecimalFormat TeamperatureFormat = new DecimalFormat("##.#");
     public static DecimalFormat AmountFormat = new DecimalFormat("###");
+    public static SimpleDateFormat OneDayDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public static float getRecord(float advise, float amount, float temperatureHigh, float temperatureLow, float time) {
         float ratio, sum = 0;

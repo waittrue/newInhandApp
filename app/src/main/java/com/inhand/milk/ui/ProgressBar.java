@@ -1,4 +1,4 @@
-package com.inhand.milk.utils;
+package com.inhand.milk.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,10 +12,10 @@ import android.view.View;
  * Created by Administrator on 2015/5/17.
  */
 public class ProgressBar extends View {
-    private int bgColor,color;
-    private float width,height;
+    private int bgColor, color;
+    private float width, height;
     private int timeAnimator;
-    private float maxNum,currentNum = 0;
+    private float maxNum, currentNum = 0;
     private android.os.Handler handler;
     private boolean attchTo = false;
 
@@ -24,13 +24,15 @@ public class ProgressBar extends View {
         width = height = 0;
         attchTo = true;
     }
-    public ProgressBar(Context context,float width,float height) {
+
+    public ProgressBar(Context context, float width, float height) {
         super(context);
         this.width = width;
         this.height = height;
         attchTo = false;
     }
-    public ProgressBar(Context context,float width,float height,int bgColor,int color) {
+
+    public ProgressBar(Context context, float width, float height, int bgColor, int color) {
         super(context);
         this.width = width;
         this.height = height;
@@ -53,10 +55,12 @@ public class ProgressBar extends View {
         super(context, attrs, defStyleAttr, defStyleRes);
         attchTo = true;
     }
-    public void setBgColor(int color){
+
+    public void setBgColor(int color) {
         this.bgColor = color;
     }
-    public void setColor(int color){
+
+    public void setColor(int color) {
         this.color = color;
     }
 
@@ -73,8 +77,8 @@ public class ProgressBar extends View {
     }
 
     public void setMaxNum(float maxNum) {
-        this.maxNum = maxNum>100?100:maxNum;
-        currentNum = (float)this.maxNum;
+        this.maxNum = maxNum > 100 ? 100 : maxNum;
+        currentNum = (float) this.maxNum;
     }
 
     private void drawLine(Canvas canvas, int color, float len) {
@@ -82,17 +86,18 @@ public class ProgressBar extends View {
         paint.setAntiAlias(true);
         paint.setStrokeWidth(1);
         paint.setColor(color);
-        if(len < height)
+        if (len < height)
             return;
         RectF rectF;
 
 
         rectF = new RectF(0, 0, height, height);
-        canvas.drawArc(rectF,90,180,true,paint);
-        canvas.drawRect(height/2-1,0,len-height/2+1,height,paint);
-        rectF = new RectF(len-height,0,len,height);
-        canvas.drawArc(rectF,270,180,true,paint);
+        canvas.drawArc(rectF, 90, 180, true, paint);
+        canvas.drawRect(height / 2 - 1, 0, len - height / 2 + 1, height, paint);
+        rectF = new RectF(len - height, 0, len, height);
+        canvas.drawArc(rectF, 270, 180, true, paint);
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -111,21 +116,20 @@ public class ProgressBar extends View {
             setMeasuredDimension((int) (width), (int) (height));
     }
 
-    public void startAnimator(){
+    public void startAnimator() {
         if (handler == null)
-            handler  =new android.os.Handler();
+            handler = new android.os.Handler();
         currentNum = 0;
-     //   Log.i("maxNum",String.valueOf(maxNum));
-        Runnable runnable =new Runnable() {
+        //   Log.i("maxNum",String.valueOf(maxNum));
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 invalidate();
-                currentNum += maxNum/(timeAnimator/2);
-                if (currentNum >= maxNum){
+                currentNum += maxNum / (timeAnimator / 2);
+                if (currentNum >= maxNum) {
                     currentNum = maxNum;
                     handler.removeCallbacks(this);
-                }
-                else {
+                } else {
                     handler.postDelayed(this, 2);
                 }
                 //Log.i("currenNum",String.valueOf(currentNum));

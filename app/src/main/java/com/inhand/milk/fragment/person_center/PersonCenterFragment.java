@@ -15,15 +15,14 @@ import com.inhand.milk.activity.BluetoothPairedAcivity;
 import com.inhand.milk.activity.PersonCenterBabyInfoActivity;
 import com.inhand.milk.activity.UserInfoSettingsActivity;
 import com.inhand.milk.fragment.TitleFragment;
-import com.inhand.milk.utils.PopupWindowSelected;
 
 /**
  * Created by Administrator on 2015/7/7.
  */
 public class PersonCenterFragment extends TitleFragment {
-    private RelativeLayout userInfo,babyInfo,babyRecord,babyMilk,myDevice,syn;
-    private View.OnTouchListener  onTouchListener;
-    private int clickColor,unclickColor = Color.WHITE;
+    private RelativeLayout userInfo, babyInfo, babyRecord, babyMilk, myDevice, syn;
+    private View.OnTouchListener onTouchListener;
+    private int clickColor, unclickColor = Color.WHITE;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,22 +34,20 @@ public class PersonCenterFragment extends TitleFragment {
                 Intent intent = new Intent(getActivity(), MilkAmountCurveActivity.class);
                 getActivity().startActivity(intent);
                 */
-                Toast.makeText(getActivity(),"shezhi",1000).show();
+                Toast.makeText(getActivity(), "shezhi", 1000).show();
             }
         };
-        setTitleview(getResources().getString(R.string.person_center_fragment_title),0,
-                    getResources().getString(R.string.person_center_fragment_title_right_text),listener);
+        setTitleview(getResources().getString(R.string.person_center_fragment_title), 0,
+                getResources().getString(R.string.person_center_fragment_title_right_text), listener);
         clickColor = getResources().getColor(R.color.common_settings_item_click_bg_color);
         onTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     v.setBackgroundColor(clickColor);
-                }
-                else if(event.getAction() == MotionEvent.ACTION_UP){
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     v.setBackgroundColor(unclickColor);
-                }
-                else if (event.getAction() == MotionEvent.ACTION_MOVE){
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     v.setBackgroundColor(unclickColor);
                 }
                 return false;
@@ -63,9 +60,9 @@ public class PersonCenterFragment extends TitleFragment {
     }
 
 
-    private void initUserinfo(){
-        if(userInfo == null)
-            userInfo = (RelativeLayout)mView.findViewById(R.id.person_center_info_container);
+    private void initUserinfo() {
+        if (userInfo == null)
+            userInfo = (RelativeLayout) mView.findViewById(R.id.person_center_info_container);
         userInfo.setOnTouchListener(onTouchListener);
         userInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,9 +73,10 @@ public class PersonCenterFragment extends TitleFragment {
             }
         });
     }
-    private void initBabyInfo(){
-        if(babyInfo == null)
-            babyInfo = (RelativeLayout)mView.findViewById(R.id.person_center_baby_info_container);
+
+    private void initBabyInfo() {
+        if (babyInfo == null)
+            babyInfo = (RelativeLayout) mView.findViewById(R.id.person_center_baby_info_container);
         babyInfo.setOnTouchListener(onTouchListener);
         babyInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,9 +87,10 @@ public class PersonCenterFragment extends TitleFragment {
             }
         });
     }
-    private void initSyn(){
-        if(syn == null)
-            syn = (RelativeLayout)mView.findViewById(R.id.person_center_syn_container);
+
+    private void initSyn() {
+        if (syn == null)
+            syn = (RelativeLayout) mView.findViewById(R.id.person_center_syn_container);
         syn.setOnTouchListener(onTouchListener);
         syn.setOnClickListener(new View.OnClickListener() {
             @Override

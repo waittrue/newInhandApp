@@ -1,4 +1,4 @@
-package com.inhand.milk.utils;
+package com.inhand.milk.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,8 +13,8 @@ import com.inhand.milk.R;
 
 public class Circle extends View {
 
-    int mColor = Color.WHITE, r = 0;
     private static final String TAG = "Circle";
+    int mColor = Color.WHITE, r = 0;
 
     public Circle(Context context) {
         super(context);

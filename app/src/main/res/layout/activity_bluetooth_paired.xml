@@ -3,21 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/launch_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bluetooth_paired_title_height"
+        android:layout_gravity="center_vertical"
         android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_gravity="center_vertical">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/bluetooth_title_text"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/bluetooth_title_text" />
 
     </LinearLayout>
 
@@ -27,61 +27,61 @@
         android:layout_weight="1">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"></LinearLayout>
+                android:layout_weight="1"
+                android:orientation="horizontal"></LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="0.75">
+                    android:layout_weight="0.75"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="3">
+                        android:layout_weight="3"
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="0.125"></LinearLayout>
+                            android:layout_weight="0.125"
+                            android:orientation="horizontal"></LinearLayout>
 
                         <ListView
                             android:id="@+id/bluetooth_paired_listview"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
                             android:layout_weight="0.75"
-                            android:visibility="gone"
-                            android:background="@drawable/bluetooth_listview_corner" />
+                            android:background="@drawable/bluetooth_listview_corner"
+                            android:visibility="gone" />
 
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="0.125"></LinearLayout>
+                            android:layout_weight="0.125"
+                            android:orientation="horizontal"></LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"></LinearLayout>
+                        android:layout_weight="1"
+                        android:orientation="horizontal"></LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -90,42 +90,41 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
-            <com.inhand.milk.utils.BluetoothPairedViewGroup
+            <com.inhand.milk.ui.BluetoothPairedViewGroup
                 android:id="@+id/bloothPairedViewGroup"
                 android:layout_width="200dp"
                 android:layout_height="250dp"
                 android:layout_alignParentLeft="false"
-                android:layout_marginLeft="0dp"
                 android:layout_alignParentTop="false"
-                android:layout_marginTop="0dp"
                 android:layout_alignWithParentIfMissing="false"
-                android:layout_centerInParent="true">
-            </com.inhand.milk.utils.BluetoothPairedViewGroup>
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"></com.inhand.milk.ui.BluetoothPairedViewGroup>
 
             <TextView
+                android:id="@+id/bluetoot_paired_unable_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="蓝牙关闭了，请点击上面打开"
-                android:id="@+id/bluetoot_paired_unable_text"
                 android:layout_below="@+id/bloothPairedViewGroup"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/bluetooth_paired_text_margin_top"
-                android:textColor="#ffffff"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:text="蓝牙关闭了，请点击上面打开"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff" />
 
         </RelativeLayout>
 
     </FrameLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/bluetooth_paired_bottom_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/first_lanunch_bottom_height"
         android:background="@drawable/first_launch_bottom_background"
-        android:id="@+id/bluetooth_paired_bottom_container">
+        android:orientation="horizontal">
 
     </LinearLayout>
 

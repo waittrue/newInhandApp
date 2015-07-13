@@ -2,61 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:orientation="vertical"></LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/first_lanunch_head_up_part_height" >
+            android:layout_height="@dimen/first_lanunch_head_up_part_height">
 
             <LinearLayout
                 android:id="@+id/first_launch_choose_head_ruler_container_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:gravity="center" >
+                android:gravity="center">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.125"
-                    android:orientation="vertical" >
-                </LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
 
-                <com.inhand.milk.utils.ObservableHorizonScrollView
+                <com.inhand.milk.ui.ObservableHorizonScrollView
                     android:id="@+id/first_launch_choose_head_scrollView"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/first_lanunch_weight_ruler_height"
                     android:layout_weight="0.75"
                     android:background="@drawable/first_launch_ruler_v_bg"
-                    android:scrollbars="none" >
+                    android:scrollbars="none">
 
                     <LinearLayout
                         android:id="@+id/first_launch_choose_head_ruler_container"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:gravity="center"
-                        android:orientation="horizontal" >
-                    </LinearLayout>
-                </com.inhand.milk.utils.ObservableHorizonScrollView>
+                        android:orientation="horizontal"></LinearLayout>
+                </com.inhand.milk.ui.ObservableHorizonScrollView>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.125"
-                    android:orientation="vertical" >
-                </LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -66,7 +62,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginBottom="@dimen/first_lanunch_weight_ruler_jt_margin_bottom"
                 android:gravity="bottom|center_horizontal"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/first_launch_choose_head_ruler_jt_icon"
@@ -79,18 +75,18 @@
         <FrameLayout
             android:id="@+id/FrameLayout1"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/first_lanunch_head_down_part_height" >
+            android:layout_height="@dimen/first_lanunch_head_down_part_height">
 
             <RelativeLayout
                 android:id="@+id/RelativeLayout1"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
+                android:layout_height="fill_parent">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" >
+                    android:layout_centerHorizontal="true">
 
                     <TextView
                         android:id="@+id/first_launch_choose_head_num_textview"
@@ -115,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/first_launch_choose_head_icon_imageview"
@@ -133,7 +129,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:orientation="vertical"></LinearLayout>
 
 </LinearLayout>

@@ -1,11 +1,11 @@
-package com.inhand.milk.utils.firstlanunch;
+package com.inhand.milk.ui.firstlanunch;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
-import com.inhand.milk.R;
 
+import com.inhand.milk.R;
 
 
 public class Ruler extends View {
@@ -25,11 +25,11 @@ public class Ruler extends View {
         super(context);
         // TODO Auto-generated constructor stub
         if (s > e) {
-        //    Log.i("ruler", "s > e");
+            //    Log.i("ruler", "s > e");
             return;
         }
         if (spanum > e - s) {
-         //   Log.i("ruler", "spanum > e-s");
+            //   Log.i("ruler", "spanum > e-s");
             return;
         }
         startNum = s;
@@ -62,7 +62,8 @@ public class Ruler extends View {
         else
             setMeasuredDimension((int) width + 1, (int) (height + offsetstart * 2 + 1));
     }
-    public void setRulerLineColor(int color){
+
+    public void setRulerLineColor(int color) {
         rulerLineColor = color;
     }
 
@@ -76,7 +77,7 @@ public class Ruler extends View {
         paint.setColor(rulerLineColor);
         paint.setAntiAlias(true);
         paint.setStrokeWidth(spacing / 6);
-      //  Log.i("ruler", String.valueOf(totalNum));
+        //  Log.i("ruler", String.valueOf(totalNum));
         if (vertical) {
             for (int i = 0; i <= totalNum; i++) {
                 drawLine(canvas, offsetstart + i * spacing, 0, paint);
@@ -89,7 +90,7 @@ public class Ruler extends View {
     }
 
     private void drawLine(Canvas canvas, int x, int y, Paint paint) {
-      //  Log.i("ruler", String.valueOf(vertical));
+        //  Log.i("ruler", String.valueOf(vertical));
         if (vertical) {
             if ((x - offsetstart) % (spacing * 10) == 0) {
                 paint.setAlpha(255);

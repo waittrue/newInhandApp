@@ -54,9 +54,8 @@ public class Excle extends View{
 		drawBackground(canvas);
 		drawPoint(canvas);
 	}
-	//����ǽ���,�Ǹ�ʽ<2.5h,10��>
-	//������»����ܣ��Ǹ�ʽ��<30��>
-	public void clearData(){
+
+    public void clearData(){
 		orignalLineData.clear();
 	}
 	 public void addLine(List<List<float[]>> data){
@@ -112,7 +111,6 @@ public class Excle extends View{
 					y = (int)(  titleMarginTop + lenY - p.get(i)[0]/maxnum *lenY );
 					point[i*2] = x;
 					point[i*2+1] = y;
-					//Log.i("��"+String.valueOf(i)+"�����ʱ��", String.valueOf(lenX) +"  "+String.valueOf((float) i/(length-1) * lenX ));
 				}
 			}
 			LineData.add(point);
@@ -150,9 +148,6 @@ public class Excle extends View{
 		}
 
 	}
-
-
-	//�����˵�������������ͼ��
 	private void drawBackground(Canvas canvas){
 		drawTopText(canvas);
 		drawBottomText(canvas);

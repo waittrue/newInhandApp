@@ -9,22 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.inhand.milk.R;
-import com.inhand.milk.utils.ProgressBar;
+import com.inhand.milk.ui.ProgressBar;
 
 /**
  * Created by Administrator on 2015/6/16.
  */
 public class Adder extends ViewGroup {
-    private float height, width;
     private static final String TAG = "ADDER";
     private static final float scaleX = 0.8f;
+    private float height, width;
     private ProgressBar progressBar;
     private int bgColor;
-
-    public void setBgColor(int bgColor) {
-        this.bgColor = bgColor;
-        progressBar.setBgColor(bgColor);
-    }
 
     public Adder(Context context, float width, float height) {
         super(context);
@@ -46,6 +41,11 @@ public class Adder extends ViewGroup {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    public void setBgColor(int bgColor) {
+        this.bgColor = bgColor;
+        progressBar.setBgColor(bgColor);
+    }
+
     private void init() {
 
         progressBar = new ProgressBar(getContext());
@@ -55,7 +55,7 @@ public class Adder extends ViewGroup {
         TextView textview = new TextView(getContext());
         textview.setText(getResources().getString(R.string.weight_fragment_adder_text));
         textview.setTextColor(getResources().getColor(R.color.weight_fragment_adder_text_color));
-        textview.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.weight_fragment_adder_text_size));
+        textview.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.weight_fragment_adder_text_size));
         this.addView(textview, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
         ImageView imageView = new ImageView(getContext());
@@ -96,14 +96,13 @@ public class Adder extends ViewGroup {
                 (height - child.getMeasuredHeight()) / 2 + child.getMeasuredHeight());
 
 
-
         float space = height - height * scaleX;
         space = space / 2;
         child = getChildAt(2);
-        child.layout((int) (width - child.getMeasuredWidth() - space-space
+        child.layout((int) (width - child.getMeasuredWidth() - space - space
                 ),
                 (int) (space),
-                (int) (width - space - space ),
+                (int) (width - space - space),
                 (int) (space + child.getMeasuredHeight()));
 
     }

@@ -1,61 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#f5f5f5"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
+
     <LinearLayout
-        android:layout_width="fill_parent"
         android:id="@+id/title"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"></LinearLayout>
+
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:id="@+id/scrollView"
         android:layout_weight="1">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/person_center_info_container"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/person_center_info_container"
                 android:layout_marginTop="@dimen/common_settings_item_margin_top"
-                android:id="@+id/person_center_info_container"
                 android:background="@color/color_white">
 
                 <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                    android:src="@color/common_settings_item_line_color"
-                    android:layout_alignParentTop="true" />
+                    android:layout_alignParentTop="true"
+                    android:src="@color/common_settings_item_line_color" />
 
                 <view
+                    android:id="@+id/view"
+                    class="com.inhand.milk.ui.CircleImageView"
                     android:layout_width="@dimen/person_center_info_head_image_height_width"
                     android:layout_height="@dimen/person_center_info_head_image_height_width"
-                    class="com.inhand.milk.utils.CircleImageView"
-                    android:src="@drawable/ic_launcher"
-                    android:id="@+id/view"
-                    android:layout_marginLeft="@dimen/common_settings_item_margin_left"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+                    android:src="@drawable/ic_launcher" />
 
                 <ImageView
+                    android:id="@+id/imageView6"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                    android:id="@+id/imageView6"
                     android:layout_alignParentBottom="true"
                     android:src="@color/common_settings_item_line_color" />
 
                 <RelativeLayout
+                    android:id="@+id/relativeLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:id="@+id/relativeLayout"
                     android:layout_marginLeft="@dimen/common_settings_item_margin_left"
-                    android:layout_toRightOf="@+id/view" >
+                    android:layout_toRightOf="@+id/view">
 
                     <TextView
                         android:id="@+id/person_center_user_name_text"
@@ -70,9 +72,9 @@
                         android:id="@+id/person_center_user_special_doc_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/person_center_user_name_text"
                         android:layout_below="@+id/person_center_user_name_text"
                         android:layout_marginTop="@dimen/person_center_info_text_margin"
-                        android:layout_alignLeft="@+id/person_center_user_name_text"
                         android:singleLine="true"
                         android:text="奶瓶账号:JJD22446"
                         android:textColor="@color/person_center_special_text_color"
@@ -80,9 +82,9 @@
                 </RelativeLayout>
 
                 <ImageView
+                    style="@style/common_settings_item_right_arrow"
                     android:layout_width="@dimen/common_settings_item_text_size"
-                    android:layout_height="@dimen/common_settings_item_text_size"
-                    style="@style/common_settings_item_right_arrow" />
+                    android:layout_height="@dimen/common_settings_item_text_size" />
 
             </RelativeLayout>
 
@@ -93,98 +95,104 @@
                 android:background="@color/color_white">
 
                 <RelativeLayout
+                    android:id="@+id/person_center_baby_info_container"
                     android:layout_width="fill_parent"
-                    android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:id="@+id/person_center_baby_info_container">
+                    android:layout_height="@dimen/common_settings_item_normal_height">
 
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
                         android:src="@color/common_settings_item_line_color" />
+
                     <ImageView
-                        android:id= "@+id/person_center_baby_info_icon"
+                        android:id="@+id/person_center_baby_info_icon"
                         style="@style/person_center_icon"
-                        android:src = "@drawable/person_center_baby_info_ico"/>
+                        android:src="@drawable/person_center_baby_info_ico" />
+
                     <TextView
+                        style="@style/common_settings_item_left_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/person_center_baby_info"
                         android:layout_toRightOf="@id/person_center_baby_info_icon"
-                        style="@style/common_settings_item_left_text"/>
-                    <ImageView
-                        android:layout_width="@dimen/common_settings_item_text_size"
-                        android:layout_height="@dimen/common_settings_item_text_size"
-                        style="@style/common_settings_item_right_arrow" />
+                        android:text="@string/person_center_baby_info" />
 
                     <ImageView
-                        android:layout_width="fill_parent"
-                        android:layout_height="@dimen/common_settings_item_line_smaller_height"
+                        style="@style/common_settings_item_right_arrow"
+                        android:layout_width="@dimen/common_settings_item_text_size"
+                        android:layout_height="@dimen/common_settings_item_text_size" />
+
+                    <ImageView
                         android:id="@+id/imageView8"
-                        android:src="@color/common_settings_item_line_color"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/common_settings_item_line_smaller_height"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/person_center_line_margin_left" />
+                        android:layout_marginLeft="@dimen/person_center_line_margin_left"
+                        android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/person_center_baby_record_container"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:layout_below="@+id/person_center_baby_info_container"
-                    android:id="@+id/person_center_baby_record_container">
+                    android:layout_below="@+id/person_center_baby_info_container">
 
                     <ImageView
+                        style="@style/common_settings_item_right_arrow"
                         android:layout_width="@dimen/common_settings_item_text_size"
-                        android:layout_height="@dimen/common_settings_item_text_size"
-                        style="@style/common_settings_item_right_arrow" />
+                        android:layout_height="@dimen/common_settings_item_text_size" />
 
                     <ImageView
-                        android:id= "@+id/person_center_baby_record"
+                        android:id="@+id/person_center_baby_record"
                         style="@style/person_center_icon"
-                        android:src = "@drawable/person_center_baby_record_ico"/>
+                        android:src="@drawable/person_center_baby_record_ico" />
+
                     <TextView
+                        style="@style/common_settings_item_left_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/person_center_baby_record"
                         android:layout_toRightOf="@id/person_center_baby_record"
-                        style="@style/common_settings_item_left_text"/>
+                        android:text="@string/person_center_baby_record" />
 
                     <ImageView
+                        android:id="@+id/imageView11"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:id="@+id/imageView11"
-                        android:src="@color/common_settings_item_line_color"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/person_center_line_margin_left" />
+                        android:layout_marginLeft="@dimen/person_center_line_margin_left"
+                        android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/person_center_baby_milk_container"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:layout_below="@+id/person_center_baby_record_container"
-                    android:id="@+id/person_center_baby_milk_container">
+                    android:layout_below="@+id/person_center_baby_record_container">
 
                     <ImageView
+                        style="@style/common_settings_item_right_arrow"
                         android:layout_width="@dimen/common_settings_item_text_size"
-                        android:layout_height="@dimen/common_settings_item_text_size"
-                        style="@style/common_settings_item_right_arrow" />
+                        android:layout_height="@dimen/common_settings_item_text_size" />
 
                     <ImageView
-                        android:id= "@+id/person_center_baby_milk"
+                        android:id="@+id/person_center_baby_milk"
                         style="@style/person_center_icon"
-                        android:src = "@drawable/person_center_baby_milk"/>
+                        android:src="@drawable/person_center_baby_milk" />
+
                     <TextView
+                        style="@style/common_settings_item_left_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/person_center_baby_milk"
                         android:layout_toRightOf="@id/person_center_baby_milk"
-                        style="@style/common_settings_item_left_text"/>
+                        android:text="@string/person_center_baby_milk" />
 
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:src="@color/common_settings_item_line_color"
-                        android:layout_alignParentBottom="true" />
+                        android:layout_alignParentBottom="true"
+                        android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -192,64 +200,68 @@
                 android:background="@color/color_white">
 
                 <RelativeLayout
+                    android:id="@+id/percon_center_baby_device_container"
                     android:layout_width="fill_parent"
-                    android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:id="@+id/percon_center_baby_device_container">
+                    android:layout_height="@dimen/common_settings_item_normal_height">
 
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
                         android:src="@color/common_settings_item_line_color" />
+
                     <ImageView
-                        android:id= "@+id/person_center_baby_device"
+                        android:id="@+id/person_center_baby_device"
                         style="@style/person_center_icon"
-                        android:src = "@drawable/person_center_device_ico"/>
+                        android:src="@drawable/person_center_device_ico" />
+
                     <TextView
+                        style="@style/common_settings_item_left_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/person_center_baby_device"
                         android:layout_toRightOf="@id/person_center_baby_device"
-                        style="@style/common_settings_item_left_text"/>
+                        android:text="@string/person_center_baby_device" />
+
                     <ImageView
+                        style="@style/common_settings_item_right_arrow"
                         android:layout_width="@dimen/common_settings_item_text_size"
-                        android:layout_height="@dimen/common_settings_item_text_size"
-                        style="@style/common_settings_item_right_arrow" />
+                        android:layout_height="@dimen/common_settings_item_text_size" />
 
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:src="@color/common_settings_item_line_color"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/person_center_line_margin_left" />
+                        android:layout_marginLeft="@dimen/person_center_line_margin_left"
+                        android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/person_center_syn_container"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:layout_below="@+id/percon_center_baby_device_container"
-                    android:id="@+id/person_center_syn_container">
+                    android:layout_below="@+id/percon_center_baby_device_container">
 
                     <ImageView
+                        style="@style/common_settings_item_right_arrow"
                         android:layout_width="@dimen/common_settings_item_text_size"
-                        android:layout_height="@dimen/common_settings_item_text_size"
-                        style="@style/common_settings_item_right_arrow" />
+                        android:layout_height="@dimen/common_settings_item_text_size" />
 
                     <ImageView
-                        android:id= "@+id/person_center_syn"
+                        android:id="@+id/person_center_syn"
                         style="@style/person_center_icon"
-                        android:src = "@drawable/person_center_syn_ico"/>
+                        android:src="@drawable/person_center_syn_ico" />
+
                     <TextView
+                        style="@style/common_settings_item_left_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/person_center_baby_syn"
                         android:layout_toRightOf="@id/person_center_syn"
-                        style="@style/common_settings_item_left_text"/>
+                        android:text="@string/person_center_baby_syn" />
 
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:src="@color/common_settings_item_line_color"
-                        android:layout_alignParentBottom="true" />
+                        android:layout_alignParentBottom="true"
+                        android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
             </RelativeLayout>
 

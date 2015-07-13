@@ -48,10 +48,10 @@ public class FooterNavigation extends Fragment {
 
     private void initButtons() {
         fragmentManager = getFragmentManager();
+        buttonsManager = new FooterButtonsManager(fragmentManager);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                buttonsManager = new FooterButtonsManager(fragmentManager);
                 milkAmountFragment = new MilkAmountFragment();
                 weight = new WeightFragment();
                 health = new HealthFragment();

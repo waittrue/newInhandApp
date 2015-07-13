@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/menu_head_height" >
+        android:layout_height="@dimen/menu_head_height">
+
         <view
             android:id="@+id/menu_image_container"
+            class="com.inhand.milk.ui.CircleImageView"
             android:layout_width="@dimen/menu_head_icon_width"
             android:layout_height="@dimen/menu_head_icon_height"
             android:layout_alignParentLeft="true"
@@ -16,48 +18,48 @@
             android:layout_marginBottom="@dimen/menu_head_icon_margin_bottom"
             android:layout_marginLeft="@dimen/menu_head_icon_margin_left"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_launcher"
-            class="com.inhand.milk.utils.CircleImageView"
-           />
+            android:src="@drawable/ic_launcher" />
+
         <RelativeLayout
+            android:id="@+id/menu_user_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:id="@+id/menu_user_info"
             android:layout_marginLeft="@dimen/menu_head_text_margin_left_icon"
             android:layout_toRightOf="@+id/menu_image_container">
-        <TextView
-            android:id="@+id/menu_title_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="宝宝妈妈"
-            android:textColor="@color/menu_head_text_color"
-            android:textSize="@dimen/menu_head_name_text_size" />
 
-        <TextView
-            android:id="@+id/menu_title_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/menu_title_name"
-            android:layout_marginTop="10dp"
-            android:layout_alignLeft="@+id/menu_title_name"
-            android:singleLine="true"
-            android:text="奶瓶账号:JJD22446"
-            android:textColor="@color/menu_head_text_color"
-            android:textSize="@dimen/menu_head_id_text_size" />
+            <TextView
+                android:id="@+id/menu_title_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="宝宝妈妈"
+                android:textColor="@color/menu_head_text_color"
+                android:textSize="@dimen/menu_head_name_text_size" />
+
+            <TextView
+                android:id="@+id/menu_title_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/menu_title_name"
+                android:layout_below="@+id/menu_title_name"
+                android:layout_marginTop="10dp"
+                android:singleLine="true"
+                android:text="奶瓶账号:JJD22446"
+                android:textColor="@color/menu_head_text_color"
+                android:textSize="@dimen/menu_head_id_text_size" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="@dimen/menu_head_under_line_height"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/first_launch_baby_info_boy_icon"
                 android:layout_width="@dimen/menu_head_under_line_margin_left"
-                android:layout_height="fill_parent"/>
+                android:layout_height="fill_parent" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -68,7 +70,6 @@
         </LinearLayout>
 
 
-
     </RelativeLayout>
 
     <ListView
@@ -76,7 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@color/color_white"
-        android:dividerHeight="0dp" >
+        android:dividerHeight="0dp">
 
     </ListView>
 

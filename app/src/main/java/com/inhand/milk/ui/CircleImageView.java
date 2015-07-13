@@ -1,4 +1,4 @@
-package com.inhand.milk.utils;
+package com.inhand.milk.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,8 +15,9 @@ import android.widget.ImageView;
 /**
  * Created by Administrator on 2015/7/2.
  */
-public class CircleImageView extends ImageView{
-    private int boundWidth = 10,boundColor = Color.GREEN;
+public class CircleImageView extends ImageView {
+    private int boundWidth = 10, boundColor = Color.GREEN;
+
     public CircleImageView(Context context) {
         super(context);
     }
@@ -31,6 +32,39 @@ public class CircleImageView extends ImageView{
 
     public CircleImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public static Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
+        Bitmap p;
+        //判断图片的大小与传入radius是否相等，如果不相等，那么
+        //将图片设置成长 宽都是radius的图片
+        if (bmp.getWidth() != radius || bmp.getHeight() != radius)
+            p = Bitmap.createScaledBitmap(bmp, radius, radius, false);
+        else
+            p = bmp;
+        //最后输出的图片信息
+        Bitmap output = Bitmap.createBitmap(p.getWidth(),
+                p.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, p.getWidth(), p.getHeight());
+        //画笔加上  抗锯齿标志，图像更加平滑
+        paint.setAntiAlias(true);
+        //如果该项设置为true,则图像在动画进行中会滤掉对Bitmap图像的优化操作,加快显示
+        paint.setFilterBitmap(true);
+        //防抖动
+        paint.setDither(true);
+// 透明色
+        canvas.drawARGB(0, 0, 0, 0);
+        //画笔的颜色
+        paint.setColor(Color.parseColor("#BAB399"));
+        //画出一个圆形
+        canvas.drawCircle(p.getWidth() / 2 + 0.7f, p.getHeight() / 2 + 0.7f,
+                p.getWidth() / 2 + 0.1f, paint);
+        //设置两张图片相交时的模式 ，就是在画布上遮上圆形的图片信息
+        paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(p, rect, rect, paint);
+        return output;
     }
 
     @Override
@@ -57,12 +91,13 @@ public class CircleImageView extends ImageView{
 
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-        int bitmapRadius = (int)radius*2 - boundWidth;
-        bitmap = getCroppedBitmap(bitmap,bitmapRadius);
-        canvas.drawBitmap(bitmap,cx- bitmapRadius/2,cy - bitmapRadius/2,paint);
+        int bitmapRadius = (int) radius * 2 - boundWidth;
+        bitmap = getCroppedBitmap(bitmap, bitmapRadius);
+        canvas.drawBitmap(bitmap, cx - bitmapRadius / 2, cy - bitmapRadius / 2, paint);
 
     }
-    public  Bitmap drawableToBitmap(Drawable drawable) {
+
+    public Bitmap drawableToBitmap(Drawable drawable) {
         // 取 drawable 的长宽
         int w = drawable.getIntrinsicWidth();
         int h = drawable.getIntrinsicHeight();
@@ -80,38 +115,5 @@ public class CircleImageView extends ImageView{
 
 
         return bitmap;
-    }
-
-    public static Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
-        Bitmap p;
-        //判断图片的大小与传入radius是否相等，如果不相等，那么
-        //将图片设置成长 宽都是radius的图片
-        if(bmp.getWidth() != radius || bmp.getHeight() != radius)
-            p = Bitmap.createScaledBitmap(bmp, radius, radius, false);
-        else
-            p = bmp;
-        //最后输出的图片信息
-        Bitmap output = Bitmap.createBitmap(p.getWidth(),
-                p.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, p.getWidth(), p.getHeight());
-        //画笔加上  抗锯齿标志，图像更加平滑
-        paint.setAntiAlias(true);
-        //如果该项设置为true,则图像在动画进行中会滤掉对Bitmap图像的优化操作,加快显示
-        paint.setFilterBitmap(true);
-        //防抖动
-        paint.setDither(true);
-// 透明色
-        canvas.drawARGB(0, 0, 0, 0);
-        //画笔的颜色
-        paint.setColor(Color.parseColor("#BAB399"));
-        //画出一个圆形
-        canvas.drawCircle(p.getWidth() / 2+0.7f, p.getHeight() / 2+0.7f,
-                p.getWidth() / 2+0.1f, paint);
-        //设置两张图片相交时的模式 ，就是在画布上遮上圆形的图片信息
-        paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(p, rect, rect, paint);
-        return output;
     }
 }

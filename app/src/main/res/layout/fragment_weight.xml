@@ -1,139 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="@dimen/weight_fragment_up_total_height"
+            android:layout_weight="1"
+            android:background="@drawable/header_long_bg1_a"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/weight_fragment_up_total_height"
-                android:layout_weight="1"
-                android:background="@drawable/header_long_bg1_a"
-                >
-                <RelativeLayout
-                    android:id="@+id/title_background"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/weight_fragment_title_height"
-                    >
-                    <TextView
-                        android:id="@+id/title_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/main_title_margin_top"
-                        android:text="@string/weight_fragment_title"
-                        android:textColor="@color/main_title_text_color"
-                        android:textSize="@dimen/main_title_text_size" />
-
-                    <ImageView
-                        android:id="@+id/title_left_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/menu_entry_height"
-                        android:layout_alignTop="@+id/title_text"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="@dimen/menu_margin_left"
-                        android:scaleType="centerInside"
-                        />
-                    <ImageView
-                        android:id="@+id/title_right_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/main_title_right_icon_height"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="@dimen/main_title_right_icon_margin_top"
-                        android:layout_marginRight="@dimen/menu_margin_left"
-                        android:scaleType="centerInside" />
-
-                </RelativeLayout>
-                 <view
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/weight_fragment_tab_height"
-                class="com.inhand.milk.fragment.weight.WeightTab"
-                android:id="@+id/weight_tabs"
-                android:scrollbars="none"
-                android:background="#00000000" />
-                <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_marginTop="@dimen/weight_fragment_line_margin_top"
-                android:layout_height="@dimen/weight_fragment_line_height"
-                android:background="@color/weight_fragment_line_bg_color"
-                android:id="@+id/weight_fragment_line_container">
-            </LinearLayout>
-
-                 <view
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                class="com.inhand.milk.fragment.weight.WeightExcle"
-                android:id="@+id/weight_fragment_excle"
-                android:layout_weight="1" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/weight_fragment_excle_down_divider_height"
-                android:id="@+id/imageView"
-                android:background="@color/color_white"
-                android:src="@drawable/header_long_bg2_a"
-                android:scaleType="fitXY" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="#ffffff">
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3"
-                    android:id="@+id/weight_fragment_ring_container">
-
-                    <view
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        class="com.inhand.milk.utils.RingWithText"
-                        android:id="@+id/weight_fragment_ring_withtext" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                        android:orientation="vertical"
-                        android:layout_width="fill_parent"
-                        android:layout_height="@dimen/weight_fragment_adder_height"
-                        android:id="@+id/weight_fragment_adder_container">
-
-                        <view
-                            android:layout_width="@dimen/weight_fragment_adder_width"
-                            android:layout_height="@dimen/weight_fragment_adder_height"
-                            class="com.inhand.milk.fragment.weight.Adder"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:id="@+id/weight_fragment_adder"
-                            android:clickable="true" />
-                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/title_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/weight_fragment_title_height">
 
                 <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="@dimen/weight_fragment_bottom_text_height"
-                    android:text="New Text"
-                    android:id="@+id/weight_fragment_bottom_text"
-                    android:textSize="@dimen/weight_fragment_bottom_text_size"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textColor="@color/weight_fragment_bottom_text_color" />
-            </LinearLayout>
+                    android:id="@+id/title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/main_title_margin_top"
+                    android:text="@string/weight_fragment_title"
+                    android:textColor="@color/main_title_text_color"
+                    android:textSize="@dimen/main_title_text_size" />
 
+                <ImageView
+                    android:id="@+id/title_left_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/menu_entry_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignTop="@+id/title_text"
+                    android:layout_marginLeft="@dimen/menu_margin_left"
+                    android:scaleType="centerInside" />
 
+                <ImageView
+                    android:id="@+id/title_right_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/main_title_right_icon_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="@dimen/menu_margin_left"
+                    android:layout_marginTop="@dimen/main_title_right_icon_margin_top"
+                    android:scaleType="centerInside" />
 
+            </RelativeLayout>
+
+            <view
+                android:id="@+id/weight_tabs"
+                class="com.inhand.milk.fragment.weight.WeightTab"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/weight_fragment_tab_height"
+                android:background="#00000000"
+                android:scrollbars="none" />
+
+            <LinearLayout
+                android:id="@+id/weight_fragment_line_container"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/weight_fragment_line_height"
+                android:layout_marginTop="@dimen/weight_fragment_line_margin_top"
+                android:background="@color/weight_fragment_line_bg_color"
+                android:orientation="vertical"></LinearLayout>
+
+            <view
+                android:id="@+id/weight_fragment_excle"
+                class="com.inhand.milk.fragment.weight.WeightExcle"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/weight_fragment_excle_down_divider_height"
+            android:background="@color/color_white"
+            android:scaleType="fitXY"
+            android:src="@drawable/header_long_bg2_a" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/weight_fragment_ring_container"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3">
+
+                <view
+                    android:id="@+id/weight_fragment_ring_withtext"
+                    class="com.inhand.milk.ui.RingWithText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/weight_fragment_adder_container"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/weight_fragment_adder_height"
+                android:orientation="vertical">
+
+                <view
+                    android:id="@+id/weight_fragment_adder"
+                    class="com.inhand.milk.fragment.weight.Adder"
+                    android:layout_width="@dimen/weight_fragment_adder_width"
+                    android:layout_height="@dimen/weight_fragment_adder_height"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/weight_fragment_bottom_text"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/weight_fragment_bottom_text_height"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="New Text"
+                android:textColor="@color/weight_fragment_bottom_text_color"
+                android:textSize="@dimen/weight_fragment_bottom_text_size" />
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </LinearLayout>

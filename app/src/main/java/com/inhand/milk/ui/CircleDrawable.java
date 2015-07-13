@@ -1,4 +1,4 @@
-package com.inhand.milk.utils;
+package com.inhand.milk.ui;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,21 +12,24 @@ import android.graphics.drawable.Drawable;
 public class CircleDrawable extends Drawable {
     private float rr;
     private int color;
-    public  CircleDrawable() {
+
+    public CircleDrawable() {
         rr = 0;
         color = Color.WHITE;
     }
-    public  CircleDrawable(float r, int color) {
-        rr =r;
+
+    public CircleDrawable(float r, int color) {
+        rr = r;
         this.color = color;
     }
+
     @Override
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setAlpha(255);
         paint.setAntiAlias(true);
         paint.setColor(color);
-        canvas.drawCircle(rr , rr , rr, paint);
+        canvas.drawCircle(rr, rr, rr, paint);
     }
 
     @Override

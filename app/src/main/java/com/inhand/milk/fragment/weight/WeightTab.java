@@ -14,28 +14,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.inhand.milk.R;
-import com.inhand.milk.utils.ObservableHorizonScrollView;
+import com.inhand.milk.ui.ObservableHorizonScrollView;
 
 /**
  * Created by Administrator on 2015/6/6.
  * 实现weight那个图里面  最上面那个Tab
  */
 public class WeightTab extends ObservableHorizonScrollView {
+    private static final float Alpha_Center = 1f, Alpha_Minor = 0.5f, Alpha_Most = 0.1f;
     private int num = 0;
     private int textViewWidth;
-    private int textColor = Color.WHITE,unUsedTextColor = getResources().getColor(R.color.public_darkin_littlelight_color);
+    private int textColor = Color.WHITE, unUsedTextColor = getResources().getColor(R.color.public_darkin_littlelight_color);
     private int lastX;
     private float textSize;
     private ViewGroup.LayoutParams lp;
     private LinearLayout linearLayout;
-    private Handler handler ;
+    private Handler handler;
     private Runnable runnable;
-    private static final float Alpha_Center = 1f,Alpha_Minor = 0.5f, Alpha_Most =0.1f;
     private StopLisetner stopLisetner;
 
-    public interface StopLisetner {
-        void stopLisetner(int position);
-    }
     public WeightTab(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initVaribles();
@@ -54,21 +51,23 @@ public class WeightTab extends ObservableHorizonScrollView {
     public void setStopLisetner(StopLisetner stopLisetner) {
         this.stopLisetner = stopLisetner;
     }
-    private void initVaribles(){
+
+    private void initVaribles() {
         WindowManager wm = (WindowManager) getContext()
                 .getSystemService(Context.WINDOW_SERVICE);
 
-        textViewWidth = wm.getDefaultDisplay().getWidth() /4;
+        textViewWidth = wm.getDefaultDisplay().getWidth() / 4;
         textSize = textViewWidth / 5;
         lp = new ViewGroup.LayoutParams(textViewWidth, ViewGroup.LayoutParams.MATCH_PARENT);
         linearLayout = new LinearLayout(this.getContext());
-        this.addView(linearLayout,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+        this.addView(linearLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         this.setOverScrollMode(OVER_SCROLL_NEVER);
         setFingStopListener();
 
     }
-    private void setFingStopListener(){
+
+    private void setFingStopListener() {
         handler = new Handler();
         runnable = new Runnable() {
             @Override
@@ -77,10 +76,9 @@ public class WeightTab extends ObservableHorizonScrollView {
                 if (lastX == x) {
                     handerStop(x);
                     handler.removeCallbacks(runnable);
-                }
-                else {
+                } else {
                     lastX = x;
-                    handler.postDelayed(runnable,20);
+                    handler.postDelayed(runnable, 20);
                 }
 
             }
@@ -98,24 +96,23 @@ public class WeightTab extends ObservableHorizonScrollView {
         });
     }
 
-    public  void setTextColor(int color){
+    public void setTextColor(int color) {
         this.textColor = color;
     }
-    public void setTabNum(int num){
+
+    public void setTabNum(int num) {
         if (num < 0)
             num = 0;
-        this.num = num ;
+        this.num = num;
     }
 
-
-
-    public  void initTabs(){
-        TextView  textView ;
+    public void initTabs() {
+        TextView textView;
         linearLayout.removeAllViews();
         initEnd();
-        for (int i=0;i<num;i++) {
+        for (int i = 0; i < num; i++) {
             textView = new TextView(this.getContext());
-            initTextView(textView,i);
+            initTextView(textView, i);
             linearLayout.addView(textView);
         }
         initEnd();
@@ -134,7 +131,7 @@ public class WeightTab extends ObservableHorizonScrollView {
         }, 10);
     }
 
-    private void handerStop(int x){
+    private void handerStop(int x) {
         int position = localToPostion(x);
         int tempX = postionToLocal(position);
         smoothScrollTo(tempX, getScrollY());
@@ -148,47 +145,49 @@ public class WeightTab extends ObservableHorizonScrollView {
 
         int position = localToPostion(x);
         View child;
-        position = position+2;
-        child  = linearLayout.getChildAt(position);
+        position = position + 2;
+        child = linearLayout.getChildAt(position);
         child.setAlpha(Alpha_Center);
-        ((TextView)child).setTextColor(textColor);
+        ((TextView) child).setTextColor(textColor);
 
-        child  = linearLayout.getChildAt(position-1);
+        child = linearLayout.getChildAt(position - 1);
         child.setAlpha(Alpha_Minor);
-        ((TextView)child).setTextColor(unUsedTextColor);
+        ((TextView) child).setTextColor(unUsedTextColor);
 
         child = linearLayout.getChildAt(position + 1);
         child.setAlpha(Alpha_Minor);
-        ((TextView)child).setTextColor(unUsedTextColor);
+        ((TextView) child).setTextColor(unUsedTextColor);
 
         child = linearLayout.getChildAt(position - 2);
         child.setAlpha(Alpha_Most);
-        ((TextView)child).setTextColor(unUsedTextColor);
+        ((TextView) child).setTextColor(unUsedTextColor);
 
         child = linearLayout.getChildAt(position + 2);
         child.setAlpha(Alpha_Most);
-        ((TextView)child).setTextColor(unUsedTextColor);
+        ((TextView) child).setTextColor(unUsedTextColor);
 
     }
 
     //根据x，y算出应该把第几个textview放在中间;
-    private int localToPostion(int x){
-        return (int)((float)x/textViewWidth + 0.5);
-    }
-    //根据第几个，返回位置x
-    private int postionToLocal(int postion){
-        return postion*textViewWidth;
+    private int localToPostion(int x) {
+        return (int) ((float) x / textViewWidth + 0.5);
     }
 
-    private void initTextView(TextView v,int position){
-        v.setText(String.valueOf(position)+"个月");
+    //根据第几个，返回位置x
+    private int postionToLocal(int postion) {
+        return postion * textViewWidth;
+    }
+
+    private void initTextView(TextView v, int position) {
+        v.setText(String.valueOf(position) + "个月");
         v.setTextColor(textColor);
-        v.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
+        v.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         v.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
         v.setLayoutParams(lp);
         v.setAlpha(Alpha_Most);
     }
-    private void initEnd(){
+
+    private void initEnd() {
         TextView v = new TextView(this.getContext());
         v.setText("");
         v.setLayoutParams(lp);
@@ -197,10 +196,14 @@ public class WeightTab extends ObservableHorizonScrollView {
 
         v = new TextView(this.getContext());
         v.setText("");
-        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(textViewWidth/2, ViewGroup.LayoutParams.MATCH_PARENT);
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(textViewWidth / 2, ViewGroup.LayoutParams.MATCH_PARENT);
         v.setLayoutParams(lp);
         v.setAlpha(Alpha_Most);
         linearLayout.addView(v);
+    }
+
+    public interface StopLisetner {
+        void stopLisetner(int position);
     }
 }
 

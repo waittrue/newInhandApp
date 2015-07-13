@@ -64,6 +64,7 @@ public class HomeFragment extends TitleFragment {
                 return true;
             }
             record = records.get(records.size() - 1);
+            aCache.put(Standar.LastRecord, record);
         }
         lastTString = Standar.TeamperatureFormat.format((record.getBeginTemperature() + record.getEndTemperature()) / 2)
                 + "°C";
@@ -71,6 +72,7 @@ public class HomeFragment extends TitleFragment {
         adviseAmountString = String.valueOf(record.getAdviceVolumn()) + "ml";
         adviseTString = "35°C";
         score = record.getScore();
+        Log.i("milkamount", String.valueOf(score));
         lastTime = record.getBeginTime();
         return true;
 
@@ -93,6 +95,8 @@ public class HomeFragment extends TitleFragment {
         adviseT.setText(adviseTString);
         adviseAmount.setText(adviseAmountString);
         circle.setScore(score);
+        Log.i("milkamount_update", String.valueOf(score));
+        circle.start();
     }
 
     private void setHome(View view) {
@@ -103,10 +107,8 @@ public class HomeFragment extends TitleFragment {
         width = dm.widthPixels;
         float r = width / 4.15f;
         circle = new Circle(this.getActivity().getApplicationContext(), r);
-        circle.setScore(score);
         LinearLayout linearCircle = (LinearLayout) view.findViewById(R.id.temperature_milk_circle_container);
         linearCircle.addView(circle);
-        circle.start();
         setOthers(view);
         updateViews();
     }
@@ -123,6 +125,5 @@ public class HomeFragment extends TitleFragment {
         if (initData() == false)
             return;
         updateViews();
-        circle.start();
     }
 }

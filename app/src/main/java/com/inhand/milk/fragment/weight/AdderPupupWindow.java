@@ -18,8 +18,8 @@ import android.widget.TextView;
 
 import com.inhand.milk.App;
 import com.inhand.milk.R;
-import com.inhand.milk.utils.ObservableHorizonScrollView;
-import com.inhand.milk.utils.firstlanunch.Ruler;
+import com.inhand.milk.ui.ObservableHorizonScrollView;
+import com.inhand.milk.ui.firstlanunch.Ruler;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -31,6 +31,9 @@ import java.util.Date;
 public class AdderPupupWindow {
 
     private static final String TAG = "FloatADDERwindow";
+    private static final int AnimationDuration = 300;
+    private static final int spacenum = 2;
+    private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
     private WindowManager windowManager;
     private View mView;
     private Activity activity;
@@ -38,9 +41,6 @@ public class AdderPupupWindow {
     private TextView numTextView;
     private int space;
     private PopupWindow popupWindow;
-    private static final int AnimationDuration = 300;
-    private static final int spacenum = 2;
-    private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
     private ObservableHorizonScrollView scrollView;
 
     public AdderPupupWindow(Activity activity) {
@@ -144,7 +144,7 @@ public class AdderPupupWindow {
                 String str = decimalFormat.format(xx);
                 numTextView.setText(str);
                 popupWindow.showAsDropDown(mView);
-                Log.i(TAG,String.valueOf(popupWindow.isShowing()));
+                Log.i(TAG, String.valueOf(popupWindow.isShowing()));
             }
         });
     }

@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/milk_amount_listview_item_title_bg_color">
-
+    android:background="@color/milk_amount_listview_item_title_bg_color"
+    android:orientation="vertical">
 
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/milk_amount_title_total_height"
-        android:background="@drawable/header_long_bg1_a">
+        android:background="@drawable/header_long_bg1_a"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <RelativeLayout
                 android:id="@+id/title_background"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/milk_amount_title_height"
-                >
+                android:layout_height="@dimen/milk_amount_title_height">
+
                 <TextView
                     android:id="@+id/title_text"
                     android:layout_width="wrap_content"
@@ -36,23 +37,23 @@
                     android:id="@+id/title_left_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/menu_entry_height"
-                    android:layout_alignTop="@+id/title_text"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignTop="@+id/title_text"
                     android:layout_marginLeft="@dimen/menu_margin_left"
-                    android:scaleType="centerInside"
-                    />
+                    android:scaleType="centerInside" />
+
                 <ImageView
                     android:id="@+id/title_right_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/main_title_right_icon_height"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="@dimen/main_title_right_icon_margin_top"
                     android:layout_marginRight="@dimen/menu_margin_left"
+                    android:layout_marginTop="@dimen/main_title_right_icon_margin_top"
                     android:scaleType="centerInside" />
 
             </RelativeLayout>
-         </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -64,60 +65,60 @@
             android:layout_height="@dimen/milk_amount_advise_title_total_height">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/milk_amount_advise_text_margin_left"
-                android:layout_centerVertical="true">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="宝宝今天喝了：780ml"
                     android:id="@+id/milk_amount_drink_num"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:textSize="@dimen/milk_amount_advise_text_size"
-                    android:textColor="@color/milk_amount_advise_text_color" />
-
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="小兜建议宝宝喝：800ml"
-                    android:id="@+id/milk_amount_advise_num"
                     android:gravity="center_vertical"
                     android:singleLine="true"
+                    android:text="宝宝今天喝了：780ml"
+                    android:textColor="@color/milk_amount_advise_text_color"
+                    android:textSize="@dimen/milk_amount_advise_text_size" />
+
+                <TextView
+                    android:id="@+id/milk_amount_advise_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/milk_amount_advise_texts_margin_top"
-                    android:textSize="@dimen/milk_amount_advise_text_size"
-                    android:textColor="@color/milk_amount_advise_text_color" />
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="小兜建议宝宝喝：800ml"
+                    android:textColor="@color/milk_amount_advise_text_color"
+                    android:textSize="@dimen/milk_amount_advise_text_size" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
+                android:id="@+id/milk_amount_advise_ring_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/milk_amount_advise_margin_right"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:id="@+id/milk_amount_advise_ring_container"
-                android:layout_gravity="right"></LinearLayout>
+                android:layout_centerVertical="true"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/milk_amount_advise_margin_right"
+                android:orientation="vertical"></LinearLayout>
 
         </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/milk_amount_advise_bottom_height"
-        android:background="@drawable/header_long_bg2_a"></LinearLayout>
+        android:background="@drawable/header_long_bg2_a"
+        android:orientation="vertical"></LinearLayout>
 
 
-    <com.inhand.milk.utils.PinnerListView
+    <com.inhand.milk.ui.PinnerListView
+        android:id="@+id/milk_amount_listview"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:id="@+id/milk_amount_listview"
-        android:scrollbars="none"
-        android:layout_weight="1"></com.inhand.milk.utils.PinnerListView>
+        android:layout_weight="1"
+        android:scrollbars="none"></com.inhand.milk.ui.PinnerListView>
 
 </LinearLayout>

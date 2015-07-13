@@ -16,20 +16,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.inhand.milk.R;
-import com.inhand.milk.utils.ObservableScrollView;
-import com.inhand.milk.utils.firstlanunch.Ruler;
+import com.inhand.milk.ui.ObservableScrollView;
+import com.inhand.milk.ui.firstlanunch.Ruler;
 
-public class ChooseHeight extends FirstLaunchFragment{
+public class ChooseHeight extends FirstLaunchFragment {
 
-    private TextView num,unit;
-    private ImageView icon,rulerJt;
+    private final int TIME = 500;
+    private TextView num, unit;
+    private ImageView icon, rulerJt;
     private ObservableScrollView scrollView;
     private LinearLayout rulerContainer;
     private RelativeLayout iconContainer;
     private int spacing;
     private int spacingnum = 2;
-    private final int TIME = 500;
-
     private LinearLayout test;
 
     @Override
@@ -37,7 +36,7 @@ public class ChooseHeight extends FirstLaunchFragment{
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.first_launch_choose_height,null);
+        View view = inflater.inflate(R.layout.first_launch_choose_height, null);
         setTitle(getResources().getString(R.string.first_launch_choose_height_info));
         setPre();
         setNext();
@@ -45,14 +44,14 @@ public class ChooseHeight extends FirstLaunchFragment{
         return view;
     }
 
-    private void initViews(View view){
-        num = (TextView)view.findViewById(R.id.first_launch_height_num_textview);
-        unit =(TextView)view.findViewById(R.id.first_launch_height_unit_textview);
-        scrollView = (ObservableScrollView )view.findViewById(R.id.first_launch_height_scrollView);
-        rulerJt = (ImageView)view.findViewById(R.id.first_launch_height_ruler_jt_ico);
-        rulerContainer = (LinearLayout)view.findViewById(R.id.first_launch_height_ruler_container);
-        iconContainer = (RelativeLayout)view.findViewById(R.id.first_launch_height_icon_container);
-        icon = (ImageView)view.findViewById(R.id.first_launch_height_icon_imageview);
+    private void initViews(View view) {
+        num = (TextView) view.findViewById(R.id.first_launch_height_num_textview);
+        unit = (TextView) view.findViewById(R.id.first_launch_height_unit_textview);
+        scrollView = (ObservableScrollView) view.findViewById(R.id.first_launch_height_scrollView);
+        rulerJt = (ImageView) view.findViewById(R.id.first_launch_height_ruler_jt_ico);
+        rulerContainer = (LinearLayout) view.findViewById(R.id.first_launch_height_ruler_container);
+        iconContainer = (RelativeLayout) view.findViewById(R.id.first_launch_height_icon_container);
+        icon = (ImageView) view.findViewById(R.id.first_launch_height_icon_imageview);
         String sex = getExtraInfo();
         if (sex.equals("boy"))
             icon.setImageDrawable(getResources().getDrawable(R.drawable.first_launch_weight_boy_icon));
@@ -60,17 +59,17 @@ public class ChooseHeight extends FirstLaunchFragment{
             icon.setImageDrawable(getResources().getDrawable(R.drawable.first_launch_weight_girl_icon));
 
         int height = (int) getResources().getDimension(R.dimen.first_lanunch_height_choose_height);
-        spacing = height/30;
-        Ruler ruler = new Ruler(getActivity().getApplicationContext(),height,
+        spacing = height / 30;
+        Ruler ruler = new Ruler(getActivity().getApplicationContext(), height,
                 getResources().getDimension(R.dimen.first_lanunch_height_ruler_width),
                 0, 0, 100, spacing, spacingnum, false);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.setMargins((int) -getResources().getDimension(R.dimen.first_lanunch_weight_ruler_margin),0,0,20);
-        rulerContainer.addView(ruler,lp);
+        lp.setMargins((int) -getResources().getDimension(R.dimen.first_lanunch_weight_ruler_margin), 0, 0, 20);
+        rulerContainer.addView(ruler, lp);
 
 
-     //   test = (LinearLayout)view.findViewById(R.id.height_linearlayout);
+        //   test = (LinearLayout)view.findViewById(R.id.height_linearlayout);
         scrollView.setScrollViewListener(new ObservableScrollView.ScrollViewListener() {
 
             @Override
@@ -78,16 +77,16 @@ public class ChooseHeight extends FirstLaunchFragment{
                                         int oldx, int oldy) {
                 // TODO Auto-generated method stub
                 float xx = scrollView.getScrollY();
-                xx = xx/spacing * spacingnum /10f;
-                num.setText( String.format("%.1f",xx));
-             //   Log.i("height:totoal",String.valueOf(test.getWidth()));
-                Log.i("height:num",String.valueOf(num.getWidth()));
-                Log.i("height:unit",String.valueOf(unit.getWidth()));
+                xx = xx / spacing * spacingnum / 10f;
+                num.setText(String.format("%.1f", xx));
+                //   Log.i("height:totoal",String.valueOf(test.getWidth()));
+                Log.i("height:num", String.valueOf(num.getWidth()));
+                Log.i("height:unit", String.valueOf(unit.getWidth()));
             }
         });
     }
 
-    private void setPre(){
+    private void setPre() {
         lanunchBottom.setPreListener(new OnClickListener() {
 
             @Override
@@ -97,7 +96,8 @@ public class ChooseHeight extends FirstLaunchFragment{
             }
         });
     }
-    private void setNext(){
+
+    private void setNext() {
         lanunchBottom.setNextListener(new OnClickListener() {
 
             @Override
@@ -108,6 +108,7 @@ public class ChooseHeight extends FirstLaunchFragment{
             }
         });
     }
+
     @Override
     protected Fragment nextFragment() {
         // TODO Auto-generated method stub
@@ -118,7 +119,7 @@ public class ChooseHeight extends FirstLaunchFragment{
     public void onHiddenChanged(boolean hidden) {
         // TODO Auto-generated method stub
         super.onHiddenChanged(hidden);
-        if (!hidden){
+        if (!hidden) {
             setTitle(getResources().getString(R.string.first_launch_choose_height_info));
             setNext();
             iconContainer.clearAnimation();
@@ -145,12 +146,12 @@ public class ChooseHeight extends FirstLaunchFragment{
         alphAnimation(scrollView, 0f, TIME);
 
 
-        int movedright = (int) (width/2 - width*0.5 + icon.getWidth()/2);
-        Animation animation = new TranslateAnimation(0,movedright,0,0);
+        int movedright = (int) (width / 2 - width * 0.5 + icon.getWidth() / 2);
+        Animation animation = new TranslateAnimation(0, movedright, 0, 0);
         animation.setFillAfter(true);
         animation.setDuration(TIME);
         iconContainer.startAnimation(animation);
-        animation.setAnimationListener( new AnimationListener() {
+        animation.setAnimationListener(new AnimationListener() {
 
             @Override
             public void onAnimationStart(Animation animation) {
@@ -172,13 +173,13 @@ public class ChooseHeight extends FirstLaunchFragment{
             }
         });
     }
-	/*
+    /*
 	 * num.getText().toString() 返回身高单位厘米
 	 */
 
-    private void save(){
-       Float height=Float.valueOf(num.getText().toString());
-       baby.setHeight(height);
+    private void save() {
+        Float height = Float.valueOf(num.getText().toString());
+        baby.setHeight(height);
     }
 
 }

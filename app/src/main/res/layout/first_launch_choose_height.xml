@@ -2,55 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:orientation="vertical"></LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/first_lanunch_height_choose_height" >
+        android:layout_height="@dimen/first_lanunch_height_choose_height">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/LinearLayout1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1" >
+                    android:layout_weight="1">
 
                     <RelativeLayout
                         android:id="@+id/RelativeLayout1"
                         android:layout_width="@dimen/first_lanunch_weight_girl_boy_icon_width"
                         android:layout_height="fill_parent"
-                        android:layout_alignParentRight="true" >
+                        android:layout_alignParentRight="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true" >
+                            android:layout_centerInParent="true">
 
                             <TextView
                                 android:id="@+id/first_launch_height_num_textview"
                                 android:layout_width="80dp"
                                 android:layout_height="wrap_content"
+                                android:gravity="right"
                                 android:text="0.0"
                                 android:textColor="@color/color_white"
-                                android:textSize="@dimen/first_lanunch_weight_num_text_size"
-                                android:gravity="right" />
+                                android:textSize="@dimen/first_lanunch_weight_num_text_size" />
 
                             <TextView
                                 android:id="@+id/first_launch_height_unit_textview"
@@ -66,30 +65,28 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1" >
-                </RelativeLayout>
+                    android:layout_weight="1"></RelativeLayout>
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="4" >
+                android:layout_weight="4">
 
-                <com.inhand.milk.utils.ObservableScrollView
+                <com.inhand.milk.ui.ObservableScrollView
                     android:id="@+id/first_launch_height_scrollView"
                     android:layout_width="@dimen/first_lanunch_height_ruler_width"
                     android:layout_height="fill_parent"
                     android:layout_centerInParent="true"
                     android:background="@drawable/first_launch_ruler_y_bg"
-                    android:scrollbars="none" >
+                    android:scrollbars="none">
 
                     <LinearLayout
                         android:id="@+id/first_launch_height_ruler_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-                    </LinearLayout>
-                </com.inhand.milk.utils.ObservableScrollView>
+                        android:orientation="vertical"></LinearLayout>
+                </com.inhand.milk.ui.ObservableScrollView>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -97,7 +94,7 @@
                     android:layout_marginLeft="@dimen/first_lanunch_height_ruler_jt_margin_left"
                     android:layout_toRightOf="@id/first_launch_height_scrollView"
                     android:gravity="center"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/first_launch_height_ruler_jt_ico"
@@ -113,19 +110,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/first_lanunch_weight_girl_boy_icon_height"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:id="@+id/first_launch_height_icon_container"
@@ -133,7 +129,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom|right"
                     android:layout_weight="4"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/first_launch_height_icon_imageview"
@@ -151,8 +147,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
-                    android:orientation="vertical" >
-                </LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
@@ -161,7 +156,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:orientation="vertical"></LinearLayout>
 
 </LinearLayout>

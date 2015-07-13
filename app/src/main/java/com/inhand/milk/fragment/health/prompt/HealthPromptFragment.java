@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.TitleFragment;
-import com.inhand.milk.utils.CircleDrawable;
+import com.inhand.milk.ui.CircleDrawable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +35,8 @@ public class HealthPromptFragment extends TitleFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       // return super.onCreateView(inflater, container, savedInstanceState);
-        mView = inflater.inflate(R.layout.health_prompt,container,false);
+        // return super.onCreateView(inflater, container, savedInstanceState);
+        mView = inflater.inflate(R.layout.health_prompt, container, false);
         rightListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,18 +44,20 @@ public class HealthPromptFragment extends TitleFragment {
             }
         };
         initViews(mView);
-        setTitleview(getResources().getString(R.string.health_prompt_title),2,getResources().getDrawable(R.drawable.header_sector_ico),rightListener);
+        setTitleview(getResources().getString(R.string.health_prompt_title), 2, getResources().getDrawable(R.drawable.header_sector_ico), rightListener);
         return mView;
     }
-    private void initViews(View v){
+
+    private void initViews(View v) {
         initConfigures();
-        mInflater  =  LayoutInflater.from(getActivity().getApplicationContext());//这个inflate可不可以等于上面那个
-        listView = (ListView)v.findViewById(R.id.health_prompt_listview);
+        mInflater = LayoutInflater.from(getActivity().getApplicationContext());//这个inflate可不可以等于上面那个
+        listView = (ListView) v.findViewById(R.id.health_prompt_listview);
         listView.setAdapter(getAdapter());
 
     }
-    private void initConfigures(){
-        int i,temp=0;
+
+    private void initConfigures() {
+        int i, temp = 0;
         textColor = getResources().getColor(R.color.health_prompt_listview_item_long_doc_text_color);
         String[] strings = getResources().getStringArray(R.array.health_prompt_listview_item_doc);
         String[] docStrings = getResources().getStringArray(R.array.health_prompt_listview_item_long_doc);
@@ -64,7 +66,7 @@ public class HealthPromptFragment extends TitleFragment {
         int[] longColors = getResources().getIntArray(R.array.health_prompt_listview_item_num_long_doc_colors);
         mWeight = new float[strings.length];
         text = new ArrayList<>();
-        for( i=0;i<strings.length;i++){
+        for (i = 0; i < strings.length; i++) {
             List<Object> list = new ArrayList<>();
             String[] doc = new String[3];
             list.add(strings[i]);
@@ -72,8 +74,8 @@ public class HealthPromptFragment extends TitleFragment {
 
             list.add(textColors[i]);
             list.add(numColors[i]);
-            list.add(String.valueOf(getPromptCount(i))+"次");
-            doc[1] = String.valueOf(getPromptCount(i))+"次";
+            list.add(String.valueOf(getPromptCount(i)) + "次");
+            doc[1] = String.valueOf(getPromptCount(i)) + "次";
             text.add(doc);
 
             mWeight[i] = getPromptCount(i);
@@ -82,12 +84,13 @@ public class HealthPromptFragment extends TitleFragment {
             list.add(longColors[i]);
             configuration.add(list);
         }
-        for(i=0;i<strings.length;i++){
+        for (i = 0; i < strings.length; i++) {
             String[] doc = text.get(i);
-            doc[2] = "共"+String.valueOf(temp)+"次";
+            doc[2] = "共" + String.valueOf(temp) + "次";
         }
     }
-    private BaseAdapter getAdapter(){
+
+    private BaseAdapter getAdapter() {
         return new BaseAdapter() {
             @Override
             public int getCount() {
@@ -107,39 +110,40 @@ public class HealthPromptFragment extends TitleFragment {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 if (convertView == null)
-                    convertView = mInflater.inflate(R.layout.health_prompt_listview_item,null);
-                itemSettings(convertView,  (List<Object> )getItem(position) );
-                return  convertView;
+                    convertView = mInflater.inflate(R.layout.health_prompt_listview_item, null);
+                itemSettings(convertView, (List<Object>) getItem(position));
+                return convertView;
             }
         };
     }
-    private void itemSettings(View view,List<Object> item){
-        ImageView  imageView = (ImageView)view.findViewById(R.id.health_prompt_listview_item_circle_icon);
-        CircleDrawable circle  = new CircleDrawable( getResources().getDimension(R.dimen.health_prompt_listview_item_circle_r)/2,
-                (int)item.get(1) );
+
+    private void itemSettings(View view, List<Object> item) {
+        ImageView imageView = (ImageView) view.findViewById(R.id.health_prompt_listview_item_circle_icon);
+        CircleDrawable circle = new CircleDrawable(getResources().getDimension(R.dimen.health_prompt_listview_item_circle_r) / 2,
+                (int) item.get(1));
         imageView.setImageDrawable(circle);
 
-        TextView textView = (TextView)view.findViewById(R.id.health_prompt_listview_item_text_doc);
-        textView.setText((String)item.get(0));
+        TextView textView = (TextView) view.findViewById(R.id.health_prompt_listview_item_text_doc);
+        textView.setText((String) item.get(0));
         textView.setTextColor((int) item.get(1));
 
-        textView = (TextView)view.findViewById(R.id.health_prompt_listview_item_text_total);
-        textView.setTextColor((int)item.get(1));
+        textView = (TextView) view.findViewById(R.id.health_prompt_listview_item_text_total);
+        textView.setTextColor((int) item.get(1));
 
-        textView = (TextView)view.findViewById(R.id.health_prompt_listview_item_text_num);
-        textView.setText((String)item.get(3));
-        GradientDrawable myGrad = (GradientDrawable)textView.getBackground();
-        myGrad.setColor((int)item.get(1));
+        textView = (TextView) view.findViewById(R.id.health_prompt_listview_item_text_num);
+        textView.setText((String) item.get(3));
+        GradientDrawable myGrad = (GradientDrawable) textView.getBackground();
+        myGrad.setColor((int) item.get(1));
 
-        textView = (TextView)view.findViewById(R.id.health_prompt_listview_item_text_long_doc);
-        textView.setText((String)item.get(4));
+        textView = (TextView) view.findViewById(R.id.health_prompt_listview_item_text_long_doc);
+        textView.setText((String) item.get(4));
         textView.setTextColor(textColor);
-        myGrad = (GradientDrawable)textView.getBackground();
-        myGrad.setColor((int)item.get(5));
+        myGrad = (GradientDrawable) textView.getBackground();
+        myGrad.setColor((int) item.get(5));
     }
 
-    private int getPromptCount(int i){
-        switch (i){
+    private int getPromptCount(int i) {
+        switch (i) {
             case 0:
                 return getHeightChongtiao();
             case 1:
@@ -152,16 +156,18 @@ public class HealthPromptFragment extends TitleFragment {
 
     @Override
     protected Fragment getNextFragment() {
-        return new Nutrition(mWeight,text);
+        return new Nutrition(mWeight, text);
     }
 
-    private int getHeightChongtiao(){
+    private int getHeightChongtiao() {
         return 16;
     }
-    private int getHeightTemperature(){
+
+    private int getHeightTemperature() {
         return 4;
     }
-    private int getLowTemperature(){
+
+    private int getLowTemperature() {
         return 2;
     }
 

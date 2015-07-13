@@ -73,7 +73,7 @@
                         android:layout_weight="0.125"
                         android:orientation="vertical"></LinearLayout>
 
-                    <com.inhand.milk.utils.ObservableHorizonScrollView
+                    <com.inhand.milk.ui.ObservableHorizonScrollView
                         android:id="@+id/first_launch_choose_head_scrollView"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/first_lanunch_weight_ruler_height"
@@ -87,7 +87,7 @@
                             android:layout_height="fill_parent"
                             android:gravity="center"
                             android:orientation="horizontal"></LinearLayout>
-                    </com.inhand.milk.utils.ObservableHorizonScrollView>
+                    </com.inhand.milk.ui.ObservableHorizonScrollView>
 
                     <LinearLayout
                         android:layout_width="0dp"

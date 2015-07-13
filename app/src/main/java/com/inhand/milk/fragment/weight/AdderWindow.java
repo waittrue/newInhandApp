@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.inhand.milk.App;
 import com.inhand.milk.R;
-import com.inhand.milk.utils.ObservableHorizonScrollView;
-import com.inhand.milk.utils.firstlanunch.Ruler;
+import com.inhand.milk.ui.ObservableHorizonScrollView;
+import com.inhand.milk.ui.firstlanunch.Ruler;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -26,12 +26,12 @@ import java.util.Date;
  */
 public class AdderWindow extends Activity {
     private static final String TAG = "AdderWindow";
-    private LinearLayout outerLayer, rulerContainer;
-    private TextView numTextView;
-    private int space;
     private static final int AnimationDuration = 300;
     private static final int spacenum = 2;
     private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
+    private LinearLayout outerLayer, rulerContainer;
+    private TextView numTextView;
+    private int space;
     private ObservableHorizonScrollView scrollView;
 
     @Override
@@ -64,8 +64,9 @@ public class AdderWindow extends Activity {
 
     private void hidden() {
         //windowManager.removeView(view);
-       finish();
+        finish();
     }
+
     private void initOuter() {
         outerLayer = (LinearLayout) findViewById(R.id.weigth_fragment_outest_layer);
         rulerContainer = (LinearLayout) findViewById(R.id.weight_fragment_ruler_container);
@@ -128,6 +129,7 @@ public class AdderWindow extends Activity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
         return sdf.format(today);
     }
+
     private void outAnimation() {
         int height = App.getWindowHeight(this);
         Animation animation = new TranslateAnimation(0, 0, 0, height / 2);

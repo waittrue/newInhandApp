@@ -1,4 +1,4 @@
-package com.inhand.milk.utils;
+package com.inhand.milk.ui;
 
 import android.content.Context;
 
@@ -9,8 +9,10 @@ public abstract class QuickListViewAdapter extends PinnerListViewAdapter {
     public QuickListViewAdapter(Context context) {
         super(context);
     }
+
     public abstract String getTitle(int position);
-    public int getCount(){
+
+    public int getCount() {
         return mData.size();
     }
 }

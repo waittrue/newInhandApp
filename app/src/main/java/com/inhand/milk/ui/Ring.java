@@ -1,63 +1,76 @@
-package com.inhand.milk.fragment.home;
+package com.inhand.milk.ui;
+
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.SweepGradient;
 import android.os.Handler;
 import android.view.View;
 
-import com.inhand.milk.App;
-import com.inhand.milk.R;
+public class Ring extends View {
 
-public class Circle extends View {
-
-    private final float[] originalColorWeight = {0, 0.33f, 0.66f, 1.0f};//һ��������0.25�����������ĳ�0.245
-    private final int[] originalRGB = {0x04, 0x98, 0xa2,
-            0x02, 0xb9, 0xb4,
-            0x05, 0x7e, 0x9b,
-            0x05, 0x7e, 0x9b};
     private float sweepAngle = 0;
     private Handler handler;
     private Runnable runnabel;
-    private int time, maxScore, score;
+    private int time;
+    private boolean first = true;
     private float maxSweepAngle;
-    private String scoreString;
-    ;
-    private float accurateScore;
-    private float x, y, r, wr, paintWidth, textSize;
+    private float x, y, r, wr, paintWidth;
+    private int backgroundColor;
+
+    private float[] originalColorWeight = {0, 0.33f, 0.66f, 1.0f};//&#x4bb;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;0.25&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#x133;&#xfffd;0.245
+    private int[] originalRGB = {0x04, 0x98, 0xa2,
+            0x02, 0xb9, 0xb4,
+            0x05, 0x7e, 0x9b,
+            0x05, 0x7e, 0x9b};
     private int[] color;
     private float[] fixedColorWeight;
     private int[] fixedRGB;
 
-    public Circle(Context context, float rr) {
+    public Ring(Context context) {
         super(context);
-        time = 300;
-        score = 10;
-        scoreString = String.valueOf(score);
-        maxScore = 0;
-        maxSweepAngle = maxScore * 3.6f;
-
-        x = rr;//Բ��
-        y = rr;//Բ��
-        wr = rr;//�뾶 ��Ȧ
-        paintWidth = wr * 2 / 366 * 5;//��Բ��ʱ��ıʵĿ��
-        x = wr + paintWidth;//Ԥ����һ��width�ĳ���
-        y = wr + paintWidth;
-        r = wr - paintWidth / 2;
-        textSize = wr * 2 * 150 / 366;
-
         fixColor();
         sortWeight();
     }
 
-    public void setScore(int s) {
-        maxScore = s;
-        maxSweepAngle = maxScore * 3.6f;
+    public Ring(Context context, float rr, int color) {
+        super(context);
+        // TODO Auto-generated constructor stub
+        time = 10000;
+        handler = new Handler();
+        maxSweepAngle = 360;
+
+        x = rr;//Բ��
+        y = rr;//Բ��
+        wr = rr;//�뾶 ��Ȧ
+        paintWidth = wr / 8;//��Բ��ʱ��ıʵĿ��
+        x = wr + paintWidth;//Ԥ����һ��width�ĳ���
+        y = wr + paintWidth;
+        r = wr - paintWidth / 2;
+        backgroundColor = color;
+        fixColor();
+        sortWeight();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // TODO Auto-generated method stub
+        setMeasuredDimension((int) (wr + wr + paintWidth * 2 + 0.5f), (int) (wr + wr + paintWidth * 2 + 0.5f));
+    }
+
+
+    public void setColors(int[] colors, float[] colorsWeight) {
+        if (colors.length / 3 != colorsWeight.length)
+            return;
+        originalColorWeight = colorsWeight;
+        originalRGB = colors;
+        fixColor();
+        sortWeight();
     }
 
     public void setAnimalTime(int t) {
@@ -67,32 +80,13 @@ public class Circle extends View {
 
     private void drawBackground(Canvas canvas) {
         Paint paint = new Paint();
+        paint.setAlpha(255);
         paint.setAntiAlias(true);
         paint.setStrokeWidth(paintWidth);
 
-        paint.setColor(getResources().getColor(R.color.home_circle_outermost));
+        paint.setColor(backgroundColor);
         paint.setStyle(Style.STROKE);
         canvas.drawCircle(x, y, r, paint);
-
-        paint.setStyle(Style.FILL);
-        paint.setStrokeWidth(1);
-
-
-        paint.setColor(getResources().getColor(R.color.home_circle_inner_outermost));
-        canvas.drawCircle(x, y, r - paintWidth / 2, paint);
-
-
-        float tempr = wr * 312f / 366;
-        paint.setColor(getResources().getColor(R.color.public_main_b_color));
-        paint.setAlpha((int) (0.03 * 256));
-        canvas.drawCircle(x, y, tempr, paint);
-
-
-        tempr = wr * 266f / 366;
-        paint.setColor(getResources().getColor(R.color.public_main_b_color));
-        paint.setAlpha((int) (0.07 * 256));
-        canvas.drawCircle(x, y, tempr, paint);
-
 
     }
 
@@ -196,77 +190,30 @@ public class Circle extends View {
 
     }
 
-    private void drawEdge(Canvas canvas, float sweepAngle, boolean right) {
+    private void drawEdge(Canvas canvas, float sweepAngle, boolean end) {
         float xx, yy, rr;
         float temp = 270;
         Paint paint = new Paint();
         paint.setStrokeWidth(1);
+        paint.setStyle(Style.FILL);
         paint.setAntiAlias(true);
-        /*
-        if(right  == true){
-			temp =temp + 1;
-			selecteColor(sweepAngle+1, paint);
-			}
-		else {
-			temp =temp +1;
-			selecteColor(sweepAngle+1, paint);
-			}
-			*/
+        if (end == true)
+            sweepAngle = sweepAngle - 1;
+        else
+            sweepAngle = sweepAngle + 1;
+        selecteColor(sweepAngle, paint);
+
         xx = (float) (x + r * Math.cos((temp + sweepAngle) / 180 * Math.PI));
         yy = (float) (y + r * Math.sin((temp + sweepAngle) / 180 * Math.PI));
-        rr = paintWidth;
-        //Shader shader = new SweepGradient(x, y,color,fixedColorWeight);
-        Shader shader = new LinearGradient(x - r, y + r, x + r, y - r,
-                getResources().getColor(R.color.public_main_b_color),
-                getResources().getColor(R.color.public_main_a_color), Shader.TileMode.MIRROR);
-        paint.setShader(shader);
-        canvas.drawCircle(xx, yy, rr, paint);
-    }
-
-
-    private void drawText(Canvas canvas) {
-        Paint paint = new Paint();
-        float strLen;
-        String doc = getResources().getString(R.string.home_circle_doc);
-        int lowScore = getResources().getColor(R.color.public_caution_color);
-        int highScore = getResources().getColor(R.color.public_main_b_color);
-        int fen = getResources().getColor(R.color.home_fen_color);
-        int docColor = getResources().getColor(R.color.public_main_b_color);
-
-        paint.setTextSize(textSize);
-
-        paint.setTypeface(App.Typeface_arial);
-        paint.setAntiAlias(true);
-        if (score < 70)
-            paint.setColor(lowScore);
+        rr = paintWidth / 2;
+        RectF rectF = new RectF(xx - rr, yy - rr, xx + rr, yy + rr);
+        if (end == true)
+            canvas.drawArc(rectF, temp + sweepAngle, 180, false, paint);
         else
-            paint.setColor(highScore);
-        strLen = paint.measureText(scoreString);
-        canvas.drawText(scoreString, x - strLen * 23 / 40, y + textSize / 5f, paint);
-
-        paint.setColor(fen);
-        paint.setTextSize(textSize / 3.5f);
-        canvas.drawText("分", x - strLen * 23 / 40 + strLen, y + textSize / 5f, paint);//��ͼ���ڳ����Ĳ���
-
-        float temp = (textSize);
-        float docTextsize = temp / 4.8f;
-        paint.setTextSize(docTextsize);
-        paint.setColor(docColor);
-        strLen = paint.measureText(doc);
-        float yy = y + docTextsize + textSize / 4.5f + docTextsize / 3;
-        canvas.drawText(doc, x - strLen / 2, yy, paint);
+            canvas.drawArc(rectF, temp + sweepAngle, -180, false, paint);
     }
-
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // TODO Auto-generated method stub
-        setMeasuredDimension((int) (wr + wr + paintWidth * 2 + 0.5f), (int) (wr + wr + paintWidth * 2 + 0.5f));//Ԥ��һ�㳤�ȡ�
-    }
-
 
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         drawBackground(canvas);
 
         Paint paint = new Paint();
@@ -274,53 +221,64 @@ public class Circle extends View {
         paint.setAntiAlias(true);
         paint.setStrokeWidth(paintWidth);
         RectF rectf = new RectF(x - r, y - r, x + r, y + r);
-        //Shader shader = new SweepGradient(x, y,color,fixedColorWeight);
-        Shader shader = new LinearGradient(x - r, y + r, x + r, y - r,
-                getResources().getColor(R.color.public_main_b_color),
-                getResources().getColor(R.color.public_main_a_color), Shader.TileMode.MIRROR);
+        Shader shader = new SweepGradient(x, y, color, fixedColorWeight);
         paint.setShader(shader);
         canvas.drawArc(rectf, 270, sweepAngle, false, paint);
-
-        drawEdge(canvas, sweepAngle, true);
-        drawText(canvas);
-
+        if (!first) {
+            drawEdge(canvas, sweepAngle, true);
+            drawEdge(canvas, 0, false);
+        }
     }
 
 
     public void start() {
-        handler = new Handler();
+
+        first = false;
         sweepAngle = 0;
-        score = 0;
-        accurateScore = 0;
         runnabel = new Runnable() {
 
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                if (maxScore == -1 || maxScore == 0)
-                    scoreString = "无";
-                else
-                    scoreString = String.valueOf(score);
                 invalidate();
                 if (sweepAngle == maxSweepAngle)
                     handler.removeCallbacks(this);
 
                 else
                     handler.postDelayed(this, 2);
-
-
-                sweepAngle += maxSweepAngle / (time / 5);
-                accurateScore = accurateScore + (float) (maxScore) / (time / 5);
-                score = (int) accurateScore;
+                sweepAngle += maxSweepAngle / (time / 2);
                 if (sweepAngle > maxSweepAngle) {
                     sweepAngle = maxSweepAngle;
-                    score = maxScore;
+                    first = true;
                 }
-
             }
-
         };
-        handler.postDelayed(runnabel, 4);
+        handler.postDelayed(runnabel, 2);
     }
 
+    public void accelerateAnimator() {
+        first = false;
+        handler.removeCallbacks(runnabel);
+        runnabel = new Runnable() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                invalidate();
+                if (sweepAngle == maxSweepAngle)
+                    handler.removeCallbacks(this);
+                else
+                    handler.postDelayed(this, 2);
+                sweepAngle += temp / (100 / 2);
+                if (sweepAngle > maxSweepAngle) {
+                    sweepAngle = maxSweepAngle;
+                    first = true;
+                }
+            }
+
+            float temp = maxSweepAngle - sweepAngle;
+
+        };
+        handler.postDelayed(runnabel, 2);
+    }
 }
+

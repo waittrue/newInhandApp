@@ -3,12 +3,17 @@ package com.inhand.milk.fragment.milk_amount_curve;
 import android.app.Activity;
 
 import com.inhand.milk.R;
+import com.inhand.milk.STANDAR.Standar;
+import com.inhand.milk.dao.BaseDao;
+import com.inhand.milk.dao.OneDayDao;
+import com.inhand.milk.entity.OneDay;
+import com.inhand.milk.entity.Record;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePaper {
-
 	public curveDay(Activity activity, int width) {
 		super(activity,width);
 		// TODO Auto-generated constructor stub
@@ -74,6 +79,42 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
                 getString(R.string.milk_excle_day_right_title));
     }
 
+    private void updateTemperatureData(final List<List<float[]>> data) {
+        String today = "";
+        Date dt = new Date();
+        today = Standar.OneDayDateFormat.format(dt);
+        final OneDayDao oneDayDao = new OneDayDao(mActivty);
+        oneDayDao.findOneDayFromDB(today, new BaseDao.DBFindCallback() {
+            @Override
+            public void done(List results) {
+                if (results != null && results.size() > 0) {
+                    OneDay oneDay = (OneDay) results.get(0);
+                    List<float[]> maxTemperature = new ArrayList<>();
+                    List<float[]> minTemperature = new ArrayList<>();
+                    for (Record record : oneDay.getRecords()) {
+                        float[] maxTemp = new float[2];
+                        float[] minTemp = new float[2];
+                        float time = time2float(record.getBeginTime());
+                        minTemp[0] = maxTemp[0] = time;
+                        minTemp[1] = record.getEndTemperature();
+                        maxTemp[1] = record.getBeginTemperature();
+
+                        maxTemperature.add(maxTemp);
+                        minTemperature.add(minTemp);
+                    }
+                }
+            }
+        });
+    }
+
+    private float time2float(String time) {
+        String[] str = time.split(":");
+
+        int hour = Integer.parseInt(str[0]);
+        int min = Integer.parseInt(str[1]);
+
+        return (float) min / 60 + (float) hour / 24;
+    }
     @Override
     protected void refreshTemperatureData(List<List<float[]>> data) {
         data.clear();
