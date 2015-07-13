@@ -14,10 +14,10 @@ import java.util.Date;
 import java.util.List;
 
 public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePaper {
-	public curveDay(Activity activity, int width) {
-		super(activity,width);
-		// TODO Auto-generated constructor stub
-	}
+    public curveDay(Activity activity, int width) {
+        super(activity, width);
+        // TODO Auto-generated constructor stub
+    }
 
     /**
      * 返回当天温度，温度分为两个<list<float[]>>
@@ -25,7 +25,7 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
      * 每个温度为     时间 和 温度<float float> 时间3：30 = 3.5
      */
     /*
-	@Override
+    @Override
 	public void  refreshData(final List<List<float[]>> data) {
 		// TODO Auto-generated method stub
         String today="";
@@ -62,7 +62,6 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
         });
 	}
 */
-
     @Override
     protected void setTemperatureExcle(Excle excle) {
         excle.setLeftTiltle(mActivty.getResources().getString(R.string.temperature_excle_day_left_title));
@@ -98,7 +97,6 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
                         minTemp[0] = maxTemp[0] = time;
                         minTemp[1] = record.getEndTemperature();
                         maxTemp[1] = record.getBeginTemperature();
-
                         maxTemperature.add(maxTemp);
                         minTemperature.add(minTemp);
                     }
@@ -109,12 +107,12 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
 
     private float time2float(String time) {
         String[] str = time.split(":");
-
         int hour = Integer.parseInt(str[0]);
         int min = Integer.parseInt(str[1]);
 
         return (float) min / 60 + (float) hour / 24;
     }
+
     @Override
     protected void refreshTemperatureData(List<List<float[]>> data) {
         data.clear();
@@ -122,20 +120,20 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
         temperatureMax = Integer.MIN_VALUE;
         List<float[]> maxTemperature = new ArrayList<>();
         List<float[]> minTemperature = new ArrayList<>();
-        for(int i=0;i<8;i++){
+        for (int i = 0; i < 8; i++) {
             float[] maxTemp = new float[2];
             float[] minTemp = new float[2];
-            maxTemp[0] = (float)i*3/24;
-            maxTemp[1] = (float)Math.random()*20+20;
+            maxTemp[0] = (float) i * 3 / 24;
+            maxTemp[1] = (float) Math.random() * 20 + 20;
             maxTemperature.add(maxTemp);
-            minTemp[0] = (float)i*3/24;
-            minTemp[1] = (float)Math.random()*10+10;
+            minTemp[0] = (float) i * 3 / 24;
+            minTemp[1] = (float) Math.random() * 10 + 10;
             minTemperature.add(minTemp);
 
-            if(maxTemp[1] > temperatureMax)
-                temperatureMax = (int)maxTemp[1];
-            if(minTemp[1] < temperatureMin)
-                temperatureMin = (int)minTemp[1];
+            if (maxTemp[1] > temperatureMax)
+                temperatureMax = (int) maxTemp[1];
+            if (minTemp[1] < temperatureMin)
+                temperatureMin = (int) minTemp[1];
         }
         temperatureMin = 10;
         temperatureMax = 50;
@@ -150,16 +148,16 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
         amountMin = Integer.MAX_VALUE;
         amountMax = Integer.MIN_VALUE;
         List<float[]> list = new ArrayList<>();
-        for(int i=0;i<8;i++){
+        for (int i = 0; i < 8; i++) {
             float[] temp = new float[2];
-            temp[0] =(float)i*3/24;
-            temp[1] = (float)Math.random()*50+60;
+            temp[0] = (float) i * 3 / 24;
+            temp[1] = (float) Math.random() * 50 + 60;
             list.add(temp);
 
-            if(temp[1] > amountMax)
-                amountMax = (int)temp[1];
-            if(temp[1] < amountMin)
-                amountMin = (int)temp[1];
+            if (temp[1] > amountMax)
+                amountMax = (int) temp[1];
+            if (temp[1] < amountMin)
+                amountMin = (int) temp[1];
         }
         data.add(list);
         amountMax = 140;

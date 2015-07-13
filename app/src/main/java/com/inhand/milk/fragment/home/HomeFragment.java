@@ -16,7 +16,6 @@ import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.TitleFragment;
-import com.inhand.milk.utils.ACache;
 
 import java.util.List;
 
@@ -41,30 +40,34 @@ public class HomeFragment extends TitleFragment {
         return mView;
     }
 
+    private void initNoDateVaribles() {
+        lastTString = adviseTString = lastAmountString = adviseAmountString
+                = getResources().getString(R.string.public_no_data);
+        score = -1;
+    }
+
     private boolean initData() {
-        ACache aCache = ACache.get(App.getAppContext());
-        record = (Record) aCache.getAsObject(Standar.LastRecord);
-        if (lastTime != null && record != null && lastTime.equals(record.getBeginTime())) {
-            return false;
-        }
-        if (record == null) {
-            List<OneDay> oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(0);
+        if (lastTime == null || Standar.needUpdate(lastTime)) {
+            List<OneDay> oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(1);
             if (oneDays == null || oneDays.size() == 0) {
-                lastTString = adviseTString = lastAmountString = adviseAmountString
-                        = getResources().getString(R.string.public_no_data);
-                score = -1;
-                Log.i("homefragment", "no oneday");
+                initNoDateVaribles();
                 return true;
             }
-            List<Record> records = oneDays.get(oneDays.size() - 1).getRecords();
+            OneDay oneDay = oneDays.get(0);
+            String time = oneDay.getDate();
+            if (oneDay == null) {
+                initNoDateVaribles();
+                return true;
+            }
+            List<Record> records = oneDay.getRecords();
             if (records == null || records.size() == 0) {
-                lastTString = adviseTString = lastAmountString = adviseAmountString
-                        = getResources().getString(R.string.public_no_data);
-                score = -1;
+                initNoDateVaribles();
                 return true;
             }
             record = records.get(records.size() - 1);
-            aCache.put(Standar.LastRecord, record);
+            lastTime = time + record.getBeginTime();
+        } else {
+            return false;
         }
         lastTString = Standar.TeamperatureFormat.format((record.getBeginTemperature() + record.getEndTemperature()) / 2)
                 + "°C";
@@ -73,7 +76,6 @@ public class HomeFragment extends TitleFragment {
         adviseTString = "35°C";
         score = record.getScore();
         Log.i("milkamount", String.valueOf(score));
-        lastTime = record.getBeginTime();
         return true;
 
     }

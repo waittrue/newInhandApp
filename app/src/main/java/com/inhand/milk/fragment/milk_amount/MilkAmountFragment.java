@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
@@ -25,7 +23,6 @@ import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.TitleFragment;
-import com.inhand.milk.utils.ACache;
 import com.inhand.milk.ui.MultiLayerCircle;
 import com.inhand.milk.ui.PinnerListView;
 import com.inhand.milk.ui.PinnerListViewAdapter;
@@ -108,7 +105,7 @@ public class MilkAmountFragment extends TitleFragment {
                 Record result = null;
                 List<Record> records;
                 position = position + 1;
-                for (int i = len - 1; i >= 0; i--) {
+                for (int i = 0; i < len; i++) {
                     records = oneDays.get(i).getRecords();
                     if (position > records.size()) {
                         position = position - records.size();
@@ -245,68 +242,30 @@ public class MilkAmountFragment extends TitleFragment {
     }
 
     private boolean updateMyData(PinnerListViewAdapter adapter) {
-        ACache aCache = ACache.get(App.getAppContext());
-        Record record = (Record) aCache.getAsObject(Standar.LastRecord);
-        if (lastTime != null && record != null && lastTime.equals(record.getBeginTime())) {
-            return false;
-        }
-        if (lastTime == null || record == null) {
-            getData(adapter, aCache);
+        if (lastTime == null || Standar.needUpdate(lastTime)) {
+            getDataFromDB(adapter);
             return true;
         }
-        getDataFromDB(adapter, aCache);
-        return true;
+        return false;
     }
 
-    private void getDataFromDB(PinnerListViewAdapter adapter, ACache aCache) {
+    private void getDataFromDB(PinnerListViewAdapter adapter) {
         adapter.clearData();
-        oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(0);
+        oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(dataLoadAmount);
+        /*
         int days = oneDays.size();
         int len = Math.min(days, dataLoadAmount);
-        oneDays = oneDays.subList(days - len, days);
-        String jsonArray = JSON.toJSONString(oneDays);
-        aCache.put(Standar.MilkAmountRecord, jsonArray);
+        */
+        //oneDays = oneDays.subList(days - len, days);
+        int len = oneDays.size();
         int addCount = 0;
         for (int i = 0; i < len; i++) {
-            OneDay oneDay = oneDays.get(len - 1 - i);
+            OneDay oneDay = oneDays.get(i);
             List<Record> temp = oneDay.getRecords();
             int recordSize = temp.size();
             for (int j = 0; j < recordSize; j++) {
                 if (i == 0 && j == 0)
-                    lastTime = temp.get(recordSize - 1 - j).getBeginTime();
-                adapter.addMap(getHeadData(oneDay), getContentData(temp.get(recordSize - 1 - j)), addCount++);
-            }
-        }
-    }
-
-    private void getData(PinnerListViewAdapter adapter, ACache aCache) {
-        int len;
-        adapter.clearData();
-        String jsonArray = aCache.getAsString(Standar.MilkAmountRecord);
-        if (jsonArray != null) {
-            oneDays = JSON.parseArray(jsonArray, OneDay.class);
-            len = oneDays.size();
-        } else {
-            oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(0);
-            if (oneDays == null) {
-                Log.i("milkamount", String.valueOf(oneDays == null));
-                return;
-            }
-            Log.i("milkamount", String.valueOf(oneDays.size()));
-            int days = oneDays.size();
-            len = Math.min(days, dataLoadAmount);
-            oneDays = oneDays.subList(days - len, days);
-            jsonArray = JSON.toJSONString(oneDays);
-            aCache.put(Standar.MilkAmountRecord, jsonArray);
-        }
-        int addCount = 0;
-        for (int i = 0; i < len; i++) {
-            OneDay oneDay = oneDays.get(len - 1 - i);
-            List<Record> temp = oneDay.getRecords();
-            int recordSize = temp.size();
-            for (int j = 0; j < recordSize; j++) {
-                if (i == 0 && j == 0)
-                    lastTime = temp.get(recordSize - 1 - j).getBeginTime();
+                    lastTime = oneDay.getDate() + temp.get(recordSize - 1 - j).getBeginTime();
                 adapter.addMap(getHeadData(oneDay), getContentData(temp.get(recordSize - 1 - j)), addCount++);
             }
         }

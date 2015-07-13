@@ -12,7 +12,6 @@ import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.health.last_drink.LastDrink;
-import com.inhand.milk.utils.ACache;
 
 import java.util.List;
 
@@ -40,14 +39,12 @@ public class HealthDrinkLastActivity extends SubActivity {
             Log.i("healthdringk", String.valueOf(record.getScore()));
             return;
         }
-        ACache aCache = ACache.get(App.getAppContext());
-        record = (Record) aCache.getAsObject(Standar.LastRecord);
         if (record == null) {
-            List<OneDay> oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(0);
+            List<OneDay> oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(1);
             if (oneDays == null || oneDays.size() == 0) {
                 fragment.setRecord(null);
             } else {
-                List<Record> records = oneDays.get(oneDays.size() - 1).getRecords();
+                List<Record> records = oneDays.get(0).getRecords();
                 if (records == null || records.size() == 0) {
                     fragment.setRecord(null);
                 } else {

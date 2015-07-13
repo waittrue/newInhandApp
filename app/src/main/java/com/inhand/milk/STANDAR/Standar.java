@@ -1,15 +1,19 @@
 package com.inhand.milk.STANDAR;
 
+import com.inhand.milk.App;
+import com.inhand.milk.dao.OneDayDao;
+import com.inhand.milk.entity.OneDay;
+import com.inhand.milk.entity.Record;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/6/3.
  * 提供整个app中的标准值。
  */
 public class Standar {
-    public static final String LastRecord = "lastRecord";
-    public static final String MilkAmountRecord = "milkamountrecord";
     public static final String LastDrinkIntentKey = "lastDrinkintentkey";
     public final static int drinkMaxDuration = 20;
     public final static int drinkMinDuration = 10;
@@ -26,6 +30,7 @@ public class Standar {
     public static DecimalFormat TeamperatureFormat = new DecimalFormat("##.#");
     public static DecimalFormat AmountFormat = new DecimalFormat("###");
     public static SimpleDateFormat OneDayDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static SimpleDateFormat RecordDateFormat = new SimpleDateFormat("HH:mm");
 
     public static float getRecord(float advise, float amount, float temperatureHigh, float temperatureLow, float time) {
         float ratio, sum = 0;
@@ -50,5 +55,27 @@ public class Standar {
         sum += TIMESCORE * ratio;
         //Log.i("amount tempreature time" ,String.valueOf(sum));
         return sum;
+    }
+
+    public static boolean needUpdate(String lastRecordTime) {
+        OneDayDao oneDayDao = new OneDayDao(App.getAppContext());
+        List<OneDay> oneDays = oneDayDao.findAllFromDB(1);
+        if (oneDays == null)
+            return true;
+        OneDay oneDay = oneDays.get(0);
+        if (oneDay == null)
+            return true;
+        String date = oneDay.getDate();
+        List<Record> records = oneDay.getRecords();
+        if (records == null)
+            return true;
+        Record record = records.get(records.size() - 1);
+        if (record == null)
+            return true;
+        String time = record.getBeginTime();
+        if (lastRecordTime.equals(date + time)) {
+            return false;
+        }
+        return true;
     }
 }

@@ -8,9 +8,7 @@ import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Base;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
-import com.inhand.milk.utils.ACache;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -70,8 +68,6 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
 
         records.add(record);
         printRecord(record);
-        ACache aCache = ACache.get(App.getAppContext());
-        aCache.put(Standar.LastRecord, record);
         oneDay.setRecords(records);
         oneDay.saveInDB(App.getAppContext(), new Base.DBSavingCallback() {
             @Override
@@ -90,11 +86,10 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
     }
 
     private void setRecordTime(Record record, float continuTime, float interva, OneDay oneDay) {
-        SimpleDateFormat recordDateFormat = new SimpleDateFormat("HH:mm");
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, -(int) interva);
         calendar.add(Calendar.MINUTE, -(int) continuTime);
-        record.setBeginTime(recordDateFormat.format(calendar.getTime()));
+        record.setBeginTime(Standar.RecordDateFormat.format(calendar.getTime()));
         oneDay.setDate(calendar.getTime());
     }
 

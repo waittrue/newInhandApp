@@ -11,7 +11,6 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.inhand.milk.App;
-import com.inhand.milk.activity.SyncTestActivity;
 import com.inhand.milk.entity.Base;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
@@ -35,8 +34,8 @@ import java.util.List;
  */
 public class OneDayDao extends BaseDao {
     private static final String SORT_BY = "createdAt";
-    private AVQuery<OneDay> query;
     private static final String RECORDS_COMP_FORMAT = "HH:mm";
+    private AVQuery<OneDay> query;
 
     public OneDayDao(Context ctx) {
         super(ctx);
@@ -46,14 +45,14 @@ public class OneDayDao extends BaseDao {
     /**
      * 异步地根据从云端获取所有记录
      *
-     * @param limit     最大条数
+     * @param limit    最大条数
      * @param callback 回调函数
      */
     public void findAllFromCloud(int limit, FindCallback callback) {
         query = AVQuery.getQuery(OneDay.class);
         // 按照更新时间降序排序
         query.whereEqualTo(OneDay.BABY_KEY, App.getCurrentBaby());
-        query.orderBy(SORT_BY);
+        query.orderByAscending(SORT_BY);
         // 最大返回1000条
         if (limit > 0)
             query.limit(limit);
@@ -122,7 +121,7 @@ public class OneDayDao extends BaseDao {
      * @param oneDay
      */
     public void updateOrSaveInCloud(OneDay oneDay) throws AVException {
-        OneDay src =  oneDay;
+        OneDay src = oneDay;
         OneDay old = findOneDayFromCloud(src.getDate());
         if (old == null) {
             //不存在则新建
@@ -355,34 +354,34 @@ public class OneDayDao extends BaseDao {
         List<Record> dstRecords = dst.getRecords();
         Log.d("合并 dst size", String.valueOf(dstRecords.size()));
         List<Record> srcRecords = src.getRecords();
-        Log.d("合并 src size",String.valueOf(srcRecords.size()));
+        Log.d("合并 src size", String.valueOf(srcRecords.size()));
         // 确定循环次数
         int count = dstRecords.size() > srcRecords.size() ?
                 srcRecords.size() : dstRecords.size();
         int i;
         // 两个有序链表合并为一个有序链表
         int j = 0;
-        while( dstRecords.size()!=0
-                && srcRecords.size()!=0 ){
+        while (dstRecords.size() != 0
+                && srcRecords.size() != 0) {
             Log.d("merge test dst size is", String.valueOf(dstRecords.size()));
             Log.d("merge test src size is", String.valueOf(srcRecords.size()));
             Record dstRecord = dstRecords.get(0);
             Record srcRecord = srcRecords.get(0);
-            if( dstRecord.equals(srcRecord) ){
-                records.add(j,dstRecord);
+            if (dstRecord.equals(srcRecord)) {
+                records.add(j, dstRecord);
                 dstRecords.remove(0);
                 srcRecords.remove(0);
-            } else{
+            } else {
                 SimpleDateFormat compSdf = new SimpleDateFormat(RECORDS_COMP_FORMAT);
                 try {
                     Date srcBeginTime = compSdf.parse(srcRecord.getBeginTime());
                     Date dstBeginTime = compSdf.parse(dstRecord.getBeginTime());
                     //追加日期较早的记录
                     if (srcBeginTime.after(dstBeginTime)) {
-                        records.add(j,dstRecord);
+                        records.add(j, dstRecord);
                         dstRecords.remove(0);
                     } else {
-                        records.add(j,srcRecord);
+                        records.add(j, srcRecord);
                         srcRecords.remove(0);
                     }
                 } catch (ParseException e) {
