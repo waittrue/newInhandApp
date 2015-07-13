@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
-import com.inhand.milk.dao.BaseDao;
 import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
@@ -13,55 +12,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePaper {
+    private static final int VolunMinDiff = 80;
+    private String today;
     public curveDay(Activity activity, int width) {
         super(activity, width);
-        // TODO Auto-generated constructor stub
+        Date dt = new Date();
+        today = Standar.OneDayDateFormat.format(dt);
     }
 
-    /**
-     * 返回当天温度，温度分为两个<list<float[]>>
-     * 一个代表最高温度，一个最低温度
-     * 每个温度为     时间 和 温度<float float> 时间3：30 = 3.5
-     */
-    /*
-    @Override
-	public void  refreshData(final List<List<float[]>> data) {
-		// TODO Auto-generated method stub
-        String today="";
-        Date dt=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        today=sdf.format(dt);
-        final OneDayDao oneDayDao=new OneDayDao(mActivty);
-        oneDayDao.findOneDayFromDB(today, new BaseDao.DBFindCallback<OneDay>() {
-            @Override
-            public void done(List<OneDay> oneDays) {
-                if (oneDays != null && oneDays.size() > 0) {
-                    OneDay oneDay = (OneDay) oneDays.get(0);
-                    List<float[]> max_temp_points = new ArrayList<float[]>();
-                    List<float[]> min_temp_points = new ArrayList<float[]>();
-                    for (Record record : oneDay.getRecords()) {
-                        float[] point = new float[2];
-                        point[0] = Float.valueOf(record.getBeginTime().replace(":", "."));
-                        //Log.d("point0",String.valueOf(point[0]));
-                        point[1]=getMaxTemp(record);
-                        Log.d("max_temp",String.valueOf(point[1]));
-                        max_temp_points.add(point);
-                        point = new float[2];
-                        point[0] = Float.valueOf(record.getBeginTime().replace(":", "."));
-                        point[1]=getMinTemp(record);
-                       Log.d("min_temp",String.valueOf(point[1]));
-                        min_temp_points.add(point);
-                    }
-                    //Log.d("point",String.valueOf(points.get(0)[0]));
-                    data.clear();
-                    data.add(max_temp_points);
-                    data.add(min_temp_points);
-                }
-            }
-        });
-	}
-*/
+
     @Override
     protected void setTemperatureExcle(Excle excle) {
         excle.setLeftTiltle(mActivty.getResources().getString(R.string.temperature_excle_day_left_title));
@@ -78,89 +39,57 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
                 getString(R.string.milk_excle_day_right_title));
     }
 
-    private void updateTemperatureData(final List<List<float[]>> data) {
-        String today = "";
-        Date dt = new Date();
-        today = Standar.OneDayDateFormat.format(dt);
+    @Override
+    protected void refreshExcleData(List<List<float[]>> temperatureData, List<List<float[]>> amountData) {
+        updateTemperatureData(temperatureData, amountData);
+    }
+
+    private void updateTemperatureData(final List<List<float[]>> temperatureData, final List<List<float[]>> volumeData) {
+        amountMin = Integer.MAX_VALUE;
+        amountMax = Integer.MIN_VALUE;
+        temperatureData.clear();
+        volumeData.clear();
         final OneDayDao oneDayDao = new OneDayDao(mActivty);
-        oneDayDao.findOneDayFromDB(today, new BaseDao.DBFindCallback() {
-            @Override
-            public void done(List results) {
-                if (results != null && results.size() > 0) {
-                    OneDay oneDay = (OneDay) results.get(0);
-                    List<float[]> maxTemperature = new ArrayList<>();
-                    List<float[]> minTemperature = new ArrayList<>();
-                    for (Record record : oneDay.getRecords()) {
-                        float[] maxTemp = new float[2];
-                        float[] minTemp = new float[2];
-                        float time = time2float(record.getBeginTime());
-                        minTemp[0] = maxTemp[0] = time;
-                        minTemp[1] = record.getEndTemperature();
-                        maxTemp[1] = record.getBeginTemperature();
-                        maxTemperature.add(maxTemp);
-                        minTemperature.add(minTemp);
-                    }
-                }
-            }
-        });
+        OneDay oneday = oneDayDao.findOneDayFromDB(today);
+        if (oneday == null)
+            return;
+        List<float[]> maxTemperature = new ArrayList<>();
+        List<float[]> minTemperature = new ArrayList<>();
+        List<float[]> volume = new ArrayList<>();
+        for (Record record : oneday.getRecords()) {
+            float[] maxTemp = new float[2];
+            float[] minTemp = new float[2];
+            float[] v = new float[2];
+            float time = time2float(record.getBeginTime());
+            v[0] = minTemp[0] = maxTemp[0] = time;
+            minTemp[1] = record.getEndTemperature();
+            maxTemp[1] = record.getBeginTemperature();
+            v[1] = record.getVolume();
+            if (amountMax < v[1])
+                amountMax = (int) v[1];
+            if (amountMin > v[1])
+                amountMin = (int) v[1];
+            maxTemperature.add(maxTemp);
+            minTemperature.add(minTemp);
+            volume.add(v);
+        }
+        temperatureData.add(maxTemperature);
+        temperatureData.add(minTemperature);
+        volumeData.add(volume);
+
+
+        int diff = amountMax - amountMin;
+        amountMax = diff / 4 + amountMax;
+        amountMin = amountMin - diff / 4;
+        if (amountMin < 0)
+            amountMin = 0;
+
     }
 
     private float time2float(String time) {
         String[] str = time.split(":");
         int hour = Integer.parseInt(str[0]);
         int min = Integer.parseInt(str[1]);
-
-        return (float) min / 60 + (float) hour / 24;
-    }
-
-    @Override
-    protected void refreshTemperatureData(List<List<float[]>> data) {
-        data.clear();
-        temperatureMin = Integer.MAX_VALUE;
-        temperatureMax = Integer.MIN_VALUE;
-        List<float[]> maxTemperature = new ArrayList<>();
-        List<float[]> minTemperature = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            float[] maxTemp = new float[2];
-            float[] minTemp = new float[2];
-            maxTemp[0] = (float) i * 3 / 24;
-            maxTemp[1] = (float) Math.random() * 20 + 20;
-            maxTemperature.add(maxTemp);
-            minTemp[0] = (float) i * 3 / 24;
-            minTemp[1] = (float) Math.random() * 10 + 10;
-            minTemperature.add(minTemp);
-
-            if (maxTemp[1] > temperatureMax)
-                temperatureMax = (int) maxTemp[1];
-            if (minTemp[1] < temperatureMin)
-                temperatureMin = (int) minTemp[1];
-        }
-        temperatureMin = 10;
-        temperatureMax = 50;
-        data.add(maxTemperature);
-        data.add(minTemperature);
-
-    }
-
-    @Override
-    protected void refreshAmountData(List<List<float[]>> data) {
-        data.clear();
-        amountMin = Integer.MAX_VALUE;
-        amountMax = Integer.MIN_VALUE;
-        List<float[]> list = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            float[] temp = new float[2];
-            temp[0] = (float) i * 3 / 24;
-            temp[1] = (float) Math.random() * 50 + 60;
-            list.add(temp);
-
-            if (temp[1] > amountMax)
-                amountMax = (int) temp[1];
-            if (temp[1] < amountMin)
-                amountMin = (int) temp[1];
-        }
-        data.add(list);
-        amountMax = 140;
-        amountMin = 0;
+        return (float) min / 60 / 24 + (float) hour / 24;
     }
 }

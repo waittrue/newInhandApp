@@ -1,62 +1,114 @@
 package com.inhand.milk.fragment.milk_amount_curve;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.inhand.milk.R;
+import com.inhand.milk.STANDAR.Standar;
+import com.inhand.milk.dao.OneDayDao;
+import com.inhand.milk.entity.OneDay;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class curveMonth extends com.inhand.milk.fragment.milk_amount_curve.OnePaper {
+    private static final int TotalDays = 30;
+    private int year, month, day;
+    private Calendar startCalender;
 
-	public curveMonth(Activity activity, int width) {
+    public curveMonth(Activity activity, int width) {
 		super(activity,width);
-		// TODO Auto-generated constructor stub
+        startCalender = Calendar.getInstance();
+        startCalender.add(Calendar.DAY_OF_MONTH, -TotalDays + 1);
+        year = startCalender.get(Calendar.YEAR);
+        month = startCalender.get(Calendar.MONTH) + 1;
+        day = startCalender.get(Calendar.DAY_OF_MONTH);
+        // TODO Auto-generated constructor stub
 	}
 
-    /**
-     * 返回当天前30天，温度分为两个<list<float[]>>
-     * 当天最高温度，当天最低温度
-     * 每个温度为     < float>
-     */
-    /*
-	@Override
-	public void refreshData(List<List<float[]>> data) {
-		// TODO Auto-generated method stub
+
+    @Override
+    protected void refreshExcleData(List<List<float[]>> temperatureData, List<List<float[]>> amountData) {
+        temperatureData.clear();
+        amountData.clear();
+        amountMin = Integer.MAX_VALUE;
+        amountMax = Integer.MIN_VALUE;
         OneDayDao oneDayDao=new OneDayDao(mActivty);
-        Date dt=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        List<Date>days= DateHelper.getMonthDays(dt);
-        int len=0;
-        data.clear();
-        final List<float[]> max_temp_points = new ArrayList<float[]>();
-        final List<float[]> min_temp_points = new ArrayList<float[]>();
-        for (Date date:days){
-            String monthday=sdf.format(date);
-            Log.d("monthday", monthday);
-            oneDayDao.findOneDayFromDB(monthday, new BaseDao.DBFindCallback<OneDay>() {
-                @Override
-                public void done(List<OneDay> oneDays) {
-                    if (oneDays != null && oneDays.size() > 0) {
-                        OneDay oneDay=oneDays.get(0);
-                        float[] point = new float[1];
-                        //Log.d("point0",String.valueOf(point[0]));
-                        point[0]=getMaxTemp(oneDay);
-                        Log.d("max_temp",String.valueOf(point[0]));
-                        max_temp_points.add(point);
-                        point = new float[1];
-                        point[0]=getMinTemp(oneDay);
-                        Log.d("min_temp",String.valueOf(point[0]));
-                        min_temp_points.add(point);
-                        min_temp_points.add(point);
-                    }
-                }
-            });
+        List<OneDay> oneDays = oneDayDao.findAllFromDB(TotalDays);
+        if (oneDays == null)
+            return;
+        List<float[]> maxTemperature = new ArrayList<>();
+        List<float[]> minTemperature = new ArrayList<>();
+        List<float[]> volume = new ArrayList<>();
+        String time;
+        for (OneDay oneDay : oneDays) {
+            time = oneDay.getDate();
+            if (isOutOfdex(time)) {
+                break;
+            }
+            float[] maxTemp = new float[2];
+            float[] minTemp = new float[2];
+            float[] v = new float[2];
+            v[0] = maxTemp[0] = minTemp[0] = day2float(time);
+            v[1] = oneDay.getVolume();
+            if (amountMax < v[1])
+                amountMax = (int) v[1];
+            if (amountMin > v[1])
+                amountMin = (int) v[1];
+            maxTemp[1] = getMaxTemp(oneDay);
+            minTemp[1] = getMinTemp(oneDay);
+            maxTemperature.add(maxTemp);
+            minTemperature.add(minTemp);
+            volume.add(v);
         }
-        data.add(max_temp_points);
-        data.add(min_temp_points);
-	}
-*/
+        temperatureData.add(maxTemperature);
+        temperatureData.add(minTemperature);
+        amountData.add(volume);
+        amountMax = (amountMax - amountMin) / 4 + amountMax;
+        amountMin = amountMin - (amountMax - amountMin) / 4;
+        if (amountMin < 0)
+            amountMin = 0;
+        Log.i("curve  1", String.valueOf(amountMax));
+    }
+
+    private float day2float(String time) {
+        Calendar calendar = Calendar.getInstance();
+        Date date1 = null;
+        try {
+            date1 = Standar.OneDayDateFormat.parse(time);
+        } catch (ParseException e) {
+            return 0;
+        }
+        calendar.setTime(date1);
+        long diff;
+        diff = (calendar.getTimeInMillis() - startCalender.getTimeInMillis()) / (1000 * 3600 * 24);
+        diff++;
+        return (float) diff / (TotalDays - 1);
+    }
+
+    private boolean isOutOfdex(String time) {
+        String[] str = time.split("-");
+        int tempYear = Integer.parseInt(str[0]);
+        int tempMonth = Integer.parseInt(str[1]);
+        int tempDay = Integer.parseInt(str[2]);
+        Log.i("curve shijian", String.valueOf(year) + " " + String.valueOf(month) + " " + String.valueOf(day));
+        if (tempYear < year)
+            return true;
+        if (tempYear > year)
+            return false;
+        if (tempMonth < month)
+            return true;
+        if (tempMonth > month)
+            return false;
+        if (tempDay < day)
+            return true;
+        if (tempDay > day)
+            return false;
+        return false;
+    }
     @Override
     protected void setTemperatureExcle(com.inhand.milk.fragment.milk_amount_curve.Excle excle) {
         excle.setLeftTiltle(mActivty.getResources().
@@ -73,56 +125,6 @@ public class curveMonth extends com.inhand.milk.fragment.milk_amount_curve.OnePa
                 getString(R.string.milk_excle_month_left_title));
         excle.setRightTiltle(mActivty.getResources().
                 getString(R.string.milk_excle_month_right_title));
-    }
-
-    @Override
-    protected void refreshTemperatureData(List<List<float[]>> data) {
-        data.clear();
-        temperatureMin = Integer.MAX_VALUE;
-        temperatureMax = Integer.MIN_VALUE;
-        List<float[]> maxTemperature = new ArrayList<>();
-        List<float[]> minTemperature = new ArrayList<>();
-        for(int i=0;i<30;i++){
-            float[] maxTemp = new float[2];
-            float[] minTemp = new float[2];
-            maxTemp[0] = (float)i/30;
-            maxTemp[1] = (float)Math.random()*20+20;
-            maxTemperature.add(maxTemp);
-            minTemp[0] = (float)i/30;
-            minTemp[1] = (float)Math.random()*10+10;
-            minTemperature.add(minTemp);
-
-            if(maxTemp[1] > temperatureMax)
-                temperatureMax = (int)maxTemp[1];
-            if(minTemp[1] < temperatureMin)
-                temperatureMin = (int)minTemp[1];
-        }
-        data.add(maxTemperature);
-        data.add(minTemperature);
-        temperatureMin = 10;
-        temperatureMax = 50;
-    }
-
-    @Override
-    protected void refreshAmountData(List<List<float[]>> data) {
-        data.clear();
-        amountMin = Integer.MAX_VALUE;
-        amountMax = Integer.MIN_VALUE;
-        List<float[]> list = new ArrayList<>();
-        for(int i=0;i<30;i++){
-            float[] temp = new float[2];
-            temp[0] = (float)i/30;
-            temp[1] = (float)Math.random()*50+60;
-            list.add(temp);
-
-            if(temp[1] > amountMax)
-                amountMax = (int)temp[1];
-            if(temp[1] < amountMin)
-                amountMin = (int)temp[1];
-        }
-        data.add(list);
-        amountMax = 140;
-        amountMin = 0;
     }
 
 }
