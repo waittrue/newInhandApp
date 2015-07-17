@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import com.inhand.milk.R;
 
 /**

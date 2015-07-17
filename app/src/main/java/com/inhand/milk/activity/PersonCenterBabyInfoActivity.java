@@ -2,6 +2,7 @@ package com.inhand.milk.activity;
 
 import android.app.Fragment;
 
+import com.inhand.milk.entity.Baby;
 import com.inhand.milk.fragment.person_center.PersonCenterBabyFragment;
 
 /**

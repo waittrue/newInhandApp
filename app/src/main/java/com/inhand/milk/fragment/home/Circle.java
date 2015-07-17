@@ -27,7 +27,6 @@ public class Circle extends View {
     private int time, maxScore, score;
     private float maxSweepAngle;
     private String scoreString;
-    ;
     private float accurateScore;
     private float x, y, r, wr, paintWidth, textSize;
     private int[] color;

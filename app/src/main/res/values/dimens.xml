@@ -439,7 +439,11 @@
     <dimen name="person_center_special_doc_text_size">10dp</dimen>
     <dimen name="person_center_icon_width_height">30dp</dimen>
     <dimen name="person_center_line_margin_left">50dp</dimen>
-
+    <!-- ui-->
+    <dimen name="ui_loading_image_height_width">60dp</dimen>
+    <dimen name="ui_loading_view_down_height">40dp</dimen>
+    <dimen name="ui_loading_view_width">150dp</dimen>
+    <dimen name="ui_loading_view_height">150dp</dimen>
 
 
 </resources>

@@ -1,8 +1,10 @@
 package com.inhand.milk.fragment.person_center;
 
 import android.app.DatePickerDialog;
+import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,12 +12,18 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.SaveCallback;
+import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.PersonCenterBabyInfoActivity;
 import com.inhand.milk.activity.UserInfoSettingsActivity;
+import com.inhand.milk.entity.Baby;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.fragment.user_info_settings.UserinfoNameFragment;
+import com.inhand.milk.ui.DefaultLoadingView;
 import com.inhand.milk.ui.PopupWindowSelected;
 
 import java.util.Calendar;
@@ -28,10 +36,13 @@ public class PersonCenterBabyFragment extends TitleFragment {
     private int clickColor, unclickColor = Color.WHITE;
     private View.OnTouchListener onTouchListener;
     private PopupWindowSelected headPopupWiondow, sexPopupWindow;
-    private String man, woman;
+    private String man, woman,temp;
     private int year, monthOfyear, dayOfmonth;
     private TextView babySexTextView, babynameTextView, babyBirthTextView;
     private DatePickerDialog datePickerDialog;
+    private UserinfoNameFragment userinfoNameFragment;
+    private DefaultLoadingView dfLoadingView;
+    private boolean success;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.person_center_baby_info, container, false);
@@ -180,12 +191,69 @@ public class PersonCenterBabyFragment extends TitleFragment {
     }
 
     private void setname(final RelativeLayout name) {
+        Log.i("personcenter","temp-------");
+
+        final DefaultLoadingView.LoadingCallback callback = new DefaultLoadingView.LoadingCallback() {
+            @Override
+            public void doInBackground() {
+                Baby baby = App.getCurrentBaby();
+                baby.setNickname(temp);
+                baby.save(new SaveCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        if (e == null)
+                            success = true;
+                        else {
+                            success = false;
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onPreExecute() {
+                success = false;
+                userinfoNameFragment.hiddenSoftInput();
+            }
+
+            @Override
+            public void onPostExecute() {
+
+                if (success == true) {
+                    ((PersonCenterBabyInfoActivity) getActivity()).setName(temp);
+                    FragmentManager fragmentManager = getActivity().getFragmentManager();
+                    fragmentManager.popBackStack();
+                    fragmentManager.beginTransaction().commit();
+                    dfLoadingView.dismiss();
+                } else {
+                    dfLoadingView.disppear(null, "请求失败", 2);
+                }
+
+            }
+
+        };
+        userinfoNameFragment = new UserinfoNameFragment(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                temp = userinfoNameFragment.getString();
+                if(temp.equals("")){
+
+                    userinfoNameFragment.hiddenSoftInput();
+                    Toast.makeText(getActivity(),"不能填写空白",Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                dfLoadingView = new DefaultLoadingView(getActivity(),"加载中");
+                dfLoadingView.loading(callback);
+
+            }
+        });
         name.setOnTouchListener(onTouchListener);
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoSpecialFragment(new UserinfoNameFragment());
+                gotoSpecialFragment(userinfoNameFragment);
             }
         });
     }
+
 }

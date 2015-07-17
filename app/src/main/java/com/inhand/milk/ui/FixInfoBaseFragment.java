@@ -1,5 +1,6 @@
 package com.inhand.milk.ui;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.inhand.milk.R;
+import com.inhand.milk.activity.UserInfoSettingsActivity;
 import com.inhand.milk.fragment.TitleFragment;
 
 /**
@@ -30,12 +32,13 @@ public class FixInfoBaseFragment extends TitleFragment {
         editText = (EditText) view.findViewById(R.id.user_info_fix_edit);
     }
 
-    protected void hiddenSoftInput() {
+    public void hiddenSoftInput() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
-    protected String getString() {
+
+    public String getString() {
         return editText.getText().toString();
     }
 
