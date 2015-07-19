@@ -27,6 +27,7 @@ public class App extends Application {
     public static Baby currentBaby = null;
     private static Context context = null;
     public static Typeface Typeface_arial;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -34,7 +35,8 @@ public class App extends Application {
         LeanCloudHelper.initLeanCloud(this);
         initCurrentBaby();
         context = getApplicationContext();
-        Typeface_arial =Typeface.createFromAsset(context.getAssets(),"ttf/arial.ttf");
+        Typeface_arial = Typeface.createFromAsset(context.getAssets(), "ttf/arial.ttf");
+
     }
 
 
@@ -74,6 +76,8 @@ public class App extends Application {
         return context;
     }
 
+
+    //分工不分--这部分我添加的
     /*获取状态栏高度*/
     public static int getStatusHeight(Activity activity) {
         int statusHeight = 0;

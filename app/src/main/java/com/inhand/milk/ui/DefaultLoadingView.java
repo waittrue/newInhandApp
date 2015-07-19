@@ -11,12 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.inhand.milk.App;
 import com.inhand.milk.R;
-
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Handler;
 
 /**
  * Created by Administrator on 2015/7/14.
@@ -27,6 +22,9 @@ public class DefaultLoadingView extends Dialog {
     private ImageView imageView;
     private TextView textView;
     private Animation animation ;
+    private boolean finish;
+    private static final String TAG = "DEFAULTLOADomgView";
+    private static final int TimeDelay = 800;
     public DefaultLoadingView(Context context,String doc,Drawable drawable) {
         super(context);
         this.doc = doc;
@@ -89,14 +87,27 @@ public class DefaultLoadingView extends Dialog {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            DefaultLoadingView.this.setCanceledOnTouchOutside(false);
-            defaultLoadingView.show();
-            imageView.startAnimation(animation);
+            //Log.i(TAG,"onpreExecute");
+            finish = false;
+            android.os.Handler handler = new android.os.Handler();
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (finish == true)
+                        return;
+                    DefaultLoadingView.this.setCanceledOnTouchOutside(false);
+                    defaultLoadingView.show();
+                    imageView.startAnimation(animation);
+                }
+            };
+            handler.postDelayed(runnable, TimeDelay);
             loadingCallback.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(Object o) {
+            //Log.i(TAG,"onpostExecute");
+            finish = true;
             DefaultLoadingView.this.setCanceledOnTouchOutside(true);
             super.onPostExecute(o);
             loadingCallback.onPostExecute();
@@ -104,13 +115,14 @@ public class DefaultLoadingView extends Dialog {
 
         @Override
         protected Object doInBackground(Object[] params) {
+            //Log.i(TAG,"doinbackground");
             loadingCallback.doInBackground();
             return null;
         }
     }
     /**
      * LoadingCallBack
-     * Desc:¼ÓÔØ¶¯»­»Øµ÷½Ó¿Ú
+     * Desc:ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½Ó¿ï¿½
      */
     public static interface LoadingCallback {
         public void doInBackground();

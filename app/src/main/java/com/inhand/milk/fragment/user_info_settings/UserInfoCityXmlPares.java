@@ -21,7 +21,7 @@ import java.util.Map;
 public class UserInfoCityXmlPares {
     private static final String title = "title",content = "content";
     List<Map<String,String>> data ;
-    XmlPullParser parser;
+    private XmlPullParser parser;
     private static UserInfoCityXmlPares instance = null;
 
     private static synchronized  UserInfoCityXmlPares init(){
@@ -39,7 +39,7 @@ public class UserInfoCityXmlPares {
        data = new ArrayList<>();
        InputStream inputStream = null;
        try {
-          inputStream = context.getResources().getAssets().open("config/CityList.xml");
+           inputStream = context.getResources().getAssets().open("StanderData/CityList.xml");
        }catch (Exception e){
            e.printStackTrace();
            return;

@@ -2,9 +2,6 @@ package com.inhand.milk.entity;
 
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.SaveCallback;
-import com.inhand.milk.App;
-
-import java.util.Date;
 
 /**
  * Weight
@@ -36,8 +33,8 @@ public class Weight extends Base {
      * 获得宝宝体重
      * @return 宝宝体重
      */
-    public int getWeight(){
-        return this.getInt(WEIGHT_KEY);
+    public float getWeight() {
+        return (float) this.getDouble(WEIGHT_KEY);
     }
 
     public void setWeight(float weight){

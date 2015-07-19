@@ -14,11 +14,15 @@ import android.widget.TextView;
 
 import com.inhand.milk.App;
 import com.inhand.milk.R;
+import com.inhand.milk.entity.Baby;
+import com.inhand.milk.entity.Weight;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.firstlanunch.Ruler;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -45,7 +49,6 @@ public class AdderWindow extends Activity {
         p.width = (App.getWindowWidth(this));
         p.alpha = 1.0f;                //设置本身透明度
         p.dimAmount = 0.0f;                //设置黑暗度
-
         getWindow().setAttributes(p);     //设置生效
         getWindow().setGravity(Gravity.RIGHT);                 //设置靠右对齐
 
@@ -86,7 +89,25 @@ public class AdderWindow extends Activity {
             @Override
             public void onClick(View v) {
                 outAnimation();
-                //还有数据存储没有做
+                Weight weight = new Weight();
+                weight.setMoonAge(getMonthDay());
+                float num;
+                try {
+                    num = Float.parseFloat(numTextView.getText().toString());
+                } catch (Exception e) {
+                    return;
+                }
+                weight.setWeight(num);
+                Baby baby = App.getCurrentBaby();
+                baby.addWeight(weight);
+                /*
+                baby.saveInCache(App.getAppContext(), new Base.CacheSavingCallback() {
+                    @Override
+                    public void done() {
+                        Log.i(TAG,"baby save success");
+                    }
+                });
+                */
             }
         });
         numTextView = (TextView) findViewById(R.id.weight_fragment_adder_num_text);
@@ -94,6 +115,49 @@ public class AdderWindow extends Activity {
 
     }
 
+    private int getMonthDay() {
+        Baby baby = App.getCurrentBaby();
+        int months = getMonths(baby.getBirthday());
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        return WeightMonth.createbabyMonth(months, day);
+    }
+
+    private int getMonths(String birth) {
+
+        int months = 0;
+        if (birth == null)
+            return months;
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy年mm月dd日");
+        Date date;
+        try {
+            date = dateFormat1.parse(birth);
+        } catch (ParseException e) {
+            return 0;
+        }
+        Date today = new Date();
+        Calendar birthCalendar = Calendar.getInstance();
+        birthCalendar.setTime(date);
+        Calendar todayCalendr = Calendar.getInstance();
+        todayCalendr.setTime(date);
+
+        int year1 = birthCalendar.get(Calendar.YEAR);
+        int year2 = todayCalendr.get(Calendar.YEAR);
+        int month1 = birthCalendar.get(Calendar.MONTH);
+        int month2 = todayCalendr.get(Calendar.MONTH);
+        int month = 0;
+        if (month2 >= month1)
+            month = month2 - month1;
+        else if (month2 < month1) {
+            month = 12 + month2 - month1;
+            year2--;
+        }
+        if (year2 < year1)
+            return 0;
+        month = 12 * (year2 - year1) + month;
+        return month;
+
+    }
     private void initRuler() {
         space = App.getWindowWidth(this) / 30;
         int height = App.getWindowHeight(this) - App.getStatusHeight(this);

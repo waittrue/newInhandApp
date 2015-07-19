@@ -152,6 +152,16 @@ public class Baby extends Base {
     }
 
     /**
+     * 同步地存储Baby对象，若已存在，则为更新
+     */
+    public void saveSync() throws AVException {
+        if (this.getUser() == null) {
+            this.setUser(App.getCurrentUser());
+        }
+        this.save();
+    }
+
+    /**
      * 写入缓存,考虑baby对象在离线情况下始终可用，
      *
      * @param ctx 上下文环境

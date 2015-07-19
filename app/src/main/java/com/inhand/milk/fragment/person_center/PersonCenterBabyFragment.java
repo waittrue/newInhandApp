@@ -15,18 +15,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.PersonCenterBabyInfoActivity;
 import com.inhand.milk.activity.UserInfoSettingsActivity;
+import com.inhand.milk.dao.BabyDao;
 import com.inhand.milk.entity.Baby;
+import com.inhand.milk.entity.Base;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.fragment.user_info_settings.UserinfoNameFragment;
 import com.inhand.milk.ui.DefaultLoadingView;
 import com.inhand.milk.ui.PopupWindowSelected;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/7/7.
@@ -41,13 +43,16 @@ public class PersonCenterBabyFragment extends TitleFragment {
     private TextView babySexTextView, babynameTextView, babyBirthTextView;
     private DatePickerDialog datePickerDialog;
     private UserinfoNameFragment userinfoNameFragment;
-    private DefaultLoadingView dfLoadingView;
+    private DefaultLoadingView loadingView;
+    private DefaultLoadingView.LoadingCallback sexCallBack, birthCallBack, initCallBack;
     private boolean success;
+    private Baby baby;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.person_center_baby_info, container, false);
-        setTitleview(getResources().getString(R.string.user_info_title), 2);
-
+        baby = App.getCurrentBaby();
+        loadingView = new DefaultLoadingView(getActivity(), "同步中");
+        setTitleview(getResources().getString(R.string.person_center_baby_info), 2);
         clickColor = getResources().getColor(R.color.common_settings_item_click_bg_color);
         onTouchListener = new View.OnTouchListener() {
             @Override
@@ -64,9 +69,47 @@ public class PersonCenterBabyFragment extends TitleFragment {
         };
         initView(mView);
         initTextViews();
+        initCallBack = new DefaultLoadingView.LoadingCallback() {
+            @Override
+            public void doInBackground() {
+                List<Baby> babies = BabyDao.findBabiesByUser(App.getCurrentUser());
+                if (babies == null) {
+                    return;
+                }
+                String birth, sex, name;
+                sex = null;
+                birth = baby.getBirthday();
+                // Log.i("personcenterbabyinfo initcallback",birth);
+                int sexIndex = baby.getSex();
+                if (sexIndex == Baby.FEMALE)
+                    sex = "女性";
+                else if (sexIndex == Baby.MALE)
+                    sex = "男性";
+                name = baby.getNickname();
+                ((PersonCenterBabyInfoActivity) getActivity()).setName(name);
+                ((PersonCenterBabyInfoActivity) getActivity()).setBirth(birth);
+                ((PersonCenterBabyInfoActivity) getActivity()).setSex(sex);
+                success = true;
+            }
+
+            @Override
+            public void onPreExecute() {
+                success = false;
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (success == true) {
+                    loadingView.dismiss();
+                    initTextViews();
+                } else {
+                    loadingView.disppear(null, "加载失败", 2);
+                }
+            }
+        };
+        loadingView.loading(initCallBack);
         return mView;
     }
-
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -82,7 +125,6 @@ public class PersonCenterBabyFragment extends TitleFragment {
         birth = (RelativeLayout) view.findViewById(R.id.person_center_birth_container);
         man = getResources().getString(R.string.user_info_popupwindow_sex_man);
         woman = getResources().getString(R.string.user_info_popupwindow_sex_woman);
-
         babyBirthTextView = (TextView) view.findViewById(R.id.person_center_baby_birth_textview);
         babynameTextView = (TextView) view.findViewById(R.id.person_center_baby_name_textview);
         babySexTextView = (TextView) view.findViewById(R.id.person_center_baby_info_sex_textview);
@@ -144,12 +186,57 @@ public class PersonCenterBabyFragment extends TitleFragment {
         sexPopupWindow = new PopupWindowSelected(getActivity());
         sexPopupWindow.setFirstItemText(man);
         sexPopupWindow.setSecondeItemText(woman);
+
+        sexCallBack = new DefaultLoadingView.LoadingCallback() {
+            @Override
+            public void doInBackground() {
+                String sex = babySexTextView.getText().toString();
+
+                if (sex.equals(getResources().getString(R.string.user_info_popupwindow_sex_man))) {
+                    baby.setSex(Baby.MALE);
+                } else if (sex.equals(getResources().getString(R.string.user_info_popupwindow_sex_woman))) {
+                    baby.setSex(Baby.FEMALE);
+                }
+                try {
+                    baby.saveSync();
+                    baby.saveInCache(getActivity(), new Base.CacheSavingCallback() {
+                        @Override
+                        public void done() {
+
+                        }
+                    });
+                    success = true;
+                } catch (AVException e) {
+                    e.printStackTrace();
+                    success = false;
+                }
+
+            }
+
+            @Override
+            public void onPreExecute() {
+                success = false;
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (success == true) {
+                    loadingView.dismiss();
+                    Log.i("personcenter resulet", "sex true");
+                } else {
+                    Log.i("personcenter resulet", "sex false");
+                    loadingView.disppear(null, "请求失败", 2);
+                }
+            }
+        };
+
         sexPopupWindow.setFirstListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 babySexTextView.setText(man);
                 ((PersonCenterBabyInfoActivity) getActivity()).setSex(man);
                 sexPopupWindow.dismiss();
+                loadingView.loading(sexCallBack);
             }
         });
         sexPopupWindow.setSecondeListener(new View.OnClickListener() {
@@ -158,6 +245,7 @@ public class PersonCenterBabyFragment extends TitleFragment {
                 babySexTextView.setText(woman);
                 ((PersonCenterBabyInfoActivity) getActivity()).setSex(woman);
                 sexPopupWindow.dismiss();
+                loadingView.loading(sexCallBack);
             }
         });
         sex.setOnTouchListener(onTouchListener);
@@ -178,10 +266,47 @@ public class PersonCenterBabyFragment extends TitleFragment {
         datePickerDialog = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String str = String.valueOf(year) + "年" + String.valueOf(monthOfYear) + "月" + String.valueOf(dayOfMonth) + "日";
+                String str = String.valueOf(year) + "年" + String.valueOf(monthOfYear + 1) + "月" + String.valueOf(dayOfMonth) + "日";
                 babyBirthTextView.setText(str);
+                loadingView.loading(birthCallBack);
             }
         }, year, monthOfyear, dayOfmonth);
+        loadingView = new DefaultLoadingView(getActivity(), "同步中");
+        birthCallBack = new DefaultLoadingView.LoadingCallback() {
+            @Override
+            public void doInBackground() {
+                String birth = babyBirthTextView.getText().toString();
+                baby.setBirthday(birth);
+                try {
+                    baby.saveSync();
+                    baby.saveInCache(getActivity(), new Base.CacheSavingCallback() {
+                        @Override
+                        public void done() {
+
+                        }
+                    });
+                    success = true;
+                } catch (AVException e) {
+                    e.printStackTrace();
+                    success = false;
+                }
+
+            }
+
+            @Override
+            public void onPreExecute() {
+                success = false;
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (success == false) {
+                    loadingView.disppear(null, "加载失败", 2);
+                } else {
+                    loadingView.dismiss();
+                }
+            }
+        };
         birth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,23 +316,25 @@ public class PersonCenterBabyFragment extends TitleFragment {
     }
 
     private void setname(final RelativeLayout name) {
-        Log.i("personcenter","temp-------");
 
         final DefaultLoadingView.LoadingCallback callback = new DefaultLoadingView.LoadingCallback() {
             @Override
             public void doInBackground() {
-                Baby baby = App.getCurrentBaby();
+
                 baby.setNickname(temp);
-                baby.save(new SaveCallback() {
-                    @Override
-                    public void done(AVException e) {
-                        if (e == null)
-                            success = true;
-                        else {
-                            success = false;
+                try {
+                    baby.saveSync();
+                    baby.saveInCache(getActivity(), new Base.CacheSavingCallback() {
+                        @Override
+                        public void done() {
+
                         }
-                    }
-                });
+                    });
+                    success = true;
+                } catch (AVException e) {
+                    e.printStackTrace();
+                    success = false;
+                }
             }
 
             @Override
@@ -224,9 +351,9 @@ public class PersonCenterBabyFragment extends TitleFragment {
                     FragmentManager fragmentManager = getActivity().getFragmentManager();
                     fragmentManager.popBackStack();
                     fragmentManager.beginTransaction().commit();
-                    dfLoadingView.dismiss();
+                    loadingView.dismiss();
                 } else {
-                    dfLoadingView.disppear(null, "请求失败", 2);
+                    loadingView.disppear(null, "请求失败", 2);
                 }
 
             }
@@ -242,8 +369,8 @@ public class PersonCenterBabyFragment extends TitleFragment {
                     Toast.makeText(getActivity(),"不能填写空白",Toast.LENGTH_SHORT).show();
                     return ;
                 }
-                dfLoadingView = new DefaultLoadingView(getActivity(),"加载中");
-                dfLoadingView.loading(callback);
+                loadingView = new DefaultLoadingView(getActivity(), "加载中");
+                loadingView.loading(callback);
 
             }
         });
