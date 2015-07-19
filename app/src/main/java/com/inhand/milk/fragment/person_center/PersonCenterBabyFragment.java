@@ -2,11 +2,9 @@ package com.inhand.milk.fragment.person_center;
 
 import android.app.DatePickerDialog;
 import android.app.FragmentManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -35,8 +33,6 @@ import java.util.List;
  */
 public class PersonCenterBabyFragment extends TitleFragment {
     private RelativeLayout head, name, sex, birth;
-    private int clickColor, unclickColor = Color.WHITE;
-    private View.OnTouchListener onTouchListener;
     private PopupWindowSelected headPopupWiondow, sexPopupWindow;
     private String man, woman,temp;
     private int year, monthOfyear, dayOfmonth;
@@ -53,20 +49,7 @@ public class PersonCenterBabyFragment extends TitleFragment {
         baby = App.getCurrentBaby();
         loadingView = new DefaultLoadingView(getActivity(), "同步中");
         setTitleview(getResources().getString(R.string.person_center_baby_info), 2);
-        clickColor = getResources().getColor(R.color.common_settings_item_click_bg_color);
-        onTouchListener = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundColor(clickColor);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    v.setBackgroundColor(unclickColor);
-                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    v.setBackgroundColor(unclickColor);
-                }
-                return false;
-            }
-        };
+
         initView(mView);
         initTextViews();
         initCallBack = new DefaultLoadingView.LoadingCallback() {
@@ -173,7 +156,6 @@ public class PersonCenterBabyFragment extends TitleFragment {
         headPopupWiondow.setFirstItemText(getActivity().getResources().getString(R.string.user_info_popupwindow_choose_photo));
         headPopupWiondow.setSecondeItemText(getActivity().getResources().getString(R.string.user_info_popupwindow_create_photo));
 
-        head.setOnTouchListener(onTouchListener);
         head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,7 +230,7 @@ public class PersonCenterBabyFragment extends TitleFragment {
                 loadingView.loading(sexCallBack);
             }
         });
-        sex.setOnTouchListener(onTouchListener);
+
         sex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,7 +240,7 @@ public class PersonCenterBabyFragment extends TitleFragment {
     }
 
     private void setBirth(final RelativeLayout birth) {
-        birth.setOnTouchListener(onTouchListener);
+
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         monthOfyear = calendar.get(Calendar.MONTH) + 1;
@@ -374,7 +356,6 @@ public class PersonCenterBabyFragment extends TitleFragment {
 
             }
         });
-        name.setOnTouchListener(onTouchListener);
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

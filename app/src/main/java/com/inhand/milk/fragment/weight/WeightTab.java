@@ -184,7 +184,7 @@ public class WeightTab extends ObservableHorizonScrollView {
         v.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         v.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
         v.setLayoutParams(lp);
-        v.setAlpha(Alpha_Most);
+        v.setAlpha(Alpha_Center);
     }
 
     private void initEnd() {

@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,7 +25,6 @@ public class UserInfoSettingsFragment extends TitleFragment {
     private String man, woman;
     private int clickColor, unclickColor = Color.WHITE;
     private PopupWindowSelected headPopupWiondow, sexPopupWindow;
-    private View.OnTouchListener backgroundListener;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.user_info_settings, container, false);
@@ -45,19 +43,6 @@ public class UserInfoSettingsFragment extends TitleFragment {
         telephoneTextView = (TextView) view.findViewById(R.id.user_info_telephone_textview);
         emailTextView = (TextView) view.findViewById(R.id.user_info_email_textview);
         cityTextView = (TextView) view.findViewById(R.id.user_info_city_textview);
-        backgroundListener = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundColor(clickColor);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    v.setBackgroundColor(unclickColor);
-                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    v.setBackgroundColor(unclickColor);
-                }
-                return false;
-            }
-        };
         man = getResources().getString(R.string.user_info_popupwindow_sex_man);
         woman = getResources().getString(R.string.user_info_popupwindow_sex_woman);
 
@@ -117,7 +102,6 @@ public class UserInfoSettingsFragment extends TitleFragment {
     }
 
     private void setTelephone(final RelativeLayout telephone) {
-        telephone.setOnTouchListener(backgroundListener);
         telephone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +111,6 @@ public class UserInfoSettingsFragment extends TitleFragment {
     }
 
     private void setCity(final RelativeLayout city) {
-        city.setOnTouchListener(backgroundListener);
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +120,6 @@ public class UserInfoSettingsFragment extends TitleFragment {
     }
 
     private void setEmail(final RelativeLayout email) {
-        email.setOnTouchListener(backgroundListener);
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +129,7 @@ public class UserInfoSettingsFragment extends TitleFragment {
     }
 
     private void setname(final RelativeLayout name) {
-        name.setOnTouchListener(backgroundListener);
+
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +158,6 @@ public class UserInfoSettingsFragment extends TitleFragment {
                 sexPopupWindow.dismiss();
             }
         });
-        sex.setOnTouchListener(backgroundListener);
         sex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,7 +185,6 @@ public class UserInfoSettingsFragment extends TitleFragment {
         headPopupWiondow.setFirstItemText(getActivity().getResources().getString(R.string.user_info_popupwindow_choose_photo));
         headPopupWiondow.setSecondeItemText(getActivity().getResources().getString(R.string.user_info_popupwindow_create_photo));
 
-        head.setOnTouchListener(backgroundListener);
         head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

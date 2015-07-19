@@ -37,12 +37,13 @@ public class WeightStanderPares {
         readXML(inputStream);
     }
 
+    private static synchronized void init() {
+        if (instance == null)
+            instance = new WeightStanderPares();
+    }
     public static WeightStanderPares getInstance() {
         if (instance == null) {
-            synchronized (instance) {
-                if (instance == null)
-                    instance = new WeightStanderPares();
-            }
+            init();
         }
         return instance;
     }

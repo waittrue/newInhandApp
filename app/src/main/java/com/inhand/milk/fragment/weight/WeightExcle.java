@@ -84,6 +84,8 @@ public class WeightExcle extends View {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (points == null)
+                        return false;
                     int date = pointsAt(event.getX(), event.getY());
                     if (date == 0)
                         return false;
@@ -383,8 +385,8 @@ public class WeightExcle extends View {
         paint.setAntiAlias(true);
         paint.setColor(standerAreaColor);
 
-        setStanderLeft((maxValue - minValue) / 3 + minValue, (maxValue - minValue) / 3 * 2 + minValue);
-        setStanderRight((maxValue - minValue) / 2 + minValue, (maxValue - minValue) * 3 / 4 + minValue);
+        // setStanderLeft((maxValue - minValue) / 3 + minValue, (maxValue - minValue) / 3 * 2 + minValue);
+        //setStanderRight((maxValue - minValue) / 2 + minValue, (maxValue - minValue) * 3 / 4 + minValue);
 
         if (standerRight == null || standerLeft == null)
             return;

@@ -21,7 +21,7 @@
                 android:focusable="false"
 			    android:background="#00000000"
 			    android:scaleType="centerInside"
-			    android:src="@drawable/footer_record_cur_ico" />
+				android:src="@drawable/footer_record_bg" />
 		</RelativeLayout>
 
 		<RelativeLayout
@@ -40,7 +40,7 @@
 			    android:clickable="false"
                 android:focusable="false"
 			    android:scaleType="centerInside"
-			    android:src="@drawable/footer_develop_cur_ico" />
+				android:src="@drawable/footer_develop_bg" />
 
 		</RelativeLayout>
 
@@ -59,7 +59,7 @@
 			 	android:scaleType="centerInside"
                 android:clickable="false"
                 android:focusable="false"
-			    android:src="@drawable/footer_grade_cur_ico" />
+				android:src="@drawable/footer_grade_bg" />
 
 		</RelativeLayout>
 
@@ -79,7 +79,7 @@
 			    android:scaleType="centerInside"
                 android:clickable="false"
                 android:focusable="false"
-			    android:src="@drawable/footer_eating_cur_ico" />
+				android:src="@drawable/footer_eating_bg" />
 
 		</RelativeLayout>
 
@@ -99,7 +99,7 @@
 			    android:scaleType="centerInside"
                 android:clickable="false"
                 android:focusable="false"
-			    android:src="@drawable/footer_mine_cur_ico" />
+				android:src="@drawable/footer_mine_bg" />
 
 		</RelativeLayout>
 

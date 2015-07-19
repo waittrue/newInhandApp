@@ -2,6 +2,7 @@ package com.inhand.milk.fragment.weight;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.entity.Baby;
@@ -37,7 +40,7 @@ public class AdderWindow extends Activity {
     private TextView numTextView;
     private int space;
     private ObservableHorizonScrollView scrollView;
-
+    private Weight weight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +92,7 @@ public class AdderWindow extends Activity {
             @Override
             public void onClick(View v) {
                 outAnimation();
-                Weight weight = new Weight();
+                weight = new Weight();
                 weight.setMoonAge(getMonthDay());
                 float num;
                 try {
@@ -98,8 +101,26 @@ public class AdderWindow extends Activity {
                     return;
                 }
                 weight.setWeight(num);
-                Baby baby = App.getCurrentBaby();
-                baby.addWeight(weight);
+                weight.save(new SaveCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        if (e != null)
+                            return;
+                        Baby baby = App.getCurrentBaby();
+                        baby.addWeight(weight);
+                        baby.save(new SaveCallback() {
+                            @Override
+                            public void done(AVException e) {
+                                if (e != null) {
+                                    Log.i("AdderWindow", "save failed");
+                                    return;
+                                }
+                                Log.i("AdderWindow", "save success");
+                            }
+                        });
+                    }
+                });
+
                 /*
                 baby.saveInCache(App.getAppContext(), new Base.CacheSavingCallback() {
                     @Override

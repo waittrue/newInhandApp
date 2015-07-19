@@ -16,10 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.FindCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
+import com.inhand.milk.dao.BabyDao;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.entity.Weight;
 import com.inhand.milk.fragment.TitleFragment;
@@ -51,17 +50,22 @@ public class WeightFragment extends TitleFragment {
     private static WeightStanderPares weightStanderPares = WeightStanderPares.getInstance();
     private float currentStanderMin = 0, currentStanderMax;
     private Weight currentWeight;
+    private int birthDay;
+
+    public WeightFragment() {
+        initData();
+        initCurrentStander();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "oncreateView");
         mView = inflater.inflate(R.layout.fragment_weight, container, false);
         initViews(mView);
         return mView;
     }
 
     private void initViews(View view) {
-        baby = App.getCurrentBaby();
-        initData();
         initWeightTab(view);
         initLine(view);
         initWeightExcle(view);
@@ -70,35 +74,34 @@ public class WeightFragment extends TitleFragment {
     }
 
     private void initData() {
-        baby.getWeight(new FindCallback<Weight>() {
-            @Override
-            public void done(List<Weight> list, AVException e) {
-                if (e != null) {
-                    Log.i(TAG, "error");
-                    return;
-                }
-                if (list == null) {
-                    Log.i(TAG, "enull");
-                    return;
-                }
-                int month;
-                int lastmonth = -1;
-                Map<Integer, Float> weightValues = null;
-                for (Weight weight : list) {
-                    month = WeightMonth.getbabyMonth(weight);
-                    if (lastmonth != month) {
-                        if (weightValues != null)
-                            monthToweights.put(lastmonth, weightValues);
-                        weightValues = new HashMap<>();
-                        lastmonth = month;
-                        weightValues.put(WeightMonth.getbabyDay(weight), weight.getWeight());
-                    } else if (lastmonth == month) {
-                        currentWeight = weight;
-                        weightValues.put(WeightMonth.getbabyDay(weight), weight.getWeight());
-                    }
-                }
+        List<Baby> babies = new BabyDao(App.getAppContext()).findBabiesByUser(App.getCurrentUser());
+        if (babies == null) {
+            Log.i(TAG, "babies == null");
+        }
+        baby = babies.get(0);
+        List<Weight> list = baby.getWeight();
+        if (list == null) {
+            Log.i(TAG, "error");
+            return;
+        }
+        int month;
+        int lastmonth = -1;
+        Map<Integer, Float> weightValues = null;
+        for (Weight weight : list) {
+            month = WeightMonth.getbabyMonth(weight);
+            if (lastmonth != month) {
+                if (weightValues != null)
+                    monthToweights.put(lastmonth, weightValues);
+                weightValues = new HashMap<>();
+                lastmonth = month;
+                weightValues.put(WeightMonth.getbabyDay(weight), weight.getWeight());
+            } else if (lastmonth == month) {
+
+                weightValues.put(WeightMonth.getbabyDay(weight), weight.getWeight());
             }
-        });
+            currentWeight = weight;
+        }
+        monthToweights.put(lastmonth, weightValues);
 
     }
     private void initAdder(View view) {
@@ -142,7 +145,7 @@ public class WeightFragment extends TitleFragment {
 
     private String getLastTime() {
         String str = getResources().getString(R.string.weight_fragment_bottome_text);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String time = simpleDateFormat.format(currentWeight.getCreatedAt());
         return str + time;
     }
@@ -239,18 +242,19 @@ public class WeightFragment extends TitleFragment {
         return currentWeight.getWeight();
     }
 
-    private String getCurrentStander() {
+    private void initCurrentStander() {
         Date date = currentWeight.getCreatedAt();
+        Log.i(TAG, "currentdate:" + String.valueOf(date));
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int day1 = calendar.get(Calendar.DAY_OF_MONTH);
         String birth = baby.getBirthday();
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy年mm月dd日");
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy年MM月dd日");
         Date birthdate;
         try {
             birthdate = dateFormat1.parse(birth);
         } catch (Exception e) {
-            return null;
+            return;
         }
         calendar.setTime(birthdate);
         int day2 = calendar.get(Calendar.DAY_OF_MONTH);
@@ -266,16 +270,22 @@ public class WeightFragment extends TitleFragment {
             currentStanderMax = weightStanderPares.getGirlMax(months);
             nextStandermin = weightStanderPares.getGirlMin(months + 1);
             nextMaxStandermax = weightStanderPares.getGirlMax(months + 1);
-            currentStanderMax = (nextMaxStandermax - currentStanderMax) / 30 * diffDay;
-            currentStanderMin = (nextStandermin - currentStanderMin) / 30 * diffDay;
+            currentStanderMax = (nextMaxStandermax - currentStanderMax) / 30 * diffDay + currentStanderMax;
+            currentStanderMin = (nextStandermin - currentStanderMin) / 30 * diffDay + currentStanderMin;
         } else if (baby.getSex() == Baby.MALE) {
             currentStanderMin = weightStanderPares.getBoyMin(months);
             currentStanderMax = weightStanderPares.getBoyMax(months);
+            Log.i(TAG, "month:" + String.valueOf(months));
+            Log.i(TAG, "month max:" + String.valueOf(currentStanderMax));
+            Log.i(TAG, "month min:" + String.valueOf(currentStanderMin));
             nextStandermin = weightStanderPares.getBoyMin(months + 1);
             nextMaxStandermax = weightStanderPares.getBoyMax(months + 1);
-            currentStanderMax = (nextMaxStandermax - currentStanderMax) / 30 * diffDay;
-            currentStanderMin = (nextStandermin - currentStanderMin) / 30 * diffDay;
+            currentStanderMax = (nextMaxStandermax - currentStanderMax) / 30 * diffDay + currentStanderMax;
+            currentStanderMin = (nextStandermin - currentStanderMin) / 30 * diffDay + currentStanderMin;
         }
+
+    }
+    private String getCurrentStander() {
         DecimalFormat decimalFormat = new DecimalFormat("##.#");
         return decimalFormat.format(currentStanderMin) + "~" + decimalFormat.format(currentStanderMax);
     }
@@ -328,15 +338,21 @@ public class WeightFragment extends TitleFragment {
 
     private void initWeightExcle(View view) {
         weightExcle = (WeightExcle) view.findViewById(R.id.weight_fragment_excle);
-        //addPoints(weightExcle);
-        // weightExcle.setMonthDays(6);
+        monthToWeightExcle(weightExcle, lastPositon);
     }
 
     private void addPoints(WeightExcle weightExcle, int posiont) {
         weightExcle.clearPoints();
+        Log.i(TAG, String.valueOf(posiont));
         Map<Integer, Float> weights = monthToweights.get(posiont);
         for (Integer key : weights.keySet()) {
             float weight = weights.get(key);
+            Log.i(TAG + String.valueOf(key), String.valueOf(weight));
+            key = key - birthDay;
+            if (key < 0)
+                key = getMonthDays(posiont) + key + 1;
+            else
+                key = key + 1;
             weightExcle.addPoint(key, weight);
         }
     }
@@ -344,14 +360,15 @@ public class WeightFragment extends TitleFragment {
     private void initWeightTab(View view) {
         WeightTab weightTab = (WeightTab) view.findViewById(R.id.weight_tabs);
         int months = getMonths();
-        weightTab.setTabNum(months);
-        lastPositon = months - 1;
+        weightTab.setTabNum(months + 1);
+        lastPositon = months;
         weightTab.initTabs();
         weightTab.setStopLisetner(new WeightTab.StopLisetner() {
             @Override
             public void stopLisetner(int position) {
                 if (lastPositon == position)
                     return;
+                Log.i(TAG, "position" + String.valueOf(position));
                 lastPositon = position;
                 monthToWeightExcle(weightExcle, position);
                 weightExcle.invalidate();
@@ -366,17 +383,21 @@ public class WeightFragment extends TitleFragment {
 
     private int getMonths(Date today) {
         String birth = baby.getBirthday();
+        Log.i(TAG, "birth :" + birth);
         int months = 0;
         if (birth == null)
             return months;
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy年mm月dd日");
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy年MM月dd日");
+        Log.i(TAG, "today:" + dateFormat1.format(today));
         Date date;
         try {
             date = dateFormat1.parse(birth);
         } catch (ParseException e) {
             return 0;
         }
-        return calcuteDiffMonth(date, today);
+        int mun = calcuteDiffMonth(date, today);
+        Log.i(TAG, "num:" + String.valueOf(mun));
+        return mun;
     }
 
     private int calcuteDiffMonth(Date start, Date end) {
@@ -390,6 +411,7 @@ public class WeightFragment extends TitleFragment {
         int month1 = birthCalendar.get(Calendar.MONTH);
         int month2 = todayCalendr.get(Calendar.MONTH);
         int day1 = birthCalendar.get(Calendar.DAY_OF_MONTH);
+        birthDay = day1;
         int day2 = todayCalendr.get(Calendar.DAY_OF_MONTH);
         int month = 0;
         if (day2 < day1) {
@@ -398,6 +420,8 @@ public class WeightFragment extends TitleFragment {
                 month2 = 11;
                 year2 = year2--;
             }
+        } else {
+            month = 1;
         }
 
         if (month2 >= month1)

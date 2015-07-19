@@ -27,7 +27,7 @@
                 android:layout_height="@dimen/common_settings_item_bigger_item_height"
                 android:layout_marginTop="@dimen/common_settings_item_margin_top"
                 android:id="@+id/user_info_head_image"
-                android:background="@color/color_white">
+                android:background="@drawable/user_info_setting_bg">
 
                 <ImageView
                     android:layout_width="fill_parent"
@@ -73,6 +73,7 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
+                    android:background="@drawable/user_info_setting_bg"
                     android:id="@+id/person_center_name_container">
 
                     <ImageView
@@ -127,6 +128,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
                     android:layout_below="@+id/person_center_name_container"
+                    android:background="@drawable/user_info_setting_bg"
                     android:id="@+id/person_center_sex_container">
 
                     <ImageView
@@ -176,6 +178,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
                     android:id="@+id/user_info_city"
+                    android:background="@drawable/user_info_setting_bg"
                     android:layout_below="@+id/person_center_sex_container">
 
                     <ImageView
@@ -230,6 +233,7 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
+                    android:background="@drawable/user_info_setting_bg"
                     android:id="@+id/user_info_telephone" >
 
                     <ImageView
@@ -285,6 +289,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
                     android:id="@+id/user_info_email"
+                    android:background="@drawable/user_info_setting_bg"
                     android:layout_below="@+id/user_info_telephone">
 
                     <ImageView

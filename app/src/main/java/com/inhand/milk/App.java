@@ -71,13 +71,13 @@ public class App extends Application {
             return false;
         return true;
     }
+    //分工不分--这部分我添加的
+
 
     public static Context getAppContext() {
         return context;
     }
 
-
-    //分工不分--这部分我添加的
     /*获取状态栏高度*/
     public static int getStatusHeight(Activity activity) {
         int statusHeight = 0;
