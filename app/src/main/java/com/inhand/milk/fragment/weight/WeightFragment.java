@@ -16,15 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
-import com.inhand.milk.dao.BabyDao;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.entity.Weight;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.ui.RingWithText;
-import com.inhand.milk.utils.ACache;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -32,7 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,17 +44,35 @@ public class WeightFragment extends TitleFragment {
     private Baby baby;
     private Map<Integer, Map<Integer, Float>> monthToweights = new HashMap<>();
     private static final String TAG = "weightFragment";
-    private static final String WeightKey = "weightkey", LastAddTime = "LastAddTime";
     private static WeightStanderPares weightStanderPares = WeightStanderPares.getInstance();
     private float currentStanderMin = 0, currentStanderMax;
     private Weight currentWeight;
     private Date lastWeightTime;
     private int birthDay;
+    private WeightAcache weightAcache;
 
     public WeightFragment() {
         initData();
+    }
+
+    private void initData() {
+        baby = App.getCurrentBaby();
+        weightAcache = new WeightAcache();
+        currentWeight = weightAcache.getCurrentWeight();
+        lastWeightTime = weightAcache.getLastWeightTime();
+        monthToweights = weightAcache.getMonthToweights();
         initCurrentStander();
     }
+
+    @Override
+    public void refresh() {
+        Log.i(TAG, "refresh");
+        initData();
+        initWeightTab(mView);
+        initWeightExcle(mView);
+        initRelativeContent(mView);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,74 +90,6 @@ public class WeightFragment extends TitleFragment {
         initAdder(view);
     }
 
-    private void initData() {
-        ACache cache = ACache.get(App.getAppContext());
-        String json = cache.getAsString(WeightKey);
-        String time = cache.getAsString(LastAddTime);
-        List<Weight> list;
-        if (json == null || time == null) {
-            Log.i(TAG, "null");
-            list = initFromCloud();
-            if (list == null)
-                return;
-            weights2Array(list);
-
-            String save = JSON.toJSONString(list);
-            cache.put(WeightKey, save);
-            String t = JSON.toJSONString(lastWeightTime);
-            Log.i(TAG, lastWeightTime.toString());
-            cache.put(LastAddTime, t);
-        } else {
-            list = JSON.parseArray(json, Weight.class);
-            if (list == null)
-                return;
-            baby = App.getCurrentBaby();
-            lastWeightTime = JSON.parseObject(time, Date.class);
-            weights2Array(list);
-        }
-
-    }
-
-    private void weights2Array(List<Weight> list) {
-        if (list == null)
-            return;
-        if (monthToweights == null)
-            monthToweights = new HashMap<>();
-        else
-            monthToweights.clear();
-        int month;
-        int lastmonth = -1;
-        Map<Integer, Float> weightValues = null;
-        for (Weight weight : list) {
-            month = WeightMonth.getbabyMonth(weight);
-            if (lastmonth != month) {
-                if (weightValues != null)
-                    monthToweights.put(lastmonth, weightValues);
-                weightValues = new HashMap<>();
-                lastmonth = month;
-                weightValues.put(WeightMonth.getbabyDay(weight), weight.getWeight());
-            } else if (lastmonth == month) {
-                weightValues.put(WeightMonth.getbabyDay(weight), weight.getWeight());
-            }
-            currentWeight = weight;
-        }
-        lastWeightTime = currentWeight.getCreatedAt();
-        monthToweights.put(lastmonth, weightValues);
-    }
-
-    private List<Weight> initFromCloud() {
-        List<Baby> babies = new BabyDao(App.getAppContext()).findBabiesByUser(App.getCurrentUser());
-        if (babies == null) {
-            Log.i(TAG, "babies == null");
-        }
-        baby = babies.get(0);
-        List<Weight> list = baby.getWeight();
-        if (list == null) {
-            Log.i(TAG, "error");
-        }
-        Log.i(TAG, String.valueOf(list.size()));
-        return list;
-    }
     private void initAdder(View view) {
         adder = (Adder) view.findViewById(R.id.weight_fragment_adder);
         adder.setBgColor(getResources().getColor(R.color.weight_fragment_adder_color));
@@ -283,10 +229,8 @@ public class WeightFragment extends TitleFragment {
     }
 
     private void initCurrentStander() {
-        Date date = currentWeight.getCreatedAt();
+        Date date = lastWeightTime;
         Log.i(TAG, "currentdate:" + String.valueOf(date));
-        if (date == null)
-            date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int day1 = calendar.get(Calendar.DAY_OF_MONTH);
@@ -511,7 +455,6 @@ public class WeightFragment extends TitleFragment {
         //imageView.setImageDrawable(new ColorDrawable(getResources().getColor(R.color.color_white)));
         linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
         linearLayout.addView(imageView);
-
     }
 
 }

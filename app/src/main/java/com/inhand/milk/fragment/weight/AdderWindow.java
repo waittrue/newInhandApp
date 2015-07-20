@@ -122,6 +122,7 @@ public class AdderWindow extends Activity {
                                     return;
                                 }
                                 Log.i("AdderWindow", "save success");
+                                new WeightAcache().syncNoFresh();
                             }
                         });
                     }
