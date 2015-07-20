@@ -75,6 +75,12 @@ public class AdderWindow extends Activity {
 
     private void initOuter() {
         outerLayer = (LinearLayout) findViewById(R.id.weigth_fragment_outest_layer);
+        outerLayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                outAnimation();
+            }
+        });
         rulerContainer = (LinearLayout) findViewById(R.id.weight_fragment_ruler_container);
 
         TextView adderTitle = (TextView) findViewById(R.id.weight_fragment_adder_title_text);
