@@ -28,88 +28,80 @@ public class Baby extends Base {
     public static final String BABY_CLASS = "Baby";
     public static final String NICKNAME_KEY = "nickname";
     public static final String BIRTHDAY_KEY = "birthday";
-    public static final String HEIGHT_KEY = "height";
-    public static final String WEIGHT_KEY = "weights";
-    public static final String HEAD_SIZE_KEY = "head_size";
+    public static final String POWDER_KEY = "powder";
     public static final String USER_KEY = "user";
     public static final String SEX_KEY = "sex";
     public static int FEMALE = 2; // 女性
     public static int MALE = 1; // 男性
 
+    /**
+     * 获得宝宝昵称
+     * @return 宝宝昵称
+     */
     public String getNickname() {
         return this.getString(NICKNAME_KEY);
     }
 
+    /**
+     * 设置宝宝昵称
+     * @param nickname 昵称
+     */
     public void setNickname(String nickname) {
         this.put(NICKNAME_KEY, nickname);
     }
 
+    /**
+     * 获得宝宝生日
+     * @return 宝宝生日 格式：2014-02-03
+     */
     public String getBirthday() {
         return this.getString(BIRTHDAY_KEY);
     }
 
+    /**
+     * 设置宝宝生日
+     * @param birthday 宝宝生日 格式：2014-02-03
+     */
     public void setBirthday(String birthday) {
         this.put(BIRTHDAY_KEY, birthday);
     }
 
-    public float getHeight() {
-        return this.getInt(HEIGHT_KEY);
-    }
-
-    public void setHeight(float height) {
-        this.put(HEIGHT_KEY, height);
-    }
 
     /**
-     * 异步地获取宝宝体重列表
-     * @param callback 回调接口
+     * 获得宝宝性别
+     * @return 宝宝性别：1===MALE,2===FEMALE
      */
-    public void getWeight(
-            final FindCallback<Weight> callback) {
-        AVRelation<Weight> relation =
-                this.getRelation(WEIGHT_KEY);
-        relation.getQuery().findInBackground(callback);
-    }
-
-    /**
-     * 同步地获取宝宝体重列表
-     * @return 体重列表
-     */
-    public List<Weight> getWeight() {
-        AVRelation<Weight> relation =
-                this.getRelation(WEIGHT_KEY);
-        try {
-            return relation.getQuery().find();
-        } catch (AVException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * 添加一条体重记录
-     * @param weight 待添加体重记录
-     */
-    public void addWeight(Weight weight) {
-        AVRelation<Weight> relation =
-                this.getRelation(WEIGHT_KEY);
-        relation.add(weight);
-    }
-
-    public float getHeadSize() {
-        return this.getInt(HEAD_SIZE_KEY);
-    }
-
-    public void setHeadSize(float headSize) {
-        this.put(HEAD_SIZE_KEY, headSize);
-    }
-
     public int getSex() {
         return this.getInt(SEX_KEY);
     }
 
+    /**
+     * 设置宝宝性别
+     * @param sex 宝宝性别：1===MALE,2==FEMALE
+     */
     public void setSex(int sex) {
         this.put(SEX_KEY, sex);
+    }
+
+    /**
+     * 获得宝宝当前所用奶粉
+     * @return 宝宝当前所用奶粉
+     */
+    public Powder getPowder(){
+        try {
+            return this.getAVObject(POWDER_KEY,Powder.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 设置宝宝当前所用奶粉
+     * @param powder 宝宝当前所用奶粉
+     */
+    public void setPowder(Powder powder){
+        this.put(POWDER_KEY,powder);
     }
 
     /**

@@ -129,4 +129,6 @@ public class App extends Application {
         return metric.heightPixels;  // 屏幕宽度（像素）
 
     }
+
+
 }
