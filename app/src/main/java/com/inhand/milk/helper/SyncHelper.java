@@ -35,7 +35,6 @@ public class SyncHelper {
             protected Object doInBackground(Object[] params) {
                 //同步OneDay
                 OneDayDao oneDayDao = new OneDayDao();
-
                 try {
                     oneDayDao.syncCloud(ctx);
                     return null;
