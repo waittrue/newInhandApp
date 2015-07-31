@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.entity.Baby;
-import com.inhand.milk.entity.Weight;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.ui.RingWithText;
 

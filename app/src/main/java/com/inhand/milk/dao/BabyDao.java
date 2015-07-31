@@ -1,54 +1,43 @@
 package com.inhand.milk.dao;
 
-import android.content.Context;
-
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.inhand.milk.entity.Baby;
-import com.inhand.milk.entity.OneDay;
+import com.inhand.milk.entity.User;
 
 import java.util.List;
 
 /**
  * BabyDao
- * Desc:
+ * Desc: 数据访问层--宝宝
  * Team: InHand
  * User:Wooxxx
  * Date: 2015-03-17
  * Time: 08:44
  */
-public class BabyDao extends BaseDao {
-    public static AVQuery<Baby> query = AVQuery.getQuery(Baby.class);
+public class BabyDao {
+    private AVQuery<Baby> query = AVQuery.getQuery(Baby.class);
 
-    public BabyDao(Context ctx) {
-        super(ctx);
-    }
-
-
-    void updateOrSaveInCloud(OneDay oneDay) throws AVException {
-
-    }
 
     /**
-     * 异步地查询某用户的所有宝宝
+     * 异步地从云端查询某用户的所有宝宝
      *
      * @param user     用户
      * @param callback 回调接口
      */
-    public static void findBabiesByUser(AVUser user, FindCallback<Baby> callback) {
-        query.whereEqualTo(Baby.USER_KEY, user);
+    public void findByUserFromCloud(final User user, final FindCallback<Baby> callback) {
+        initFindByUserFromCloud(user);
         query.findInBackground(callback);
     }
 
     /**
-     * 同步地查询某用户的所有宝宝
+     * 同步地从云端查询某用户的所有宝宝
      *
      * @param user 用户
      */
-    public static List<Baby> findBabiesByUser(AVUser user) {
-        query.whereEqualTo(Baby.USER_KEY, user);
+    public List<Baby> findByUserFromCloud(final User user) {
+        initFindByUserFromCloud(user);
         try {
             return query.find();
         } catch (AVException e) {
@@ -56,4 +45,12 @@ public class BabyDao extends BaseDao {
         }
         return null;
     }
+
+    private void initFindByUserFromCloud(final User user) {
+        query.whereEqualTo(Baby.USER_KEY, user);
+        query.include(Baby.STATISTICS_KEY);
+        query.include(Baby.POWDER_KEY);
+        query.include(Baby.FEED_PLAN_KEY);
+    }
+
 }
