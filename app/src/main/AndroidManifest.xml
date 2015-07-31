@@ -90,12 +90,6 @@
             android:theme="@style/AdderWindowStyle">
             </activity>
 
-        <!-- 下面是测试Activity -->
-        <activity android:name=".test.BabyInfoTestActivity"/>
-        <activity android:name=".test.DeviceTestActivity"/>
-        <activity android:name=".test.MainActivity"/>
-        <activity android:name=".test.StatisticsTestActivity"/>
-        <activity android:name=".test.SyncTestActivity"/>
     </application>
 
 </manifest>
