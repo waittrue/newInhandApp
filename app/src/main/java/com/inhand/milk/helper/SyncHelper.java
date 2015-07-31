@@ -4,9 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.avos.avoscloud.AVException;
-import com.inhand.milk.dao.DeviceDao;
 import com.inhand.milk.dao.OneDayDao;
-import com.inhand.milk.dao.StatisticsDao;
 
 /**
  * SyncHelper
@@ -27,7 +25,8 @@ public class SyncHelper {
 
     /**
      * 与云端同步数据
-     * @param ctx         上下文环境
+     *
+     * @param ctx      上下文环境
      * @param callback 同步回调接口
      */
     public static void syncCloud(final Context ctx, final SyncCallback callback) {
@@ -35,15 +34,10 @@ public class SyncHelper {
             @Override
             protected Object doInBackground(Object[] params) {
                 //同步OneDay
-                OneDayDao oneDayDao = new OneDayDao(ctx);
-                //同步设备
-                DeviceDao deviceDao= new DeviceDao(ctx);
-                //同步statistic
-                StatisticsDao statisticsDao=new StatisticsDao(ctx);
+                OneDayDao oneDayDao = new OneDayDao();
+
                 try {
-                    oneDayDao.syncCloud();
-                    deviceDao.syncCloud();
-                    statisticsDao.syncCloud();
+                    oneDayDao.syncCloud(ctx);
                     return null;
                 } catch (AVException e) {
                     e.printStackTrace();
