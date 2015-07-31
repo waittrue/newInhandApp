@@ -4,11 +4,17 @@ import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVClassName;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.utils.ACache;
 import com.inhand.milk.utils.LocalSaveTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.util.List;
 
 /**
  * BabyInfo
@@ -121,6 +127,55 @@ public class BabyInfo extends Base implements CacheSaving<BabyInfo> {
         this.put(BABY_KEY, baby);
     }
 
+    /**
+     * 同步地将BabyInfo存至云端
+     */
+    public void saveInCloud() {
+        // 同一age的进行覆盖
+        AVQuery<BabyInfo> query = AVQuery.getQuery(BabyInfo.class);
+        query.whereEqualTo(BabyInfo.AGE_KEY, this.getAge());
+        query.whereEqualTo(BabyInfo.BABY_KEY, this.getBaby());
+        try {
+            List<BabyInfo> infos = query.find();
+            if (infos.size() > 0) {
+                // 如果存在，则覆盖
+                BabyInfo info = infos.get(0);
+                info.refresh(this);
+                info.save();
+            } else {
+                this.save();
+            }
+        } catch (AVException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 异步地将BabyInfo存至云端
+     *
+     * @param callback 回调接口
+     */
+    public void saveInCloud(final SaveCallback callback) {
+        final BabyInfo newInfo = this;
+        // 同一age的进行覆盖
+        AVQuery<BabyInfo> query = AVQuery.getQuery(BabyInfo.class);
+        query.whereEqualTo(BabyInfo.AGE_KEY, this.getAge());
+        query.whereEqualTo(BabyInfo.BABY_KEY, this.getBaby());
+        query.findInBackground(new FindCallback<BabyInfo>() {
+            @Override
+            public void done(List<BabyInfo> list, AVException e) {
+                if (list.size() > 0) {
+                    // 如果存在，则覆盖
+                    BabyInfo info = list.get(0);
+                    info.refresh(newInfo);
+                    info.saveInBackground(callback);
+                } else {
+                    newInfo.saveInBackground(callback);
+                }
+            }
+        });
+    }
+
     @Override
     public void saveInCache(final Context ctx, final LocalSaveTask.LocalSaveCallback callback) {
         LocalSaveTask task =
@@ -134,7 +189,6 @@ public class BabyInfo extends Base implements CacheSaving<BabyInfo> {
         task.execute();
     }
 
-    @Override
     public void saveInCache(Context ctx) {
         ACache aCache = ACache.get(ctx);
         // 根据年-月（"BabyInfo-2014-02"）进行缓存
@@ -143,25 +197,29 @@ public class BabyInfo extends Base implements CacheSaving<BabyInfo> {
         // 本地是否存在本月信息列表缓存，不存在则新建
         if (infos == null) {
             infos = new JSONArray();
-            aCache.put(cacheKey, infos);
         }
-        // 比较是否重复,若重复，则覆盖
         if (infos.length() > 0) {
             int lastIdx = infos.length() - 1;
             try {
                 String latestStr = infos.getString(lastIdx);
                 BabyInfo babyInfo = JSON.parseObject(latestStr, BabyInfo.class);
+                // 比较是否重复,若重复，则覆盖
                 if (babyInfo.getAge()
                         .equals(this.getAge())) {
-                    refresh(this);
+                    babyInfo.refresh(this);
+                    infos.put(lastIdx, babyInfo.toJSONObject());
+                } else {
+                    // 否则，追加
+                    infos.put(this.toJSONObject());
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        } else {
+            // 如果array为空，追加
+            infos.put(this.toJSONObject());
         }
-        // 存储
-        infos.put(this.toJSONObject());
         // 刷新缓存
         aCache.put(cacheKey, infos);
     }
