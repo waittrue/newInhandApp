@@ -7,11 +7,8 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
-import com.inhand.milk.dao.DeviceDao;
-import com.inhand.milk.dao.OneDayDao;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.inhand.milk.utils.ACache;
+import com.inhand.milk.utils.LocalSaveTask;
 
 /**
  * Device
@@ -21,32 +18,40 @@ import java.util.Date;
  * Created by: Wooxxx
  */
 @AVClassName(Device.DEVICE_CLASS)
-public class Device extends Base {
+public class Device extends Base implements CacheSaving<Device> {
     public static final String DEVICE_CLASS = "Milk_Device";
 
-    public static final String SOFTWARE_VERSION_KEY = "software_version";
-    public static final String HARDWARE_VERSION_KEY="hardware_version";
-    public static final String ADJUST_NUM_KEY= "adjust_num";
-    public static final String ADJUST_DEVIATION_KEY="adjust_deviation";
-    public static final String MAC_KEY = "mac";
-    public static final String PRESSURE_ERROR_NUM_KEY = "pressure_error_num";
-    public static final String TEMPERATURE_ERROR_NUM_KEY = "temperature_error_num";
-    public static final String ACCELERATE_ERROR_NUM_KEY = "accelerate_error_num";
-    public static final String USER_KEY = "user";
-    public static final String VERSION_KEY = "version";
+    public static final String SOFTWARE_VERSION_KEY = "softwareVersion"; //软件版本
+    public static final String HARDWARE_VERSION_KEY = "hardwareVersion"; // 硬件版本
+    public static final String ADJUST_NUM_KEY = "adjustNum"; // 校准次数
+    public static final String ADJUST_DEVIATION_KEY = "adjustDeviation"; // 校准误差
+    public static final String MAC_KEY = "mac"; // mac地址
+    public static final String PRESSURE_ERROR_NUM_KEY = "pressureErrorNum"; // 压力传感器错误次数
+    public static final String TEMPERATURE_ERROR_NUM_KEY = "temperatureErrorNum"; // 温度传感器错误次数
+    public static final String ACCELERATE_ERROR_NUM_KEY = "accelerateErrorNum"; // 加速度传感器错误次数
+    public static final String USER_KEY = "user"; // 所属用户
+    public static final String UUID_KEY = "uuid"; // UUID
+    public static final String NAME_KEY = "name"; // 自定义设备名称
+
+    public static final String CACHE_KEY = "device";
 
     public Device(){
 
     }
 
     /**
-     * 获得设备MAC地址
+     * 获得设备Mac地址
      * @return MAC地址
      */
     public String getMac(){
         return this.getString(MAC_KEY);
     }
 
+    /**
+     * 设置设备Mac地址
+     *
+     * @param mac mac地址
+     */
     public void setMac(String mac){
         this.put(MAC_KEY,mac);
     }
@@ -59,6 +64,10 @@ public class Device extends Base {
         return this.getString(SOFTWARE_VERSION_KEY);
     }
 
+    /**
+     * 设置设备软件版本
+     * @param softwareVersion 软甲版本
+     */
     public void setSoftwareVersion(String softwareVersion){
         this.put(SOFTWARE_VERSION_KEY,softwareVersion);
     }
@@ -71,6 +80,10 @@ public class Device extends Base {
         return this.getString(HARDWARE_VERSION_KEY);
     }
 
+    /**
+     * 设置设备硬件版本
+     * @param hardwareVersion 设备硬件版本
+     */
     public void setHardwareVersion(String hardwareVersion){
         this.put(HARDWARE_VERSION_KEY,hardwareVersion);
     }
@@ -83,6 +96,10 @@ public class Device extends Base {
         return this.getInt(ADJUST_NUM_KEY);
     }
 
+    /**
+     * 设置校准次数
+     * @param adjustNum 校准次数
+     */
     public void setAdjustNum(int adjustNum){
         this.put(ADJUST_NUM_KEY,adjustNum);
     }
@@ -95,6 +112,10 @@ public class Device extends Base {
         return this.getDouble(ADJUST_DEVIATION_KEY);
     }
 
+    /**
+     * 设置校准误差
+     * @param adjustNumDeviation 校准误差
+     */
     public void setAdjustDeviation(double adjustNumDeviation){
         this.put(ADJUST_DEVIATION_KEY,adjustNumDeviation);
     }
@@ -107,6 +128,10 @@ public class Device extends Base {
         return this.getInt(PRESSURE_ERROR_NUM_KEY);
     }
 
+    /**
+     * 设置压力传感器错误次数
+     * @param pressureErrorNum 压力传感器错误次数
+     */
     public void setPressureErrorNum(int pressureErrorNum){
         this.put(PRESSURE_ERROR_NUM_KEY,pressureErrorNum);
     }
@@ -119,6 +144,10 @@ public class Device extends Base {
         return this.getInt(TEMPERATURE_ERROR_NUM_KEY);
     }
 
+    /**
+     * 设置温度传感器错误次数
+     * @param temperatureErrorNum 温度传感器错误次数
+     */
     public void setTemperatureErrorNum(int temperatureErrorNum){
         this.put(TEMPERATURE_ERROR_NUM_KEY,temperatureErrorNum);
     }
@@ -131,22 +160,19 @@ public class Device extends Base {
         return this.getInt(ACCELERATE_ERROR_NUM_KEY);
     }
 
+    /**
+     * 设置加速度模块错误次数
+     * @param accelerateErrorNum 加速度模块错误次数
+     */
     public void setAccelerateErrorNum(int accelerateErrorNum){
         this.put(ACCELERATE_ERROR_NUM_KEY,accelerateErrorNum);
     }
 
+
     /**
-     * 获得当前数据记录版本
-     * @return 版本号
+     * 获得设备所属用户
+     * @return
      */
-    public String getVersion(){
-        return this.getString(VERSION_KEY);
-    }
-
-    public void setVersion(String version){
-        this.put(VERSION_KEY,version);
-    }
-
     public User getUser(){
         return this.getAVUser(USER_KEY,User.class);
     }
@@ -162,43 +188,72 @@ public class Device extends Base {
             e.printStackTrace();
         }
     }
+
     /**
-     * 保存设备信息至云端
-     * @param callback 存储回调接口
-     * @param ctx 上下文环境
+     * 获得设备UUID
+     * @return 设备UUID
      */
-    public void saveInCloud(Context ctx,final SaveCallback callback){
-        final Device  device = this;
-        if( device.getUser() == null )
-            device.setUser(App.getCurrentUser());
-        //???°汾???
-        SimpleDateFormat sdf = new SimpleDateFormat(VERSION_FORMAT);
-        String version = sdf.format(new Date());
-        device.setVersion(version);
-        device.saveInBackground(callback);
+    public String getUUID() {
+        return this.getString("uuid");
     }
 
     /**
-     * 保存设备信息至本地
-     * @param ctx 上下文环境
+     * 设置设备UUID
+     *
+     * @param uuid 设备
+     */
+    public void setUUID(String uuid) {
+        this.put(UUID_KEY, uuid);
+    }
+
+    /**
+     * 获得设备名称
+     *
+     * @return 设备名称
+     */
+    public String getName() {
+        return this.getString(NAME_KEY);
+    }
+
+    /**
+     * 设置设备名称
+     *
+     * @param name 设备名称
+     */
+    public void setName(String name) {
+        this.put(NAME_KEY, name);
+    }
+
+    /**
+     * 保存设备信息至云端，覆盖式存储
      * @param callback 存储回调接口
      */
-    public void saveInDB(final Context ctx,final DBSavingCallback callback){
+    public void saveInCloud(final SaveCallback callback){
         if( this.getUser() == null )
             this.setUser(App.getCurrentUser());
-        //更新版本表示
-        SimpleDateFormat sdf = new SimpleDateFormat(VERSION_FORMAT);
-        String version = sdf.format(new Date());
-        this.setVersion(version);
-        DBSavingTask task = new DBSavingTask(ctx, callback) {
+        this.saveInBackground(callback);
+    }
+
+    @Override
+    public void saveInCache(final Context ctx, LocalSaveTask.LocalSaveCallback<Device> callback) {
+
+        LocalSaveTask task = new LocalSaveTask(callback) {
             @Override
-            protected Object doInBackground(Object[] params) {
-                //更新本地数据库
-                DeviceDao deviceDao = new DeviceDao(ctx);
-                deviceDao.updateOrSaveInDB(Device.this);
-                return null;
+            protected Void doInBackground(Void... voids) {
+                saveInCache(ctx);
+                return super.doInBackground(voids);
             }
         };
+
         task.execute();
+
+    }
+
+    @Override
+    public void saveInCache(Context ctx) {
+        if (this.getUser() == null)
+            this.setUser(App.getCurrentUser());
+        ACache aCache = ACache.get(ctx);
+        aCache.put(Device.CACHE_KEY, this.toJSONObject());
     }
 }

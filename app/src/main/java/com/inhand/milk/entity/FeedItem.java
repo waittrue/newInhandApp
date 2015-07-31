@@ -1,9 +1,6 @@
 package com.inhand.milk.entity;
 
-import android.content.Context;
-
 import com.avos.avoscloud.AVClassName;
-import com.inhand.milk.utils.ACache;
 
 /**
  * FeedItem
@@ -16,10 +13,16 @@ import com.inhand.milk.utils.ACache;
 @AVClassName(FeedItem.FEED_ITEM_CLASS_KEY)
 public class FeedItem extends Base {
     public static final String FEED_ITEM_CLASS_KEY = "Milk_FeedItem";
-    public static final String FEED_PLAN_KEY = "feed_plan"; // 所属喂养计划
+    public static final String FEED_PLAN_KEY = "feedPlan"; // 所属喂养计划
     public static final String TIME_KEY = "time"; // 喂养时间
     public static final String SUPPLEMENT_KEY = "supplement"; // 辅食
-    public static final String IS_MILKING_KEY = "is_milking"; // 是否为饮奶
+    public static final String TYPE_KEY = "type"; // 喂食方式
+
+    public static final int TYPE_MILK = 0; // 饮奶方式
+    public static final int TYPE_SUPP = 1; // 辅食方式
+
+    public static final String CACHE_KEY = "feed_items";
+
 
     /**
      * 获得该喂养条目所属的喂养计划
@@ -76,23 +79,25 @@ public class FeedItem extends Base {
      * @param supplement 辅食
      */
     public void setSupplement(Supplement supplement){
+        // 设置装填为辅食
+        this.put(TYPE_KEY, TYPE_SUPP);
         this.put(SUPPLEMENT_KEY,supplement);
     }
 
     /**
-     * 获得该条目是否为喝奶
-     * @return 是否为喝奶
+     * 返回喂食类型
+     * @return 喂食类型
      */
-    public boolean isMilking(){
-        return this.getBoolean(IS_MILKING_KEY);
+    public int getType() {
+        return this.getInt(TYPE_KEY);
     }
 
     /**
-     * 设置该条目是否为喝奶
-     * @param isMilking 是否为喝奶
+     * 设置喂食类型
+     * @param type 喂食类型
      */
-    public void setIsMilking(boolean isMilking){
-        this.put(IS_MILKING_KEY,isMilking);
+    public void setType(int type) {
+        this.put(TYPE_KEY, type);
     }
 
 

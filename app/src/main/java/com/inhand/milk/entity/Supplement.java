@@ -16,9 +16,9 @@ public class Supplement extends Base {
     public static final String SUPPLEMENT_CLASS = "Milk_Supplement";
     public static final String NAME_KEY = "name"; // 辅食名称
     public static final String INGREDIENTS_KEY = "ingredients"; // 辅食食材
-    public static final String COOKING_METHOD_KEY = "cooking_method"; // 辅食做法
+    public static final String COOKING_METHOD_KEY = "cookingMethod"; // 辅食做法
     public static final String DESC_KEY = "desc"; // 辅食描述
-    public static final String FOR_AGE_KEY = "for_age"; // 针对年龄段
+    public static final String FOR_AGE_KEY = "forAge"; // 针对年龄段
 
     /**
      * 获得辅食名称
@@ -26,6 +26,10 @@ public class Supplement extends Base {
      */
     public String getName(){
         return this.getString(NAME_KEY);
+    }
+
+    public void setName(String name) {
+        this.put(NAME_KEY, name);
     }
 
     /**
@@ -37,6 +41,9 @@ public class Supplement extends Base {
     }
 
 
+    public void setIngredients(String ingredients) {
+        this.put(INGREDIENTS_KEY, ingredients);
+    }
     /**
      * 获得辅食做法
      * @return 辅食做法
@@ -45,6 +52,9 @@ public class Supplement extends Base {
         return this.getString(COOKING_METHOD_KEY);
     }
 
+    public void setCookingMethod(String cookingMethod) {
+        this.put(COOKING_METHOD_KEY, cookingMethod);
+    }
 
     /**
      * 获得辅食描述
@@ -52,6 +62,10 @@ public class Supplement extends Base {
      */
     public String getDesc(){
         return this.getString(DESC_KEY);
+    }
+
+    public void setDesc(String desc) {
+        this.put(DESC_KEY, desc);
     }
 
     /**
@@ -62,5 +76,8 @@ public class Supplement extends Base {
         return this.getString(FOR_AGE_KEY);
     }
 
+    public void setForAge(String forAge) {
+        this.put(FOR_AGE_KEY, forAge);
+    }
 
 }

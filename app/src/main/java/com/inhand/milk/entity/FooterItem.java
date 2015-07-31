@@ -19,4 +19,6 @@ public class FooterItem extends ConfigableMenuItem {
     public void setFragment(String fragment) {
         this.fragment = fragment;
     }
+
+
 }

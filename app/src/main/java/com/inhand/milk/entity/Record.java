@@ -1,14 +1,10 @@
 package com.inhand.milk.entity;
 
 
-import com.alibaba.fastjson.JSON;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Record
@@ -29,7 +25,7 @@ public class Record implements Serializable{
     //饮奶时间
     public static final String DURATION_KEY = "duration";
     //建议奶量
-    public static final String ADVICE_VOLUMN_KEY = "adviceVolumn";
+    public static final String ADVICE_VOLUME_KEY = "adviceVolume";
     //喝奶分数
     public static final String SCORE_KEY = "score";
     //奶量
@@ -44,7 +40,7 @@ public class Record implements Serializable{
     //喝奶评分
     private int score;
     //建议奶量
-    private int adviceVolumn;
+    private int adviceVolume;
 
     public Record() {
 
@@ -98,12 +94,12 @@ public class Record implements Serializable{
         this.score = score;
     }
 
-    public int getAdviceVolumn() {
-        return adviceVolumn;
+    public int getAdviceVolume() {
+        return adviceVolume;
     }
 
-    public void setAdviceVolumn(int adviceVolumn) {
-        this.adviceVolumn = adviceVolumn;
+    public void setAdviceVolumne(int adviceVolume) {
+        this.adviceVolume = adviceVolume;
     }
 
     /**
@@ -132,7 +128,7 @@ public class Record implements Serializable{
             obj.put(Record.BEGIN_TIME_KEY, this.getBeginTime());
             obj.put(Record.SCORE_KEY,this.getScore());
             obj.put(Record.DURATION_KEY,this.getDuration());
-            obj.put(Record.ADVICE_VOLUMN_KEY,this.getAdviceVolumn());
+            obj.put(Record.ADVICE_VOLUME_KEY, this.getAdviceVolume());
             return obj;
         } catch (JSONException e) {
             e.printStackTrace();

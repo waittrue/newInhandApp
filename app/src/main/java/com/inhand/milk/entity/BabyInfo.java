@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.avos.avoscloud.AVClassName;
 import com.inhand.milk.utils.ACache;
+import com.inhand.milk.utils.LocalSaveTask;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,18 +18,17 @@ import org.json.JSONObject;
  * Time: 10:36
  */
 @AVClassName(BabyInfo.BABY_INFO_CLASS)
-public class BabyInfo extends Base {
+public class BabyInfo extends Base implements CacheSaving<BabyInfo> {
     public static final String BABY_INFO_CLASS = "Milk_BabyInfo";
 
     public static final String AGE_KEY = "age"; // 宝宝日龄
     public static final String HEIGHT_KEY = "height"; // 宝宝身高
     public static final String WEIGHT_KEY = "weight"; // 宝宝体重
-    public static final String HEAD_SIZE_KEY = "head_size"; // 宝宝头围
+    public static final String HEAD_SIZE_KEY = "headSize"; // 宝宝头围
     public static final String BABY_KEY = "baby"; // 信息所属宝宝
-
+    public static final String CACHE_KEY_PREFIX = "babyinfo-";
     public static final String AGE_DATE_FORMAT = "yyyy-MM-dd"; // 宝宝日龄格式
 
-    public static final String CACHE_KEY = "baby_infos";
 
     /**
      * 获得宝宝日龄
@@ -110,30 +110,32 @@ public class BabyInfo extends Base {
         this.put(BABY_KEY,baby);
     }
 
-    /**
-     * 将该缓存到本地宝宝信息列表
-     * @param ctx 上下文环境
-     * @param callback 回调接口
-     */
-    public void saveInCache(final Context ctx, final CacheSavingCallback callback){
-        final BabyInfo babyInfo = this;
-        CacheSavingTask cacheSavingTask =
-                new CacheSavingTask(ctx, callback) {
+    @Override
+    public void saveInCache(final Context ctx, final LocalSaveTask.LocalSaveCallback callback) {
+        LocalSaveTask task =
+                new LocalSaveTask(callback) {
                     @Override
-                    protected Object doInBackground(Object[] params) {
-                        ACache aCache = ACache.get(ctx);
-                        // 本地是否存在信息列表缓存，不存在则新建
-                        JSONArray infos = aCache.getAsJSONArray(BabyInfo.CACHE_KEY);
-                        if(infos == null){
-                            infos = new JSONArray();
-                            aCache.put(BabyInfo.CACHE_KEY,infos);
-                        }
-                        JSONObject obj = babyInfo.toJSONObject();
-                        infos.put(obj);
-                        aCache.put(BabyInfo.CACHE_KEY,infos);
-                        return super.doInBackground(params);
+                    protected Void doInBackground(Void... voids) {
+                        saveInCache(ctx);
+                        return super.doInBackground(voids);
                     }
                 };
-        cacheSavingTask.execute();
+        task.execute();
+    }
+
+    @Override
+    public void saveInCache(Context ctx) {
+        ACache aCache = ACache.get(ctx);
+        // 根据年-月（"BabyInfo-2014-02"）进行缓存
+        String cacheKey = CACHE_KEY_PREFIX + this.getAge().substring(0, 7);
+        JSONArray infos = aCache.getAsJSONArray(cacheKey);
+        // 本地是否存在信息列表缓存，不存在则新建
+        if (infos == null) {
+            infos = new JSONArray();
+            aCache.put(cacheKey, infos);
+        }
+        JSONObject obj = this.toJSONObject();
+        infos.put(obj);
+        aCache.put(cacheKey, infos);
     }
 }

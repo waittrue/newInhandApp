@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.inhand.milk.R;
-import com.inhand.milk.dao.BaseDao;
 import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;

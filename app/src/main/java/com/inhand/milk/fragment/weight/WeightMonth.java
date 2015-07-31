@@ -1,7 +1,5 @@
 package com.inhand.milk.fragment.weight;
 
-import com.inhand.milk.entity.Weight;
-
 /**
  * Created by Administrator on 2015/7/19.
  * 由于数据接口只能存储month，这里我加这个类，利用存储的的是int

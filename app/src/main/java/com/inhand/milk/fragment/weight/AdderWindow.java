@@ -18,7 +18,6 @@ import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.entity.Baby;
-import com.inhand.milk.entity.Weight;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.firstlanunch.Ruler;
 
