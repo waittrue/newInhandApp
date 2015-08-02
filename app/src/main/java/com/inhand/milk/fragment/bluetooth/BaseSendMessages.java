@@ -110,7 +110,6 @@ public class BaseSendMessages {
         low = high%256;
         high = high/256;
         decimal = (int)((value - (int)value)*256);
-        Toast.makeText(App.getAppContext(),String.valueOf(decimal),1000).show();
         buffer[used] = 0x00;
         buffer[used+1]= (byte)high;
         buffer[used+2]= (byte)low;

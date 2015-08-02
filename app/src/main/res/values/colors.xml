@@ -44,7 +44,8 @@
     <color name="record_curve_shadow_color">#41fb98</color>
     <color name="develop_round_start_colors">#3ed2bb</color>
     <color name="develop_round_end_colors">#44dd73</color>
-
+    <color name="public_button_a_bg_color">#19d1a8</color>
+    <color name="public_button_b_bg_color">#ff6600</color>
 
     <!-- main title -->
     <color name="main_title_text_color">#ffffffff</color>
@@ -199,5 +200,14 @@
     <color name="user_info_settings_city_listview_item_content_text_color">#111111</color>
     <color name="person_center_user_name_text_color">#000000</color>
     <color name="person_center_special_text_color">#000000</color>
+
+    <!--eating_plan-->
+    <color name="eating_plan_time_hour_minute_second">#444444</color>
+    <color name="eating_plan_unover_color">#d5d5d5</color>
+    <color name="eating_plan_counting_bg">#1919d1a8</color>
+    <color name="eating_pop_title_color">#888888</color>
+    <color name="eating_custom_plan_item_time_text_color">#bbbbbb</color>
+    <color name="eating_custom_plan_item_type_text_color">#555555</color>
+    <color name="eating_custom_fix_choose_food_text_color">#000000</color>
 
 </resources>

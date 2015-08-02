@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    android:id="@+id/alarm_activity_caintainer">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="210dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/alarm_total_container">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/alarm_notification_up_bg"
+            android:layout_weight="5"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09:40"
+                android:id="@+id/alarm_time_textview"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/alarm_milk_food_icon"
+                android:src="@drawable/alarm_milk_icon"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/alarm_notification_down_bg"
+            android:layout_weight="2">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/alarm_icon_imageview"
+                android:src="@drawable/alram_icon"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小兜提醒 宝宝该饮奶"
+                android:id="@+id/alarm_doc_textview"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/alarm_icon_imageview" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:text="确定"
+                android:id="@+id/alarm_image_button"
+                android:layout_alignParentRight="true"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:background="@drawable/alarm_notification_button_bg"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

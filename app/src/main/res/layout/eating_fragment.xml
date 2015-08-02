@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myview = "http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/title">
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/eating_time_title_height"
+            android:text="@string/eating_time_title"
+            android:id="@+id/eating_time_title"
+            android:gravity="center"
+            android:textSize="@dimen/eating_time_title_size"
+            android:layout_marginTop="@dimen/eating_time_title_margin_top"
+            android:textColor="@color/public_main_a_color" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/eating_time_height"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/eating_plan_time_count__container">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:id="@+id/eating_time_hour"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/eating_time_num_size"
+                android:textColor="@color/public_main_a_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/eating_time_doc_size"
+                android:textColor="@color/eating_plan_time_hour_minute_second" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:id="@+id/eating_time_mm"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/eating_time_num_size"
+                android:textColor="@color/public_main_a_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/eating_time_doc_size"
+                android:id="@+id/textView8"
+                android:textColor="@color/eating_plan_time_hour_minute_second" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:id="@+id/eating_time_second"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/eating_time_num_size"
+                android:textColor="@color/public_main_a_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="秒"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/eating_time_doc_size"
+                android:id="@+id/textView10"
+                android:textColor="@color/eating_plan_time_hour_minute_second" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/eating_time_height"
+            android:background="@color/eating_plan_counting_bg"
+            android:id="@+id/eating_plan_eating_container">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/eating_plan_eating_textview"
+                android:textSize="@dimen/eating_time_doc_size"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textColor="@color/public_main_a_color" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:id="@+id/imageView24"
+            android:layout_weight="1"
+            android:src="@drawable/eating_picture"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="@dimen/eating_piacture_margin_left_right"
+            android:layout_marginRight="@dimen/eating_piacture_margin_left_right"
+            android:layout_marginTop="@dimen/eating_piacture_margin_left_right"
+            android:layout_margin="@dimen/eating_piacture_margin_left_right" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/eating_plan_edit_container_height">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/eating_plan_doc"
+                android:layout_marginLeft="@dimen/eating_piacture_margin_left_right"
+                android:id="@+id/eating_plan_doc"
+                android:textSize="@dimen/eating_plan_text_size"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="@color/eating_plan_time_hour_minute_second" />
+
+            <view
+                class="com.inhand.milk.ui.RoundImageView"
+                myview:backgroundcolor="@color/public_button_a_bg_color"
+                myview:text="编辑"
+                myview:textsize="15dp"
+                myview:textcolor="#ffffff"
+                android:layout_width="@dimen/eating_button_width"
+                android:layout_height="fill_parent"
+                android:id="@+id/eating_plan_custom"
+                android:layout_marginRight="@dimen/eating_piacture_margin_left_right"
+                android:layout_toLeftOf="@+id/eating_plan_list" />
+
+            <view
+                android:layout_width="@dimen/eating_button_width"
+                android:layout_height="fill_parent"
+                class="com.inhand.milk.ui.RoundImageView"
+                android:id="@+id/eating_plan_list"
+                myview:backgroundcolor="@color/public_button_b_bg_color"
+                myview:text="清单"
+                myview:textsize="15dp"
+                myview:textcolor="#ffffff"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/eating_piacture_margin_left_right" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"></LinearLayout>
+
+            <view
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                class="com.inhand.milk.ui.ObservableHorizonScrollView"
+                android:id="@+id/eating_plan_show_scroll"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:layout_weight="86"
+             >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/eating_plan_show_container"></LinearLayout>
+            </view>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"></LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

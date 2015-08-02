@@ -37,7 +37,6 @@ public class TitleFragment extends Fragment{
                 title3.setrightTextView(righListenner,rightIcon);
                 LinearLayout layout3 = (LinearLayout)mView.findViewById(R.id.title);
                 layout3.addView(title3.getView(this.getActivity()));
-
             default:
                 break;
         }

@@ -15,6 +15,15 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+
+
 
     <application
         android:name="App"
@@ -85,11 +94,40 @@
             android:name="com.inhand.milk.activity.PersonCenterBabyInfoActivity"
             android:label="@string/app_name" >
         </activity>
+
+        <activity
+            android:name=".activity.EatingCustomPlanActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".activity.EatingCustomFixActivity"
+            android:label="@string/app_name" >
+        </activity>
         <activity
             android:name="com.inhand.milk.fragment.weight.AdderWindow"
             android:theme="@style/AdderWindowStyle">
             </activity>
+        <activity android:name=".activity.AlarmActivity"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar">
+        </activity>
 
+        <activity android:name=".activity.AlarmFloatActivity"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent"
+            />
+        <receiver android:name=".BroadcastReceiver.AlarmReceiver"
+            android:process=":remote">
+        </receiver>
+        <receiver android:name=".BroadcastReceiver.StartingUpReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
         <!-- 下面是测试Activity -->
         <activity android:name=".test.BabyInfoTestActivity"/>
         <activity android:name=".test.DeviceTestActivity"/>

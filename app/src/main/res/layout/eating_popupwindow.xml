@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#66000000"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/eating_pop_outside">
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/eating_pop_height"
+        android:background="#f5f5f5"
+        android:id="@+id/eating_pop_content">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/eating_pop_title_height"
+            android:text="@string/eating_pop_title"
+            android:id="@+id/textView6"
+            android:gravity="center"
+            android:textSize="@dimen/eating_pop_title_size"
+            android:textColor="@color/eating_pop_title_color" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/common_settings_item_line_smaller_height"
+            android:id="@+id/imageView25"
+            android:background="@color/common_settings_item_line_color" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="@dimen/eating_pop_btn_width_height"
+                    android:layout_height="@dimen/eating_pop_btn_width_height"
+                    android:id="@+id/eating_pop_recommend"
+                    android:focusableInTouchMode="false"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/eating_pop_recommend_btn" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="@dimen/eating_pop_btn_width_height"
+                    android:layout_height="@dimen/eating_pop_btn_width_height"
+                    android:id="@+id/eating_pop_custom"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/eating_pop_custom_btn" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

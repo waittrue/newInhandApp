@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVUser;
@@ -118,6 +119,12 @@ public class App extends Application {
         activity.getWindowManager().getDefaultDisplay().getMetrics(metric);
         return metric.widthPixels;  // 屏幕宽度（像素）
 
+    }
+    public static int getWindowWidth(Context context) {
+        WindowManager wm = (WindowManager)context
+                .getSystemService(Context.WINDOW_SERVICE);
+
+        return wm.getDefaultDisplay().getWidth();
     }
 
     /*

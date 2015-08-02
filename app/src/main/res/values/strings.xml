@@ -58,6 +58,10 @@
     <!-- ************************分工部分********************************* -->
     <!--common string-->
     <string name="public_no_data">无数据</string>
+    <string name="public_finish">完成</string>
+    <string name="public_cancle">取消</string>
+    <string name="public_delect">删除</string>
+    <string name="public_add">添加</string>
     <!-- health nutrition -->
     <string name="health_nutrition_title">非健康汇总</string>
 
@@ -237,4 +241,32 @@
     <string name="person_center_baby_device">我的奶瓶</string>
     <string name="person_center_baby_syn">云端同步</string>
     <string name="person_center_baby_info_birth">宝宝生日</string>
+
+    <!--eating fragment-->
+    <string name="eating_title">今日饮食计划</string>
+    <string name="eating_time_title">距离下次喂养时间</string>
+    <string name="eating_time_eating_title">当前为宝宝喂养时段</string>
+    <string name="eating_time_end_title">宝宝当天喂养已结束</string>
+    <string name="eating_plan_doc">今日计划表</string>
+    <string name="eating_plan_eating_start">今天已喂养提醒</string>
+    <string name="eating_plan_eating_middle">次，还剩余喂养</string>
+    <string name="eating_plan_eating_end">次</string>
+
+    <!-- alarm setting-->
+    <string name="alarm_eating_milk">小兜提醒 宝宝该饮奶</string>
+    <string name="alarm_eating_food">小兜提醒 宝宝该喂食</string>
+    <string name="eating_pop_title">修改喂养计划表</string>
+
+    <!--eating_plan_custom-->
+    <string name="eating_plan_custom_title">自定义用户表</string>
+    <string name="eating_plan_custom_item_type_milk">饮奶</string>
+    <string name="eating_plan_custom_item_type_food">辅食</string>
+    <string name="eating_custom_fix_pick_time">选择时间:</string>
+    <string name="eating_custom_fix_type">选择类型:</string>
+    <string name="eating_custom_fix_milk">饮奶</string>
+    <string name="eating_custom_fix_choose_food">请选择你需要的辅食(点击此处)</string>
+    <string name="eating_custom_fix_choose_result_food_doc">已选择：辅食</string>
+    <string name="eating_custom_fix_choose_result_milk_doc">已选择：饮奶</string>
+
+
 </resources>

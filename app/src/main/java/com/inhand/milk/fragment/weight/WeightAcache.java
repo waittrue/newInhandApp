@@ -1,7 +1,6 @@
 package com.inhand.milk.fragment.weight;
 
 import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.inhand.milk.App;
 import com.inhand.milk.dao.BabyDao;
@@ -20,14 +19,34 @@ import java.util.Map;
 public class WeightAcache {
     private static final String TAG = "weightAache";
     private static final String WeightKey = "weightkey", LastAddTime = "LastAddTime";
-    private Weight currentWeight;
-    private Date lastWeightTime;
-    private Map<Integer, Map<Integer, Float>> monthToweights = new HashMap<>();
-
-    public WeightAcache() {
+    private  Weight currentWeight;
+    private  Date lastWeightTime,achachLastTime;
+    private  Map<Integer, Map<Integer, Float>> monthToweights = new HashMap<>();
+    private static WeightAcache instance;
+    private  WeightAcache() {
         initData();
     }
-
+    private static synchronized void initInstance(){
+        if(instance == null)
+            instance = new WeightAcache();
+    }
+    public static  WeightAcache getInstance(){
+        if(instance == null){
+            initInstance();
+        }
+        return instance;
+    }
+    public boolean isUpdate(){
+        if(achachLastTime == null && lastWeightTime !=null)
+            return true;
+        if(achachLastTime == null && lastWeightTime == null)
+            return false;
+        if(achachLastTime != null && lastWeightTime == null)
+            return false;
+        if ( lastWeightTime.compareTo(achachLastTime) == 0)
+            return false;
+        return true;
+    }
     public void fresh() {
         ACache cache = ACache.get(App.getAppContext());
         List<Weight> list;
@@ -35,8 +54,10 @@ public class WeightAcache {
         if (list == null)
             return;
         weights2Array(list);
+        achachLastTime = lastWeightTime;
         lastWeightTime = currentWeight.getCreatedAt();
-
+        Log.i(TAG+"lasttime",achachLastTime.toString());
+        Log.i(TAG+"current",lastWeightTime.toString());
         String save = JSON.toJSONString(list);
         cache.put(WeightKey, save);
         String t = JSON.toJSONString(lastWeightTime);
@@ -68,6 +89,7 @@ public class WeightAcache {
     }
 
     private void initData() {
+
         ACache cache = ACache.get(App.getAppContext());
         String json = cache.getAsString(WeightKey);
         String time = cache.getAsString(LastAddTime);
@@ -78,6 +100,7 @@ public class WeightAcache {
             list = JSON.parseArray(json, Weight.class);
             if (list == null)
                 return;
+            achachLastTime = lastWeightTime;
             lastWeightTime = JSON.parseObject(time, Date.class);
             weights2Array(list);
         }

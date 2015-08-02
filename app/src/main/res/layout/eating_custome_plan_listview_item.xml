@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/eating_custom_plan_item_height">
+
+        <CheckBox
+            android:layout_width="@dimen/eating_custom_plan_item_checkbox_height_width"
+            android:layout_height="@dimen/eating_custom_plan_item_checkbox_height_width"
+            android:id="@+id/eating_custome_plan_check_box"
+            android:layout_marginLeft="@dimen/eating_custom_plan_item_checkbox_margin_left"
+            android:layout_centerVertical="true"
+            android:shadowColor="#ffff00"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Textt"
+            android:layout_marginRight="@dimen/eating_custom_plan_item_text_margin_arrow"
+            android:id="@+id/eating_custome_plan_item_time"
+            android:layout_toLeftOf="@+id/imageView27"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/eating_custom_plan_item_time_text_size"
+            android:textColor="@color/eating_custom_plan_item_time_text_color" />
+
+        <ImageView
+            android:layout_width="@dimen/eating_custom_plan_item_arrow_height_width"
+            android:layout_height="@dimen/eating_custom_plan_item_arrow_height_width"
+            android:id="@+id/imageView27"
+            android:src="@drawable/arrow_icon"
+            android:layout_marginRight="@dimen/eating_custom_plan_item_arrow_margin_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:layout_width="@dimen/eating_custom_plan_item_icon_width_height"
+            android:layout_height="@dimen/eating_custom_plan_item_icon_width_height"
+            android:id="@+id/eating_custome_plan_item_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/eating_custom_plan_item_icon_margin_left"
+            android:src="@drawable/eating_feed_food_ico" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/eating_custom_plan_item_type"
+            android:layout_marginLeft="@dimen/eating_custom_plan_item_type_text_margin_parent_left"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/eating_custom_plan_item_type_text_color"
+            android:textSize="@dimen/eating_plan_custom_item_type_text_size" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/common_settings_item_line_smaller_height"
+            android:id="@+id/imageView29"
+            android:layout_alignParentBottom="true"
+            android:background="@color/common_settings_item_line_color"
+            android:layout_marginLeft="@dimen/eating_custom_plan_item_type_text_margin_parent_left" />
+    </RelativeLayout>
+</LinearLayout>

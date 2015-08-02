@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.inhand.milk.R;
+import com.inhand.milk.fragment.Eating.EatingFragment;
 import com.inhand.milk.fragment.health.HealthFragment;
 import com.inhand.milk.fragment.home.HomeFragment;
 import com.inhand.milk.fragment.milk_amount.MilkAmountFragment;
@@ -31,6 +32,7 @@ public class FooterNavigation extends Fragment {
     private PersonCenterFragment personCenterFragment;
     private FooterButtonsManager buttonsManager;
     private FragmentManager fragmentManager;
+    private EatingFragment eatingFragment;
     private static final int pressed = 1, unpressed = 2;
     private Map<ImageButton, Map<Integer, Integer>> src = new HashMap<>();
 
@@ -63,6 +65,7 @@ public class FooterNavigation extends Fragment {
                 weight = new WeightFragment();
                 health = new HealthFragment();
                 personCenterFragment = new PersonCenterFragment();
+                eatingFragment = new EatingFragment();
 
                 RelativeLayout button;
                 ImageButton imageButton;
@@ -85,7 +88,8 @@ public class FooterNavigation extends Fragment {
                 button.setTag(imageButton);
                 initMap(button, R.drawable.footer_eating_ico, R.drawable.footer_eating_cur_ico);
                 button.setOnTouchListener(onTouchListener);
-                buttonsManager.addButtons(button, health);
+                //buttonsManager.addButtons(button, health);
+                buttonsManager.addButtons(button,eatingFragment);
 
                 button = (RelativeLayout) view.findViewById(R.id.buttons_person_center);
                 imageButton = (ImageButton) view.findViewById(R.id.buttons_person_center_button);
@@ -121,9 +125,7 @@ public class FooterNavigation extends Fragment {
                 ImageButton imageButton = (ImageButton) v.getTag();
                 for (ImageButton temp : src.keySet()) {
                     Map<Integer, Integer> map = src.get(temp);
-                    Log.i("footernavigation", temp.toString());
                     if (temp.equals(imageButton)) {
-                        Log.i("footernavigation == ", temp.toString());
                         temp.setImageDrawable(getResources().getDrawable(map.get(pressed)));
                     } else
                         temp.setImageDrawable(getResources().getDrawable(map.get(unpressed)));

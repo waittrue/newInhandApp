@@ -49,34 +49,52 @@ public class WeightFragment extends TitleFragment {
     private Weight currentWeight;
     private Date lastWeightTime;
     private int birthDay;
+    private WeightTab weightTab;
     private WeightAcache weightAcache;
+    private TextView leftUp,rightUp;
 
     public WeightFragment() {
         initData();
     }
 
-    private void initData() {
+    private boolean initData() {
         baby = App.getCurrentBaby();
-        weightAcache = new WeightAcache();
+        weightAcache = WeightAcache.getInstance();
+        boolean update = weightAcache.isUpdate();
+        if(update == false)
+            return false;
         currentWeight = weightAcache.getCurrentWeight();
         lastWeightTime = weightAcache.getLastWeightTime();
         monthToweights = weightAcache.getMonthToweights();
         initCurrentStander();
+        return update;
     }
 
     @Override
     public void refresh() {
         Log.i(TAG, "refresh");
-        initData();
+        if( initData() == false) {
+            Log.i(TAG, "update == false");
+            return;
+        }
+        Log.i(TAG, "update == true");
+        int months = getMonths();
+        weightTab.setTabNum(months + 1);
+        lastPositon = months;
+        weightTab.initTabs();
+
         initWeightTab(mView);
-        initWeightExcle(mView);
+        monthToWeightExcle(weightExcle,lastPositon);
+        weightExcle.invalidate();
+
         initRelativeContent(mView);
+        updateRelativetexts();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i(TAG, "oncreateView");
+       // Log.i(TAG, "oncreateView");
         mView = inflater.inflate(R.layout.fragment_weight, container, false);
         initViews(mView);
         return mView;
@@ -96,7 +114,6 @@ public class WeightFragment extends TitleFragment {
         adder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "click");
                 inAnimation();
             }
         });
@@ -135,9 +152,16 @@ public class WeightFragment extends TitleFragment {
         String time = simpleDateFormat.format(lastWeightTime);
         return str + time;
     }
+    private void updateRelativetexts(){
+        String upString = decimalFormat.format(getCurrentWeight());
+        leftUp.setText(upString);
+        rightUp.setText( getCurrentStander());
+        initBottomTextView(mView);
+        ringWithText.setTexts(getRingWithTextStrings());
 
+    }
     private void initRelativeLeftTexts(RelativeLayout relativeLayout) {
-        TextView leftUp = new TextView(getActivity());
+        leftUp = new TextView(getActivity());
         TextView leftDown = new TextView(getActivity());
         String upString = decimalFormat.format(getCurrentWeight());
         String downString = getResources().getString(R.string.weight_left_down_text);
@@ -180,7 +204,7 @@ public class WeightFragment extends TitleFragment {
     }
 
     private void initRelativeRightTexts(RelativeLayout relativeLayout) {
-        TextView rightUp = new TextView(getActivity());
+        rightUp = new TextView(getActivity());
         TextView rightDown = new TextView(getActivity());
         String upString = getCurrentStander();
         String downString = getResources().getString(R.string.weight_right_down_text);
@@ -230,7 +254,7 @@ public class WeightFragment extends TitleFragment {
 
     private void initCurrentStander() {
         Date date = lastWeightTime;
-        Log.i(TAG, "currentdate:" + String.valueOf(date));
+        //Log.i(TAG, "currentdate:" + String.valueOf(date));
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int day1 = calendar.get(Calendar.DAY_OF_MONTH);
@@ -329,7 +353,6 @@ public class WeightFragment extends TitleFragment {
 
     private void addPoints(WeightExcle weightExcle, int posiont) {
         weightExcle.clearPoints();
-        Log.i(TAG, String.valueOf(posiont));
         Map<Integer, Float> weights = monthToweights.get(posiont);
         for (Integer key : weights.keySet()) {
             float weight = weights.get(key);
@@ -344,7 +367,7 @@ public class WeightFragment extends TitleFragment {
     }
 
     private void initWeightTab(View view) {
-        WeightTab weightTab = (WeightTab) view.findViewById(R.id.weight_tabs);
+        weightTab = (WeightTab) view.findViewById(R.id.weight_tabs);
         int months = getMonths();
         weightTab.setTabNum(months + 1);
         lastPositon = months;
@@ -354,7 +377,6 @@ public class WeightFragment extends TitleFragment {
             public void stopLisetner(int position) {
                 if (lastPositon == position)
                     return;
-                Log.i(TAG, "position" + String.valueOf(position));
                 lastPositon = position;
                 monthToWeightExcle(weightExcle, position);
                 weightExcle.invalidate();
@@ -369,12 +391,10 @@ public class WeightFragment extends TitleFragment {
 
     private int getMonths(Date today) {
         String birth = baby.getBirthday();
-        Log.i(TAG, "birth :" + birth);
         int months = 0;
         if (birth == null)
             return months;
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy年MM月dd日");
-        Log.i(TAG, "today:" + dateFormat1.format(today));
         Date date;
         try {
             date = dateFormat1.parse(birth);
@@ -382,7 +402,6 @@ public class WeightFragment extends TitleFragment {
             return 0;
         }
         int mun = calcuteDiffMonth(date, today);
-        Log.i(TAG, "num:" + String.valueOf(mun));
         return mun;
     }
 
@@ -440,7 +459,6 @@ public class WeightFragment extends TitleFragment {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -position);
         int result = calendar.getActualMaximum(Calendar.DATE);
-        Log.i(TAG, String.valueOf(result) + " nums of month");
         return result;
     }
     private void initLine(View view) {
