@@ -31,6 +31,7 @@ public class SupplementDao {
     public void findSuppsFromCloud(final int page
             , final int per, final FindCallback<Supplement> callback) {
         query.orderByAscending(FIND_SORT);
+        query.whereNotEqualTo("isDel", true);
         query.setSkip(page * per);
         query.findInBackground(callback);
     }
@@ -45,6 +46,7 @@ public class SupplementDao {
      */
     public List<Supplement> findSuppsFromCloud(final int page, final int per) {
         query.orderByAscending(FIND_SORT);
+        query.whereNotEqualTo("isDel", true);
         query.setSkip(page * per);
         try {
             return query.find();

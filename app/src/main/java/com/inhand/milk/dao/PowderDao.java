@@ -31,6 +31,7 @@ public class PowderDao {
                               final int per,
                               final FindCallback<Powder> callback) {
         query.orderByAscending(Powder.PINYIN_NAME_KEY);
+        query.whereNotEqualTo("isDel", true);
         query.setSkip(page * per);
         query.findInBackground(callback);
 
@@ -45,6 +46,7 @@ public class PowderDao {
      */
     public List<Powder> findFromCloud(final int page, final int per) {
         query.orderByAscending(Powder.PINYIN_NAME_KEY);
+        query.whereNotEqualTo("isDel", true);
         query.setSkip(page * per);
         try {
             return query.find();
