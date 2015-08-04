@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.media.Image;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,7 @@ public class EatingPopUpWindow {
 
     }
     public void show() {
+        mview.setVisibility(View.VISIBLE);
         popupWindow.showAtLocation(mview, Gravity.BOTTOM, 0, 0);
         setLeftImageViewAnimation();
         setRightImageViewAnimation();
@@ -127,7 +129,8 @@ public class EatingPopUpWindow {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mview.setVisibility(View.GONE);
+                 mview.setVisibility(View.GONE);
+                 //popupWindow.dismiss();
             }
 
             @Override
@@ -136,6 +139,16 @@ public class EatingPopUpWindow {
             }
         });
         content.startAnimation(animation);
+    }
+    public void dismissWithoutAnimation(){
+        Handler handler  = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                popupWindow.dismiss();
+            }
+        };
+       handler.postDelayed(runnable,300);
     }
 
 }

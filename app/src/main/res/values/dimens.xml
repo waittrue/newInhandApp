@@ -484,4 +484,5 @@
     <dimen name="eating_custom_fix_text_margin_left">15dp</dimen>
     <dimen name="eating_custom_fix_time_type_text_size">15dp</dimen>
     <dimen name="eating_custom_fix_choose_food_container_height">40dp</dimen>
+    <dimen name="eating_custom_fix_name_left_margin">10dp</dimen>
 </resources>

@@ -46,6 +46,7 @@ public class EatingFragment extends TitleFragment {
     private static final int COUNTING_TIME =1,EATING=2,ENDING=3;
     private int eatingTimeout = -1,endingTimeOut;
     public static String PlanTimeKey = "plantimekey",IsMilkKey = "ismilkkey";
+    private EatingPopUpWindow eatingPopUpWindow;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,20 +64,21 @@ public class EatingFragment extends TitleFragment {
     }
     private void initButtons(){
          RoundImageView custom = (RoundImageView)mView.findViewById(R.id.eating_plan_custom);
-        custom.setOnClickListener(new View.OnClickListener() {
+         eatingPopUpWindow = new EatingPopUpWindow(getActivity());
+         eatingPopUpWindow.setRightButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EatingPopUpWindow eatingPopUpWindow = new EatingPopUpWindow(getActivity());
-                eatingPopUpWindow.setRightButtonListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), EatingCustomPlanActivity.class);
-                        intent.putExtra(IsMilkKey,isMilk);
-                        intent.putExtra(PlanTimeKey,(Serializable)planTime);
-                        getActivity().startActivity(intent);
-                       // Log.i("eatingfragmnet","onclick");
-                    }
-                });
+                Intent intent = new Intent(getActivity(), EatingCustomPlanActivity.class);
+                intent.putExtra(IsMilkKey,isMilk);
+                intent.putExtra(PlanTimeKey,(Serializable)planTime);
+                getActivity().startActivity(intent);
+                eatingPopUpWindow.dismissWithoutAnimation();
+                // Log.i("eatingfragmnet","onclick");
+            }
+        });
+         custom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 eatingPopUpWindow.show();
             }
         });

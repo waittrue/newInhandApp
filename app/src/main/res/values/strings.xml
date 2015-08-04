@@ -264,6 +264,7 @@
     <string name="eating_custom_fix_pick_time">选择时间:</string>
     <string name="eating_custom_fix_type">选择类型:</string>
     <string name="eating_custom_fix_milk">饮奶</string>
+    <string name="eating_custom_fix_food">辅食</string>
     <string name="eating_custom_fix_choose_food">请选择你需要的辅食(点击此处)</string>
     <string name="eating_custom_fix_choose_result_food_doc">已选择：辅食</string>
     <string name="eating_custom_fix_choose_result_milk_doc">已选择：饮奶</string>

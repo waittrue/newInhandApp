@@ -15,6 +15,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -50,7 +51,13 @@ public class EatingCustomFragment extends TitleFragment {
     private boolean closeAnimationFirstEnd =false;
     private   List<Integer> seletedData;
     private float animationTranslate ;
-
+    private AdapterView.OnItemClickListener listViewListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent = new Intent(getActivity(),EatingCustomFixActivity.class);
+            getActivity().startActivity(intent);
+        }
+    };
 
     private View.OnClickListener deleteListener = new View.OnClickListener() {
         @Override
@@ -145,6 +152,7 @@ public class EatingCustomFragment extends TitleFragment {
         delectAdapter = new DelectAdapter(getActivity());
         delectAdapter.setData(data);
         listView.setAdapter(delectAdapter);
+        listView.setOnItemClickListener(listViewListener);
     }
     private String formatTime(int[] time){
         String hour,m,result="";

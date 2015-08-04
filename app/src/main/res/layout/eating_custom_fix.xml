@@ -113,7 +113,8 @@
                     android:text="@string/eating_custom_fix_milk"
                     android:id="@+id/eating_custom_fix_milk_textview"
                     android:layout_toRightOf="@+id/eating_custom_fix_milk_icon"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin" />
 
                 <CheckBox
                     android:layout_width="40dp"
@@ -124,7 +125,8 @@
                     android:clickable="false"
                     android:background="@drawable/eating_custom_checkbox_style"
                     android:layout_alignBottom="@+id/eating_custom_fix_milk_icon"
-                    android:layout_toRightOf="@+id/eating_custom_fix_milk_icon" />
+                    android:layout_toRightOf="@+id/eating_custom_fix_milk_icon"
+                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin" />
 
             </RelativeLayout>
         </RelativeLayout>
@@ -157,9 +159,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/eating_custom_fix_milk"
+                    android:text="@string/eating_custom_fix_food"
                     android:id="@+id/eating_custom_fix_food_textview"
-                    android:layout_toRightOf="@+id/eating_custom_fix_food_icon" />
+                    android:layout_toRightOf="@+id/eating_custom_fix_food_icon"
+                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin" />
 
                 <CheckBox
                     android:layout_width="40dp"
@@ -168,7 +171,8 @@
                     android:button="@null"
                     android:background="@drawable/eating_custom_checkbox_style"
                     android:layout_toRightOf="@+id/eating_custom_fix_food_icon"
-                    android:layout_alignBottom="@+id/eating_custom_fix_food_icon"/>
+                    android:layout_alignBottom="@+id/eating_custom_fix_food_icon"
+                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
