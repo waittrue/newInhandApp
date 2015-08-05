@@ -185,6 +185,6 @@ public class ChooseWeight extends FirstLaunchFragment {
      */
     private void save() {
         Float weight = Float.valueOf(num.getText().toString());
-        //baby.setWeight(weight);
+        babyInfo.setWeight(weight);
     }
 }

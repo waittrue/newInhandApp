@@ -179,7 +179,7 @@ public class ChooseHeight extends FirstLaunchFragment {
 
     private void save() {
         Float height = Float.valueOf(num.getText().toString());
-        babyInfo.setHeadSize(height);
+        babyInfo.setHeight(height);
     }
 
 }
