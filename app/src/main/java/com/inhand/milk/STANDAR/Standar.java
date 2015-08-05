@@ -29,8 +29,8 @@ public class Standar {
     final static float TIMESCORE = 10, TEMPREATUREHIGH = 40, TEMPREATURELOW = 37, STANDARTIME = 30;
     public static DecimalFormat TeamperatureFormat = new DecimalFormat("##.#");
     public static DecimalFormat AmountFormat = new DecimalFormat("###");
-    public static SimpleDateFormat OneDayDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    public static SimpleDateFormat RecordDateFormat = new SimpleDateFormat("HH:mm");
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     public static float getRecord(float advise, float amount, float temperatureHigh, float temperatureLow, float time) {
         float ratio, sum = 0;
@@ -58,8 +58,8 @@ public class Standar {
     }
 
     public static boolean needUpdate(String lastRecordTime) {
-        OneDayDao oneDayDao = new OneDayDao(App.getAppContext());
-        List<OneDay> oneDays = oneDayDao.findAllFromDB(1);
+        OneDayDao oneDayDao = new OneDayDao();
+        List<OneDay> oneDays = oneDayDao.findFromDB(App.getAppContext(),1);
         if (oneDays == null)
             return true;
         OneDay oneDay = oneDays.get(0);

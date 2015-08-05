@@ -11,14 +11,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.inhand.milk.App;
 import com.inhand.milk.R;
-import com.inhand.milk.dao.BaseDao;
 import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.fragment.temperature_amount.details_once.DetailsOnceFragment;
 import com.inhand.milk.helper.DateHelper;
+import com.inhand.milk.utils.LocalFindTask;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class DetailsFragment  extends TitleFragment{
         final float highTemp=38;
         final float lowTemp=20;
         final float lowMikeVolume=100;
-        OneDayDao oneDayDao=new OneDayDao(getActivity());
+        OneDayDao oneDayDao=new OneDayDao();
         Date dt=new Date();
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdfShow=new SimpleDateFormat("MM月dd日");
@@ -95,7 +96,7 @@ public class DetailsFragment  extends TitleFragment{
             String preday=sdf.format(date);
             //Log.d("preday",preday);
             final String title=sdfShow.format(date);
-            oneDayDao.findOneDayFromDB(preday, new BaseDao.DBFindCallback<OneDay>() {
+            oneDayDao.findOneFromDB(App.getAppContext(),preday, new LocalFindTask.LocalFindCallback<OneDay>() {
                 @Override
                 public void done(List<OneDay> oneDays) {
                     String amount,time;

@@ -2,7 +2,6 @@ package com.inhand.milk.fragment.weight;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
+import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Baby;
-import com.inhand.milk.entity.Weight;
+import com.inhand.milk.entity.BabyInfo;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.firstlanunch.Ruler;
 
@@ -40,13 +38,13 @@ public class AdderWindow extends Activity {
     private TextView numTextView;
     private int space;
     private ObservableHorizonScrollView scrollView;
-    private Weight weight;
+    private WeightHelper weightHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_weight_ruler);
+        weightHelper = WeightHelper.getInstance();
         initOuter();
-
         WindowManager.LayoutParams p = getWindow().getAttributes();  //获取对话框当前的参数值
         p.height = (App.getWindowHeight(this));
         p.width = (App.getWindowWidth(this));
@@ -61,11 +59,9 @@ public class AdderWindow extends Activity {
     protected void onResume() {
         super.onResume();
         int height = App.getWindowHeight(this);
-
         Animation animation = new TranslateAnimation(0, 0, height / 2, 0);
         animation.setDuration(AnimationDuration);
         rulerContainer.startAnimation(animation);
-
     }
 
     private void hidden() {
@@ -97,95 +93,26 @@ public class AdderWindow extends Activity {
         okIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                outAnimation();
-                weight = new Weight();
-                weight.setMoonAge(getMonthDay());
                 float num;
                 try {
                     num = Float.parseFloat(numTextView.getText().toString());
                 } catch (Exception e) {
                     return;
                 }
-                weight.setWeight(num);
-                weight.save(new SaveCallback() {
-                    @Override
-                    public void done(AVException e) {
-                        if (e != null)
-                            return;
-                        Baby baby = App.getCurrentBaby();
-                        baby.addWeight(weight);
-                        baby.save(new SaveCallback() {
-                            @Override
-                            public void done(AVException e) {
-                                if (e != null) {
-                                    Log.i("AdderWindow", "save failed");
-                                    return;
-                                }
-                                Log.i("AdderWindow", "save success");
-                                WeightAcache.getInstance().syncNoFresh();
-                            }
-                        });
-                    }
-                });
-
-                /*
-                baby.saveInCache(App.getAppContext(), new Base.CacheSavingCallback() {
-                    @Override
-                    public void done() {
-                        Log.i(TAG,"baby save success");
-                    }
-                });
-                */
+                BabyInfo babyInfo = new BabyInfo();
+                babyInfo.setBaby(App.getCurrentBaby());
+                babyInfo.setWeight(num);
+                String date = Standar.dateFormat.format(new Date());
+                babyInfo.setAge(date);
+                weightHelper.saveOneWeight(babyInfo);
             }
+
         });
         numTextView = (TextView) findViewById(R.id.weight_fragment_adder_num_text);
         initRuler();
 
     }
 
-    private int getMonthDay() {
-        Baby baby = App.getCurrentBaby();
-        int months = getMonths(baby.getBirthday());
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        return WeightMonth.createbabyMonth(months, day);
-    }
-
-    private int getMonths(String birth) {
-
-        int months = 0;
-        if (birth == null)
-            return months;
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy年mm月dd日");
-        Date date;
-        try {
-            date = dateFormat1.parse(birth);
-        } catch (ParseException e) {
-            return 0;
-        }
-        Date today = new Date();
-        Calendar birthCalendar = Calendar.getInstance();
-        birthCalendar.setTime(date);
-        Calendar todayCalendr = Calendar.getInstance();
-        todayCalendr.setTime(date);
-
-        int year1 = birthCalendar.get(Calendar.YEAR);
-        int year2 = todayCalendr.get(Calendar.YEAR);
-        int month1 = birthCalendar.get(Calendar.MONTH);
-        int month2 = todayCalendr.get(Calendar.MONTH);
-        int month = 0;
-        if (month2 >= month1)
-            month = month2 - month1;
-        else if (month2 < month1) {
-            month = 12 + month2 - month1;
-            year2--;
-        }
-        if (year2 < year1)
-            return 0;
-        month = 12 * (year2 - year1) + month;
-        return month;
-
-    }
     private void initRuler() {
         space = App.getWindowWidth(this) / 30;
         int height = App.getWindowHeight(this) - App.getStatusHeight(this);

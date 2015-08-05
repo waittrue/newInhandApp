@@ -3,11 +3,13 @@ package com.inhand.milk.fragment.bluetooth;
 import android.util.Log;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Base;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
+import com.inhand.milk.utils.LocalSaveTask;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,7 +63,7 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
         setRecordTime(record, continuTime, interval, oneDay);
 
         advice = getDataValue(buf, 21);
-        record.setAdviceVolumn((int) advice);
+        record.setAdviceVolumne((int) advice);
 
         score = Standar.getRecord(advice, amount, startT, endT, continuTime);
         record.setScore((int) score);
@@ -69,19 +71,19 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
         records.add(record);
         printRecord(record);
         oneDay.setRecords(records);
-        oneDay.saveInDB(App.getAppContext(), new Base.DBSavingCallback() {
+
+        oneDay.saveInCloud(new SaveCallback() {
             @Override
-            public void done() {
-                Log.i("record recive save", "ok");
+            public void done(AVException e) {
+
             }
         });
-        try {
-            oneDay.save();
-        } catch (AVException e) {
-            Log.i("record recive save in cloud", "ok");
-            e.printStackTrace();
-        }
+        oneDay.saveInDB(App.getAppContext(), new LocalSaveTask.LocalSaveCallback() {
+            @Override
+            public void done() {
 
+            }
+        });
         return true;
     }
 
@@ -89,7 +91,7 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, -(int) interva);
         calendar.add(Calendar.MINUTE, -(int) continuTime);
-        record.setBeginTime(Standar.RecordDateFormat.format(calendar.getTime()));
+        record.setBeginTime(Standar.timeFormat.format(calendar.getTime()));
         oneDay.setDate(calendar.getTime());
     }
 
@@ -119,7 +121,7 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
         str += "开始温度:" + String.valueOf(record.getBeginTemperature()) + "\n";
         str += "结束温度：" + String.valueOf(record.getEndTemperature()) + "\n";
         str += "饮奶量" + String.valueOf(record.getVolume()) + "\n";
-        str += "建议量" + String.valueOf(record.getAdviceVolumn()) + "\n";
+        str += "建议量" + String.valueOf(record.getAdviceVolume()) + "\n";
         str += "持续时间" + String.valueOf(record.getDuration()) + "\n";
         str += "分数" + String.valueOf(record.getScore()) + "\n";
         Log.i(TAG, str);

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.alibaba.fastjson.JSON;
@@ -48,7 +49,9 @@ public class App extends Application {
     public void initCurrentBaby() {
         if (currentBaby == null) {
             ACache aCache = ACache.get(this);
-            String json = aCache.getAsString(BABY_CACHE_KEY);
+            String json = aCache.getAsString(Baby.CACHE_KEY);
+            if(json == null)
+                return;
             currentBaby = JSON.parseObject(json, Baby.class);
         }
     }
@@ -135,5 +138,15 @@ public class App extends Application {
         activity.getWindowManager().getDefaultDisplay().getMetrics(metric);
         return metric.heightPixels;  // 屏幕宽度（像素）
 
+    }
+
+    /**
+     * 登出方法,会清除保存的宝宝信息
+     */
+    public static void logOut() {
+        ACache aCache = ACache.get(getAppContext());
+        // 清除所有缓存
+        aCache.clear();
+        AVUser.logOut();
     }
 }

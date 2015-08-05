@@ -16,7 +16,6 @@ public class BluetoothData {
     private BluetoothData(){
         this.buf = new byte[MAXLEN];
         this.location =  0;
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:MM");
     }
     private static synchronized  void init(){
         if(bluetoothData == null)

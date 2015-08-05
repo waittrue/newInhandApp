@@ -18,13 +18,13 @@ import android.widget.TextView;
 
 import com.inhand.milk.App;
 import com.inhand.milk.R;
+import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Baby;
-import com.inhand.milk.entity.Weight;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.ui.RingWithText;
+import com.inhand.milk.utils.Calculator;
 
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,28 +46,29 @@ public class WeightFragment extends TitleFragment {
     private static final String TAG = "weightFragment";
     private static WeightStanderPares weightStanderPares = WeightStanderPares.getInstance();
     private float currentStanderMin = 0, currentStanderMax;
-    private Weight currentWeight;
-    private Date lastWeightTime;
-    private int birthDay;
+    private Date lastWeightTime = null;
     private WeightTab weightTab;
-    private WeightAcache weightAcache;
+    private WeightHelper weightHelper;
     private TextView leftUp,rightUp;
 
     public WeightFragment() {
         initData();
     }
 
-    private boolean initData() {
-        baby = App.getCurrentBaby();
-        weightAcache = WeightAcache.getInstance();
-        boolean update = weightAcache.isUpdate();
-        if(update == false)
-            return false;
-        currentWeight = weightAcache.getCurrentWeight();
-        lastWeightTime = weightAcache.getLastWeightTime();
-        monthToweights = weightAcache.getMonthToweights();
-        initCurrentStander();
-        return update;
+    /**
+     * 初始化一些基本数据
+     */
+    private boolean  initData() {
+        if(lastWeightTime == null){
+            baby = App.getCurrentBaby();
+            weightHelper = weightHelper.getInstance();
+            initCurrentStander();
+            return true;
+        }
+        else if(lastWeightTime.compareTo(weightHelper.getLastWeightDate()) == -1){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -78,7 +79,7 @@ public class WeightFragment extends TitleFragment {
             return;
         }
         Log.i(TAG, "update == true");
-        int months = getMonths();
+        int months = Calculator.getBabyMonthAge( weightHelper.getLastWeightDate());
         weightTab.setTabNum(months + 1);
         lastPositon = months;
         weightTab.initTabs();
@@ -100,6 +101,10 @@ public class WeightFragment extends TitleFragment {
         return mView;
     }
 
+    /**
+     * 初始化所有这个页面的view
+     * @param view 父view
+     */
     private void initViews(View view) {
         initWeightTab(view);
         initLine(view);
@@ -153,7 +158,7 @@ public class WeightFragment extends TitleFragment {
         return str + time;
     }
     private void updateRelativetexts(){
-        String upString = decimalFormat.format(getCurrentWeight());
+        String upString = decimalFormat.format(weightHelper.getCurrentWeight());
         leftUp.setText(upString);
         rightUp.setText( getCurrentStander());
         initBottomTextView(mView);
@@ -163,7 +168,7 @@ public class WeightFragment extends TitleFragment {
     private void initRelativeLeftTexts(RelativeLayout relativeLayout) {
         leftUp = new TextView(getActivity());
         TextView leftDown = new TextView(getActivity());
-        String upString = decimalFormat.format(getCurrentWeight());
+        String upString = decimalFormat.format(weightHelper.getCurrentWeight());
         String downString = getResources().getString(R.string.weight_left_down_text);
 
         float upLeftMargin, downLeftMargin, upTopMargin, downTopMargin;
@@ -248,27 +253,25 @@ public class WeightFragment extends TitleFragment {
         relativeLayout.addView(rightDown, downLp);
     }
 
-    private float getCurrentWeight() {
-        return currentWeight.getWeight();
-    }
 
+    /**
+     * 本地文件哪里读取基本的标准的体重，并设置。
+     */
     private void initCurrentStander() {
-        Date date = lastWeightTime;
-        //Log.i(TAG, "currentdate:" + String.valueOf(date));
+        Date date = weightHelper.getLastWeightDate();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int day1 = calendar.get(Calendar.DAY_OF_MONTH);
         String birth = baby.getBirthday();
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy年MM月dd日");
         Date birthdate;
         try {
-            birthdate = dateFormat1.parse(birth);
+            birthdate = Standar.dateFormat.parse(birth);
         } catch (Exception e) {
             return;
         }
         calendar.setTime(birthdate);
         int day2 = calendar.get(Calendar.DAY_OF_MONTH);
-        int months = getMonths(date);
+        int months = Calculator.getBabyMonthAge(date);
         int diffDay;
         diffDay = day1 - day2;
         if (day2 > day1) {
@@ -335,7 +338,7 @@ public class WeightFragment extends TitleFragment {
     private String[] getRingWithTextStrings() {
         String[] result = new String[2];
         result[0] = getResources().getString(R.string.weight_ring_text_up);
-        float weight = currentWeight.getWeight();
+        float weight = weightHelper.getCurrentWeight();
         if (weight < currentStanderMin) {
             result[1] = getResources().getStringArray(R.array.weight_ring_text_status)[0];
         } else if (weight > currentStanderMax) {
@@ -351,24 +354,21 @@ public class WeightFragment extends TitleFragment {
         monthToWeightExcle(weightExcle, lastPositon);
     }
 
-    private void addPoints(WeightExcle weightExcle, int posiont) {
+    private void addPoints(WeightExcle weightExcle, int position) {
         weightExcle.clearPoints();
-        Map<Integer, Float> weights = monthToweights.get(posiont);
-        for (Integer key : weights.keySet()) {
-            float weight = weights.get(key);
-            Log.i(TAG + String.valueOf(key), String.valueOf(weight));
-            key = key - birthDay;
-            if (key < 0)
-                key = getMonthDays(posiont) + key + 1;
-            else
-                key = key + 1;
-            weightExcle.addPoint(key, weight);
+        Map<Integer, Float>  date = weightHelper.getWeights(position);
+        for(int key:date.keySet()){
+            weightExcle.addPoint(key,date.get(key));
         }
     }
 
+    /**
+     * 初始化上面那个滑动条
+     * @param view 用来查找id的父view
+     */
     private void initWeightTab(View view) {
         weightTab = (WeightTab) view.findViewById(R.id.weight_tabs);
-        int months = getMonths();
+        int months = Calculator.getBabyMonthAge(new Date());
         weightTab.setTabNum(months + 1);
         lastPositon = months;
         weightTab.initTabs();
@@ -384,63 +384,10 @@ public class WeightFragment extends TitleFragment {
         });
     }
 
-    private int getMonths() {
-        Date today = new Date();
-        return getMonths(today);
-    }
 
-    private int getMonths(Date today) {
-        String birth = baby.getBirthday();
-        int months = 0;
-        if (birth == null)
-            return months;
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy年MM月dd日");
-        Date date;
-        try {
-            date = dateFormat1.parse(birth);
-        } catch (ParseException e) {
-            return 0;
-        }
-        int mun = calcuteDiffMonth(date, today);
-        return mun;
-    }
 
-    private int calcuteDiffMonth(Date start, Date end) {
-        Calendar birthCalendar = Calendar.getInstance();
-        birthCalendar.setTime(start);
-        Calendar todayCalendr = Calendar.getInstance();
-        todayCalendr.setTime(end);
 
-        int year1 = birthCalendar.get(Calendar.YEAR);
-        int year2 = todayCalendr.get(Calendar.YEAR);
-        int month1 = birthCalendar.get(Calendar.MONTH);
-        int month2 = todayCalendr.get(Calendar.MONTH);
-        int day1 = birthCalendar.get(Calendar.DAY_OF_MONTH);
-        birthDay = day1;
-        int day2 = todayCalendr.get(Calendar.DAY_OF_MONTH);
-        int month = 0;
-        if (day2 < day1) {
-            month2 = month2 - 1;
-            if (month2 < 0) {
-                month2 = 11;
-                year2 = year2--;
-            }
-        } else {
-            month = 1;
-        }
 
-        if (month2 >= month1)
-            month = month2 - month1;
-        else if (month2 < month1) {
-            month = 12 + month2 - month1;
-            year2--;
-        }
-        if (year2 < year1)
-            return 0;
-        month = 12 * (year2 - year1) + month;
-        return month;
-
-    }
     private void monthToWeightExcle(WeightExcle weightExcle, int position) {
         weightExcle.clearPoints();
         weightExcle.clearStander();
@@ -455,6 +402,11 @@ public class WeightFragment extends TitleFragment {
         weightExcle.setMonthDays(getMonthDays(position));
     }
 
+    /**
+     * 计算该月最大有多少天
+     * @param position 离今天又几个月
+     * @return 返回该月有多少天
+     */
     private int getMonthDays(int position) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -position);

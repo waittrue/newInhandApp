@@ -3,6 +3,7 @@ package com.inhand.milk.fragment.fisrt_lanunch;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.FirstLanunchActivity;
 import com.inhand.milk.entity.Baby;
+import com.inhand.milk.entity.BabyInfo;
 import com.inhand.milk.ui.firstlanunch.FirstLanunchBottom;
 
 import android.animation.ObjectAnimator;
@@ -20,6 +21,7 @@ public abstract class FirstLaunchFragment extends Fragment {
     protected FirstLanunchBottom lanunchBottom;
     protected Baby baby;
     protected float width;
+    protected BabyInfo babyInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,6 +33,7 @@ public abstract class FirstLaunchFragment extends Fragment {
 
         lanunchBottom = ((FirstLanunchActivity) this.getActivity()).getFirstLanunchBottom();
         baby = ((FirstLanunchActivity) this.getActivity()).getBaby();
+        babyInfo = ((FirstLanunchActivity) this.getActivity()).getBabyInfo();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

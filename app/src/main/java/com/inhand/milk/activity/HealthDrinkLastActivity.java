@@ -40,7 +40,7 @@ public class HealthDrinkLastActivity extends SubActivity {
             return;
         }
         if (record == null) {
-            List<OneDay> oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(1);
+            List<OneDay> oneDays = new OneDayDao().findFromDB(App.getAppContext(),1);
             if (oneDays == null || oneDays.size() == 0) {
                 fragment.setRecord(null);
             } else {

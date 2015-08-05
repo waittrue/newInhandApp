@@ -3,6 +3,7 @@ package com.inhand.milk.fragment.fisrt_lanunch;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,9 +18,10 @@ import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.SaveCallback;
+import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.MainActivity;
-import com.inhand.milk.entity.Base;
+import com.inhand.milk.utils.LocalSaveTask;
 
 public class ChooseMilk extends FirstLaunchFragment {
 
@@ -37,6 +39,7 @@ public class ChooseMilk extends FirstLaunchFragment {
         initView(view);
         setPre();
         setNext();
+        Log.i("babySaveinCache", "oncreateview");
         return view;
     }
 
@@ -49,8 +52,6 @@ public class ChooseMilk extends FirstLaunchFragment {
         float milkHeight = getResources().getDimension(R.dimen.first_lanunch_milk_icon_height);
         float height = getResources().getDimension(R.dimen.first_launch_milk_icons_container_height);
         float margin  = getResources().getDimension(R.dimen.first_lanunch_milk_icon_margin);
-        Toast.makeText(getActivity().getApplicationContext(),
-                String.valueOf(milkHeight)+" "+String.valueOf(milkWidth), 1000).show();
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams((int)milkWidth,
                 (int)milkHeight);
 
@@ -130,7 +131,6 @@ public class ChooseMilk extends FirstLaunchFragment {
             @Override
             public void onAnimationEnd(Animation animation) {
                 // TODO Auto-generated method stub
-                enterNextActivity();
                 save();
                 getActivity().finish();
             }
@@ -170,21 +170,38 @@ public class ChooseMilk extends FirstLaunchFragment {
     private void save(){
        // enterNextActivity();
 
-        baby.save(new SaveCallback() {
+        Log.i("babySaveinCache", "save");
+        babyInfo.setBaby(baby);
+        babyInfo.saveInCloud(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                if (e != null)
+                    return;
+                babyInfo.saveInCache(App.getAppContext(), new LocalSaveTask.LocalSaveCallback() {
+                    @Override
+                    public void done() {
+                        Log.i("babyInfo_save","success");
+                    }
+                });
+            }
+        });
+
+
+        baby.saveInCloud(new SaveCallback() {
             @Override
             public void done(AVException e) {
                 if (e != null) {
-                    Toast.makeText(getActivity(), "存入宝贝信息失败", Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(App.getAppContext(), "存入失败，可能没有网络，请检查", Toast.LENGTH_LONG).show();
+                    return;
                 }
-                else{
-                    baby.saveInCache(getActivity(), new Base.CacheSavingCallback() {
-                        @Override
-                        public void done() {
-                            enterNextActivity();
-                        }
-                    });
-                }
+                baby.saveInCache(App.getAppContext(), new LocalSaveTask.LocalSaveCallback() {
+                    @Override
+                    public void done() {
+                        Log.i("baby_save","success");
+                        enterNextActivity();
+                    }
+                });
+
             }
         });
 

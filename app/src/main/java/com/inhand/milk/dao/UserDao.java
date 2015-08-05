@@ -1,7 +1,5 @@
 package com.inhand.milk.dao;
 
-import android.content.Context;
-
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
@@ -17,14 +15,10 @@ import java.util.List;
  * Time: 10:00
  * Created by: Wooxxx
  */
-public class UserDao extends BaseDao {
-    private AVQuery<User> query;
+public class UserDao {
+    private AVQuery<User> query = AVQuery.getQuery(User.class);
 
 
-    public UserDao(Context ctx) {
-        super(ctx);
-        query = new AVQuery<>(User.CLASS_NAME);
-    }
 
     /**
      * 异步地根据用户名查找用户
@@ -32,7 +26,7 @@ public class UserDao extends BaseDao {
      * @param username 待查询用户名
      * @param callback 回调接口
      */
-    public void findUserByUsername(String username,
+    public void findByUsername(final String username,
                                           final FindCallback<User> callback) {
         query.whereEqualTo("username", username);
         query.findInBackground(callback);
@@ -44,7 +38,7 @@ public class UserDao extends BaseDao {
      * @param username 待查询用户名
      * @return callback 回调接口
      */
-    public List<User> findUserByUsername(String username) {
+    public List<User> findByUsername(final String username) {
         query.whereEqualTo("username", username);
         try {
             return query.find();

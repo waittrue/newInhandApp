@@ -11,9 +11,9 @@ import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.helper.JSONHelper;
+import com.inhand.milk.utils.LocalSaveTask;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -29,7 +29,7 @@ import java.util.List;
  * Time: 09:17
  */
 @AVClassName(OneDay.ONEDAY_CLASS)
-public class OneDay extends Base {
+public class OneDay extends Base implements DBSaving<OneDay> {
     //远程及云端表名都为此
     public static final String ONEDAY_CLASS = "Milk_OneDay";
     public static final String VOLUME_KEY = "volume";
@@ -103,12 +103,11 @@ public class OneDay extends Base {
     }
 
     /**
-     * 将数据存储至云端
+     * 异步地将数据存储至云端
      * 存储OneDay对象，若该“日”已存在，则为更新
-     * @param ctx   上下文环境
      * @param saveCallback 回调接口
      */
-    public void saveInCloud(Context ctx, final SaveCallback saveCallback) {
+    public void saveInCloud(final SaveCallback saveCallback) {
         final OneDay day = this;
         //更新版本表示
         String version = day.getVersion();
@@ -118,8 +117,8 @@ public class OneDay extends Base {
             version = sdf.format(new Date());
         }
         day.setVersion(version);
-        OneDayDao oneDayDao = new OneDayDao(ctx);
-        oneDayDao.findOneDayFromCloud(day.getDate(), new FindCallback<OneDay>() {
+        OneDayDao oneDayDao = new OneDayDao();
+        oneDayDao.findOneFromCloud(day.getDate(), new FindCallback<OneDay>() {
             @Override
             public void done(List<OneDay> oneDays, AVException e) {
                 //如果不存在，插入
@@ -140,13 +139,57 @@ public class OneDay extends Base {
     }
 
     /**
-     * 将数据存至数据库
-     *
-     * @param ctx      上下文环境
-     * @param callback 回调接口
+     * 同步地将数据存储至云端
+     * 存储OneDay对象，若该“日”已存在，则为更新
      */
+    public void saveInCloud() {
+        //更新版本表示
+        String version = this.getVersion();
+        if (version == null) {
+            //如果先前没有手动设置过version
+            SimpleDateFormat sdf = new SimpleDateFormat(VERSION_FORMAT);
+            version = sdf.format(new Date());
+        }
+        this.setVersion(version);
+        OneDayDao oneDayDao = new OneDayDao();
+        OneDay oneDay = oneDayDao.findOneFromCloud(this.getDate());
+        if (oneDay == null) {
+            this.setBaby(App.getCurrentBaby());
+            try {
+                this.save();
+            } catch (AVException e) {
+                e.printStackTrace();
+            }
+        } else {
+            oneDay.setRecords(this.getRecords());
+            oneDay.setVolume(this.getVolume());
+            oneDay.setScore(this.getScore());
+            oneDay.setVersion(this.getVersion());
+            try {
+                oneDay.save();
+            } catch (AVException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public void saveInDB(final Context ctx,
-                         final DBSavingCallback callback) {
+                         final LocalSaveTask.LocalSaveCallback callback) {
+
+        LocalSaveTask task = new LocalSaveTask(callback) {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                saveInDB(ctx);
+                return null;
+            }
+        };
+        task.execute();
+    }
+
+    @Override
+    public void saveInDB(final Context ctx) {
+        //先查询数据库中是否有此记录
         this.setBaby(App.getCurrentBaby());
         //更新版本表示
         String version = this.getVersion();
@@ -156,20 +199,8 @@ public class OneDay extends Base {
             version = sdf.format(new Date());
         }
         this.setVersion(version);
-        DBSavingTask task = new DBSavingTask(ctx, callback) {
-            @Override
-            protected Object doInBackground(Object[] params) {
-                //先查询数据库中是否有此记录
-                OneDayDao oneDayDao = new OneDayDao(ctx);
-                oneDayDao.updateOrSaveInDB(OneDay.this);
-                return null;
-            }
-        };
-        task.execute();
+        OneDayDao oneDayDao = new OneDayDao();
+        oneDayDao.updateOrSaveInDB(ctx, this);
     }
 
-    @Override
-    public String getTable() {
-        return ONEDAY_CLASS;
-    }
 }

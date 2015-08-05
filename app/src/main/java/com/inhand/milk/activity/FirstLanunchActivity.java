@@ -1,7 +1,9 @@
 package com.inhand.milk.activity;
 
 import com.inhand.milk.R;
+import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Baby;
+import com.inhand.milk.entity.BabyInfo;
 import com.inhand.milk.fragment.fisrt_lanunch.ChooseParentsFragment;
 import com.inhand.milk.ui.firstlanunch.FirstLanunchBottom;
 import com.inhand.milk.ui.firstlanunch.SmallDotsTab;
@@ -18,6 +20,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Date;
+
 public class FirstLanunchActivity extends BaseActivity {
 
     private final int num = 6;
@@ -25,12 +29,16 @@ public class FirstLanunchActivity extends BaseActivity {
     private SmallDotsTab smallDotsTab;
     private String extraInfo;
     private Baby baby;
+    private BabyInfo babyInfo;
 
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_lanunch);
         baby = new Baby();
+        babyInfo = new BabyInfo();
+        babyInfo.setAge(Standar.dateFormat.format(new Date()));
+
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         float width = dm.widthPixels;
@@ -81,6 +89,10 @@ public class FirstLanunchActivity extends BaseActivity {
 
     public Baby getBaby() {
         return this.baby;
+    }
+
+    public BabyInfo getBabyInfo() {
+        return babyInfo;
     }
 
     public void moveNextDots() {

@@ -67,7 +67,7 @@ public class ButtonA extends View {
         paint.setColor(textColor);
         paint.setTextSize(textSize);
         float textWidth = paint.measureText(text);
-        //хцндвжиооб╬сжп
+        // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫б╬О©╫О©╫О©╫
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float fontHeight = fontMetrics.bottom - fontMetrics.top;
         float textBaseY = height - (height - fontHeight)/2 - fontMetrics.bottom;

@@ -174,7 +174,7 @@ public class ChooseHead extends FirstLaunchFragment {
      */
     private void save() {
         float headsize = Float.valueOf(num.getText().toString());
-        baby.setHeadSize(headsize);
+        babyInfo.setHeadSize(headsize);
     }
 
 }

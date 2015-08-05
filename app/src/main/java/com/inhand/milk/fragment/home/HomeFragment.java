@@ -47,7 +47,7 @@ public class HomeFragment extends TitleFragment {
 
     private boolean initData() {
         if (lastTime == null || Standar.needUpdate(lastTime)) {
-            List<OneDay> oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(1);
+            List<OneDay> oneDays = new OneDayDao().findFromDB(App.getAppContext(),1);
             if (oneDays == null || oneDays.size() == 0) {
                 initNoDateVaribles();
                 return true;
@@ -71,7 +71,7 @@ public class HomeFragment extends TitleFragment {
         lastTString = Standar.TeamperatureFormat.format((record.getBeginTemperature() + record.getEndTemperature()) / 2)
                 + "°C";
         lastAmountString = String.valueOf(record.getVolume()) + "ml";
-        adviseAmountString = String.valueOf(record.getAdviceVolumn()) + "ml";
+        adviseAmountString = String.valueOf(record.getAdviceVolume()) + "ml";
         adviseTString = "35°C";
         score = record.getScore();
         Log.i("milkamount", String.valueOf(score));

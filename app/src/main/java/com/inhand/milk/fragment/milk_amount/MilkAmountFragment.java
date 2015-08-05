@@ -251,7 +251,7 @@ public class MilkAmountFragment extends TitleFragment {
 
     private void getDataFromDB(PinnerListViewAdapter adapter) {
         adapter.clearData();
-        oneDays = new OneDayDao(App.getAppContext()).findAllFromDB(dataLoadAmount);
+        oneDays = new OneDayDao().findFromDB(App.getAppContext(),dataLoadAmount);
         /*
         int days = oneDays.size();
         int len = Math.min(days, dataLoadAmount);
@@ -372,7 +372,7 @@ public class MilkAmountFragment extends TitleFragment {
 
         adviseAmount = 0;
         for (int i = 0; i < len; i++) {
-            adviseAmount += records.get(i).getAdviceVolumn();
+            adviseAmount += records.get(i).getAdviceVolume();
         }
         return Standar.AmountFormat.format(adviseAmount) + "ml";
     }

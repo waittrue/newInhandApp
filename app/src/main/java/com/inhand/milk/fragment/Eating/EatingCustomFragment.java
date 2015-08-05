@@ -106,7 +106,6 @@ public class EatingCustomFragment extends TitleFragment {
     private View.OnClickListener addListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //转到其他页面
             Intent intent = new Intent(getActivity(), EatingCustomFixActivity.class);
             getActivity().startActivity(intent);
         }
@@ -124,7 +123,7 @@ public class EatingCustomFragment extends TitleFragment {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
-                //提交数据
+
             }
         };
         initViews();
@@ -395,7 +394,7 @@ public class EatingCustomFragment extends TitleFragment {
             }
 
 
-            //如果是milk
+
             if((boolean)map.get(TYPE)){
                 icon.setImageDrawable(context.getResources().getDrawable(R.drawable.eating_feed_milk_ico));
                 typeTextView.setText(getResources().getString(R.string.eating_plan_custom_item_type_milk));

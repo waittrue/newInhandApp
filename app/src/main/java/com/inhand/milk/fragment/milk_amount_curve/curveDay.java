@@ -2,6 +2,7 @@ package com.inhand.milk.fragment.milk_amount_curve;
 
 import android.app.Activity;
 
+import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.dao.OneDayDao;
@@ -19,7 +20,7 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
     public curveDay(Activity activity, int width) {
         super(activity, width);
         Date dt = new Date();
-        today = Standar.OneDayDateFormat.format(dt);
+        today = Standar.dateFormat.format(dt);
     }
 
 
@@ -49,8 +50,8 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
         amountMax = Integer.MIN_VALUE;
         temperatureData.clear();
         volumeData.clear();
-        final OneDayDao oneDayDao = new OneDayDao(mActivty);
-        OneDay oneday = oneDayDao.findOneDayFromDB(today);
+        final OneDayDao oneDayDao = new OneDayDao();
+        OneDay oneday = oneDayDao.findOneFromDB(App.getAppContext(),today);
         if (oneday == null)
             return;
         List<float[]> maxTemperature = new ArrayList<>();

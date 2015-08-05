@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.activity.BluetoothPairedAcivity;
 import com.inhand.milk.dao.DeviceDao;
@@ -155,19 +156,16 @@ public class Bluetooth {
     public void setPaired(BluetoothDevice blueDevice) {
         bluetoothAdapter.cancelDiscovery();
         paired = blueDevice;
-        Device device = new Device();
+        final Device device = new Device();
         device.setMac(blueDevice.getAddress());
-        device.saveInDB(App.getAppContext(), new Base.DBSavingCallback() {
+        device.saveInCloud(new SaveCallback() {
             @Override
-            public void done() {
-                Log.i("blutooth", "device_save");
+            public void done(AVException e) {
+                if(e != null)
+                    return;
+                device.saveInCache(App.getAppContext());
             }
         });
-        try {
-            device.save();
-        } catch (AVException e) {
-            e.printStackTrace();
-        }
         Log.i("device_name", paired.getName());
         Log.i("device_addres", paired.getAddress());
     }
@@ -198,11 +196,13 @@ public class Bluetooth {
         return null;
     }
 
-    /*返回默认存储的蓝牙地址，当没有的时候返回null
-    * **/
+    /**
+     * 返回绑定的蓝牙的mac地址
+     * @return 蓝牙mac地址
+     */
     private String getDefaultMac() {
-        DeviceDao deviceDao = new DeviceDao(App.getAppContext());
-        Device device = deviceDao.findFromDBByCurrentUser();
+        DeviceDao deviceDao = new DeviceDao();
+        Device device = deviceDao.getFromCache(App.getAppContext());
         if (device == null)
             return null;
         Log.i("bluetooth_get_dev", device.getMac());

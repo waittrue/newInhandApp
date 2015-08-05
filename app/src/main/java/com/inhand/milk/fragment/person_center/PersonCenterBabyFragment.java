@@ -24,6 +24,7 @@ import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.fragment.user_info_settings.UserinfoNameFragment;
 import com.inhand.milk.ui.DefaultLoadingView;
 import com.inhand.milk.ui.PopupWindowSelected;
+import com.inhand.milk.utils.LocalSaveTask;
 
 import java.util.Calendar;
 import java.util.List;
@@ -55,7 +56,8 @@ public class PersonCenterBabyFragment extends TitleFragment {
         initCallBack = new DefaultLoadingView.LoadingCallback() {
             @Override
             public void doInBackground() {
-                List<Baby> babies = BabyDao.findBabiesByUser(App.getCurrentUser());
+                BabyDao babyDao = new BabyDao();
+                List<Baby> babies = babyDao.findByUserFromCloud(App.getCurrentUser());
                 if (babies == null) {
                     return;
                 }
@@ -180,8 +182,8 @@ public class PersonCenterBabyFragment extends TitleFragment {
                     baby.setSex(Baby.FEMALE);
                 }
                 try {
-                    baby.saveSync();
-                    baby.saveInCache(getActivity(), new Base.CacheSavingCallback() {
+                    baby.save();
+                    baby.saveInCache(getActivity(), new LocalSaveTask.LocalSaveCallback() {
                         @Override
                         public void done() {
 
@@ -260,8 +262,8 @@ public class PersonCenterBabyFragment extends TitleFragment {
                 String birth = babyBirthTextView.getText().toString();
                 baby.setBirthday(birth);
                 try {
-                    baby.saveSync();
-                    baby.saveInCache(getActivity(), new Base.CacheSavingCallback() {
+                    baby.save();
+                    baby.saveInCache(getActivity(), new LocalSaveTask.LocalSaveCallback() {
                         @Override
                         public void done() {
 
@@ -305,8 +307,8 @@ public class PersonCenterBabyFragment extends TitleFragment {
 
                 baby.setNickname(temp);
                 try {
-                    baby.saveSync();
-                    baby.saveInCache(getActivity(), new Base.CacheSavingCallback() {
+                    baby.save();
+                    baby.saveInCache(getActivity(), new LocalSaveTask.LocalSaveCallback(){
                         @Override
                         public void done() {
 

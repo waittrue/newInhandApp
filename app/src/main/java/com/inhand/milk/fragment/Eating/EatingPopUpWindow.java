@@ -95,7 +95,7 @@ public class EatingPopUpWindow {
     }
     private void setRightImageViewAnimation(){
         float width = App.getWindowWidth(context);
-        float ImageWidth = ((float)context.getResources().getDimensionPixelOffset(R.dimen.eating_pop_btn_width_height))/284*233 ;//这个比例是图片额比例
+        float ImageWidth = ((float)context.getResources().getDimensionPixelOffset(R.dimen.eating_pop_btn_width_height))/284*233 ;
         Animation first = new TranslateAnimation(width/2,-(width/2 - ImageWidth)/2,0,0);
         first.setDuration(200);
         final Animation second = new TranslateAnimation(-(width/2 - ImageWidth)/2,0,0,0);
