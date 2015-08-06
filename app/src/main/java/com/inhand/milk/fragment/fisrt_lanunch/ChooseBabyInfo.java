@@ -305,6 +305,14 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
 	private void saveDate(){
 		String birthday =  birthdayTextView.getText().toString();
 		String nickname = nameEdit.getText().toString();
+        String[] year = birthday.split("年");
+        String[] month = year[1].split("月");
+        String[] day = month[1].split("日");
+        if(month[0].length()<=1)
+            month[0] = "0"+month[0];
+        if(day[0].length()<=1)
+            day[0] = "0"+day[0];
+        birthday = year[0] +"-"+month[0]+"-"+day[0];
         int sex=selectSex;
         baby.setBirthday(birthday);
         baby.setNickname(nickname);

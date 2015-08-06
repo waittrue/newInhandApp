@@ -1,5 +1,7 @@
 package com.inhand.milk.utils;
 
+import android.util.Log;
+
 import com.inhand.milk.App;
 import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Record;
@@ -48,14 +50,15 @@ public class Calculator {
     /**
      * 计算宝宝的月龄
      * @param date  开始算的时间
-     * @return  宝宝的月龄，-1表示错误。
+     * @return  宝宝的月龄,当日期低于宝宝的生日时候，抛出异常
      */
     public static int getBabyMonthAge(Date date) throws InvalidParameterException{
             Calendar birthCalendar = Calendar.getInstance();
             String birth = App.getCurrentBaby().getBirthday();
+        Log.d("baby birth",birth);
         Date  birthDay = null;
         try {
-            birthDay = Standar.dateFormat.parse(birth);
+            birthDay = Standar.DATE_FORMAT.parse(birth);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -107,7 +110,7 @@ public class Calculator {
         String birth = App.getCurrentBaby().getBirthday();
         Date  birthDay = null;
         try {
-            birthDay = Standar.dateFormat.parse(birth);
+            birthDay = Standar.DATE_FORMAT.parse(birth);
         } catch (ParseException e) {
             e.printStackTrace();
             return -1;

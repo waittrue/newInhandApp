@@ -117,7 +117,7 @@ public class MilkAmountFragment extends TitleFragment {
                 }
                 Intent intent = new Intent(getActivity(), HealthDrinkLastActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Standar.LastDrinkIntentKey, result);
+                bundle.putSerializable(Standar.LASTDRINK_KEY, result);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
             }
@@ -135,14 +135,14 @@ public class MilkAmountFragment extends TitleFragment {
         ringWithText.setTextColor(getResources().getColor(R.color.milk_amount_ring_text_color));
         final String[] strings = new String[2];
         strings[0] = getResources().getString(R.string.milk_amount_advise_ring_up_doc);
-        strings[1] = String.valueOf(Standar.AmountFormat.format(drinkAmount / adviseAmount * 100)) + "%";
+        strings[1] = String.valueOf(Standar.AMOUNT_FORMAT.format(drinkAmount / adviseAmount * 100)) + "%";
         float[] sizes = {getResources().getDimension(R.dimen.milk_amount_advise_ring_text_up_size),
                 getResources().getDimension(R.dimen.milk_amount_advise_ring_text_down_size)};
         ringWithText.setTexts(strings, sizes);
         RingWithText.updateListener listener = new RingWithText.updateListener() {
             @Override
             public void updateSweepAngle(float sweepAngle) {
-                strings[1] = String.valueOf(Standar.AmountFormat.format(sweepAngle / 360 * 100)) + "%";
+                strings[1] = String.valueOf(Standar.AMOUNT_FORMAT.format(sweepAngle / 360 * 100)) + "%";
             }
         };
         ringWithText.setListener(listener);
@@ -287,8 +287,8 @@ public class MilkAmountFragment extends TitleFragment {
         amount = getOnceAmount(record);
         mTemperature = getOnceTemperature(record);
         map.put(CONTETN_TIME, record.getBeginTime());
-        map.put(CONTENT_TP, Standar.TeamperatureFormat.format(mTemperature[1]) + "°C");
-        map.put(CONTENT_AMOUNT, Standar.AmountFormat.format(amount) + "ml");
+        map.put(CONTENT_TP, Standar.TEMPERATURE_FORMAT.format(mTemperature[1]) + "°C");
+        map.put(CONTENT_AMOUNT, Standar.AMOUNT_FORMAT.format(amount) + "ml");
 
         score = record.getScore();
         color = selectColor(mTemperature[0], mTemperature[1]);
@@ -360,7 +360,7 @@ public class MilkAmountFragment extends TitleFragment {
         if (oneDays == null || oneDays.size() == 0)
             return "无数据";
         drinkAmount = oneDays.get(oneDays.size() - 1).getVolume();
-        return Standar.AmountFormat.format(drinkAmount) + "ml";
+        return Standar.AMOUNT_FORMAT.format(drinkAmount) + "ml";
     }
 
     private String getOneDayAdviseAmount() {
@@ -374,7 +374,7 @@ public class MilkAmountFragment extends TitleFragment {
         for (int i = 0; i < len; i++) {
             adviseAmount += records.get(i).getAdviceVolume();
         }
-        return Standar.AmountFormat.format(adviseAmount) + "ml";
+        return Standar.AMOUNT_FORMAT.format(adviseAmount) + "ml";
     }
 
     private int getTotalDrinkNum(OneDay oneDay) {

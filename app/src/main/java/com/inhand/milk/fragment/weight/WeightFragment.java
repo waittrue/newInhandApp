@@ -154,7 +154,7 @@ public class WeightFragment extends TitleFragment {
     private String getLastTime() {
         String str = getResources().getString(R.string.weight_fragment_bottome_text);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String time = simpleDateFormat.format(lastWeightTime);
+        String time = simpleDateFormat.format(weightHelper.getLastWeightDate());
         return str + time;
     }
     private void updateRelativetexts(){
@@ -265,7 +265,7 @@ public class WeightFragment extends TitleFragment {
         String birth = baby.getBirthday();
         Date birthdate;
         try {
-            birthdate = Standar.dateFormat.parse(birth);
+            birthdate = Standar.DATE_FORMAT.parse(birth);
         } catch (Exception e) {
             return;
         }

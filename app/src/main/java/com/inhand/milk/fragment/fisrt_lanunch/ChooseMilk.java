@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
+import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.activity.MainActivity;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.entity.BabyInfo;
@@ -136,7 +137,6 @@ public class ChooseMilk extends FirstLaunchFragment {
             public void onAnimationEnd(Animation animation) {
                 // TODO Auto-generated method stub
                 save();
-                getActivity().finish();
             }
         });
     }
@@ -145,7 +145,7 @@ public class ChooseMilk extends FirstLaunchFragment {
         Intent intent = new Intent();
         intent.setClass(getActivity(), MainActivity.class);
         getActivity().startActivity(intent);
-        //getActivity().finish();
+        getActivity().finish();
     }
 
 
@@ -260,6 +260,8 @@ public class ChooseMilk extends FirstLaunchFragment {
                     Log.d("BabyInfo json is:", json);
                     json = aCache.getAsString(Baby.CACHE_KEY);
                     Log.d("Baby json is:", json);
+                    Log.d("baby json createat", Standar.DATE_FORMAT.format( baby.getCreatedAt()));
+                    enterNextActivity();
                 } catch (AVException e) {
                     e.printStackTrace();
                 }

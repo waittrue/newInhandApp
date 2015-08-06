@@ -143,7 +143,7 @@ public class LastDrink extends TitleFragment {
         data.put(ItemUnit, "分");
         data.put(ItemUpText, getResources().getString(R.string.health_last_drink_score));
 
-        if (score < Standar.drinkMinScore) {
+        if (score < Standar.DRINK_MIN_SCORE) {
             data.put(ItempDownText, getResources().getString(R.string.health_last_drink_score_less_doc));
             data.put(ItemRightColor, warningColor);
             data.put(ItemLeftColor, warningColor);
@@ -164,12 +164,12 @@ public class LastDrink extends TitleFragment {
         data.put(ItemUnit, "分钟");
         data.put(ItemUpText, getResources().getString(R.string.health_last_drink_duration));
 
-        if (duration > Standar.drinkMaxDuration) {
+        if (duration > Standar.DRINK_MAX_DURATION) {
             data.put(ItempDownText, getResources().getString(R.string.health_last_drink_duration_more_doc));
             data.put(ItemRightColor, warningColor);
             data.put(ItemLeftColor, warningColor);
             data.put(ItemUpColor, warningColor);
-        } else if (duration < Standar.drinkMinDuration) {
+        } else if (duration < Standar.DRINK_MIN_DURATION) {
             data.put(ItempDownText, getResources().getString(R.string.health_last_drink_duration_less_doc));
             data.put(ItemRightColor, warningColor);
             data.put(ItemLeftColor, warningColor);
@@ -190,12 +190,12 @@ public class LastDrink extends TitleFragment {
         data.put(ItemUnit, "毫升");
 
         data.put(ItemUpText, getResources().getString(R.string.health_last_drink_amount));
-        if (volume > Standar.drinkMaxAmount) {
+        if (volume > Standar.DRINK_MAX_AMOUNT) {
             data.put(ItempDownText, getResources().getString(R.string.health_last_drink_amount_more_doc));
             data.put(ItemRightColor, warningColor);
             data.put(ItemLeftColor, warningColor);
             data.put(ItemUpColor, warningColor);
-        } else if (volume < Standar.drinkMinAmount) {
+        } else if (volume < Standar.DRINK_MIN_AMOUNT) {
             data.put(ItempDownText, getResources().getString(R.string.health_last_drink_amount_less_doc));
             data.put(ItemRightColor, warningColor);
             data.put(ItemLeftColor, warningColor);
@@ -212,15 +212,15 @@ public class LastDrink extends TitleFragment {
     private Map<Integer, Object> getBeginTp(Record record) {
         Map<Integer, Object> data = new HashMap<>();
         float beginTp = record.getBeginTemperature();
-        data.put(ItemNum, Standar.TeamperatureFormat.format(beginTp));
+        data.put(ItemNum, Standar.TEMPERATURE_FORMAT.format(beginTp));
         data.put(ItemUnit, "°C");
         data.put(ItemUpText, getResources().getString(R.string.health_last_drink_begin_temperature));
-        if (beginTp > Standar.drinkBeginMaxTp) {
+        if (beginTp > Standar.DRINK_BEGIN_MAX_TP) {
             data.put(ItempDownText, getResources().getString(R.string.health_last_drink_begin_temperature_more_doc));
             data.put(ItemRightColor, warningColor);
             data.put(ItemLeftColor, warningColor);
             data.put(ItemUpColor, warningColor);
-        } else if (beginTp < Standar.drinkBeginMinTp) {
+        } else if (beginTp < Standar.DRINK_BEGIN_MIN_TP) {
             data.put(ItempDownText, getResources().getString(R.string.health_last_drink_begin_temperature_less_doc));
             data.put(ItemRightColor, warningColor);
             data.put(ItemLeftColor, warningColor);
@@ -237,15 +237,15 @@ public class LastDrink extends TitleFragment {
     private Map<Integer, Object> getEndTp(Record record) {
         Map<Integer, Object> data = new HashMap<>();
         float endTp = record.getEndTemperature();
-        data.put(ItemNum, Standar.TeamperatureFormat.format(endTp));
+        data.put(ItemNum, Standar.TEMPERATURE_FORMAT.format(endTp));
         data.put(ItemUnit, "°C");
         data.put(ItemUpText, getResources().getString(R.string.health_last_drink_end_temperature));
-        if (endTp > Standar.drinkEndMaxTp) {
+        if (endTp > Standar.DRINK_END_MAX_TP) {
             data.put(ItempDownText, getResources().getString(R.string.health_last_drink_end_temperature_more_doc));
             data.put(ItemRightColor, warningColor);
             data.put(ItemLeftColor, warningColor);
             data.put(ItemUpColor, warningColor);
-        } else if (endTp < Standar.drinkEndMinTp) {
+        } else if (endTp < Standar.DRINK_END_MIN_TP) {
             data.put(ItempDownText, getResources().getString(R.string.health_last_drink_end_temperature_less_doc));
             data.put(ItemRightColor, warningColor);
             data.put(ItemLeftColor, warningColor);

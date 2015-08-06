@@ -95,7 +95,7 @@ public class curveWeek extends com.inhand.milk.fragment.milk_amount_curve.OnePap
         Calendar calendar = Calendar.getInstance();
         Date date1 = null;
         try {
-            date1 = Standar.dateFormat.parse(time);
+            date1 = Standar.DATE_FORMAT.parse(time);
         } catch (ParseException e) {
             return 0;
         }

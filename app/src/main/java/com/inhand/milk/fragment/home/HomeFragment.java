@@ -68,7 +68,7 @@ public class HomeFragment extends TitleFragment {
         } else {
             return false;
         }
-        lastTString = Standar.TeamperatureFormat.format((record.getBeginTemperature() + record.getEndTemperature()) / 2)
+        lastTString = Standar.TEMPERATURE_FORMAT.format((record.getBeginTemperature() + record.getEndTemperature()) / 2)
                 + "°C";
         lastAmountString = String.valueOf(record.getVolume()) + "ml";
         adviseAmountString = String.valueOf(record.getAdviceVolume()) + "ml";

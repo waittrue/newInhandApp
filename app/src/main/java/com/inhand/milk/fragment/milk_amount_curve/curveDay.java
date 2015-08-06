@@ -20,7 +20,7 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
     public curveDay(Activity activity, int width) {
         super(activity, width);
         Date dt = new Date();
-        today = Standar.dateFormat.format(dt);
+        today = Standar.DATE_FORMAT.format(dt);
     }
 
 

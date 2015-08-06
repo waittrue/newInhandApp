@@ -1,5 +1,7 @@
 package com.inhand.milk.fragment.weight;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.SaveCallback;
@@ -14,6 +16,7 @@ import com.inhand.milk.utils.LocalSaveTask;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,9 +62,10 @@ public class WeightHelper {
      */
     private void  initData(){
         currentBaby = App.getCurrentBaby();
+        ACache aCache = ACache.get(App.getAppContext());
+        String json = aCache.getAsString(Baby.CACHE_KEY);
+        Log.i("baby currentbaby json",json);
         if(currentBaby == null){
-            ACache aCache = ACache.get(App.getAppContext());
-            String json = aCache.getAsString(Baby.CACHE_KEY);
             currentBaby = JSON.parseObject(json, Baby.class);
         }
         if(babyInfos == null)
@@ -78,7 +82,7 @@ public class WeightHelper {
     }
 
     /**
-     * 得到当前最近一个体重
+     * 得到当前最近,最新的一个体重
      * @return
      */
     public float getCurrentWeight(){
@@ -92,7 +96,7 @@ public class WeightHelper {
     public Date getLastWeightDate(){
         Date date = null;
         try {
-            date = Standar.dateFormat.parse(currentBabyInfo.getAge());
+            date = Standar.DATE_FORMAT.parse(currentBabyInfo.getAge());
         }catch (ParseException e){
             e.printStackTrace();
             return null;
@@ -136,7 +140,7 @@ public class WeightHelper {
         String birth = babyInfo.getAge();
         Date date = null;
         try {
-            date = Standar.dateFormat.parse(birth);
+            date = Standar.DATE_FORMAT.parse(birth);
         } catch (ParseException e) {
             e.printStackTrace();
             return;
@@ -160,16 +164,30 @@ public class WeightHelper {
      */
     private List<BabyInfo> getAllBabyInfoCache(){
         BabyInfoDao babyInfoDao = new BabyInfoDao();
+        if(currentBaby == null)
+            Log.i("baby current","null");
         Date birth = currentBaby.getCreatedAt();
-        int birthYear = birth.getYear();
-        int birthMonth = birth.getMonth();
+        if(birth == null)
+            Log.i("baby birth","null");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(birth);
+        int birthYear = calendar.get(Calendar.YEAR);
+        int birthMonth = calendar.get(Calendar.MONTH)+1;
         Date date = new Date();
-        int year =date.getYear();
-        int month =date.getMonth();
+        calendar.setTime(date);
+        int year =calendar.get(Calendar.YEAR);
+        int month =calendar.get(Calendar.MONTH)+1;
         List<BabyInfo> result = new ArrayList<>();
         for(int i=birthYear;i<=year;i++){
             for(int j=birthMonth;j<=month;j++){
-                List<BabyInfo> tempBabyInfos = babyInfoDao.findByDateFromCache(App.getAppContext(),String.valueOf(i)+"-"+String.valueOf(j));
+                String time;
+                if(j>=10)
+                    time =String.valueOf(i)+"-"+String.valueOf(j);
+                else
+                    time = String.valueOf(i)+"-0"+String.valueOf(j);
+                Log.d("baby gettime",time);
+                List<BabyInfo> tempBabyInfos = babyInfoDao.findByDateFromCache(App.getAppContext(),time);
                 if(tempBabyInfos == null)
                     continue;
                 result.addAll(tempBabyInfos);
@@ -177,6 +195,7 @@ public class WeightHelper {
                 if(count <=0 )
                     continue;
                 currentBabyInfo = tempBabyInfos.get(count-1);
+                Log.d("baby currentbabyinfo","not null");
             }
         }
 
@@ -205,13 +224,13 @@ public class WeightHelper {
                         String today = babyInfo.getAge();
                         Date current =null,now = null;
                         try{
-                            current = Standar.dateFormat.parse(currentDate);
+                            current = Standar.DATE_FORMAT.parse(currentDate);
                         }catch (ParseException e){
                             e.printStackTrace();
                             return;
                         }
                         try {
-                            now  = Standar.dateFormat.parse(today);
+                            now  = Standar.DATE_FORMAT.parse(today);
                         }catch (ParseException e){
                             e.printStackTrace();
                             return;

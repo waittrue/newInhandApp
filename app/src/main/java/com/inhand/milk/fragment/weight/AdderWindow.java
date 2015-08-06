@@ -15,15 +15,12 @@ import android.widget.TextView;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
-import com.inhand.milk.entity.Baby;
 import com.inhand.milk.entity.BabyInfo;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.firstlanunch.Ruler;
 
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -102,7 +99,7 @@ public class AdderWindow extends Activity {
                 BabyInfo babyInfo = new BabyInfo();
                 babyInfo.setBaby(App.getCurrentBaby());
                 babyInfo.setWeight(num);
-                String date = Standar.dateFormat.format(new Date());
+                String date = Standar.DATE_FORMAT.format(new Date());
                 babyInfo.setAge(date);
                 weightHelper.saveOneWeight(babyInfo);
             }

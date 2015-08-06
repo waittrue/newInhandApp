@@ -33,7 +33,7 @@ public class HealthDrinkLastActivity extends SubActivity {
         super.onCreate(savedInstanceState);
         Intent intent = this.getIntent();
         Record record;
-        record = (Record) intent.getSerializableExtra(Standar.LastDrinkIntentKey);
+        record = (Record) intent.getSerializableExtra(Standar.LASTDRINK_KEY);
         if (record != null) {
             fragment.setRecord(record);
             Log.i("healthdringk", String.valueOf(record.getScore()));

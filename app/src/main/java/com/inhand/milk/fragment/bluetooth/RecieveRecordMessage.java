@@ -6,7 +6,6 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.STANDAR.Standar;
-import com.inhand.milk.entity.Base;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.utils.LocalSaveTask;
@@ -91,7 +90,7 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, -(int) interva);
         calendar.add(Calendar.MINUTE, -(int) continuTime);
-        record.setBeginTime(Standar.timeFormat.format(calendar.getTime()));
+        record.setBeginTime(Standar.TIME_FORMAT.format(calendar.getTime()));
         oneDay.setDate(calendar.getTime());
     }
 

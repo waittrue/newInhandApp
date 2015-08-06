@@ -37,7 +37,7 @@ public class FirstLanunchActivity extends BaseActivity {
         setContentView(R.layout.activity_first_lanunch);
         baby = new Baby();
         babyInfo = new BabyInfo();
-        babyInfo.setAge(Standar.dateFormat.format(new Date()));
+        babyInfo.setAge(Standar.DATE_FORMAT.format(new Date()));
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
