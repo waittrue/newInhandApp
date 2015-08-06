@@ -21,6 +21,7 @@ import com.avos.avoscloud.AVException;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.MainActivity;
+import com.inhand.milk.entity.Baby;
 import com.inhand.milk.entity.BabyInfo;
 import com.inhand.milk.utils.ACache;
 
@@ -257,6 +258,8 @@ public class ChooseMilk extends FirstLaunchFragment {
                     ACache aCache = ACache.get(App.getAppContext());
                     String json = aCache.getAsString(BabyInfo.CACHE_KEY_PREFIX + babyInfo.getAge().substring(0, 7));
                     Log.d("BabyInfo json is:", json);
+                    json = aCache.getAsString(Baby.CACHE_KEY);
+                    Log.d("Baby json is:", json);
                 } catch (AVException e) {
                     e.printStackTrace();
                 }
