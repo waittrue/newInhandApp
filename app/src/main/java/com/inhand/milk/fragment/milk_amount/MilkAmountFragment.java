@@ -59,6 +59,11 @@ public class MilkAmountFragment extends TitleFragment {
     private String lastTime;
     private int flags = 0;
 
+
+    public MilkAmountFragment(){
+        initAdpter();
+        updateMyData(adpter);
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,8 +165,7 @@ public class MilkAmountFragment extends TitleFragment {
         return true;
     }
 
-    private Boolean initListViews() {
-        adpter = headlistView.getAdapter();
+    private void initAdpter(){
         if (adpter == null) {
             adpter = new PinnerListViewAdapter(this.getActivity());
             adpter.setConfigureView(new PinnerListViewAdapter.ConfigureView() {
@@ -235,9 +239,12 @@ public class MilkAmountFragment extends TitleFragment {
                 }
             });
         }
+    }
+    private Boolean initListViews() {
+        initAdpter();
+        headlistView.setAdapter(adpter);
         if (updateMyData(adpter) == false)
             return false;
-        headlistView.setAdapter(adpter);
         return true;
     }
 

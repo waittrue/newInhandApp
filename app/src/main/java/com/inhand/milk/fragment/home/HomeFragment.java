@@ -29,6 +29,9 @@ public class HomeFragment extends TitleFragment {
     private TextView adviseAmount, adviseT, lastAmount, lastT;
     private Record record;
     private String lastTime;
+    public HomeFragment(){
+        initData();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
