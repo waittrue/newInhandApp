@@ -14,12 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.activity.HealthDrinkLastActivity;
 import com.inhand.milk.activity.MilkAmountCurveActivity;
-import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.TitleFragment;
@@ -28,6 +26,7 @@ import com.inhand.milk.ui.PinnerListView;
 import com.inhand.milk.ui.PinnerListViewAdapter;
 import com.inhand.milk.ui.ProgressBar;
 import com.inhand.milk.ui.RingWithText;
+import com.inhand.milk.utils.RecordHelper;
 import com.inhand.milk.utils.ViewHolder;
 
 import java.text.SimpleDateFormat;
@@ -43,7 +42,6 @@ import java.util.Map;
 public class MilkAmountFragment extends TitleFragment {
     final static float TEMPREATUREHIGH = 40, TEMPREATURELOW = 37;
     private final static int timeRing = 200, dataLoadAmount = 7;
-    private static final SimpleDateFormat dateRecordFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final String HEAD_DATA = "data", HEAD_TOTALNUM = "totalNum";
     private static final String CONTETN_TIME = "onceTime", CONTENT_TP = "oncetemperate", CONTENT_AMOUNT = "onceAmount",
             CONTENT_COLOR = "color", CONTENT_SCORE = "score";
@@ -55,14 +53,11 @@ public class MilkAmountFragment extends TitleFragment {
     private PinnerListView headlistView;
     private PinnerListViewAdapter adpter;
     private int warningHighColor, warningLowColor, normalColor, progressBgColor;
-    private List<OneDay> oneDays = null;
-    private String lastTime;
-    private int flags = 0;
-
-
+    private List<OneDay> oneDays ;
+    private RecordHelper recordHelper;
     public MilkAmountFragment(){
-        initAdpter();
-        updateMyData(adpter);
+        recordHelper = RecordHelper.getInstance();
+        initOnedays();
     }
     @Nullable
     @Override
@@ -153,16 +148,11 @@ public class MilkAmountFragment extends TitleFragment {
         ringWithText.setListener(listener);
         ringWithText.setTimeRing(timeRing);
     }
-
-    private Boolean initViews() {
-        if (flags < 3)
-            flags++;
-        if (initListViews() == false)
-            return false;
+    private void initViews() {
+        initListViews();
         drinkNum.setText(getResources().getString(R.string.milk_amount_drink_num_doc) + getOneDayDrinkAmount());
         adviseNum.setText(getResources().getString(R.string.milk_amount_advise_num_doc) + getOneDayAdviseAmount());
         ringWithText.setMaxSweepAngle(drinkAmount / adviseAmount * 360);
-        return true;
     }
 
     private void initAdpter(){
@@ -240,30 +230,13 @@ public class MilkAmountFragment extends TitleFragment {
             });
         }
     }
-    private Boolean initListViews() {
+    private void initListViews() {
         initAdpter();
-        headlistView.setAdapter(adpter);
-        if (updateMyData(adpter) == false)
-            return false;
-        return true;
+        getDataFromDB(adpter);
     }
-
-    private boolean updateMyData(PinnerListViewAdapter adapter) {
-        if (lastTime == null || Standar.needUpdate(lastTime)) {
-            getDataFromDB(adapter);
-            return true;
-        }
-        return false;
-    }
-
     private void getDataFromDB(PinnerListViewAdapter adapter) {
         adapter.clearData();
-        oneDays = new OneDayDao().findFromDB(App.getAppContext(),dataLoadAmount);
-        /*
-        int days = oneDays.size();
-        int len = Math.min(days, dataLoadAmount);
-        */
-        //oneDays = oneDays.subList(days - len, days);
+        initOnedays();
         int len = oneDays.size();
         int addCount = 0;
         for (int i = 0; i < len; i++) {
@@ -272,12 +245,16 @@ public class MilkAmountFragment extends TitleFragment {
             int recordSize = temp.size();
             for (int j = 0; j < recordSize; j++) {
                 if (i == 0 && j == 0)
-                    lastTime = oneDay.getDate() + temp.get(recordSize - 1 - j).getBeginTime();
                 adapter.addMap(getHeadData(oneDay), getContentData(temp.get(recordSize - 1 - j)), addCount++);
             }
         }
+        headlistView.setAdapter(adpter);
     }
-
+    private void initOnedays(){
+        oneDays = recordHelper.getOnedays(dataLoadAmount);
+        if(oneDays == null)
+            oneDays = new ArrayList<>();
+    }
     private Map<String, Object> getHeadData(OneDay oneDay) {
         Map<String, Object> map = new HashMap<>();
         map.put(HEAD_DATA, getCalenderBefore(oneDay));
@@ -306,8 +283,10 @@ public class MilkAmountFragment extends TitleFragment {
 
     @Override
     public void refresh() {
-        if (initViews() == false && flags != 2)
+        if(recordHelper.isDataChanged() == false)
             return;
+        recordHelper.setDataChanged(false);
+        getDataFromDB(adpter);
         startAnimator();
 
     }
@@ -339,10 +318,10 @@ public class MilkAmountFragment extends TitleFragment {
     private String getCalenderBefore(OneDay oneDay) {
         String temp = oneDay.getDate();
         Calendar calendar = Calendar.getInstance();
-        if (temp.equals(dateRecordFormat.format(calendar.getTime())))
+        if (temp.equals(Standar.DATE_FORMAT.format(calendar.getTime())))
             return "今天";
         calendar.add(Calendar.DAY_OF_MONTH, -1);
-        if (temp.equals(dateRecordFormat.format(calendar.getTime())))
+        if (temp.equals(Standar.DATE_FORMAT.format(calendar.getTime())))
             return "昨天";
         return temp;
 
@@ -366,17 +345,16 @@ public class MilkAmountFragment extends TitleFragment {
     private String getOneDayDrinkAmount() {
         if (oneDays == null || oneDays.size() == 0)
             return "无数据";
-        drinkAmount = oneDays.get(oneDays.size() - 1).getVolume();
+        drinkAmount = oneDays.get(0).getVolume();
         return Standar.AMOUNT_FORMAT.format(drinkAmount) + "ml";
     }
 
     private String getOneDayAdviseAmount() {
         if (oneDays == null || oneDays.size() == 0)
             return "无数据";
-        OneDay oneDay = oneDays.get(oneDays.size() - 1);
+        OneDay oneDay = oneDays.get(0);
         List<Record> records = oneDay.getRecords();
         int len = records.size();
-
         adviseAmount = 0;
         for (int i = 0; i < len; i++) {
             adviseAmount += records.get(i).getAdviceVolume();

@@ -168,7 +168,8 @@ public class OneDayDao {
             oneDays.add(oneDay);
         }
         cursor.close();
-        db.close();
+        //db.close();
+        dbHelper.closeDatabase();
         return oneDays;
     }
 
@@ -211,7 +212,8 @@ public class OneDayDao {
                     oneDays.add(oneDay);
                 }
                 cursor.close();
-                db.close();
+                //db.close();
+                dbHelper.closeDatabase();
                 return super.doInBackground(voids);
             }
 
@@ -256,7 +258,8 @@ public class OneDayDao {
                     days.add(oneDay);
                 }
                 cursor.close();
-                db.close();
+                //db.close();
+                dbHelper.closeDatabase();
                 return super.doInBackground(voids);
             }
 
@@ -297,7 +300,8 @@ public class OneDayDao {
             return JSON.parseObject(json, OneDay.class);
         }
         cursor.close();
-        db.close();
+        //db.close();
+        dbHelper.closeDatabase();
         return null;
     }
 
@@ -343,7 +347,8 @@ public class OneDayDao {
 
             }
         }
-        db.close();
+        //db.close();
+        dbHelper.closeDatabase();
         cursor.close();
         return oneDays;
     }
@@ -392,7 +397,8 @@ public class OneDayDao {
 
                     }
                 }
-                db.close();
+                //db.close();
+                dbHelper.closeDatabase();
                 cursor.close();
                 return super.doInBackground(voids);
             }
@@ -446,7 +452,8 @@ public class OneDayDao {
                     oneDays.add(oneDay);
                 }
                 cursor.close();
-                db.close();
+                //db.close();
+                dbHelper.closeDatabase();
                 return super.doInBackground(voids);
             }
 
@@ -492,7 +499,8 @@ public class OneDayDao {
             oneDays.add(oneDay);
         }
         cursor.close();
-        db.close();
+        //db.close();
+        dbHelper.closeDatabase();
         return oneDays;
     }
 
@@ -530,7 +538,8 @@ public class OneDayDao {
                     compStr
             );
         }
-        db.close();
+        //db.close();
+        dbHelper.closeDatabase();
     }
 
 

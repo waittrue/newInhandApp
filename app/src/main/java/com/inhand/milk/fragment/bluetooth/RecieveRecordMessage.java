@@ -9,6 +9,7 @@ import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.utils.LocalSaveTask;
+import com.inhand.milk.utils.RecordHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,18 +72,7 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
         printRecord(record);
         oneDay.setRecords(records);
 
-        oneDay.saveInCloud(new SaveCallback() {
-            @Override
-            public void done(AVException e) {
-
-            }
-        });
-        oneDay.saveInDB(App.getAppContext(), new LocalSaveTask.LocalSaveCallback() {
-            @Override
-            public void done() {
-
-            }
-        });
+        RecordHelper.getInstance().saveOneday(oneDay);
         return true;
     }
 

@@ -16,6 +16,7 @@ import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.TitleFragment;
+import com.inhand.milk.utils.RecordHelper;
 
 import java.util.List;
 
@@ -29,7 +30,9 @@ public class HomeFragment extends TitleFragment {
     private TextView adviseAmount, adviseT, lastAmount, lastT;
     private Record record;
     private String lastTime;
+    private RecordHelper recordHelper;
     public HomeFragment(){
+        recordHelper = RecordHelper.getInstance();
         initData();
     }
     @Override
@@ -44,33 +47,22 @@ public class HomeFragment extends TitleFragment {
 
     private void initNoDateVaribles() {
         lastTString = adviseTString = lastAmountString = adviseAmountString
-                = getResources().getString(R.string.public_no_data);
+                = App.getAppContext().getString(R.string.public_no_data);
         score = -1;
     }
 
     private boolean initData() {
-        if (lastTime == null || Standar.needUpdate(lastTime)) {
-            List<OneDay> oneDays = new OneDayDao().findFromDB(App.getAppContext(),1);
-            if (oneDays == null || oneDays.size() == 0) {
-                initNoDateVaribles();
-                return true;
-            }
-            OneDay oneDay = oneDays.get(0);
-            String time = oneDay.getDate();
-            if (oneDay == null) {
-                initNoDateVaribles();
-                return true;
-            }
-            List<Record> records = oneDay.getRecords();
-            if (records == null || records.size() == 0) {
-                initNoDateVaribles();
-                return true;
-            }
-            record = records.get(records.size() - 1);
-            lastTime = time + record.getBeginTime();
-        } else {
-            return false;
+        Record tempRecord;
+        tempRecord =  recordHelper.getLastRecord();
+        if(tempRecord  == null ) {
+            initNoDateVaribles();
+            return true;
         }
+        if(record == null)
+            record = tempRecord;
+        else if(record.equals(tempRecord))
+            return false;
+        record = tempRecord;
         lastTString = Standar.TEMPERATURE_FORMAT.format((record.getBeginTemperature() + record.getEndTemperature()) / 2)
                 + "°C";
         lastAmountString = String.valueOf(record.getVolume()) + "ml";
@@ -79,7 +71,6 @@ public class HomeFragment extends TitleFragment {
         score = record.getScore();
         Log.i("milkamount", String.valueOf(score));
         return true;
-
     }
 
     private void initViews() {

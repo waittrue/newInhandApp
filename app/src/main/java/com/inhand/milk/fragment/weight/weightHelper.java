@@ -62,10 +62,10 @@ public class WeightHelper {
      */
     private void  initData(){
         currentBaby = App.getCurrentBaby();
-        ACache aCache = ACache.get(App.getAppContext());
-        String json = aCache.getAsString(Baby.CACHE_KEY);
-        Log.i("baby currentbaby json",json);
         if(currentBaby == null){
+            ACache aCache = ACache.get(App.getAppContext());
+            String json = aCache.getAsString(Baby.CACHE_KEY);
+            Log.i("baby currentbaby json",json);
             currentBaby = JSON.parseObject(json, Baby.class);
         }
         if(babyInfos == null)

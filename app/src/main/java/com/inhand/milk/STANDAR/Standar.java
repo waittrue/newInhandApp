@@ -57,25 +57,4 @@ public class Standar {
         return sum;
     }
 
-    public static boolean needUpdate(String lastRecordTime) {
-        OneDayDao oneDayDao = new OneDayDao();
-        List<OneDay> oneDays = oneDayDao.findFromDB(App.getAppContext(),1);
-        if (oneDays == null)
-            return true;
-        OneDay oneDay = oneDays.get(0);
-        if (oneDay == null)
-            return true;
-        String date = oneDay.getDate();
-        List<Record> records = oneDay.getRecords();
-        if (records == null)
-            return true;
-        Record record = records.get(records.size() - 1);
-        if (record == null)
-            return true;
-        String time = record.getBeginTime();
-        if (lastRecordTime.equals(date + time)) {
-            return false;
-        }
-        return true;
-    }
 }

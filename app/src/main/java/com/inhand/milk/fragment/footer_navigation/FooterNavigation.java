@@ -63,7 +63,6 @@ public class FooterNavigation extends Fragment {
             public void run() {
                 milkAmountFragment = new MilkAmountFragment();
                 weight = new WeightFragment();
-                health = new HealthFragment();
                 personCenterFragment = new PersonCenterFragment();
                 eatingFragment = new EatingFragment();
 
