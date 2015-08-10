@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -191,6 +192,8 @@ public class Bluetooth {
 
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
         String defalutMac = getDefaultMac();
+        if(defalutMac == null)
+            return null;
         Log.i("bluetooth", String.valueOf(pairedDevices.size()));
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
@@ -208,18 +211,10 @@ public class Bluetooth {
      * @return 蓝牙mac地址
      */
     private String getDefaultMac() {
-        DeviceDao deviceDao = new DeviceDao();
+        final DeviceDao deviceDao = new DeviceDao();
         Device device = deviceDao.getFromCache(App.getAppContext());
-        if (device == null) {
-            List<Device> devices = deviceDao.findByUserFromCloud(App.getCurrentUser());
-            if(devices == null)
-                return null;
-            else if(devices.size() >1 || devices.isEmpty())
-                return null;
-            else {
-                device = devices.get(0);
-            }
-        }
+        if(device == null)
+            return null;
         Log.i("bluetooth_get_dev", device.getMac());
         return device.getMac();
     }
@@ -337,7 +332,7 @@ public class Bluetooth {
                     socket.connect();
                     break;
                 } catch (IOException connectException) {
-                    Log.i("bluetooth", "连入" + paired.getName() + "失败");
+                    //Log.i("bluetooth", "连入" + paired.getName() + "失败");
                 }
             }
             Log.i("bluetooth", "连入" + paired.getName() + ":成功创建了socket");

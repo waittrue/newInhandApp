@@ -35,6 +35,7 @@ import java.util.Map;
  * Created by Administrator on 2015/6/6.
  */
 public class WeightFragment extends TitleFragment {
+    public static final int WEIGHT_ADD = 1;
     private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
     private WeightExcle weightExcle;
     private int lastPositon = -1;
@@ -46,7 +47,6 @@ public class WeightFragment extends TitleFragment {
     private static final String TAG = "weightFragment";
     private static WeightStanderPares weightStanderPares = WeightStanderPares.getInstance();
     private float currentStanderMin = 0, currentStanderMax;
-    private Date lastWeightTime = null;
     private WeightTab weightTab;
     private WeightHelper weightHelper;
     private TextView leftUp,rightUp;
@@ -58,39 +58,28 @@ public class WeightFragment extends TitleFragment {
     /**
      * 初始化一些基本数据
      */
-    private boolean  initData() {
-        if(lastWeightTime == null){
+    private void  initData() {
             baby = App.getCurrentBaby();
             weightHelper = weightHelper.getInstance();
             initCurrentStander();
-            return true;
-        }
-        else if(lastWeightTime.compareTo(weightHelper.getLastWeightDate()) == -1){
-            return true;
-        }
-        return false;
     }
 
     @Override
     public void refresh() {
         Log.i(TAG, "refresh");
-        if( initData() == false) {
-            Log.i(TAG, "update == false");
-            return;
-        }
-        Log.i(TAG, "update == true");
+        initCurrentStander();
         int months = Calculator.getBabyMonthAge( weightHelper.getLastWeightDate());
         weightTab.setTabNum(months + 1);
         lastPositon = months;
         weightTab.initTabs();
 
         initWeightTab(mView);
-        monthToWeightExcle(weightExcle,lastPositon);
+        monthToWeightExcle(weightExcle, lastPositon);
         weightExcle.invalidate();
-
-        initRelativeContent(mView);
-        updateRelativetexts();
+        updateRelativeTexts();
     }
+
+
 
     @Nullable
     @Override
@@ -127,9 +116,19 @@ public class WeightFragment extends TitleFragment {
 
     private void inAnimation() {
         //floatAdderWindow.show();
-        this.startActivity(new Intent(getActivity(), AdderWindow.class));
+        Intent intent =new Intent(getActivity(), AdderWindow.class);
+        this.startActivityForResult(intent, WEIGHT_ADD);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == AdderWindow.ADDERWINDOW_RESULT){
+            if( data.getBooleanExtra(AdderWindow.ADDERWINDOW_KEY,false) == true)
+                refresh();
+        }
+
+    }
 
     private void initRelativeContent(View view) {
         RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.weight_fragment_ring_container);
@@ -157,7 +156,7 @@ public class WeightFragment extends TitleFragment {
         String time = simpleDateFormat.format(weightHelper.getLastWeightDate());
         return str + time;
     }
-    private void updateRelativetexts(){
+    private void updateRelativeTexts(){
         String upString = decimalFormat.format(weightHelper.getCurrentWeight());
         leftUp.setText(upString);
         rightUp.setText( getCurrentStander());
@@ -165,6 +164,7 @@ public class WeightFragment extends TitleFragment {
         ringWithText.setTexts(getRingWithTextStrings());
 
     }
+
     private void initRelativeLeftTexts(RelativeLayout relativeLayout) {
         leftUp = new TextView(getActivity());
         TextView leftDown = new TextView(getActivity());

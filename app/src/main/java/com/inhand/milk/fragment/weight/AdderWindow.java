@@ -1,6 +1,7 @@
 package com.inhand.milk.fragment.weight;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
+import com.inhand.milk.activity.MainActivity;
 import com.inhand.milk.entity.BabyInfo;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.firstlanunch.Ruler;
@@ -28,6 +30,8 @@ import java.util.Date;
  */
 public class AdderWindow extends Activity {
     private static final String TAG = "AdderWindow";
+    public static final int ADDERWINDOW_RESULT = 1;
+    public static final String ADDERWINDOW_KEY = "adderwindow_key";
     private static final int AnimationDuration = 300;
     private static final int spacenum = 2;
     private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
@@ -102,6 +106,11 @@ public class AdderWindow extends Activity {
                 String date = Standar.DATE_FORMAT.format(new Date());
                 babyInfo.setAge(date);
                 weightHelper.saveOneWeight(babyInfo);
+                Intent intent = new Intent(AdderWindow.this, MainActivity.class);
+                intent.putExtra(ADDERWINDOW_KEY,true);
+                setResult(ADDERWINDOW_RESULT,intent);
+                outAnimation();
+
             }
 
         });

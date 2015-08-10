@@ -220,12 +220,27 @@ public class WeightHelper {
             @Override
             public void done(AVException e) {
                 if(e !=null){
+                    e.printStackTrace();
+                    Log.i(TAG, "babyinfo incloud failed");
                     return ;
                 }
+                Log.i(TAG,"babyinfo incloud success");
                 babyInfo.saveInCache(App.getAppContext(), new LocalSaveTask.LocalSaveCallback() {
                     @Override
                     public void done() {
                         babyInfos.add(babyInfo);
+                        if(babyInfos.isEmpty())
+                            babyInfos.add(babyInfo);
+                        else {
+                            BabyInfo tempBabyinfo = babyInfos.get(babyInfos.size() - 1);
+                            if( tempBabyinfo.getAge().equals( babyInfo.getAge() ) ){
+                                babyInfos.remove(babyInfos.size()-1);
+                                babyInfos.add(babyInfo);
+                            }
+                            else {
+                                babyInfos.add(babyInfo);
+                            }
+                        }
                         addOneWeight(babyInfo);
                         String currentDate = currentBabyInfo.getAge();
                         String today = babyInfo.getAge();
@@ -242,7 +257,7 @@ public class WeightHelper {
                             e.printStackTrace();
                             return;
                         }
-                        if(current.compareTo(now) == -1 ){
+                        if(current.compareTo(now) <= 0 ){
                             currentBabyInfo = babyInfo;
                         }
                     }
