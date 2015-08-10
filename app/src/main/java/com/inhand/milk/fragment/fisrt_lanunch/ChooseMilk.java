@@ -214,7 +214,6 @@ public class ChooseMilk extends FirstLaunchFragment {
 // ***************************以下是我进行的更改的方法，提供了两种模式，一种是异步回调模式，一种是同步模式
         Log.i("babySaveinCache", "save");
         // 先存储baby，否则baby对象不持久化(以为着宝宝对象并没有真实存在)的如何让babyInfo去set它？
-        baby.setUser(App.getCurrentUser()); // 别忘记设置宝宝所属用户
 //        baby.saveInCloud(new SaveCallback() {
 //            @Override
 //            public void done(AVException e) {
