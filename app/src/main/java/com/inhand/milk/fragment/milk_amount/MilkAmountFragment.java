@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import com.inhand.milk.utils.ViewHolder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -244,7 +246,6 @@ public class MilkAmountFragment extends TitleFragment {
             List<Record> temp = oneDay.getRecords();
             int recordSize = temp.size();
             for (int j = 0; j < recordSize; j++) {
-                if (i == 0 && j == 0)
                 adapter.addMap(getHeadData(oneDay), getContentData(temp.get(recordSize - 1 - j)), addCount++);
             }
         }
@@ -287,6 +288,9 @@ public class MilkAmountFragment extends TitleFragment {
             return;
         recordHelper.setDataChanged(false);
         getDataFromDB(adpter);
+        drinkNum.setText(getResources().getString(R.string.milk_amount_drink_num_doc) + getOneDayDrinkAmount());
+        adviseNum.setText(getResources().getString(R.string.milk_amount_advise_num_doc) + getOneDayAdviseAmount());
+        ringWithText.setMaxSweepAngle(drinkAmount / adviseAmount * 360);
         startAnimator();
 
     }
@@ -343,22 +347,27 @@ public class MilkAmountFragment extends TitleFragment {
     }
 
     private String getOneDayDrinkAmount() {
-        if (oneDays == null || oneDays.size() == 0)
+        OneDay oneDay = recordHelper.getOneday(new Date());
+        if(oneDay == null)
             return "无数据";
-        drinkAmount = oneDays.get(0).getVolume();
+        drinkAmount = recordHelper.getOneday(new Date()).getVolume();
+        Log.i("milkamount",String.valueOf(drinkAmount));
         return Standar.AMOUNT_FORMAT.format(drinkAmount) + "ml";
     }
 
     private String getOneDayAdviseAmount() {
-        if (oneDays == null || oneDays.size() == 0)
+        OneDay oneDay =  recordHelper.getOneday(new Date());
+        if(oneDay == null){
             return "无数据";
-        OneDay oneDay = oneDays.get(0);
+        }
         List<Record> records = oneDay.getRecords();
         int len = records.size();
         adviseAmount = 0;
         for (int i = 0; i < len; i++) {
             adviseAmount += records.get(i).getAdviceVolume();
+            Log.i("milkamount",String.valueOf(adviseAmount));
         }
+        Log.i("milkamount",String.valueOf(adviseAmount));
         return Standar.AMOUNT_FORMAT.format(adviseAmount) + "ml";
     }
 

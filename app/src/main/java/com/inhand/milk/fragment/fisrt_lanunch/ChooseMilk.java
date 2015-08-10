@@ -255,12 +255,14 @@ public class ChooseMilk extends FirstLaunchFragment {
                     babyInfo.saveInCloud();
                     babyInfo.saveInCache(App.getAppContext());
                     // 查看下缓存是否存到,以下为调试代码，之后可以删除
+                    /*
                     ACache aCache = ACache.get(App.getAppContext());
                     String json = aCache.getAsString(BabyInfo.CACHE_KEY_PREFIX + babyInfo.getAge().substring(0, 7));
                     Log.d("BabyInfo json is:", json);
                     json = aCache.getAsString(Baby.CACHE_KEY);
                     Log.d("Baby json is:", json);
                     Log.d("baby json createat", Standar.DATE_FORMAT.format( baby.getCreatedAt()));
+                    */
                     enterNextActivity();
                 } catch (AVException e) {
                     e.printStackTrace();

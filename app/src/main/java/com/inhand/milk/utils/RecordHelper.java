@@ -9,6 +9,7 @@ import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
+import com.inhand.milk.fragment.bluetooth.RecieveRecordMessage;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,7 +44,7 @@ public class RecordHelper  {
     }
 
     /**
-     * 根据日期返回当天的oneday，如果数据data里面没有，则从本地取并更新。
+     * 同步的 ，根据日期返回当天的oneday，如果数据data里面没有，则从本地取并更新。
      * @param date 返回oneday的日期
      * @return oneday。
      */
@@ -112,6 +113,19 @@ public class RecordHelper  {
     }
 
     /**
+     * 更新本地的data这个数据
+     * @param date
+     */
+    private void updateOneday(String date){
+        List<OneDay> oneDays = oneDayDao.findBetween(App.getAppContext(), date, date);
+        if(oneDays == null || oneDays.isEmpty())
+            return;
+        OneDay oneDay = oneDays.get(0);
+        if(oneDay == null)
+            return;
+        data.put(date, oneDay);
+    }
+    /**
      * 输入一个record 存入本地和云端，这个地方必须开线程存，存完后我们更新数据结构data，
      * 这里存的实体应该是oneday，这里我们输入oneday，默认存的日期就是今天,对应的宝宝默认是
      * 本地缓存的宝宝。
@@ -139,17 +153,22 @@ public class RecordHelper  {
         oneDay.setRecords(records);
         saveOneday(oneDay);
     }
+
+    /**
+     * 把一天的oneday同步到云端和本地，并更新本地的数据data这个结构
+     * @param oneDay 需要存储的oneyday
+     */
     public void saveOneday(final OneDay oneDay){
         oneDay.saveInCloud(new SaveCallback() {
             @Override
             public void done(AVException e) {
-                Log.i(TAG, "oneday save inCloud success");
+                Log.i(TAG, "oneday save inCloud success" + oneDay.getDate());
             }
         });
         oneDay.saveInDB(App.getAppContext(), new LocalSaveTask.LocalSaveCallback() {
             @Override
             public void done() {
-                getRecords(Standar.DATE_FORMAT.format(oneDay.getDate()));
+                updateOneday(oneDay.getDate());
                 dataChanged = true;
             }
         });

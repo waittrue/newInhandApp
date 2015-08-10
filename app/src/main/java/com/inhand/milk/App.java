@@ -11,6 +11,7 @@ import android.view.WindowManager;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVUser;
+import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.entity.User;
 import com.inhand.milk.helper.LeanCloudHelper;
@@ -52,7 +53,12 @@ public class App extends Application {
             String json = aCache.getAsString(Baby.CACHE_KEY);
             if(json == null)
                 return;
+            Log.d("baby currentBaby",json);
             currentBaby = JSON.parseObject(json, Baby.class);
+            if(currentBaby == null){
+                Log.d("baby currentBaby","null");
+            }
+          //  Log.d("baby currentBaby", Standar.DATE_FORMAT.format( currentBaby.getCreatedAt() ));
         }
     }
 

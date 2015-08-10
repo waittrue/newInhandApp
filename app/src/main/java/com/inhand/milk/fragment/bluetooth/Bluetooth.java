@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
+import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.activity.BluetoothPairedAcivity;
 import com.inhand.milk.dao.DeviceDao;
 import com.inhand.milk.entity.Base;
@@ -25,6 +26,7 @@ import com.inhand.milk.entity.Device;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -157,17 +159,22 @@ public class Bluetooth {
         bluetoothAdapter.cancelDiscovery();
         paired = blueDevice;
         final Device device = new Device();
+        device.setSoftwareVersion(Standar.SOFT_VERSION);
+        device.setHardwareVersion(Standar.HARD_VERSION);
         device.setMac(blueDevice.getAddress());
+        device.setUser(App.getCurrentUser());
         device.saveInCloud(new SaveCallback() {
             @Override
             public void done(AVException e) {
-                if(e != null)
+                if (e != null) {
+                    Log.i("device_save_incloud", paired.getName() + "fail");
+                    e.printStackTrace();
                     return;
+                }
                 device.saveInCache(App.getAppContext());
+                Log.i("device_save_db", paired.getName() + "success");
             }
         });
-        Log.i("device_name", paired.getName());
-        Log.i("device_addres", paired.getAddress());
     }
 
     public void setActivity(Activity act) {
@@ -203,8 +210,16 @@ public class Bluetooth {
     private String getDefaultMac() {
         DeviceDao deviceDao = new DeviceDao();
         Device device = deviceDao.getFromCache(App.getAppContext());
-        if (device == null)
-            return null;
+        if (device == null) {
+            List<Device> devices = deviceDao.findByUserFromCloud(App.getCurrentUser());
+            if(devices == null)
+                return null;
+            else if(devices.size() >1 || devices.isEmpty())
+                return null;
+            else {
+                device = devices.get(0);
+            }
+        }
         Log.i("bluetooth_get_dev", device.getMac());
         return device.getMac();
     }

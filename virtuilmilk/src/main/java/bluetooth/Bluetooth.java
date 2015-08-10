@@ -173,7 +173,7 @@ public class Bluetooth {
                 if  (device.getAddress().equals( getDefaultMac() ) ) {
                     return device;
                 }
-                if (device.getName().equals( "HUAWEI MT7-TL10")){
+                if (device.getName().equals( "小米手机")){
                     Log.i(" find device",device.getName());
                     return device;
                 }
@@ -287,7 +287,7 @@ public class Bluetooth {
                     socket.connect();
                     break;
                 } catch (IOException connectException) {
-                    Log.i("bluetooth", "连入" + paired.getName() + "失败");
+                   // Log.i("bluetooth", "连入" + paired.getName() + "失败");
                 }
             }
             Log.i("bluetooth", "连入"+paired.getName()+":成功创建了socket");

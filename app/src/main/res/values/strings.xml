@@ -269,5 +269,7 @@
     <string name="eating_custom_fix_choose_result_food_doc">已选择：辅食</string>
     <string name="eating_custom_fix_choose_result_milk_doc">已选择：饮奶</string>
 
+    <!--choose milk-->
+    <string name="choose_milk_title">选择奶粉品牌</string>
 
 </resources>

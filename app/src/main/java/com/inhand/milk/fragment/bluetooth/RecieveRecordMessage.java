@@ -63,15 +63,17 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
         setRecordTime(record, continuTime, interval, oneDay);
 
         advice = getDataValue(buf, 21);
-        record.setAdviceVolumne((int) advice);
+        record.setAdviceVolume((int) advice);
 
         score = Standar.getRecord(advice, amount, startT, endT, continuTime);
         record.setScore((int) score);
 
         records.add(record);
+        //打印出record的所有相关信息
         printRecord(record);
-        oneDay.setRecords(records);
 
+        oneDay.setRecords(records);
+        oneDay.setBaby(App.getCurrentBaby());
         RecordHelper.getInstance().saveOneday(oneDay);
         return true;
     }
@@ -104,7 +106,7 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
         return true;
     }
 
-    private void printRecord(Record record) {
+    public static void printRecord(Record record) {
         String str = new String();
         str += "\n" + "开始时间:" + record.getBeginTime() + "\n";
         str += "开始温度:" + String.valueOf(record.getBeginTemperature()) + "\n";

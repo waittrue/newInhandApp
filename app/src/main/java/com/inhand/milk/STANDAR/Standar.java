@@ -31,6 +31,8 @@ public class Standar {
     public static DecimalFormat AMOUNT_FORMAT = new DecimalFormat("###");
     public static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
+    public static final String SOFT_VERSION = "1.0";
+    public static final String HARD_VERSION = "1.0";
 
     public static float getRecord(float advise, float amount, float temperatureHigh, float temperatureLow, float time) {
         float ratio, sum = 0;

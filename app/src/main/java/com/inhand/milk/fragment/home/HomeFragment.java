@@ -29,7 +29,6 @@ public class HomeFragment extends TitleFragment {
     private int score;
     private TextView adviseAmount, adviseT, lastAmount, lastT;
     private Record record;
-    private String lastTime;
     private RecordHelper recordHelper;
     public HomeFragment(){
         recordHelper = RecordHelper.getInstance();
@@ -60,12 +59,15 @@ public class HomeFragment extends TitleFragment {
         }
         if(record == null)
             record = tempRecord;
-        else if(record.equals(tempRecord))
+        else if(record.equals(tempRecord)) {
+            Log.d("Record","true");
             return false;
+        }
         record = tempRecord;
         lastTString = Standar.TEMPERATURE_FORMAT.format((record.getBeginTemperature() + record.getEndTemperature()) / 2)
                 + "°C";
         lastAmountString = String.valueOf(record.getVolume()) + "ml";
+        Log.i("home",String.valueOf(record.getAdviceVolume()));
         adviseAmountString = String.valueOf(record.getAdviceVolume()) + "ml";
         adviseTString = "35°C";
         score = record.getScore();

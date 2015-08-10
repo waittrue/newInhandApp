@@ -98,7 +98,7 @@ public class Record implements Serializable{
         return adviceVolume;
     }
 
-    public void setAdviceVolumne(int adviceVolume) {
+    public void setAdviceVolume(int adviceVolume) {
         this.adviceVolume = adviceVolume;
     }
 

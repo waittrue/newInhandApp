@@ -13,7 +13,7 @@ import com.inhand.milk.R;
 /**
  * Created by Administrator on 2015/5/30.
  */
-public class bluetoothFragment extends Fragment {
+public class BluetoothFragment extends Fragment {
 
 
     Bluetooth bluetooth;

@@ -166,10 +166,17 @@ public class WeightHelper {
         BabyInfoDao babyInfoDao = new BabyInfoDao();
         if(currentBaby == null)
             Log.i("baby current","null");
-        Date birth = currentBaby.getCreatedAt();
+       /* Date birth = currentBaby.getCreatedAt();
         if(birth == null)
             Log.i("baby birth","null");
-
+            */
+        String birthday = currentBaby.getBirthday();
+        Date birth = null;
+        try {
+            birth = Standar.DATE_FORMAT.parse(birthday);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(birth);
         int birthYear = calendar.get(Calendar.YEAR);

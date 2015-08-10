@@ -182,7 +182,6 @@ public class User extends AVUser {
         FeedItemDao fid = new FeedItemDao();
         List<FeedItem> items = fid.findByFeedPlanFromCloud(feedPlan);
         feedPlan.cacheItems(ctx, items);
-
         baby.saveInCache(ctx);
     }
 
