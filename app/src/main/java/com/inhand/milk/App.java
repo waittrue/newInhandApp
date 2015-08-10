@@ -58,7 +58,7 @@ public class App extends Application {
             if(currentBaby == null){
                 Log.d("baby currentBaby","null");
             }
-           // Log.d("baby currentBaby", Standar.DATE_FORMAT.format( currentBaby.getCreatedAt() ));
+           Log.d("baby currentBaby", Standar.DATE_FORMAT.format( currentBaby.getCreatedAt() ));
         }
     }
 
