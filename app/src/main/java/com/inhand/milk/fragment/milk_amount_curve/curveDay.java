@@ -8,6 +8,7 @@ import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
+import com.inhand.milk.utils.RecordHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,8 +51,7 @@ public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePape
         amountMax = Integer.MIN_VALUE;
         temperatureData.clear();
         volumeData.clear();
-        final OneDayDao oneDayDao = new OneDayDao();
-        OneDay oneday = oneDayDao.findOneFromDB(App.getAppContext(),today);
+        OneDay oneday = RecordHelper.getInstance().getOneday(new Date());
         if (oneday == null)
             return;
         List<float[]> maxTemperature = new ArrayList<>();
