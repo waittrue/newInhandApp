@@ -272,4 +272,11 @@
     <!--choose milk-->
     <string name="choose_milk_title">选择奶粉品牌</string>
 
+
+    <!-- pulltoRefreshListview-->
+    <string name="pull_to_refresh_pull_label">下拉刷新</string>
+    <string name="pull_to_refresh_release_label">松开后刷新</string>
+    <string name="pull_to_refresh_refreshing_label">刷新...</string>
+    <string name="pull_to_refresh_tap_label">Tap to refresh...</string>
+
 </resources>

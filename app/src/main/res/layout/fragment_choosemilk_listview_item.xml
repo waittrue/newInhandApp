@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#00ff00"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/choose_milk_fragment_listview_title_height"
+        android:background="@color/user_info_settings_listview_item_title_background"
+        android:id="@+id/choose_milk_fragment_title">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Large Text"
+            android:textStyle="bold"
+            android:id="@+id/choose_milk_fragment_listview_title_textview"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/choose_milk_fragment_listview_imageview_margin_left"
+            android:autoText="false"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/user_info_settings_listview_item_title_text_color"
+            android:textSize="@dimen/user_info_settings_city_title_text_size" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/choose_milk_fragment_listview_content_height"
+        android:background="@color/color_white"
+        android:id="@+id/choose_milk_fragment_content">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/common_settings_item_line_smaller_height"
+            android:id="@+id/choose_milk_fragment_listview_line"
+            android:layout_alignParentLeft="false"
+            android:layout_marginLeft="@dimen/choose_milk_fragment_listview_line_margin"
+            android:layout_alignParentBottom="true"
+            android:background="@color/common_settings_item_line_color" />
+
+        <ImageView
+            android:layout_width="@dimen/choose_milk_fragment_listview_imageview_width"
+            android:layout_height="@dimen/choose_milk_fragment_listview_imageview_height"
+            android:id="@+id/choose_milk_fragment_listview_milk_icon"
+            android:layout_marginLeft="@dimen/choose_milk_fragment_listview_imageview_margin_left"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="惠氏"
+            android:id="@+id/choose_milk_fragment_listview_textview"
+            android:layout_marginLeft="@dimen/choose_milk_fragment_listview_textview_margin_left"
+            android:layout_toRightOf="@+id/choose_milk_fragment_listview_milk_icon"
+            android:gravity="center"
+            android:textColor="@color/choose_milk_fragment_listview_content_text_color"
+            android:textSize="@dimen/choose_milk_fragment_listview_content_text_size"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+</LinearLayout>

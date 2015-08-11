@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.inhand.milk.R;
 import com.inhand.milk.activity.BluetoothPairedAcivity;
+import com.inhand.milk.activity.MilkChooseActivity;
 import com.inhand.milk.activity.PersonCenterBabyInfoActivity;
 import com.inhand.milk.activity.UserInfoSettingsActivity;
 import com.inhand.milk.fragment.TitleFragment;
@@ -38,6 +39,7 @@ public class PersonCenterFragment extends TitleFragment {
         initUserinfo();
         initBabyInfo();
         initSyn();
+        initBabyMilk();
         return mView;
     }
 
@@ -67,7 +69,18 @@ public class PersonCenterFragment extends TitleFragment {
             }
         });
     }
-
+    private void initBabyMilk(){
+        if (babyMilk == null)
+            babyMilk = (RelativeLayout) mView.findViewById(R.id.person_center_baby_milk_container);
+        babyMilk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MilkChooseActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
     private void initSyn() {
         if (syn == null)
             syn = (RelativeLayout) mView.findViewById(R.id.person_center_syn_container);

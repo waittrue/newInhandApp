@@ -10,6 +10,7 @@ import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.bluetooth.RecieveRecordMessage;
+import com.inhand.milk.helper.SyncHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,8 +28,7 @@ public class RecordHelper  {
     private OneDayDao oneDayDao;
     private Map<String,OneDay> data;
     private Record lastRecord;
-    private boolean dataChanged =false;//这个表示的是相对本地改变了，而不是data这个数据变了。。
-                                        //这个为真的时候，表示外部的一些ui需要进行改变。
+
     private RecordHelper(){
         oneDayDao = new OneDayDao();
         data = new HashMap<>();
@@ -124,6 +124,10 @@ public class RecordHelper  {
         if(oneDay == null)
             return;
         data.put(date, oneDay);
+        List<Record> records = oneDay.getRecords();
+        if(records == null || records.isEmpty())
+            return;
+        lastRecord = records.get(records.size()-1);
     }
     /**
      * 输入一个record 存入本地和云端，这个地方必须开线程存，存完后我们更新数据结构data，
@@ -162,29 +166,30 @@ public class RecordHelper  {
         oneDay.saveInCloud(new SaveCallback() {
             @Override
             public void done(AVException e) {
-                Log.i(TAG, "oneday save inCloud success" + oneDay.getDate());
+                if(e == null)
+                    Log.i(TAG, "oneday save inCloud success" + oneDay.getDate());
+                else{
+                    Log.i(TAG,"oneday save incloud failed"+oneDay.getDate());
+                }
             }
         });
         oneDay.saveInDB(App.getAppContext(), new LocalSaveTask.LocalSaveCallback() {
             @Override
             public void done() {
+                Log.i(TAG, "oneday save DB success" + oneDay.getDate());
                 updateOneday(oneDay.getDate());
-                dataChanged = true;
             }
         });
     }
 
     /**
-     * 设置数据是否更新了,这个方法不好，目前这是用在milkamountFragment里面用来检查是否更新了。
-     * @param a
+     * 输入外部存储的record，判断他和本地最新的record是否相同
+     * @param record
+     * @return
      */
-    public void setDataChanged(boolean a){
-        dataChanged = a;
+    public boolean needChanged(Record record){
+        return !record.equals(lastRecord);
     }
-    public boolean isDataChanged(){
-        return dataChanged;
-    }
-
     /**
      * 获得最近一次饮奶的record
      * @return 最近一次饮奶的数据.
@@ -201,5 +206,20 @@ public class RecordHelper  {
             return null;
         lastRecord = records.get(records.size()-1);
         return  lastRecord;
+    }
+    public void syncRecord(){
+        SyncHelper.syncCloud(App.getAppContext(), new SyncHelper.SyncCallback() {
+            @Override
+            public void done(AVException e) {
+                if(e !=null){
+                    Log.i(TAG,"sync failed");
+                    e.printStackTrace();
+                    return;
+                }
+                else{
+
+                }
+            }
+        });
     }
 }

@@ -2,14 +2,19 @@ package com.inhand.milk.entity;
 
 
 import android.content.Context;
+import android.util.Log;
 
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.dao.BabyDao;
+import com.inhand.milk.dao.BabyInfoDao;
 import com.inhand.milk.dao.FeedItemDao;
 import com.inhand.milk.dao.PowderTipDao;
+import com.inhand.milk.fragment.weight.WeightHelper;
+import com.inhand.milk.helper.SyncHelper;
 
 import java.util.List;
 
@@ -148,18 +153,22 @@ public class User extends AVUser {
         // 首先判断本地缓存中是否有Baby
         if (App.getCurrentBaby() == null) {
             // 若没有，再判断云端是否有宝宝，若有，选择第一个宝宝将其缓存
+            Log.d("initBaby","currentbaby == null");
             List<Baby> babies = fetchBabies();
             if (babies != null) {
+                Log.d("initBaby","babies != null");
                 if (babies.size() == 0)
                     return NO_BABY;
                 Baby baby = babies.get(0);
-                initBaby(ctx,baby);
                 // 初始化宝宝其他信息
+                initBaby(ctx,baby);
+
                 return HAS_BABY;
             } else {
                 return NETWORK_ERROR;
             }
         }
+        Log.d("initBaby","currentbaby != null");
         return HAS_BABY;
     }
 
@@ -183,8 +192,35 @@ public class User extends AVUser {
         List<FeedItem> items = fid.findByFeedPlanFromCloud(feedPlan);
         feedPlan.cacheItems(ctx, items);
         baby.saveInCache(ctx);
+
+        //缓存babyinfo 这部分是大力加的；
+        Log.d("initBaby","saveinache_start");
+        BabyInfoDao babyInfoDao = new BabyInfoDao();
+        List<BabyInfo> babyInfos = babyInfoDao.findByBabyFromCloud(baby);
+        if(babyInfos == null)
+            return;
+        Log.d("initBaby",String.valueOf(babyInfos.size()));
+        for(BabyInfo babyInfo:babyInfos){
+            try {
+                babyInfo.saveInCache(App.getAppContext());
+            }catch (Exception e){
+                e.printStackTrace();
+                Log.i("initBaby","failed");
+            }
+            Log.d("initBaby","saveinache");
+        }
+        //同步oneday
+        SyncHelper.syncCloud(App.getAppContext(), new SyncHelper.SyncCallback() {
+            @Override
+            public void done(AVException e) {
+                if(e != null){
+                    e.printStackTrace();
+                    Log.i("user_initbaby","syncCloud failed");
+                    return;
+                }
+                Log.i("user_initbaby","syncCloud success");
+            }
+        });
     }
-
-
 
 }

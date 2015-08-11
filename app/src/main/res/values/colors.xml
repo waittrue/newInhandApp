@@ -209,5 +209,6 @@
     <color name="eating_custom_plan_item_time_text_color">#bbbbbb</color>
     <color name="eating_custom_plan_item_type_text_color">#555555</color>
     <color name="eating_custom_fix_choose_food_text_color">#000000</color>
+    <color name="choose_milk_fragment_listview_content_text_color">#000000</color>
 
 </resources>

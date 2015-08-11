@@ -4,7 +4,13 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.avos.avoscloud.AVException;
+import com.inhand.milk.App;
+import com.inhand.milk.dao.BabyInfoDao;
 import com.inhand.milk.dao.OneDayDao;
+import com.inhand.milk.entity.Baby;
+import com.inhand.milk.entity.BabyInfo;
+
+import java.util.List;
 
 /**
  * SyncHelper
@@ -59,4 +65,5 @@ public class SyncHelper {
     public interface SyncCallback {
         public void done(AVException e);
     }
+
 }

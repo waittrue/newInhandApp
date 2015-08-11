@@ -251,6 +251,7 @@ public class ChooseMilk extends FirstLaunchFragment {
                 try {
                     baby.saveInCloud();
                     baby.saveInCache(App.getAppContext());
+                    babyInfo.setBaby(baby);
                     babyInfo.saveInCloud();
                     babyInfo.saveInCache(App.getAppContext());
                     // 查看下缓存是否存到,以下为调试代码，之后可以删除

@@ -54,9 +54,11 @@ public class MilkAmountFragment extends TitleFragment {
     private List<ProgressBar> progressBarList;
     private PinnerListView headlistView;
     private PinnerListViewAdapter adpter;
+    private Record lastRecord;
     private int warningHighColor, warningLowColor, normalColor, progressBgColor;
     private List<OneDay> oneDays ;
     private RecordHelper recordHelper;
+    private boolean firstEnter = true;
     public MilkAmountFragment(){
         recordHelper = RecordHelper.getInstance();
         initOnedays();
@@ -135,6 +137,14 @@ public class MilkAmountFragment extends TitleFragment {
         ringWithText.setRingBgColor(getResources().getColor(R.color.public_darkin_littlelight_color));
         ringWithText.setRingColor(getResources().getColor(R.color.milk_amount_ring_color));
         ringWithText.setTextColor(getResources().getColor(R.color.milk_amount_ring_text_color));
+        ringWithText.setTimeRing(timeRing);
+    }
+    private void initViews() {
+        initListViews();
+        drinkNum.setText(getResources().getString(R.string.milk_amount_drink_num_doc) + getOneDayDrinkAmount());
+        adviseNum.setText(getResources().getString(R.string.milk_amount_advise_num_doc) + getOneDayAdviseAmount());
+        ringWithText.setMaxSweepAngle(drinkAmount / adviseAmount * 360);
+
         final String[] strings = new String[2];
         strings[0] = getResources().getString(R.string.milk_amount_advise_ring_up_doc);
         strings[1] = String.valueOf(Standar.AMOUNT_FORMAT.format(drinkAmount / adviseAmount * 100)) + "%";
@@ -148,13 +158,6 @@ public class MilkAmountFragment extends TitleFragment {
             }
         };
         ringWithText.setListener(listener);
-        ringWithText.setTimeRing(timeRing);
-    }
-    private void initViews() {
-        initListViews();
-        drinkNum.setText(getResources().getString(R.string.milk_amount_drink_num_doc) + getOneDayDrinkAmount());
-        adviseNum.setText(getResources().getString(R.string.milk_amount_advise_num_doc) + getOneDayAdviseAmount());
-        ringWithText.setMaxSweepAngle(drinkAmount / adviseAmount * 360);
     }
 
     private void initAdpter(){
@@ -246,6 +249,8 @@ public class MilkAmountFragment extends TitleFragment {
             List<Record> temp = oneDay.getRecords();
             int recordSize = temp.size();
             for (int j = 0; j < recordSize; j++) {
+                if(i==0&&j==0)
+                   lastRecord = temp.get(recordSize - 1 - j);
                 adapter.addMap(getHeadData(oneDay), getContentData(temp.get(recordSize - 1 - j)), addCount++);
             }
         }
@@ -284,15 +289,24 @@ public class MilkAmountFragment extends TitleFragment {
 
     @Override
     public void refresh() {
-        if(recordHelper.isDataChanged() == false)
-            return;
-        recordHelper.setDataChanged(false);
+        if(firstEnter == false) {
+            if (lastRecord != null) {
+                Log.i("milkAmountFragmnet", "!=null" + lastRecord.getBeginTemperature());
+
+                if (recordHelper.needChanged(lastRecord) == false) {
+                    Log.i("milkAmountFragmnet", "false");
+                    return;
+                }
+            }
+        }
+        Log.i("milkAmountFragmnet","true");
+        initOnedays();
         getDataFromDB(adpter);
         drinkNum.setText(getResources().getString(R.string.milk_amount_drink_num_doc) + getOneDayDrinkAmount());
         adviseNum.setText(getResources().getString(R.string.milk_amount_advise_num_doc) + getOneDayAdviseAmount());
         ringWithText.setMaxSweepAngle(drinkAmount / adviseAmount * 360);
         startAnimator();
-
+        firstEnter = false;
     }
 
     private void startAnimator() {
@@ -351,7 +365,7 @@ public class MilkAmountFragment extends TitleFragment {
         if(oneDay == null)
             return "无数据";
         drinkAmount = recordHelper.getOneday(new Date()).getVolume();
-        Log.i("milkamount",String.valueOf(drinkAmount));
+       // Log.i("milkamount",String.valueOf(drinkAmount));
         return Standar.AMOUNT_FORMAT.format(drinkAmount) + "ml";
     }
 
@@ -365,9 +379,9 @@ public class MilkAmountFragment extends TitleFragment {
         adviseAmount = 0;
         for (int i = 0; i < len; i++) {
             adviseAmount += records.get(i).getAdviceVolume();
-            Log.i("milkamount",String.valueOf(adviseAmount));
+           // Log.i("milkamount",String.valueOf(adviseAmount));
         }
-        Log.i("milkamount",String.valueOf(adviseAmount));
+        //Log.i("milkamount",String.valueOf(adviseAmount));
         return Standar.AMOUNT_FORMAT.format(adviseAmount) + "ml";
     }
 

@@ -305,12 +305,12 @@
     <dimen name="milk_amount_listview_item_progress_bar_height">8dp</dimen>
     <dimen name="milk_amount_listview_item_progress_bar_width">155dp</dimen>
     <dimen name="milk_amount_listview_item_temperature_amount_parent_height">18dp</dimen>
+    <dimen name="milk_amount_listview_item_temperature_amount_parent_width">115dp</dimen>
     <dimen name="milk_amount_listview_item_temperature_amount_parent_margin_bottom">10dp</dimen>
     <dimen name="milk_amount_listview_item_temperature_amount_parent_margin_left">6dp</dimen>
     <dimen name="milk_amount_listview_item_temperature_amount_text_size">15dp</dimen>
     <dimen name="milk_amount_listview_item_divider_temperature_amount_line_width">1dp</dimen>
     <dimen name="milk_amount_listview_item_divider_temperature_amount_line_margin_left">12dp</dimen>
-    <dimen name="milk_amount_listview_item_temperature_amount_parent_width">102dp</dimen>
     <dimen name="milk_amount_listview_item_circle_D">38dp</dimen>
     <dimen name="milk_amount_listview_item_circle_up_text_size">18dp</dimen>
     <dimen name="milk_amount_listview_item_circle_down_text_size">10dp</dimen>
@@ -485,4 +485,13 @@
     <dimen name="eating_custom_fix_time_type_text_size">15dp</dimen>
     <dimen name="eating_custom_fix_choose_food_container_height">40dp</dimen>
     <dimen name="eating_custom_fix_name_left_margin">10dp</dimen>
+    <dimen name="choose_milk_fragment_item_title_height">50dp</dimen>
+    <dimen name="choose_milk_fragment_listview_title_height">50dp</dimen>
+    <dimen name="choose_milk_fragment_listview_content_height">50dp</dimen>
+    <dimen name="choose_milk_fragment_listview_imageview_width">50dp</dimen>
+    <dimen name="choose_milk_fragment_listview_imageview_height">30dp</dimen>
+    <dimen name="choose_milk_fragment_listview_imageview_margin_left">10dp</dimen>
+    <dimen name="choose_milk_fragment_listview_line_margin">40dp</dimen>
+    <dimen name="choose_milk_fragment_listview_textview_margin_left">10dp</dimen>
+    <dimen name="choose_milk_fragment_listview_content_text_size">10dp</dimen>
 </resources>

@@ -32,6 +32,7 @@ import java.util.Map;
  * 过多的内存
  *
  */
+
 public class WeightHelper {
     private static final String TAG = "weightAache";
     private  Map<Integer,Map<Integer,Float>> monthToweights = new HashMap<>();
@@ -86,6 +87,10 @@ public class WeightHelper {
      * @return
      */
     public float getCurrentWeight(){
+        if(currentBabyInfo == null){
+            NullPointerException e = new NullPointerException("weight no data in ache");
+            throw e;
+        }
         return currentBabyInfo.getWeight();
     }
 
@@ -94,6 +99,10 @@ public class WeightHelper {
      * @return 返回时间
      */
     public Date getLastWeightDate(){
+        if(currentBabyInfo == null){
+            NullPointerException e = new NullPointerException("本地没有缓存weight");
+            throw e;
+        }
         Date date = null;
         try {
             date = Standar.DATE_FORMAT.parse(currentBabyInfo.getAge());
@@ -133,7 +142,7 @@ public class WeightHelper {
     }
 
     /**
-     * 在原来的基础上增加一个weight
+     * 在原来的基础上增加一个weight,主要实现本地monthtoweights的跟新。
      * @param babyInfo 增加的weight信息
      */
     private void addOneWeight(BabyInfo babyInfo){
@@ -155,7 +164,7 @@ public class WeightHelper {
             list = new HashMap<>();
             monthToweights.put(month,list);
         }
-        list.put(days,babyInfo.getWeight());
+        list.put(days, babyInfo.getWeight());
     }
 
     /**
@@ -166,10 +175,11 @@ public class WeightHelper {
         BabyInfoDao babyInfoDao = new BabyInfoDao();
         if(currentBaby == null)
             Log.i("baby current","null");
-       /* Date birth = currentBaby.getCreatedAt();
+        Date birth = currentBaby.getCreatedAt();
         if(birth == null)
             Log.i("baby birth","null");
-            */
+
+        /*
         String birthday = currentBaby.getBirthday();
         Date birth = null;
         try {
@@ -177,6 +187,7 @@ public class WeightHelper {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        */
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(birth);
         int birthYear = calendar.get(Calendar.YEAR);
@@ -264,5 +275,34 @@ public class WeightHelper {
                 });
             }
         });
+    }
+
+    /**
+     * 同步的与云端同步，并更新weighthelper里面数据
+     */
+    public void sync(){
+        BabyInfoDao babyInfoDao = new BabyInfoDao();
+        List<BabyInfo> babyInfosCloud = babyInfoDao.findByBabyFromCloud(currentBaby);
+        if(babyInfosCloud == null || babyInfosCloud.isEmpty())
+            return;
+        if(equals(currentBabyInfo,babyInfosCloud.get(0))){
+            return;
+        }
+        for(BabyInfo babyInfo:babyInfosCloud){
+            babyInfo.saveInCache(App.getAppContext());
+        }
+        initData();
+    }
+
+    /**
+     * 比较两个babyinfo 是否相同
+     * @param a
+     * @param b
+     * @return 相同返回真
+     */
+    private boolean equals(BabyInfo a,BabyInfo b){
+        if(a.getCreatedAt().compareTo(b.getCreatedAt()) != 0)
+            return false;
+        return true;
     }
 }

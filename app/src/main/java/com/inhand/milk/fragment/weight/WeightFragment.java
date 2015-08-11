@@ -124,8 +124,10 @@ public class WeightFragment extends TitleFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == AdderWindow.ADDERWINDOW_RESULT){
-            if( data.getBooleanExtra(AdderWindow.ADDERWINDOW_KEY,false) == true)
+            if( data.getBooleanExtra(AdderWindow.ADDERWINDOW_KEY,false) == true) {
+                Log.d(TAG,"onactivityResult");
                 refresh();
+            }
         }
 
     }

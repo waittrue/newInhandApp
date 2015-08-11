@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Shader;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -60,9 +61,9 @@ public class WeightExcle extends View {
     private void initColors(){
         standerAreaColor = colorAddAlpha(0.5f,getResources().getColor(R.color.public_darkin_dark_color));
         lineColor = getResources().getColor(R.color.public_darkin_highlight_a_color);
-        leftTextColor = colorAddAlpha(0.9f,getResources().getColor(R.color.public_darkin_highlight_a_color));
-        bottomTextColor = colorAddAlpha(0.9f,getResources().getColor(R.color.public_darkin_highlight_a_color));
-        shaderStartColor =colorAddAlpha(0.8f,getResources().getColor(R.color.record_curve_shadow_color));
+        leftTextColor = colorAddAlpha(0.9f, getResources().getColor(R.color.public_darkin_highlight_a_color));
+        bottomTextColor = colorAddAlpha(0.9f, getResources().getColor(R.color.public_darkin_highlight_a_color));
+        shaderStartColor =colorAddAlpha(0.8f, getResources().getColor(R.color.record_curve_shadow_color));
         shaderEndColor = colorAddAlpha(0.0f,getResources().getColor(R.color.record_curve_shadow_color));
         pointBgColor = lineColor;
         pointInnerColor = getResources().getColor(R.color.public_main_a_color);
@@ -158,7 +159,24 @@ public class WeightExcle extends View {
         maxDate = maxDate > date ? maxDate : date;
         minDate = minDate < date ? minDate : date;
         showPoint = maxDate;
-        points.add(list);
+    //    Log.i(TAG,String.valueOf(list));
+        if(points.isEmpty()) {
+            points.add(list);
+          //  Log.i(TAG, "empty:"+String.valueOf(points.size()));
+        }
+        else {
+            int len = points.size();
+         //   Log.i(TAG,"len"+String.valueOf(len));
+            for(int i=0;i<len;i++){
+                List<Object> temp = points.get(i);
+                if((Integer)temp.get(0) >date){
+                    points.add(i,list);
+         //           Log.i(TAG,String.valueOf(points.size())+":"+String.valueOf(i));
+                    return;
+                }
+            }
+            points.add(list);
+        }
     }
 
     public void clearPoints() {

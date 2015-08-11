@@ -17,7 +17,7 @@
         android:layout_weight="1">
 
         <view
-            android:id="@+id/user_info_settings_city_listview"
+            android:id="@+id/choose_milk_fragment_quicklistview"
             class="com.inhand.milk.ui.QuickListView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
