@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVClassName;
+import com.avos.avoscloud.AVFile;
 import com.inhand.milk.dao.PowderTipDao;
 import com.inhand.milk.utils.ACache;
 import com.inhand.milk.utils.LocalFindTask;
@@ -28,6 +29,7 @@ public class Powder extends Base {
     public static final String PINYIN_NAME_KEY = "pinyinName"; // 拼音名
     public static final String SERIAL_NAME_KEY = "serialName"; // 系列名
     public static final String PHASE_KEY = "phase"; // 段数
+    public static final String LOGO_KEY = "logo"; // 奶粉logo
 
 
     public static final String CACHE_KEY = "powder"; // 奶粉缓存键
@@ -95,6 +97,18 @@ public class Powder extends Base {
 
     public void setPhase(int phase) {
         this.put(PHASE_KEY, phase);
+    }
+
+    /**
+     *  获得奶粉Logo
+     * @return 奶粉Logo
+     */
+    public AVFile getLogo(){
+        return this.getAVFile(LOGO_KEY);
+    }
+
+    public void setLogo(AVFile logo){
+        this.put(LOGO_KEY,logo);
     }
 
     /**
