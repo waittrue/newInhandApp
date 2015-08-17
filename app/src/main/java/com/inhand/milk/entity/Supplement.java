@@ -1,6 +1,7 @@
 package com.inhand.milk.entity;
 
 import com.avos.avoscloud.AVClassName;
+import com.avos.avoscloud.AVFile;
 
 /**
  * Supplement
@@ -19,6 +20,7 @@ public class Supplement extends Base {
     public static final String COOKING_METHOD_KEY = "cookingMethod"; // 辅食做法
     public static final String DESC_KEY = "desc"; // 辅食描述
     public static final String FOR_AGE_KEY = "forAge"; // 针对年龄段
+    public static final String COVER_KEY = "cover";
 
     /**
      * 获得辅食名称
@@ -86,4 +88,15 @@ public class Supplement extends Base {
         this.put(FOR_AGE_KEY, forAge);
     }
 
+    /**
+     * 获得辅食封面
+     * @return 辅食封面
+     */
+    public AVFile getCover(){
+        return this.getAVFile(COVER_KEY);
+    }
+
+    public void setCover(AVFile cover){
+        this.put(COVER_KEY,cover);
+    }
 }
