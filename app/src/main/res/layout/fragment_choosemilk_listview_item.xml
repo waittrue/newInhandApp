@@ -35,7 +35,7 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="@dimen/common_settings_item_line_smaller_height"
-            android:id="@+id/choose_milk_fragment_listview_line"
+            android:id="@+id/choose_milk_fragment_listview_divider"
             android:layout_alignParentLeft="false"
             android:layout_marginLeft="@dimen/choose_milk_fragment_listview_line_margin"
             android:layout_alignParentBottom="true"

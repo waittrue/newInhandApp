@@ -9,6 +9,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +29,6 @@ public class QuickListView extends ViewGroup {
     private QuickListViewAdapter adapter;
     private LinearLayout linearLayout;
     private int quickNavigationWidth, quickNavigationHeight, width, height;
-
     public QuickListView(Context context) {
         super(context);
         init();
@@ -155,5 +155,8 @@ public class QuickListView extends ViewGroup {
         if (i == len)
             return;
         listView.setSelection(i);
+    }
+    public void setOnItemClickListener(AdapterView.OnItemClickListener l){
+        listView.setOnItemClickListener(l);
     }
 }

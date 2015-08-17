@@ -494,4 +494,6 @@
     <dimen name="choose_milk_fragment_listview_line_margin">40dp</dimen>
     <dimen name="choose_milk_fragment_listview_textview_margin_left">10dp</dimen>
     <dimen name="choose_milk_fragment_listview_content_text_size">10dp</dimen>
+    <dimen name="choose_milk_phase_listview_item_height">50dp</dimen>
+    <dimen name="fragment_choose_milk_phase_margin_left">10dp</dimen>
 </resources>

@@ -147,6 +147,17 @@ public class App extends Application {
     }
 
     /**
+     * 获得屏幕的高度
+     * @param context 上下文
+     * @return int高度
+     */
+    public static int getWindowHeight(Context context) {
+        WindowManager wm = (WindowManager)context
+                .getSystemService(Context.WINDOW_SERVICE);
+
+        return wm.getDefaultDisplay().getHeight();
+    }
+    /**
      * 登出方法,会清除保存的宝宝信息
      */
     public static void logOut() {

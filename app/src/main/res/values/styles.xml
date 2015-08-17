@@ -222,4 +222,23 @@
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_marginLeft">@dimen/common_settings_item_margin_left</item>
     </style>
+
+    <!--很多列表那些右边有一个小箭头，小箭头的默认格式-->
+    <style name="right_arrow_default_style">
+        <item name="android:layout_height">@dimen/common_settings_item_text_size</item>
+        <item name="android:layout_width">@dimen/common_settings_item_text_size</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:src">@drawable/arrow_icon</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">@dimen/common_settings_item_margin_right</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+   <!--列表下面那个分隔线的默认格式，这个是没有设置 左键局 的-->
+    <style name="listview_divider_default_style">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/common_settings_item_line_smaller_height</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:background">@color/common_settings_item_line_color</item>
+    </style>
 </resources>

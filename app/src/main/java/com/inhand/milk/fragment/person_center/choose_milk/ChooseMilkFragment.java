@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.inhand.milk.App;
 import com.inhand.milk.R;
@@ -50,6 +52,7 @@ public class ChooseMilkFragment extends TitleFragment {
                 try {
                     powders = powderDao.findFromCloud();
                     if(powders == null) {
+                        Log.i(TAG,"奶粉同步失败");
                         success = false;
                         return;
                     }
@@ -58,6 +61,7 @@ public class ChooseMilkFragment extends TitleFragment {
                     success = false;
                     return;
                 }
+                Log.i(TAG,"奶粉同步成功");
                 success =true;
             }
 
@@ -68,8 +72,13 @@ public class ChooseMilkFragment extends TitleFragment {
 
             @Override
             public void onPostExecute() {
-                if(success)
+                if(success) {
                     initListview();
+                    loadingView.dismiss();
+                }
+                else {
+                   loadingView.disppear(null,"下载失败",1000);
+                }
             }
         };
         loadingView.loading(loadingCallback);
@@ -93,6 +102,7 @@ public class ChooseMilkFragment extends TitleFragment {
                 return title;
             }
         };
+        quickListView.setHead(R.layout.fragment_choosemilk_listview_item);
         int count = powders.size();
         Powder powder;
         for (int i=0;i<count;i++){
@@ -111,7 +121,8 @@ public class ChooseMilkFragment extends TitleFragment {
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_choosemilk_listview_item, null);
                 }
-                ViewHolder.get(convertView,R.id.choose_milk_fragment_title).setVisibility(View.GONE);
+                ViewHolder.get(convertView,R.id.choose_milk_fragment_content).setVisibility(View.GONE);
+                ViewHolder.get(convertView,R.id.choose_milk_fragment_title).setVisibility(View.VISIBLE);
                 TextView textView = ViewHolder.get(convertView,R.id.choose_milk_fragment_listview_title_textview);
                 textView.setText((String)map.get(TITLE_KEY));
                 return convertView;
@@ -121,13 +132,28 @@ public class ChooseMilkFragment extends TitleFragment {
             public View configureContent(Map<String, Object> map, View convertView, int position) {
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_choosemilk_listview_item, null);
+
                 }
-                ViewHolder.get(convertView,R.id.choose_milk_fragment_content).setVisibility(View.GONE);
+                ViewHolder.get(convertView,R.id.choose_milk_fragment_content).setVisibility(View.VISIBLE);
+                ViewHolder.get(convertView,R.id.choose_milk_fragment_title).setVisibility(View.GONE);
+                if (adapter.needHead(position + 1) == true) {
+                    ViewHolder.get(convertView, R.id.choose_milk_fragment_listview_divider).setVisibility(View.GONE);
+                } else {
+                    ViewHolder.get(convertView, R.id.choose_milk_fragment_listview_divider).setVisibility(View.VISIBLE);
+                }
                 TextView textView = ViewHolder.get(convertView,R.id.choose_milk_fragment_listview_textview);
                 textView.setText((String)map.get(NAME_KEY));
                 return convertView;
             }
         });
         quickListView.setAdapter(adapter);
+
+        quickListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                gotoSpecialFragment(new ChooseMilkPhaseFragment());
+            }
+        });
     }
+
 }
