@@ -164,14 +164,19 @@ public class BabyInfo extends Base implements CacheSaving<BabyInfo> {
         query.findInBackground(new FindCallback<BabyInfo>() {
             @Override
             public void done(List<BabyInfo> list, AVException e) {
-                if (list.size() > 0) {
-                    // 如果存在，则覆盖
-                    BabyInfo info = list.get(0);
-                    info.refresh(newInfo);
-                    info.saveInBackground(callback);
-                } else {
-                    newInfo.saveInBackground(callback);
+                if (e == null) {//这里是大力 增加了错误检查
+                    if (list.size() > 0) {
+                        // 如果存在，则覆盖
+                        BabyInfo info = list.get(0);
+                        info.refresh(newInfo);
+                        info.saveInBackground(callback);
+                    } else {
+                        newInfo.saveInBackground(callback);
+                    }
                 }
+                else //这里也是大力增加的错误检查
+                    if(callback !=null)
+                        callback.done(e);
             }
         });
     }

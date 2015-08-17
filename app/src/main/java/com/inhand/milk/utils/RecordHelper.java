@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2015/8/9.
@@ -133,7 +134,6 @@ public class RecordHelper {
         List<Record> records = oneDay.getRecords();
         if (records == null || records.isEmpty())
             return;
-        lastRecord = records.get(records.size() - 1);
     }
 
     /**
@@ -230,7 +230,12 @@ public class RecordHelper {
                     e.printStackTrace();
                     return;
                 } else {
-
+                    //跟新本地的data
+                    Log.i(TAG,"Record sync success");
+                    Set<String> set = data.keySet();
+                    for(String i:set){
+                        updateOneday(i);
+                    }
                 }
             }
         });

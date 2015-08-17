@@ -3,6 +3,8 @@ package com.inhand.milk.fragment.weight;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.TypedValue;
@@ -15,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.inhand.milk.App;
 import com.inhand.milk.R;
@@ -23,6 +26,7 @@ import com.inhand.milk.entity.Baby;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.ui.RingWithText;
 import com.inhand.milk.utils.Calculator;
+import com.inhand.milk.utils.WeightHelper;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -50,7 +54,11 @@ public class WeightFragment extends TitleFragment {
     private WeightTab weightTab;
     private WeightHelper weightHelper;
     private TextView leftUp, rightUp;
-
+    //这个主要用来让其他Activity告诉这个页面数据更新完了
+    private static WeightFragmentHandler WEIGHT_FRAGMENT_HANDLER ;
+    public static WeightFragmentHandler getWeightHander(){
+        return WEIGHT_FRAGMENT_HANDLER;
+    }
     public WeightFragment() {
         initData();
     }
@@ -86,6 +94,7 @@ public class WeightFragment extends TitleFragment {
         // Log.i(TAG, "oncreateView");
         mView = inflater.inflate(R.layout.fragment_weight, container, false);
         initViews(mView);
+        WEIGHT_FRAGMENT_HANDLER = new WeightFragmentHandler();
         return mView;
     }
 
@@ -111,25 +120,12 @@ public class WeightFragment extends TitleFragment {
                 inAnimation();
             }
         });
-
     }
 
     private void inAnimation() {
         //floatAdderWindow.show();
         Intent intent = new Intent(getActivity(), AdderWindow.class);
-        this.startActivityForResult(intent, WEIGHT_ADD);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == AdderWindow.ADDERWINDOW_RESULT) {
-            if (data.getBooleanExtra(AdderWindow.ADDERWINDOW_KEY, false) == true) {
-                Log.d(TAG, "onactivityResult");
-                refresh();
-            }
-        }
-
+        this.startActivity(intent);
     }
 
     private void initRelativeContent(View view) {
@@ -431,4 +427,16 @@ public class WeightFragment extends TitleFragment {
         linearLayout.addView(imageView);
     }
 
+    class WeightFragmentHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what == WEIGHT_ADD){
+                if(msg.arg1 == 0) //成功
+                    refresh();
+                else
+                    Toast.makeText(getActivity(),"刚刚体重存储云端失败，请检查网络",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

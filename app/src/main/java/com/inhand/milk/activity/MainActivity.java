@@ -1,5 +1,6 @@
 package com.inhand.milk.activity;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.FragmentManager;
@@ -20,6 +21,8 @@ import android.widget.SimpleAdapter;
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
 import com.inhand.milk.fragment.footer_navigation.FooterNavigation;
+import com.inhand.milk.utils.RecordHelper;
+import com.inhand.milk.utils.WeightHelper;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;
@@ -63,6 +66,18 @@ public class MainActivity extends BaseActivity {
             }
         };
         handler.postDelayed(runnable, 300);
+
+        //开启同步跟新的线程
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                WeightHelper.getInstance().sync();
+                RecordHelper.getInstance().syncRecord();
+            }
+        });
+        thread.start();
+
+        /*
         setSlidingMenu();
         onClickListener = new OnClickListener() {
             @Override
@@ -71,6 +86,7 @@ public class MainActivity extends BaseActivity {
                 menu.toggle();
             }
         };
+        */
     }
 /*
     @Override

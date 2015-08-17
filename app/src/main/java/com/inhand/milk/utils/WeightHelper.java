@@ -1,4 +1,4 @@
-package com.inhand.milk.fragment.weight;
+package com.inhand.milk.utils;
 
 import android.util.Log;
 
@@ -10,9 +10,6 @@ import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.dao.BabyInfoDao;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.entity.BabyInfo;
-import com.inhand.milk.utils.ACache;
-import com.inhand.milk.utils.Calculator;
-import com.inhand.milk.utils.LocalSaveTask;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -232,12 +229,19 @@ public class WeightHelper {
     }
 
     /**
-     * 存入一个babyinfo，先存网络，如果成功在存本地，本地也成功，则更新本类的babyinfos，更新一下monthtoweights
+     *
+     * @param babyInfo
+     */
+    public void saveOneWeight(final BabyInfo babyInfo){
+        saveOneWeight(babyInfo,null);
+    }
+    /**
+     * 异步的存入一个babyinfo，先存网络，如果成功在存本地，本地也成功，则更新本类的babyinfos，更新一下monthtoweights
      * 并更新currentbabyinfo
      *
      * @param babyInfo 要存入的babyinfo
      */
-    public void saveOneWeight(final BabyInfo babyInfo) {
+    public void saveOneWeight(final BabyInfo babyInfo,final SaveCallback callback) {
         babyInfo.setBaby(App.getCurrentBaby());
         babyInfo.saveInCloud(new SaveCallback() {
             @Override
@@ -245,13 +249,14 @@ public class WeightHelper {
                 if (e != null) {
                     e.printStackTrace();
                     Log.i(TAG, "babyinfo incloud failed");
+                    if(callback != null)
+                        callback.done(e);
                     return;
                 }
                 Log.i(TAG, "babyinfo incloud success");
                 babyInfo.saveInCache(App.getAppContext(), new LocalSaveTask.LocalSaveCallback() {
                     @Override
                     public void done() {
-                        babyInfos.add(babyInfo);
                         if (babyInfos.isEmpty())
                             babyInfos.add(babyInfo);
                         else {
@@ -282,6 +287,9 @@ public class WeightHelper {
                         if (current.compareTo(now) <= 0) {
                             currentBabyInfo = babyInfo;
                         }
+                        if(callback != null)
+                            callback.done(null);
+                        Log.i(TAG,"weight save cloud success");
                     }
                 });
             }
@@ -303,6 +311,7 @@ public class WeightHelper {
             babyInfo.saveInCache(App.getAppContext());
         }
         initData();
+        Log.i(TAG,"weight sync success");
     }
 
     /**

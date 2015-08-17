@@ -3,6 +3,8 @@ package com.inhand.milk.fragment.weight;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
@@ -20,6 +24,7 @@ import com.inhand.milk.activity.MainActivity;
 import com.inhand.milk.entity.BabyInfo;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.firstlanunch.Ruler;
+import com.inhand.milk.utils.WeightHelper;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -106,10 +111,20 @@ public class AdderWindow extends Activity {
                 babyInfo.setWeight(num);
                 String date = Standar.DATE_FORMAT.format(new Date());
                 babyInfo.setAge(date);
-                weightHelper.saveOneWeight(babyInfo);
-                Intent intent = new Intent(AdderWindow.this, MainActivity.class);
-                intent.putExtra(ADDERWINDOW_KEY, true);
-                setResult(ADDERWINDOW_RESULT, intent);
+                weightHelper.saveOneWeight(babyInfo, new SaveCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        Handler handler = WeightFragment.getWeightHander();
+                        Message message = handler.obtainMessage();
+                        message.what = WeightFragment.WEIGHT_ADD;
+                        if(e == null)
+                            message.arg1 = 0;//0代表成功
+                        else
+                            message.arg1 = 1;//1代表失败
+                        handler.sendMessage(message);
+
+                    }
+                });
                 outAnimation();
 
             }
