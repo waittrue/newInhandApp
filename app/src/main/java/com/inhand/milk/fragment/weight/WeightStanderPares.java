@@ -15,9 +15,9 @@ import java.util.Map;
  * 解析标准的那个表的，产生相对月份，相对标准的值。
  */
 public class WeightStanderPares {
+    private static final int TotalMonths = 81 + 1;
     private static WeightStanderPares instance = null;
     private XmlPullParser parser;
-    private static final int TotalMonths = 81 + 1;
     private float[][] boyStander = new float[TotalMonths][2], girlStander = new float[TotalMonths][2];
 
     private WeightStanderPares() {
@@ -41,6 +41,7 @@ public class WeightStanderPares {
         if (instance == null)
             instance = new WeightStanderPares();
     }
+
     public static WeightStanderPares getInstance() {
         if (instance == null) {
             init();

@@ -1,11 +1,5 @@
 package com.inhand.milk.fragment.fisrt_lanunch;
 
-import com.inhand.milk.R;
-import com.inhand.milk.activity.FirstLanunchActivity;
-import com.inhand.milk.entity.Baby;
-import com.inhand.milk.entity.BabyInfo;
-import com.inhand.milk.ui.firstlanunch.FirstLanunchBottom;
-
 import android.animation.ObjectAnimator;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -15,6 +9,12 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.inhand.milk.R;
+import com.inhand.milk.activity.FirstLanunchActivity;
+import com.inhand.milk.entity.Baby;
+import com.inhand.milk.entity.BabyInfo;
+import com.inhand.milk.ui.firstlanunch.FirstLanunchBottom;
 
 public abstract class FirstLaunchFragment extends Fragment {
     private static String extraInfo;

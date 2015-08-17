@@ -26,11 +26,12 @@ public class FeedItem extends Base {
 
     /**
      * 获得该喂养条目所属的喂养计划
+     *
      * @return 该喂养条目所属的喂养计划
      */
-    public FeedPlan getFeedPlan(){
+    public FeedPlan getFeedPlan() {
         try {
-            return this.getAVObject(FEED_PLAN_KEY,FeedPlan.class);
+            return this.getAVObject(FEED_PLAN_KEY, FeedPlan.class);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -39,35 +40,39 @@ public class FeedItem extends Base {
 
     /**
      * 设置该喂养条目所属的喂养计划
+     *
      * @param feedPlan 设置该喂养条目所属的喂养计划
      */
-    public void setFeedPlan(FeedPlan feedPlan){
-        this.put(FEED_PLAN_KEY,feedPlan);
+    public void setFeedPlan(FeedPlan feedPlan) {
+        this.put(FEED_PLAN_KEY, feedPlan);
     }
 
     /**
      * 获得喂奶时间
+     *
      * @return 喂奶时间
      */
-    public String getTime(){
+    public String getTime() {
         return this.getString(TIME_KEY);
     }
 
     /**
      * 设置喂奶时间
+     *
      * @param time 喂奶时间
      */
-    public void setTime(String time){
-        this.put(TIME_KEY,time);
+    public void setTime(String time) {
+        this.put(TIME_KEY, time);
     }
 
     /**
      * 获得辅食
+     *
      * @return 辅食
      */
-    public Supplement getSupplement(){
+    public Supplement getSupplement() {
         try {
-            return this.getAVObject(SUPPLEMENT_KEY,Supplement.class);
+            return this.getAVObject(SUPPLEMENT_KEY, Supplement.class);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -76,16 +81,18 @@ public class FeedItem extends Base {
 
     /**
      * 设置辅食
+     *
      * @param supplement 辅食
      */
-    public void setSupplement(Supplement supplement){
+    public void setSupplement(Supplement supplement) {
         // 设置装填为辅食
         this.put(TYPE_KEY, TYPE_SUPP);
-        this.put(SUPPLEMENT_KEY,supplement);
+        this.put(SUPPLEMENT_KEY, supplement);
     }
 
     /**
      * 返回喂食类型
+     *
      * @return 喂食类型
      */
     public int getType() {
@@ -94,6 +101,7 @@ public class FeedItem extends Base {
 
     /**
      * 设置喂食类型
+     *
      * @param type 喂食类型
      */
     public void setType(int type) {

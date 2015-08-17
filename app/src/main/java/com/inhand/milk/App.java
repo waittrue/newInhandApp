@@ -28,38 +28,11 @@ import com.inhand.milk.utils.ACache;
 public class App extends Application {
     public static final String BABY_CACHE_KEY = "current_baby";
     public static Baby currentBaby = null;
-    private static Context context = null;
     public static Typeface Typeface_arial;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        //初始化LeanCloud
-        LeanCloudHelper.initLeanCloud(this);
-        initCurrentBaby();
-        context = getApplicationContext();
-        Typeface_arial = Typeface.createFromAsset(context.getAssets(), "ttf/arial.ttf");
-
-    }
-
+    private static Context context = null;
 
     public static User getCurrentUser() {
         return AVUser.cast(AVUser.getCurrentUser(), User.class);
-    }
-
-    public void initCurrentBaby() {
-        if (currentBaby == null) {
-            ACache aCache = ACache.get(this);
-            String json = aCache.getAsString(Baby.CACHE_KEY);
-            if(json == null)
-                return;
-            Log.d("baby currentBaby",json);
-            currentBaby = JSON.parseObject(json, Baby.class);
-            if(currentBaby == null){
-                Log.d("baby currentBaby","null");
-            }
-           Log.d("baby currentBaby", Standar.DATE_FORMAT.format( currentBaby.getCreatedAt() ));
-        }
     }
 
     /**
@@ -81,8 +54,6 @@ public class App extends Application {
             return false;
         return true;
     }
-    //分工不分--这部分我添加的
-
 
     public static Context getAppContext() {
         return context;
@@ -119,6 +90,7 @@ public class App extends Application {
         }
         return statusHeight;
     }
+    //分工不分--这部分我添加的
 
     /*
     *获取屏幕宽度
@@ -129,8 +101,9 @@ public class App extends Application {
         return metric.widthPixels;  // 屏幕宽度（像素）
 
     }
+
     public static int getWindowWidth(Context context) {
-        WindowManager wm = (WindowManager)context
+        WindowManager wm = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
 
         return wm.getDefaultDisplay().getWidth();
@@ -148,15 +121,17 @@ public class App extends Application {
 
     /**
      * 获得屏幕的高度
+     *
      * @param context 上下文
      * @return int高度
      */
     public static int getWindowHeight(Context context) {
-        WindowManager wm = (WindowManager)context
+        WindowManager wm = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
 
         return wm.getDefaultDisplay().getHeight();
     }
+
     /**
      * 登出方法,会清除保存的宝宝信息
      */
@@ -165,5 +140,31 @@ public class App extends Application {
         // 清除所有缓存
         aCache.clear();
         AVUser.logOut();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        //初始化LeanCloud
+        LeanCloudHelper.initLeanCloud(this);
+        initCurrentBaby();
+        context = getApplicationContext();
+        Typeface_arial = Typeface.createFromAsset(context.getAssets(), "ttf/arial.ttf");
+
+    }
+
+    public void initCurrentBaby() {
+        if (currentBaby == null) {
+            ACache aCache = ACache.get(this);
+            String json = aCache.getAsString(Baby.CACHE_KEY);
+            if (json == null)
+                return;
+            Log.d("baby currentBaby", json);
+            currentBaby = JSON.parseObject(json, Baby.class);
+            if (currentBaby == null) {
+                Log.d("baby currentBaby", "null");
+            }
+            Log.d("baby currentBaby", Standar.DATE_FORMAT.format(currentBaby.getCreatedAt()));
+        }
     }
 }

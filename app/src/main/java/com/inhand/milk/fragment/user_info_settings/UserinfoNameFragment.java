@@ -1,7 +1,5 @@
 package com.inhand.milk.fragment.user_info_settings;
 
-import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +14,15 @@ import com.inhand.milk.ui.FixInfoBaseFragment;
  */
 public class UserinfoNameFragment extends FixInfoBaseFragment {
     private View.OnClickListener listener;
-    public UserinfoNameFragment(View.OnClickListener listener){
-        this.listener  = listener;
+
+    public UserinfoNameFragment(View.OnClickListener listener) {
+        this.listener = listener;
     }
-    public UserinfoNameFragment(){
-        this.listener =null;
+
+    public UserinfoNameFragment() {
+        this.listener = null;
     }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         setTitleview(getResources().getString(R.string.user_info_fix_name_title_text), 2, "完成", listener);

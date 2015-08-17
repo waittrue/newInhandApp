@@ -32,7 +32,7 @@
     <color name="public_main_a_color">#19d1a8</color>
     <color name="public_main_b_color">#01bcb1</color>
     <color name="public_nor_color">#88cc44</color>
-    <color name ="public_low_color">#4dd3f5</color>
+    <color name="public_low_color">#4dd3f5</color>
     <color name="public_high_color">#ff6600</color>
     <color name="public_caution_color">#fd7272</color>
     <color name="public_darkin_dark_color">#04bca4</color>
@@ -190,7 +190,7 @@
     <color name="common_settings_item_left_text_color">#000000</color>
     <color name="common_settings_item_right_text_color">#c8c8c8</color>
     <color name="common_settings_item_line_color">#c8c8c8</color>
-    <color name ="common_settings_item_click_bg_color">#77000000</color>
+    <color name="common_settings_item_click_bg_color">#77000000</color>
 
 
     <!--util popupwindow_selected-->

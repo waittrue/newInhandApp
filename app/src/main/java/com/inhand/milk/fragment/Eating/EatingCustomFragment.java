@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -39,55 +38,23 @@ import java.util.Map;
  */
 public class EatingCustomFragment extends TitleFragment {
     private static final String TAG = "eatingcustomfragment";
+    private static final String TIME = "time", TYPE = "type";
+    private static final int time = 300;
     private List<int[]> planTime = new ArrayList<>();
-    private boolean[] isMilk ;
-    private ButtonA buttonA,buttonB;
+    private boolean[] isMilk;
+    private ButtonA buttonA, buttonB;
     private ListView listView;
     private DelectAdapter delectAdapter;
-    private static final  String TIME = "time",TYPE = "type";
-    private static final int time = 300;
     private float itemHeight;
-    private List<Map<String,Object>> data;
-    private boolean closeAnimationFirstEnd =false;
-    private   List<Integer> seletedData;
-    private float animationTranslate ;
+    private List<Map<String, Object>> data;
+    private boolean closeAnimationFirstEnd = false;
+    private List<Integer> seletedData;
+    private float animationTranslate;
     private AdapterView.OnItemClickListener listViewListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent(getActivity(),EatingCustomFixActivity.class);
+            Intent intent = new Intent(getActivity(), EatingCustomFixActivity.class);
             getActivity().startActivity(intent);
-        }
-    };
-
-    private View.OnClickListener deleteListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if(buttonA == null)
-                return;
-            buttonA.setText(getResources().getString(R.string.public_cancle));
-            buttonB.setText(getResources().getString(R.string.public_finish));
-            int count = listView.getChildCount();
-            for(int i=0;i<count;i++){
-                inAnimation(listView.getChildAt(i));
-            }
-            delectAdapter.setDelect(true);
-            buttonA.setOnClickListener(cancleListener);
-            buttonB.setOnClickListener(finishListener);
-        }
-    };
-
-    private View.OnClickListener cancleListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            buttonA.setText(getResources().getString(R.string.public_delect));
-            buttonB.setText(getResources().getString(R.string.public_add));
-            int count = listView.getChildCount();
-            for(int i=0;i<count;i++){
-                outAnimaton(listView.getChildAt(i));
-            }
-            delectAdapter.setDelect(false);
-            buttonA.setOnClickListener(deleteListener);
-            buttonB.setOnClickListener(addListener);
         }
     };
     private View.OnClickListener finishListener = new View.OnClickListener() {
@@ -97,9 +64,9 @@ public class EatingCustomFragment extends TitleFragment {
             seletedData = delectAdapter.getSelected();
             int firstPosition = listView.getFirstVisiblePosition();
             int EndPosition = listView.getLastVisiblePosition();
-            for(int position :seletedData){
-                if(position>= firstPosition && position<= EndPosition)
-                     closeAniamtion(listView.getChildAt(position));
+            for (int position : seletedData) {
+                if (position >= firstPosition && position <= EndPosition)
+                    closeAniamtion(listView.getChildAt(position));
             }
         }
     };
@@ -110,13 +77,44 @@ public class EatingCustomFragment extends TitleFragment {
             getActivity().startActivity(intent);
         }
     };
+    private View.OnClickListener cancleListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            buttonA.setText(getResources().getString(R.string.public_delect));
+            buttonB.setText(getResources().getString(R.string.public_add));
+            int count = listView.getChildCount();
+            for (int i = 0; i < count; i++) {
+                outAnimaton(listView.getChildAt(i));
+            }
+            delectAdapter.setDelect(false);
+            buttonA.setOnClickListener(deleteListener);
+            buttonB.setOnClickListener(addListener);
+        }
+    };
+    private View.OnClickListener deleteListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (buttonA == null)
+                return;
+            buttonA.setText(getResources().getString(R.string.public_cancle));
+            buttonB.setText(getResources().getString(R.string.public_finish));
+            int count = listView.getChildCount();
+            for (int i = 0; i < count; i++) {
+                inAnimation(listView.getChildAt(i));
+            }
+            delectAdapter.setDelect(true);
+            buttonA.setOnClickListener(cancleListener);
+            buttonB.setOnClickListener(finishListener);
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // return super.onCreateView(inflater, container, savedInstanceState);
         mView = inflater.inflate(R.layout.eating_custom_plan, container, false);
-        buttonA = (ButtonA)mView.findViewById(R.id.eating_plan_custom_button_a);
-        buttonB = (ButtonA)mView.findViewById(R.id.eating_plan_custom_button_b);
+        buttonA = (ButtonA) mView.findViewById(R.id.eating_plan_custom_button_a);
+        buttonB = (ButtonA) mView.findViewById(R.id.eating_plan_custom_button_b);
         animationTranslate = getResources().getDimensionPixelOffset(R.dimen.eating_custom_plan_item_animation_long);
         itemHeight = getResources().getDimensionPixelOffset(R.dimen.eating_custom_plan_item_height);
         View.OnClickListener rightListener = new View.OnClickListener() {
@@ -133,19 +131,19 @@ public class EatingCustomFragment extends TitleFragment {
         return mView;
     }
 
-    private void initViews(){
-        listView = (ListView)mView.findViewById(R.id.eating_custom_plan_listview);
+    private void initViews() {
+        listView = (ListView) mView.findViewById(R.id.eating_custom_plan_listview);
         Intent intent = getActivity().getIntent();
-        isMilk  = intent.getBooleanArrayExtra(EatingFragment.IsMilkKey);
-        planTime = (List<int[]>)intent.getSerializableExtra(EatingFragment.PlanTimeKey);
-        data =new ArrayList<>();
-        for(int i=0;i<planTime.size();i++){
-            Map<String,Object> map= new HashMap<>();
+        isMilk = intent.getBooleanArrayExtra(EatingFragment.IsMilkKey);
+        planTime = (List<int[]>) intent.getSerializableExtra(EatingFragment.PlanTimeKey);
+        data = new ArrayList<>();
+        for (int i = 0; i < planTime.size(); i++) {
+            Map<String, Object> map = new HashMap<>();
             int[] time = planTime.get(i);
             boolean ismilk = isMilk[i];
             String t = formatTime(time);
-            map.put(TIME,t);
-            map.put(TYPE,ismilk);
+            map.put(TIME, t);
+            map.put(TYPE, ismilk);
             data.add(map);
         }
         delectAdapter = new DelectAdapter(getActivity());
@@ -153,59 +151,62 @@ public class EatingCustomFragment extends TitleFragment {
         listView.setAdapter(delectAdapter);
         listView.setOnItemClickListener(listViewListener);
     }
-    private String formatTime(int[] time){
-        String hour,m,result="";
+
+    private String formatTime(int[] time) {
+        String hour, m, result = "";
         hour = String.valueOf(time[0]);
         m = String.valueOf(time[1]);
-        if(time[0]<10){
+        if (time[0] < 10) {
             result = "0";
         }
-        result +=hour;
+        result += hour;
         result += ":";
-        if(time[1] <10)
-            result +="0";
+        if (time[1] < 10)
+            result += "0";
         result += m;
         return result;
     }
 
 
-    public void inAnimation(View view){
+    public void inAnimation(View view) {
         final CheckBox checkBox;
         final ImageView icon;
         final TextView typeTextView;
-        checkBox = ViewHolder.get(view,R.id.eating_custome_plan_check_box);
-        icon = ViewHolder.get(view,R.id.eating_custome_plan_item_icon);
-        typeTextView =ViewHolder.get(view, R.id.eating_custom_plan_item_type);
+        checkBox = ViewHolder.get(view, R.id.eating_custome_plan_check_box);
+        icon = ViewHolder.get(view, R.id.eating_custome_plan_item_icon);
+        typeTextView = ViewHolder.get(view, R.id.eating_custom_plan_item_type);
 
-        Animation animation = new TranslateAnimation(-animationTranslate,0,0,0);
+        Animation animation = new TranslateAnimation(-animationTranslate, 0, 0, 0);
         animation.setDuration(time);
-        ObjectAnimator inalpha = ObjectAnimator.ofFloat(checkBox,"alpha",0,1);
+        ObjectAnimator inalpha = ObjectAnimator.ofFloat(checkBox, "alpha", 0, 1);
         inalpha.setDuration(time);
         checkBox.setVisibility(View.VISIBLE);
         inalpha.start();
         checkBox.startAnimation(animation);
 
-        ObjectAnimator rightAnimation1 =getRightAnimator();
+        ObjectAnimator rightAnimation1 = getRightAnimator();
         ObjectAnimator rightAnimation2 = getRightAnimator();
         rightAnimation1.setTarget(icon);
         rightAnimation2.setTarget(typeTextView);
         rightAnimation1.start();
         rightAnimation2.start();
     }
-    private ObjectAnimator getRightAnimator(){
+
+    private ObjectAnimator getRightAnimator() {
         ObjectAnimator objectAnimator = new ObjectAnimator();
         objectAnimator.setDuration(time);
         objectAnimator.setPropertyName("translationX");
-        objectAnimator.setFloatValues(0,animationTranslate);
-        return  objectAnimator;
+        objectAnimator.setFloatValues(0, animationTranslate);
+        return objectAnimator;
     }
-    public void outAnimaton(View view){
+
+    public void outAnimaton(View view) {
         final CheckBox checkBox;
         final ImageView icon;
         final TextView typeTextView;
-        checkBox = ViewHolder.get(view,R.id.eating_custome_plan_check_box);
-        icon = ViewHolder.get(view,R.id.eating_custome_plan_item_icon);
-        typeTextView =ViewHolder.get(view,R.id.eating_custom_plan_item_type);
+        checkBox = ViewHolder.get(view, R.id.eating_custome_plan_check_box);
+        icon = ViewHolder.get(view, R.id.eating_custome_plan_item_icon);
+        typeTextView = ViewHolder.get(view, R.id.eating_custom_plan_item_type);
 
         ObjectAnimator left1 = getLeftAnimator();
         ObjectAnimator left2 = getLeftAnimator();
@@ -214,7 +215,7 @@ public class EatingCustomFragment extends TitleFragment {
         left1.start();
         left2.start();
 
-        ObjectAnimator outalpha = ObjectAnimator.ofFloat(checkBox,"alpha",1,0);
+        ObjectAnimator outalpha = ObjectAnimator.ofFloat(checkBox, "alpha", 1, 0);
         outalpha.setDuration(time);
         outalpha.addListener(new Animator.AnimatorListener() {
             @Override
@@ -239,20 +240,22 @@ public class EatingCustomFragment extends TitleFragment {
         });
         outalpha.start();
 
-        Animation animation = new TranslateAnimation(0,-animationTranslate,0,0);
+        Animation animation = new TranslateAnimation(0, -animationTranslate, 0, 0);
         animation.setDuration(time);
         checkBox.startAnimation(animation);
     }
-    private ObjectAnimator getLeftAnimator(){
+
+    private ObjectAnimator getLeftAnimator() {
         ObjectAnimator objectAnimator = new ObjectAnimator();
         objectAnimator.setDuration(time);
         objectAnimator.setPropertyName("translationX");
-        objectAnimator.setFloatValues(animationTranslate,0);
-        return  objectAnimator;
+        objectAnimator.setFloatValues(animationTranslate, 0);
+        return objectAnimator;
     }
-    private void closeAniamtion(final View view){
 
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1,0);
+    private void closeAniamtion(final View view) {
+
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0);
         valueAnimator.setDuration(time);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -261,7 +264,7 @@ public class EatingCustomFragment extends TitleFragment {
                 ViewGroup.LayoutParams lp = view.getLayoutParams();
                 lp.height = (int) (itemHeight * x);
                 view.requestLayout();
-              //  Log.i(TAG, String.valueOf(lp.height));
+                //  Log.i(TAG, String.valueOf(lp.height));
             }
         });
         valueAnimator.addListener(new Animator.AnimatorListener() {
@@ -277,7 +280,7 @@ public class EatingCustomFragment extends TitleFragment {
                 closeAnimationFirstEnd = true;
                 int count = seletedData.size();
                 for (int i = count - 1; i >= 0; i--) {
-                    data.remove( (int)seletedData.get(i) );
+                    data.remove((int) seletedData.get(i));
                     Log.i(TAG, "remove :" + String.valueOf(seletedData.get(i)));
                 }
                 delectAdapter.notifyDataSetChanged();
@@ -298,11 +301,11 @@ public class EatingCustomFragment extends TitleFragment {
         valueAnimator.start();
     }
 
-    private class  DelectAdapter extends BaseAdapter{
+    private class DelectAdapter extends BaseAdapter {
         private Context context;
         private boolean delect = false;
         private List<Integer> selected = new ArrayList<>();
-        private List<Map<String,Object>> data;
+        private List<Map<String, Object>> data;
         private float translate;
         private float itemHeight;
         private View.OnClickListener checkBoxListener = new View.OnClickListener() {
@@ -313,19 +316,20 @@ public class EatingCustomFragment extends TitleFragment {
                 if (cb.isChecked()) {
                     selected.add(num);
                 } else {
-                    selected.remove((Integer)num);
+                    selected.remove((Integer) num);
                 }
-                Log.i(TAG+"ch",String.valueOf(num));
+                Log.i(TAG + "ch", String.valueOf(num));
             }
         };
-        public  DelectAdapter(Context context){
+
+        public DelectAdapter(Context context) {
             this.context = context;
-            translate =context.getResources().getDimensionPixelOffset(R.dimen.eating_custom_plan_item_animation_long);
+            translate = context.getResources().getDimensionPixelOffset(R.dimen.eating_custom_plan_item_animation_long);
             itemHeight = getResources().getDimensionPixelOffset(R.dimen.eating_custom_plan_item_height);
         }
 
         public void setDelect(boolean delect) {
-            if(delect == true) {
+            if (delect == true) {
                 int firstPosition = listView.getFirstVisiblePosition();
                 int endPosition = listView.getLastVisiblePosition();
                 CheckBox checkBox;
@@ -340,9 +344,10 @@ public class EatingCustomFragment extends TitleFragment {
             this.delect = delect;
         }
 
-        public void setData(List<Map<String,Object>> data){
+        public void setData(List<Map<String, Object>> data) {
             this.data = data;
         }
+
         @Override
         public int getCount() {
             return data.size();
@@ -360,32 +365,30 @@ public class EatingCustomFragment extends TitleFragment {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            if(convertView == null){
-                convertView = LayoutInflater.from(context).inflate(R.layout.eating_custome_plan_listview_item,null);
-            }
-            else {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.eating_custome_plan_listview_item, null);
+            } else {
                 ViewGroup.LayoutParams lp = convertView.getLayoutParams();
                 lp.height = (int) itemHeight;
             }
-            Map<String,Object> map = data.get(position);
+            Map<String, Object> map = data.get(position);
             CheckBox checkBox;
-            TextView timeTextView,typeTextView;
+            TextView timeTextView, typeTextView;
             ImageView icon;
-            checkBox = ViewHolder.get(convertView,R.id.eating_custome_plan_check_box);
+            checkBox = ViewHolder.get(convertView, R.id.eating_custome_plan_check_box);
             checkBox.setChecked(false);
-            icon = ViewHolder.get(convertView,R.id.eating_custome_plan_item_icon);
-            typeTextView = ViewHolder.get(convertView,R.id.eating_custom_plan_item_type);
-            timeTextView = ViewHolder.get(convertView,R.id.eating_custome_plan_item_time);
-            if(delect){
+            icon = ViewHolder.get(convertView, R.id.eating_custome_plan_item_icon);
+            typeTextView = ViewHolder.get(convertView, R.id.eating_custom_plan_item_type);
+            timeTextView = ViewHolder.get(convertView, R.id.eating_custome_plan_item_time);
+            if (delect) {
                 checkBox.setAlpha(1);
                 checkBox.setVisibility(View.VISIBLE);
                 checkBox.setTag(position);
-                Log.i(TAG+"::",String.valueOf(position));
+                Log.i(TAG + "::", String.valueOf(position));
                 checkBox.setOnClickListener(checkBoxListener);
                 icon.setTranslationX(translate);
                 typeTextView.setTranslationX(translate);
-            }
-            else{
+            } else {
                 checkBox.setAlpha(0);
                 checkBox.setVisibility(View.GONE);
                 checkBox.setOnClickListener(null);
@@ -394,27 +397,27 @@ public class EatingCustomFragment extends TitleFragment {
             }
 
 
-
-            if((boolean)map.get(TYPE)){
+            if ((boolean) map.get(TYPE)) {
                 icon.setImageDrawable(context.getResources().getDrawable(R.drawable.eating_feed_milk_ico));
                 typeTextView.setText(getResources().getString(R.string.eating_plan_custom_item_type_milk));
-            }
-            else {
+            } else {
                 icon.setImageDrawable(context.getResources().getDrawable(R.drawable.eating_feed_food_ico));
                 typeTextView.setText(getResources().getString(R.string.eating_plan_custom_item_type_food));
             }
 
-            timeTextView.setText((String)map.get(TIME));
+            timeTextView.setText((String) map.get(TIME));
             return convertView;
         }
-        public List<Integer> getSelected(){
+
+        public List<Integer> getSelected() {
             Collections.sort(selected);
-            for(int a:selected){
-                Log.i("height",String.valueOf(a));
+            for (int a : selected) {
+                Log.i("height", String.valueOf(a));
             }
             return selected;
         }
-        public void clearSelected(){
+
+        public void clearSelected() {
             selected.clear();
         }
     }

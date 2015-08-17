@@ -11,22 +11,6 @@ import android.os.Bundle;
  * Time: 12:43
  */
 public abstract class BackHandleFragment extends BaseFragment {
-    /**
-     * BackHandledInterface
-     * 该接口用于告知宿主Activity当前fragment
-     */
-    public interface BackHandledInterface {
-        /**
-         * 设置需要监听返回键的fragment
-         * （当BackFragment正式开始后，通过getActivity()得到宿主Activity，
-         * 并调用宿主Activity的setSelectedFragment()方法，告知自己正在
-         * 显示，需要监听onPressed事件）
-         *
-         * @param selectedFragment 当前选中的fragment
-         */
-        public abstract void setSelectedFragment(BackHandleFragment selectedFragment);
-    }
-
     protected BackHandledInterface mBackHandledInterface;
 
     /**
@@ -55,5 +39,21 @@ public abstract class BackHandleFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         mBackHandledInterface.setSelectedFragment(this);
+    }
+
+    /**
+     * BackHandledInterface
+     * 该接口用于告知宿主Activity当前fragment
+     */
+    public interface BackHandledInterface {
+        /**
+         * 设置需要监听返回键的fragment
+         * （当BackFragment正式开始后，通过getActivity()得到宿主Activity，
+         * 并调用宿主Activity的setSelectedFragment()方法，告知自己正在
+         * 显示，需要监听onPressed事件）
+         *
+         * @param selectedFragment 当前选中的fragment
+         */
+        public abstract void setSelectedFragment(BackHandleFragment selectedFragment);
     }
 }

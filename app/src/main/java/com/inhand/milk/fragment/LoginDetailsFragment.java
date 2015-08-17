@@ -1,6 +1,5 @@
 package com.inhand.milk.fragment;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,7 +21,6 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
-import com.inhand.milk.activity.LaunchActivity;
 import com.inhand.milk.entity.User;
 import com.inhand.milk.utils.PreJudgingTask;
 
@@ -35,6 +33,9 @@ import com.inhand.milk.utils.PreJudgingTask;
  * Created by: Wooxxx
  */
 public class LoginDetailsFragment extends BaseFragment {
+    private final int FADE_DURATION = 500;
+    private final int ANIM_DURATION = 300;
+    Animation weiXinAnim, weiBoAnim, footerAnim, fadeInAnim;
     private ImageView appWeiXin;
     private ImageView appQQ;
     private ImageView appWeiBo;
@@ -42,21 +43,12 @@ public class LoginDetailsFragment extends BaseFragment {
     private LinearLayout formContainer;
     private ImageView appTitle;
     private View divider;
-
     private EditText usernameEditor;
     private EditText passwordEditor;
-
     private TextView forgetPwdTxt;
-
     private ImageView toReg;
     private ImageView submitBtn;
-
     private Resources rs;
-
-    Animation weiXinAnim, weiBoAnim, footerAnim, fadeInAnim;
-
-    private final int FADE_DURATION = 500;
-    private final int ANIM_DURATION = 300;
 
     @Nullable
     @Override
@@ -200,11 +192,11 @@ public class LoginDetailsFragment extends BaseFragment {
                             usernameEditor.setError(rs.getString(R.string.login_error));
                             usernameEditor.requestFocus();
                         } else {
-                            Log.d("usersex1", App.getCurrentUser().getSex()+"");
-                            PreJudgingTask task=new PreJudgingTask(getActivity());
+                            Log.d("usersex1", App.getCurrentUser().getSex() + "");
+                            PreJudgingTask task = new PreJudgingTask(getActivity());
                             task.execute();
                         }
                     }
-                },User.class);
+                }, User.class);
     }
 }

@@ -19,7 +19,6 @@ import com.inhand.milk.activity.PersonCenterBabyInfoActivity;
 import com.inhand.milk.activity.UserInfoSettingsActivity;
 import com.inhand.milk.dao.BabyDao;
 import com.inhand.milk.entity.Baby;
-import com.inhand.milk.entity.Base;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.fragment.user_info_settings.UserinfoNameFragment;
 import com.inhand.milk.ui.DefaultLoadingView;
@@ -35,7 +34,7 @@ import java.util.List;
 public class PersonCenterBabyFragment extends TitleFragment {
     private RelativeLayout head, name, sex, birth;
     private PopupWindowSelected headPopupWiondow, sexPopupWindow;
-    private String man, woman,temp;
+    private String man, woman, temp;
     private int year, monthOfyear, dayOfmonth;
     private TextView babySexTextView, babynameTextView, babyBirthTextView;
     private DatePickerDialog datePickerDialog;
@@ -95,6 +94,7 @@ public class PersonCenterBabyFragment extends TitleFragment {
         loadingView.loading(initCallBack);
         return mView;
     }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -308,7 +308,7 @@ public class PersonCenterBabyFragment extends TitleFragment {
                 baby.setNickname(temp);
                 try {
                     baby.save();
-                    baby.saveInCache(getActivity(), new LocalSaveTask.LocalSaveCallback(){
+                    baby.saveInCache(getActivity(), new LocalSaveTask.LocalSaveCallback() {
                         @Override
                         public void done() {
 
@@ -347,11 +347,11 @@ public class PersonCenterBabyFragment extends TitleFragment {
             @Override
             public void onClick(View v) {
                 temp = userinfoNameFragment.getString();
-                if(temp.equals("")){
+                if (temp.equals("")) {
 
                     userinfoNameFragment.hiddenSoftInput();
-                    Toast.makeText(getActivity(),"不能填写空白",Toast.LENGTH_SHORT).show();
-                    return ;
+                    Toast.makeText(getActivity(), "不能填写空白", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 loadingView = new DefaultLoadingView(getActivity(), "加载中");
                 loadingView.loading(callback);

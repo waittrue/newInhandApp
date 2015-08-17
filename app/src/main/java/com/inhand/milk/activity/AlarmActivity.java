@@ -29,10 +29,11 @@ import java.util.Date;
  * Created by Administrator on 2015/7/27.
  */
 public class AlarmActivity extends Activity {
-    private ScreenBroadcastReceiver mScreenReceiver;
-    private  boolean isMilk;
-    private int width, height,leftMargin,upHeight,downHeight;
     public static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000;
+    private ScreenBroadcastReceiver mScreenReceiver;
+    private boolean isMilk;
+    private int width, height, leftMargin, upHeight, downHeight;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Window win = getWindow();
@@ -44,29 +45,29 @@ public class AlarmActivity extends Activity {
 
         setContentView(R.layout.alarm_notification);
 
-        isMilk = getIntent().getBooleanExtra(AlarmSeting.MilkKey,false);
+        isMilk = getIntent().getBooleanExtra(AlarmSeting.MilkKey, false);
         initViews();
         startScreenBroadcastReceiver();
         start();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == event.KEYCODE_HOME){
+        if (keyCode == event.KEYCODE_HOME) {
             return true;
-        }
-        else
+        } else
             return super.onKeyDown(keyCode, event);
     }
 
 
-    private void initViews(){
-        width = App.getWindowWidth(this)*6/8;
-        height = (int)(width / 2f);
-        leftMargin = width /15;
-        upHeight = height *5/7;
-        downHeight = height *2/7;
-        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.alarm_total_container);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)linearLayout.getLayoutParams();
+    private void initViews() {
+        width = App.getWindowWidth(this) * 6 / 8;
+        height = (int) (width / 2f);
+        leftMargin = width / 15;
+        upHeight = height * 5 / 7;
+        downHeight = height * 2 / 7;
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.alarm_total_container);
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
         lp.width = width;
         lp.height = height;
         initTimeTextView();
@@ -75,52 +76,57 @@ public class AlarmActivity extends Activity {
         initDocTextView();
         initButton();
     }
-    private void initTimeTextView(){
+
+    private void initTimeTextView() {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         String time = dateFormat.format(date);
-        TextView textView = (TextView)findViewById(R.id.alarm_time_textview);
+        TextView textView = (TextView) findViewById(R.id.alarm_time_textview);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, upHeight / 2);
         textView.setText(time);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)textView.getLayoutParams();
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) textView.getLayoutParams();
         lp.leftMargin = leftMargin;
     }
-    private void initIcon(){
-        ImageView imageView =(ImageView)findViewById(R.id.alarm_milk_food_icon);
-        if(isMilk)
+
+    private void initIcon() {
+        ImageView imageView = (ImageView) findViewById(R.id.alarm_milk_food_icon);
+        if (isMilk)
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.alarm_milk_icon));
         else
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.alarm_food_icon));
 
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)imageView.getLayoutParams();
-        lp.height = upHeight*3/4;
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
+        lp.height = upHeight * 3 / 4;
         lp.width = lp.height;
         lp.rightMargin = leftMargin;
     }
-    private void initDownIcon(){
-        ImageView imageView =(ImageView)findViewById(R.id.alarm_icon_imageview);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)imageView.getLayoutParams();
-        lp.height = downHeight*3/4;
+
+    private void initDownIcon() {
+        ImageView imageView = (ImageView) findViewById(R.id.alarm_icon_imageview);
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
+        lp.height = downHeight * 3 / 4;
         lp.width = lp.height;
         lp.leftMargin = leftMargin;
     }
-    private void initDocTextView(){
-        TextView textView = (TextView)findViewById(R.id.alarm_doc_textview);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int)(downHeight / 2.5f));
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)textView.getLayoutParams();
-        lp.leftMargin = leftMargin/4;
-        if(isMilk)
+
+    private void initDocTextView() {
+        TextView textView = (TextView) findViewById(R.id.alarm_doc_textview);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (downHeight / 2.5f));
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) textView.getLayoutParams();
+        lp.leftMargin = leftMargin / 4;
+        if (isMilk)
             textView.setText(getResources().getString(R.string.alarm_eating_milk));
         else
             textView.setText(getResources().getString(R.string.alarm_eating_food));
     }
-    private void initButton(){
-        TextView imageView =(TextView)findViewById(R.id.alarm_image_button);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)imageView.getLayoutParams();
-        lp.height = (int)(downHeight*0.7f);
-        lp.width = (int)(lp.height*2f);
+
+    private void initButton() {
+        TextView imageView = (TextView) findViewById(R.id.alarm_image_button);
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
+        lp.height = (int) (downHeight * 0.7f);
+        lp.width = (int) (lp.height * 2f);
         lp.rightMargin = leftMargin;
-        imageView.setTextSize(TypedValue.COMPLEX_UNIT_PX,(int)(lp.height*0.6f));
+        imageView.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (lp.height * 0.6f));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +134,8 @@ public class AlarmActivity extends Activity {
             }
         });
     }
-    private void start(){
+
+    private void start() {
         AlarmReceiver.playSound(getApplicationContext());
         AlarmReceiver.vibrator(getApplicationContext());
     }
@@ -168,6 +175,31 @@ public class AlarmActivity extends Activity {
         start();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AlarmReceiver.stopSound();
+        AlarmReceiver.stopVibrator();
+        stopScrenBroadcastReceiver();
+    }
+
+    private void startScreenBroadcastReceiver() {
+        mScreenReceiver = new ScreenBroadcastReceiver();
+        if (mScreenReceiver == null)
+            return;
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_USER_PRESENT);
+        this.registerReceiver(mScreenReceiver, filter);
+    }
+
+    private void stopScrenBroadcastReceiver() {
+        if (mScreenReceiver == null)
+            return;
+        this.unregisterReceiver(mScreenReceiver);
+    }
+
     private class ScreenBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -180,29 +212,5 @@ public class AlarmActivity extends Activity {
 
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        AlarmReceiver.stopSound();
-        AlarmReceiver.stopVibrator();
-        stopScrenBroadcastReceiver();
-    }
-
-    private void startScreenBroadcastReceiver() {
-        mScreenReceiver = new ScreenBroadcastReceiver();
-        if(mScreenReceiver == null)
-            return;
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
-        filter.addAction(Intent.ACTION_USER_PRESENT);
-        this.registerReceiver(mScreenReceiver, filter);
-    }
-    private void stopScrenBroadcastReceiver(){
-        if(mScreenReceiver == null)
-            return;
-         this.unregisterReceiver(mScreenReceiver);
     }
 }

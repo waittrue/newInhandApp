@@ -8,7 +8,6 @@ import com.alibaba.fastjson.JSON;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,38 +52,38 @@ public class JSONHelper {
      * @param JSON 待修正JSON字串
      * @return
      */
-    public static String getValidJSON(String JSON){
-        if (Build.VERSION.SDK_INT<17){
-            JSON=JSON.replace("\"[","[");
-            JSON=JSON.replace("\\","");
-            JSON=JSON.replace("]\"","]");
+    public static String getValidJSON(String JSON) {
+        if (Build.VERSION.SDK_INT < 17) {
+            JSON = JSON.replace("\"[", "[");
+            JSON = JSON.replace("\\", "");
+            JSON = JSON.replace("]\"", "]");
         }
         return JSON;
     }
 
-    public  static  String getValidCloudJSON(String JSON){
-        if (Build.VERSION.SDK_INT<17&&JSON.indexOf("[\"{")==0){
-            Log.d("cloudjsons0",JSON);
-            JSON=JSON.replace("[\"{","[{\"");
-            JSON=JSON.replace("=","\":");
-            JSON=JSON.replace(", ",",\"");
-            JSON=JSON.replace(",\"{",",{\"");
-            JSON=JSON.replace("}\"]","}]");
-            JSON=JSON.replace(":[{",":[{\"");
-            JSON=JSON.replace("}\",","},");
-            String regEx="\\d+:\\d+";
-            Pattern pattern=Pattern.compile(regEx);
-            Matcher matcher=pattern.matcher(JSON);
-            int index=0;
+    public static String getValidCloudJSON(String JSON) {
+        if (Build.VERSION.SDK_INT < 17 && JSON.indexOf("[\"{") == 0) {
+            Log.d("cloudjsons0", JSON);
+            JSON = JSON.replace("[\"{", "[{\"");
+            JSON = JSON.replace("=", "\":");
+            JSON = JSON.replace(", ", ",\"");
+            JSON = JSON.replace(",\"{", ",{\"");
+            JSON = JSON.replace("}\"]", "}]");
+            JSON = JSON.replace(":[{", ":[{\"");
+            JSON = JSON.replace("}\",", "},");
+            String regEx = "\\d+:\\d+";
+            Pattern pattern = Pattern.compile(regEx);
+            Matcher matcher = pattern.matcher(JSON);
+            int index = 0;
             while (matcher.find()) {
-                index=JSON.indexOf(matcher.group(),index);
-                String rpstr="\"" + matcher.group() + "\"";
-                JSON = JSON.substring(0,index)+rpstr+JSON.substring(index+matcher.group().length());
-                index=index+matcher.group().length();
+                index = JSON.indexOf(matcher.group(), index);
+                String rpstr = "\"" + matcher.group() + "\"";
+                JSON = JSON.substring(0, index) + rpstr + JSON.substring(index + matcher.group().length());
+                index = index + matcher.group().length();
             }
-            Log.d("cloudjsons1",JSON);
+            Log.d("cloudjsons1", JSON);
         }
         //Log.d("cloudjsons",JSON);
-        return  JSON;
+        return JSON;
     }
 }

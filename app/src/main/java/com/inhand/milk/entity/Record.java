@@ -14,7 +14,7 @@ import java.io.Serializable;
  * Date: 2015-03-04
  * Time: 20:22
  */
-public class Record implements Serializable{
+public class Record implements Serializable {
     //奶量
     public static final String VOLUME_KEY = "volume";
     //温度(最低温度，最高温度)
@@ -119,15 +119,15 @@ public class Record implements Serializable{
     /**
      * 将Record对象转换为JSON
      */
-    public JSONObject toJsonObj(){
+    public JSONObject toJsonObj() {
         JSONObject obj = new JSONObject();
         try {
             obj.put(Record.VOLUME_KEY, this.getVolume());
             obj.put(Record.BEGIN_TEMPERATURE_KEY, this.getBeginTemperature());
             obj.put(Record.END_TEMPERATURE_KEY, this.getEndTemperature());
             obj.put(Record.BEGIN_TIME_KEY, this.getBeginTime());
-            obj.put(Record.SCORE_KEY,this.getScore());
-            obj.put(Record.DURATION_KEY,this.getDuration());
+            obj.put(Record.SCORE_KEY, this.getScore());
+            obj.put(Record.DURATION_KEY, this.getDuration());
             obj.put(Record.ADVICE_VOLUME_KEY, this.getAdviceVolume());
             return obj;
         } catch (JSONException e) {

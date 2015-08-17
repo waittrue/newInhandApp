@@ -49,14 +49,15 @@ public class Calculator {
 
     /**
      * 计算宝宝的月龄
-     * @param date  开始算的时间
-     * @return  宝宝的月龄,当日期低于宝宝的生日时候，抛出异常
+     *
+     * @param date 开始算的时间
+     * @return 宝宝的月龄, 当日期低于宝宝的生日时候，抛出异常
      */
-    public static int getBabyMonthAge(Date date) throws InvalidParameterException{
-            Calendar birthCalendar = Calendar.getInstance();
-            String birth = App.getCurrentBaby().getBirthday();
-        Log.d("baby birth",birth);
-        Date  birthDay = null;
+    public static int getBabyMonthAge(Date date) throws InvalidParameterException {
+        Calendar birthCalendar = Calendar.getInstance();
+        String birth = App.getCurrentBaby().getBirthday();
+        Log.d("baby birth", birth);
+        Date birthDay = null;
         try {
             birthDay = Standar.DATE_FORMAT.parse(birth);
         } catch (ParseException e) {
@@ -98,17 +99,17 @@ public class Calculator {
     }
 
 
-
     /**
      * 计算宝宝的日龄
      * 注意这个方法有个bug，当日期在生日之前时候，也有一些情况可以返回正常值，所以可以先用getbabydayAge来做检查。
-     * @param date    宝宝开始的时间
+     *
+     * @param date 宝宝开始的时间
      * @return 返回宝宝的日龄。
      */
-    public static int getBabyDayAge(Date date){
+    public static int getBabyDayAge(Date date) {
         Calendar birthCalendar = Calendar.getInstance();
         String birth = App.getCurrentBaby().getBirthday();
-        Date  birthDay = null;
+        Date birthDay = null;
         try {
             birthDay = Standar.DATE_FORMAT.parse(birth);
         } catch (ParseException e) {
@@ -123,13 +124,12 @@ public class Calculator {
         int day1 = birthCalendar.get(Calendar.DAY_OF_MONTH);
         int day2 = todayCalendr.get(Calendar.DAY_OF_MONTH);
         int days = 0;
-        days = day2 -day1;
-        if (days< 0) {
+        days = day2 - day1;
+        if (days < 0) {
             todayCalendr.add(Calendar.MONTH, -1);
-            days = todayCalendr.getActualMaximum(Calendar.DATE)+days+1;
-        }
-        else
-            days = days+1;
+            days = todayCalendr.getActualMaximum(Calendar.DATE) + days + 1;
+        } else
+            days = days + 1;
         return days;
     }
 }

@@ -37,7 +37,8 @@ public class BaseActivity extends FragmentActivity
                 getSupportFragmentManager().popBackStack();
         }
     }
-    public int getWindowWidth(){
+
+    public int getWindowWidth() {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         return dm.widthPixels;

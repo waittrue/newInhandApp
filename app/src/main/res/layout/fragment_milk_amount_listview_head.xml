@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <RelativeLayout
+        android:id="@+id/milk_amount_listview_item_title"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/millk_amount_listview_title_height"
-        android:id="@+id/milk_amount_listview_item_title"
         android:background="@color/milk_amount_listview_item_title_bg_color">
 
         <LinearLayout
             android:id="@+id/milk_amount_listview_item_title_circle_container"
             android:layout_width="@dimen/milk_amount_circle_D"
+            android:layout_height="@dimen/milk_amount_circle_D"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/milk_amount_circle_margin_left"
-            android:layout_height="@dimen/milk_amount_circle_D"></LinearLayout>
+            android:layout_marginLeft="@dimen/milk_amount_circle_margin_left"></LinearLayout>
 
         <TextView
+            android:id="@+id/milk_amount_time_text"
             android:layout_width="@dimen/milk_amount_listview_item_title_time_text_width"
             android:layout_height="wrap_content"
-            android:text="饮奶次数5次"
-            android:id="@+id/milk_amount_time_text"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/milk_amount_time_text_marging_left"
             android:layout_toRightOf="@+id/milk_amount_listview_item_title_circle_container"
             android:gravity="center_vertical"
-            android:textColor="@color/public_main_a_color"
             android:singleLine="true"
-            android:textSize="@dimen/milk_amount_listview_title_text_size"
-            android:layout_centerVertical="true" />
+            android:text="饮奶次数5次"
+            android:textColor="@color/public_main_a_color"
+            android:textSize="@dimen/milk_amount_listview_title_text_size" />
 
         <TextView
+            android:id="@+id/milk_amount_total_num_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="饮奶次数: 5次"
-            android:id="@+id/milk_amount_total_num_text"
-            android:layout_marginRight="@dimen/milk_amount_text_total_margin_right"
+            android:layout_alignBottom="@+id/milk_amount_time_text"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/milk_amount_text_total_margin_right"
             android:gravity="center_vertical"
             android:singleLine="true"
+            android:text="饮奶次数: 5次"
             android:textColor="@color/milk_amount_total_num_text_color"
-            android:textSize="@dimen/milk_amount_listview_title_text_size"
-            android:layout_alignBottom="@+id/milk_amount_time_text" />
+            android:textSize="@dimen/milk_amount_listview_title_text_size" />
+
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="@dimen/milk_amount_vertical_line_width"
-            android:src="@color/milk_amount_listview_item_time_line_text_color"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:src="@color/milk_amount_listview_item_time_line_text_color" />
 
     </RelativeLayout>
 </LinearLayout>

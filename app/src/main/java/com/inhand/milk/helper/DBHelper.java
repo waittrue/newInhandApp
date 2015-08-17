@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.inhand.milk.dao.BabyDao;
 import com.inhand.milk.entity.Device;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Statistics;
@@ -22,26 +21,31 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Time: 15:55
  */
 public class DBHelper extends SQLiteOpenHelper {
-    //原子计数器,用以安全地关闭数据库链接
-    private AtomicInteger openCounter = new AtomicInteger();
-    //数据库名
-    private static final String DB_NAME = "milk.db";
-    //版本维护
-    private static final int version = 1;
     //每张表只包含VERSION及JSON列
     public static final String COLUMN_JSON = "json";
     public static final String COLUMN_VERSION = "version";
     //比较位置，方便比较
     public static final String COLUMN_COMP = "comp";
+    //数据库名
+    private static final String DB_NAME = "milk.db";
+    //版本维护
+    private static final int version = 1;
     //数据表列表
     private static final String[] TB_NAMES = new String[]{
             OneDay.ONEDAY_CLASS,
             Device.DEVICE_CLASS,
             Statistics.STATISTICS_CLASS,
     };
+    private static DBHelper instance = null;
+    //原子计数器,用以安全地关闭数据库链接
+    private AtomicInteger openCounter = new AtomicInteger();
     //数据库对象
     private SQLiteDatabase db;
-    private static DBHelper instance = null;
+
+    private DBHelper(Context context) {
+        //根据当前宝宝动态指定对应数据库
+        super(context, DB_NAME, null, version);
+    }
 
     //双重检查加锁实例化单例
     public static DBHelper getInstance(Context ctx) {
@@ -53,11 +57,6 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         return instance;
-    }
-
-    private DBHelper(Context context) {
-        //根据当前宝宝动态指定对应数据库
-        super(context, DB_NAME, null, version);
     }
 
     @Override

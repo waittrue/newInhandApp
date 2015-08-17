@@ -3,117 +3,114 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/milk_amount_curve_total_tilte_height"
+        android:background="@drawable/header_long_bg1_a"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/title_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/main_title_margin_top"
+                android:text="@string/details_milk_title_string"
+                android:textColor="@color/main_title_text_color"
+                android:textSize="@dimen/main_title_text_size" />
+
+            <ImageView
+                android:id="@+id/title_left_icon"
+                android:layout_width="@dimen/main_title_left_return_icon_width"
+                android:layout_height="@dimen/main_title_left_return_icon_height"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/main_title_icon_marin_left_right"
+                android:layout_marginTop="@dimen/main_title_left_return_icon_margin_top"
+                android:scaleType="centerInside"
+                android:src="@drawable/header_return_ico" />
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/milk_amount_curve_total_tilte_height"
-            android:background="@drawable/header_long_bg1_a"
-            android:orientation="vertical" >
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/milk_amount_curve_tilte_height">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.11"
+                android:orientation="vertical"></LinearLayout>
+
             <RelativeLayout
-                android:id="@+id/title_background"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.26">
 
                 <TextView
-                    android:id="@+id/title_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/main_title_margin_top"
-                    android:text="@string/details_milk_title_string"
-                    android:textColor="@color/main_title_text_color"
-                    android:textSize="@dimen/main_title_text_size" />
+                    android:id="@+id/temperature_milk_day_show"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="@string/temperature_milk_day_text"
+                    android:textSize="@dimen/milk_amount_curve_date_text_size" />
 
-                <ImageView
-                    android:id="@+id/title_left_icon"
-                    android:layout_width="@dimen/main_title_left_return_icon_width"
-                    android:layout_height="@dimen/main_title_left_return_icon_height"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="@dimen/main_title_icon_marin_left_right"
-                    android:layout_marginTop="@dimen/main_title_left_return_icon_margin_top"
-                    android:src="@drawable/header_return_ico"
-                    android:scaleType="centerInside" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.26">
+
+                <TextView
+                    android:id="@+id/temperature_milk_week_show"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="@string/temperature_milk_week_text"
+                    android:textSize="@dimen/milk_amount_curve_date_text_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.26">
+
+                <TextView
+                    android:id="@+id/temperature_milk_month_show"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="@string/temperature_milk_month_text"
+                    android:textSize="@dimen/milk_amount_curve_date_text_size" />
+
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/milk_amount_curve_tilte_height">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.11"
-                    android:orientation="vertical" >
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.26" >
-
-                    <TextView
-                        android:id="@+id/temperature_milk_day_show"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="@string/temperature_milk_day_text"
-                        android:textSize="@dimen/milk_amount_curve_date_text_size" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.26" >
-
-                    <TextView
-                        android:id="@+id/temperature_milk_week_show"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="@string/temperature_milk_week_text"
-                        android:textSize="@dimen/milk_amount_curve_date_text_size" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="0.26" >
-
-                    <TextView
-                        android:id="@+id/temperature_milk_month_show"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="@string/temperature_milk_month_text"
-                        android:textSize="@dimen/milk_amount_curve_date_text_size" />
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.11"
-                    android:orientation="vertical" >
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/temperature_milk_time_line_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/milk_amount_curve_line_height"
-                android:background="@color/milk_amount_curve_unchecked_color"
-                android:orientation="horizontal" >
-            </LinearLayout>
-
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.11"
+                android:orientation="vertical"></LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/temperature_milk_time_line_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/milk_amount_curve_line_height"
+            android:background="@color/milk_amount_curve_unchecked_color"
+            android:orientation="horizontal"></LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -121,13 +118,12 @@
         android:background="@drawable/header_long_bg2_a"></LinearLayout>
 
 
-
     <android.support.v4.view.ViewPager
         android:id="@+id/horizontalScrollView1"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="none" >
+        android:scrollbars="none">
 
     </android.support.v4.view.ViewPager>
 

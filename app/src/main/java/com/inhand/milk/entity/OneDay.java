@@ -55,7 +55,7 @@ public class OneDay extends Base implements DBSaving<OneDay> {
 
     public List<Record> getRecords() {
         JSONArray array = this.getJSONArray(RECORDS_KEY);
-        String recordsJson= JSONHelper.getValidCloudJSON(array.toString());
+        String recordsJson = JSONHelper.getValidCloudJSON(array.toString());
         return JSON.parseArray(recordsJson, Record.class);
     }
 
@@ -105,6 +105,7 @@ public class OneDay extends Base implements DBSaving<OneDay> {
     /**
      * 异步地将数据存储至云端
      * 存储OneDay对象，若该“日”已存在，则为更新
+     *
      * @param saveCallback 回调接口
      */
     public void saveInCloud(final SaveCallback saveCallback) {

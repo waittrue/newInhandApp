@@ -1,94 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:myview = "http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:myview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"></LinearLayout>
+        android:orientation="horizontal"></LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/eating_custom_fix_time_type_title_container_height">
+        android:layout_height="@dimen/eating_custom_fix_time_type_title_container_height"
+        android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/eating_custom_fix_pick_time"
-            android:id="@+id/textView11"
-            android:gravity="center"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/eating_custom_fix_text_margin_left"
+            android:gravity="center"
+            android:text="@string/eating_custom_fix_pick_time"
             android:textSize="@dimen/eating_custom_fix_time_type_text_size" />
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/imageView28"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-        android:id="@+id/imageView28"
         android:background="@color/common_settings_item_line_color" />
 
     <TimePicker
+        android:id="@+id/timePicker"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:id="@+id/timePicker"
         android:layout_weight="2"
-        android:measureAllChildren="true"
-        android:background="#ffffff" />
+        android:background="#ffffff"
+        android:measureAllChildren="true" />
 
     <ImageView
+        android:id="@+id/imageView30"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-        android:id="@+id/imageView30"
         android:background="@color/common_settings_item_line_color" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/eating_custom_fix_time_type_title_container_height">
+        android:layout_height="@dimen/eating_custom_fix_time_type_title_container_height"
+        android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/eating_custom_fix_type"
-            android:id="@+id/textView13"
-            android:gravity="center"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/eating_custom_fix_text_margin_left"
+            android:gravity="center"
+            android:text="@string/eating_custom_fix_type"
             android:textSize="@dimen/eating_custom_fix_time_type_text_size" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1"
+            android:orientation="horizontal"></LinearLayout>
 
         <TextView
+            android:id="@+id/eating_custom_fix_choose_type_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/eating_custom_fix_choose_result_milk_doc"
-            android:id="@+id/eating_custom_fix_choose_type_textview"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/eating_custom_fix_text_margin_left" />
+            android:layout_marginRight="@dimen/eating_custom_fix_text_margin_left"
+            android:text="@string/eating_custom_fix_choose_result_milk_doc" />
 
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/imageView31"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-        android:id="@+id/imageView31"
         android:background="@color/common_settings_item_line_color" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -101,144 +102,144 @@
                 android:layout_centerInParent="true">
 
                 <ImageView
+                    android:id="@+id/eating_custom_fix_milk_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/eating_custom_fix_milk_icon"
                     android:scaleType="centerInside"
                     android:src="@drawable/eating_feed_milk_ico" />
 
                 <TextView
+                    android:id="@+id/eating_custom_fix_milk_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/eating_custom_fix_milk"
-                    android:id="@+id/eating_custom_fix_milk_textview"
+                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin"
                     android:layout_toRightOf="@+id/eating_custom_fix_milk_icon"
                     android:gravity="center"
-                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin" />
+                    android:text="@string/eating_custom_fix_milk" />
 
                 <CheckBox
+                    android:id="@+id/eating_custom_fix_milk_checkbox"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/eating_custom_fix_milk_checkbox"
+                    android:layout_alignBottom="@+id/eating_custom_fix_milk_icon"
+                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin"
+                    android:layout_toRightOf="@+id/eating_custom_fix_milk_icon"
+                    android:background="@drawable/eating_custom_checkbox_style"
                     android:button="@null"
                     android:checked="true"
-                    android:clickable="false"
-                    android:background="@drawable/eating_custom_checkbox_style"
-                    android:layout_alignBottom="@+id/eating_custom_fix_milk_icon"
-                    android:layout_toRightOf="@+id/eating_custom_fix_milk_icon"
-                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin" />
+                    android:clickable="false" />
 
             </RelativeLayout>
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/eating_custom_fix_choose_type_divider"
             android:layout_width="@dimen/weight_fragment_adder_title_line_height"
             android:layout_height="fill_parent"
-            android:id="@+id/eating_custom_fix_choose_type_divider"
+            android:layout_gravity="center"
             android:background="@color/common_settings_item_line_color"
-            android:focusableInTouchMode="false"
-            android:layout_gravity="center" />
+            android:focusableInTouchMode="false" />
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true" >
+                android:layout_centerInParent="true">
 
                 <ImageView
+                    android:id="@+id/eating_custom_fix_food_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/eating_custom_fix_food_icon"
                     android:scaleType="centerInside"
                     android:src="@drawable/eating_feed_food_ico" />
 
                 <TextView
+                    android:id="@+id/eating_custom_fix_food_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/eating_custom_fix_food"
-                    android:id="@+id/eating_custom_fix_food_textview"
+                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin"
                     android:layout_toRightOf="@+id/eating_custom_fix_food_icon"
-                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin" />
+                    android:text="@string/eating_custom_fix_food" />
 
                 <CheckBox
+                    android:id="@+id/eating_custom_fix_food_checkbox"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/eating_custom_fix_food_checkbox"
-                    android:button="@null"
-                    android:background="@drawable/eating_custom_checkbox_style"
-                    android:layout_toRightOf="@+id/eating_custom_fix_food_icon"
                     android:layout_alignBottom="@+id/eating_custom_fix_food_icon"
-                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin" />
+                    android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin"
+                    android:layout_toRightOf="@+id/eating_custom_fix_food_icon"
+                    android:background="@drawable/eating_custom_checkbox_style"
+                    android:button="@null" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/imageView32"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-        android:id="@+id/imageView32"
         android:background="@color/common_settings_item_line_color" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/eating_custom_fix_bottom_height">
+        android:layout_height="@dimen/eating_custom_fix_bottom_height"
+        android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/eating_custom_fix_choose_food_text"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/eating_custom_fix_choose_food_container_height"
-            android:text="@string/eating_custom_fix_choose_food"
-            android:id="@+id/eating_custom_fix_choose_food_text"
             android:layout_gravity="bottom"
             android:background="#00ff00"
             android:gravity="center"
+            android:text="@string/eating_custom_fix_choose_food"
             android:textColor="@color/eating_custom_fix_choose_food_text_color" />
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/eating_custom_fix_bottom_button_container_height">
+        android:layout_height="@dimen/eating_custom_fix_bottom_button_container_height"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1"
+            android:orientation="horizontal"></LinearLayout>
 
         <view
-            android:layout_width="@dimen/eating_custom_plan_button_width"
-            android:layout_height="@dimen/eating_custom_button_height"
-            class="com.inhand.milk.ui.ButtonA"
-            myview:text="@string/public_cancle"
             android:id="@+id/eating_custom_fix_cancle_button"
-            myview:textsize="@dimen/eating_custom_button_text_size"
-            android:layout_gravity="center_vertical" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"></LinearLayout>
-
-        <view
+            class="com.inhand.milk.ui.ButtonA"
             android:layout_width="@dimen/eating_custom_plan_button_width"
             android:layout_height="@dimen/eating_custom_button_height"
-            class="com.inhand.milk.ui.ButtonB"
             android:layout_gravity="center_vertical"
-            myview:textsize="@dimen/eating_custom_button_text_size"
-            myview:text="确认保存"
-            android:id="@+id/eating_custom_fix_save_button" />
+            myview:text="@string/public_cancle"
+            myview:textsize="@dimen/eating_custom_button_text_size" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1"
+            android:orientation="horizontal"></LinearLayout>
+
+        <view
+            android:id="@+id/eating_custom_fix_save_button"
+            class="com.inhand.milk.ui.ButtonB"
+            android:layout_width="@dimen/eating_custom_plan_button_width"
+            android:layout_height="@dimen/eating_custom_button_height"
+            android:layout_gravity="center_vertical"
+            myview:text="确认保存"
+            myview:textsize="@dimen/eating_custom_button_text_size" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"></LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

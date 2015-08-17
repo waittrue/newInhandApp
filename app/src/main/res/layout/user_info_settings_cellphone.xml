@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/minor_title_height"
         android:background="@drawable/header_short_bg_a"
-        android:gravity="start" >
+        android:gravity="start">
 
         <TextView
             android:id="@+id/title_text"
@@ -23,6 +22,7 @@
             android:text="@string/user_info_settings_telephone_title"
             android:textColor="@color/main_title_text_color"
             android:textSize="@dimen/main_title_text_size" />
+
         <TextView
             android:id="@+id/title_right_icon"
             android:layout_width="wrap_content"
@@ -46,102 +46,102 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/user_info_edit_container"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/common_settings_item_normal_height"
-        android:id="@+id/user_info_edit_container"
         android:background="@color/color_white">
 
         <TextView
+            android:id="@+id/user_info_fix_left_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/user_info_settings_telephone_left_textview"
-            android:id="@+id/user_info_fix_left_textview"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+            android:text="@string/user_info_settings_telephone_left_textview"
             android:textColor="@color/common_settings_item_left_text_color"
             android:textSize="@dimen/user_info_fix_lefttext_text_size" />
 
         <EditText
+            android:id="@+id/user_info_telephone_edit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/user_info_telephone_edit"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/common_settings_item_margin_left"
             android:layout_toRightOf="@+id/user_info_fix_left_textview"
-            android:layout_centerVertical="true"
+            android:background="@null"
+            android:hint="@string/user_info_settings_telephone_hint"
+            android:singleLine="true"
             android:textColor="@color/common_settings_item_right_text_color"
             android:textColorHint="@color/common_settings_item_right_text_color"
-            android:textSize="@dimen/user_info_fix_lefttext_text_size"
-            android:hint="@string/user_info_settings_telephone_hint"
-            android:background="@null"
-            android:singleLine="true" />
+            android:textSize="@dimen/user_info_fix_lefttext_text_size" />
 
         <ImageView
+            android:id="@+id/imageView19"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/common_settings_item_line_smaller_height"
-            android:id="@+id/imageView19"
             android:layout_alignParentTop="true"
             android:background="@color/common_settings_item_line_color" />
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/user_info_second_container"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/common_settings_item_normal_height"
-        android:id="@+id/user_info_second_container"
-        android:background="@color/color_white" >
+        android:background="@color/color_white">
 
         <EditText
+            android:id="@+id/user_info_settings_second_editText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/user_info_settings_second_editText"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/common_settings_item_margin_left"
             android:layout_toRightOf="@+id/textView4"
-            android:layout_centerVertical="true"
+            android:background="@null"
+            android:hint="@string/user_info_settings_telephone_seconde_hint"
+            android:inputType="phone"
+            android:singleLine="true"
             android:textColor="@color/common_settings_item_right_text_color"
             android:textColorHint="@color/common_settings_item_right_text_color"
-            android:inputType="phone"
-            android:textSize="@dimen/user_info_fix_lefttext_text_size"
-            android:hint="@string/user_info_settings_telephone_seconde_hint"
-            android:background="@null"
-            android:singleLine="true" />
+            android:textSize="@dimen/user_info_fix_lefttext_text_size" />
 
         <ImageView
+            android:id="@+id/imageView21"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/common_settings_item_line_smaller_height"
-            android:id="@+id/imageView21"
             android:layout_alignParentTop="true"
-            android:background="@color/common_settings_item_line_color"
-            android:layout_marginLeft="@dimen/common_settings_item_margin_left" />
+            android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+            android:background="@color/common_settings_item_line_color" />
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/user_info_settings_telephone_seconde_left_textview"
-            android:id="@+id/textView4"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+            android:text="@string/user_info_settings_telephone_seconde_left_textview"
             android:textColor="@color/common_settings_item_left_text_color"
             android:textSize="@dimen/user_info_fix_lefttext_text_size" />
 
         <ImageView
+            android:id="@+id/imageView22"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/common_settings_item_line_smaller_height"
-            android:id="@+id/imageView22"
             android:layout_alignParentBottom="true"
             android:background="@color/common_settings_item_line_color" />
 
         <TextView
+            android:id="@+id/user_info_settings_telephone_check_button"
             android:layout_width="@dimen/user_info_settings_telephone_button_width"
             android:layout_height="@dimen/user_info_settings_telephone_button_height"
-            android:id="@+id/user_info_settings_telephone_check_button"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/common_settings_item_margin_right"
             android:background="@color/user_info_settings_telephone_buttong_bg_color"
+            android:gravity="center"
             android:text="@string/user_info_settings_telephone_right_text"
             android:textColor="@color/color_white"
-            android:textSize="@dimen/user_info_settings_telephone_right_text_size"
-            android:gravity="center" />
+            android:textSize="@dimen/user_info_settings_telephone_right_text_size" />
     </RelativeLayout>
 
 

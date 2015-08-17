@@ -29,9 +29,9 @@ import java.util.Date;
  * Created by Administrator on 2015/6/28.
  */
 public class AdderWindow extends Activity {
-    private static final String TAG = "AdderWindow";
     public static final int ADDERWINDOW_RESULT = 1;
     public static final String ADDERWINDOW_KEY = "adderwindow_key";
+    private static final String TAG = "AdderWindow";
     private static final int AnimationDuration = 300;
     private static final int spacenum = 2;
     private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
@@ -40,6 +40,7 @@ public class AdderWindow extends Activity {
     private int space;
     private ObservableHorizonScrollView scrollView;
     private WeightHelper weightHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,8 +108,8 @@ public class AdderWindow extends Activity {
                 babyInfo.setAge(date);
                 weightHelper.saveOneWeight(babyInfo);
                 Intent intent = new Intent(AdderWindow.this, MainActivity.class);
-                intent.putExtra(ADDERWINDOW_KEY,true);
-                setResult(ADDERWINDOW_RESULT,intent);
+                intent.putExtra(ADDERWINDOW_KEY, true);
+                setResult(ADDERWINDOW_RESULT, intent);
                 outAnimation();
 
             }

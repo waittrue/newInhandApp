@@ -2,13 +2,10 @@ package com.inhand.milk.fragment.bluetooth;
 
 import android.util.Log;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
-import com.inhand.milk.utils.LocalSaveTask;
 import com.inhand.milk.utils.RecordHelper;
 
 import java.util.ArrayList;
@@ -24,6 +21,18 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
 
     public RecieveRecordMessage() {
 
+    }
+
+    public static void printRecord(Record record) {
+        String str = new String();
+        str += "\n" + "开始时间:" + record.getBeginTime() + "\n";
+        str += "开始温度:" + String.valueOf(record.getBeginTemperature()) + "\n";
+        str += "结束温度：" + String.valueOf(record.getEndTemperature()) + "\n";
+        str += "饮奶量" + String.valueOf(record.getVolume()) + "\n";
+        str += "建议量" + String.valueOf(record.getAdviceVolume()) + "\n";
+        str += "持续时间" + String.valueOf(record.getDuration()) + "\n";
+        str += "分数" + String.valueOf(record.getScore()) + "\n";
+        Log.i(TAG, str);
     }
 
     public int isRecordMessage(byte[] bytes, int len) {
@@ -104,17 +113,5 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
         if (buf[27] != (byte) 0xff)
             return false;
         return true;
-    }
-
-    public static void printRecord(Record record) {
-        String str = new String();
-        str += "\n" + "开始时间:" + record.getBeginTime() + "\n";
-        str += "开始温度:" + String.valueOf(record.getBeginTemperature()) + "\n";
-        str += "结束温度：" + String.valueOf(record.getEndTemperature()) + "\n";
-        str += "饮奶量" + String.valueOf(record.getVolume()) + "\n";
-        str += "建议量" + String.valueOf(record.getAdviceVolume()) + "\n";
-        str += "持续时间" + String.valueOf(record.getDuration()) + "\n";
-        str += "分数" + String.valueOf(record.getScore()) + "\n";
-        Log.i(TAG, str);
     }
 }

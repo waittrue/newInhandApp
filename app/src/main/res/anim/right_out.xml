@@ -3,11 +3,11 @@
     <!-- 设置从右边拖出来的动画
     android:duration指定动画持续时间  -->
     <translate
+        android:duration="300"
         android:fromXDelta="0"
-        android:toXDelta="100%p"
-        android:duration="300" />
+        android:toXDelta="100%p" />
     <alpha
+        android:duration="300"
         android:fromAlpha="1"
-        android:toAlpha="0"
-        android:duration="300"/>
+        android:toAlpha="0" />
 </set>

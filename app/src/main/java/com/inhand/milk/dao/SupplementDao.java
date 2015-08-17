@@ -17,9 +17,8 @@ import java.util.List;
  */
 public class SupplementDao {
 
-    private AVQuery<Supplement> query = AVQuery.getQuery(Supplement.class);
     public static final String FIND_SORT = "sort";
-
+    private AVQuery<Supplement> query = AVQuery.getQuery(Supplement.class);
 
     /**
      * 异步从云端分页查询辅食

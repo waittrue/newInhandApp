@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="@dimen/choose_milk_phase_listview_item_height">
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/choose_milk_phase_listview_item_height"
+    android:orientation="vertical">
+
     <TextView
+        android:id="@+id/choose_milk_phase_listview_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/choose_milk_phase_listview_item_name"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/fragment_choose_milk_phase_margin_left" />
+        android:layout_marginLeft="@dimen/fragment_choose_milk_phase_margin_left"
+        android:text="New Text" />
 
-    <ImageView
-        style="@style/right_arrow_default_style" />
+    <ImageView style="@style/right_arrow_default_style" />
 
     <ImageView
         style="@style/listview_divider_default_style"

@@ -35,15 +35,16 @@ public class Device extends Base implements CacheSaving<Device> {
 
     public static final String CACHE_KEY = "device";
 
-    public Device(){
+    public Device() {
 
     }
 
     /**
      * 获得设备Mac地址
+     *
      * @return MAC地址
      */
-    public String getMac(){
+    public String getMac() {
         return this.getString(MAC_KEY);
     }
 
@@ -52,133 +53,149 @@ public class Device extends Base implements CacheSaving<Device> {
      *
      * @param mac mac地址
      */
-    public void setMac(String mac){
-        this.put(MAC_KEY,mac);
+    public void setMac(String mac) {
+        this.put(MAC_KEY, mac);
     }
 
     /**
      * 获得设备软件版本
+     *
      * @return 软件版本
      */
-    public String getSoftwareVersion(){
+    public String getSoftwareVersion() {
         return this.getString(SOFTWARE_VERSION_KEY);
     }
 
     /**
      * 设置设备软件版本
+     *
      * @param softwareVersion 软甲版本
      */
-    public void setSoftwareVersion(String softwareVersion){
-        this.put(SOFTWARE_VERSION_KEY,softwareVersion);
+    public void setSoftwareVersion(String softwareVersion) {
+        this.put(SOFTWARE_VERSION_KEY, softwareVersion);
     }
 
     /**
      * 获得设备硬件版本
+     *
      * @return 设备硬件版本
      */
-    public String getHardwareVersion(){
+    public String getHardwareVersion() {
         return this.getString(HARDWARE_VERSION_KEY);
     }
 
     /**
      * 设置设备硬件版本
+     *
      * @param hardwareVersion 设备硬件版本
      */
-    public void setHardwareVersion(String hardwareVersion){
-        this.put(HARDWARE_VERSION_KEY,hardwareVersion);
+    public void setHardwareVersion(String hardwareVersion) {
+        this.put(HARDWARE_VERSION_KEY, hardwareVersion);
     }
 
     /**
      * 获得校准次数
+     *
      * @return 校准次数
      */
-    public int getAdjustNum(){
+    public int getAdjustNum() {
         return this.getInt(ADJUST_NUM_KEY);
     }
 
     /**
      * 设置校准次数
+     *
      * @param adjustNum 校准次数
      */
-    public void setAdjustNum(int adjustNum){
-        this.put(ADJUST_NUM_KEY,adjustNum);
+    public void setAdjustNum(int adjustNum) {
+        this.put(ADJUST_NUM_KEY, adjustNum);
     }
 
     /**
      * 获得校准差
+     *
      * @return 校准差
      */
-    public double getAdjustDeviation(){
+    public double getAdjustDeviation() {
         return this.getDouble(ADJUST_DEVIATION_KEY);
     }
 
     /**
      * 设置校准误差
+     *
      * @param adjustNumDeviation 校准误差
      */
-    public void setAdjustDeviation(double adjustNumDeviation){
-        this.put(ADJUST_DEVIATION_KEY,adjustNumDeviation);
+    public void setAdjustDeviation(double adjustNumDeviation) {
+        this.put(ADJUST_DEVIATION_KEY, adjustNumDeviation);
     }
 
     /**
      * 获得压力传感错误次数
+     *
      * @return 压力传感错误次数
      */
-    public int getPressureErrorNum(){
+    public int getPressureErrorNum() {
         return this.getInt(PRESSURE_ERROR_NUM_KEY);
     }
 
     /**
      * 设置压力传感器错误次数
+     *
      * @param pressureErrorNum 压力传感器错误次数
      */
-    public void setPressureErrorNum(int pressureErrorNum){
-        this.put(PRESSURE_ERROR_NUM_KEY,pressureErrorNum);
+    public void setPressureErrorNum(int pressureErrorNum) {
+        this.put(PRESSURE_ERROR_NUM_KEY, pressureErrorNum);
     }
 
     /**
      * 获得温度错误次数
+     *
      * @return 温度错误次数
      */
-    public int getTemperatureErrorNum(){
+    public int getTemperatureErrorNum() {
         return this.getInt(TEMPERATURE_ERROR_NUM_KEY);
     }
 
     /**
      * 设置温度传感器错误次数
+     *
      * @param temperatureErrorNum 温度传感器错误次数
      */
-    public void setTemperatureErrorNum(int temperatureErrorNum){
-        this.put(TEMPERATURE_ERROR_NUM_KEY,temperatureErrorNum);
+    public void setTemperatureErrorNum(int temperatureErrorNum) {
+        this.put(TEMPERATURE_ERROR_NUM_KEY, temperatureErrorNum);
     }
 
     /**
      * 获得加速度模块错误次数
+     *
      * @return 加速度模块错误次数
      */
-    public int getAccelerateErrorNum(){
+    public int getAccelerateErrorNum() {
         return this.getInt(ACCELERATE_ERROR_NUM_KEY);
     }
 
     /**
      * 设置加速度模块错误次数
+     *
      * @param accelerateErrorNum 加速度模块错误次数
      */
-    public void setAccelerateErrorNum(int accelerateErrorNum){
-        this.put(ACCELERATE_ERROR_NUM_KEY,accelerateErrorNum);
+    public void setAccelerateErrorNum(int accelerateErrorNum) {
+        this.put(ACCELERATE_ERROR_NUM_KEY, accelerateErrorNum);
     }
 
 
     /**
      * 获得设备所属用户
+     *
      * @return
      */
-    public User getUser(){
-        return this.getAVUser(USER_KEY,User.class);
+    public User getUser() {
+        return this.getAVUser(USER_KEY, User.class);
     }
 
     /**
      * 设置设备对应用户
+     *
      * @param user 用户
      */
     public void setUser(User user) {
@@ -191,6 +208,7 @@ public class Device extends Base implements CacheSaving<Device> {
 
     /**
      * 获得设备UUID
+     *
      * @return 设备UUID
      */
     public String getUUID() {
@@ -226,10 +244,11 @@ public class Device extends Base implements CacheSaving<Device> {
 
     /**
      * 保存设备信息至云端，覆盖式存储
+     *
      * @param callback 存储回调接口
      */
-    public void saveInCloud(final SaveCallback callback){
-        if( this.getUser() == null )
+    public void saveInCloud(final SaveCallback callback) {
+        if (this.getUser() == null)
             this.setUser(App.getCurrentUser());
         this.saveInBackground(callback);
     }

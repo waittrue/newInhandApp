@@ -21,14 +21,14 @@ public class curveMonth extends com.inhand.milk.fragment.milk_amount_curve.OnePa
     private Calendar startCalender;
 
     public curveMonth(Activity activity, int width) {
-		super(activity,width);
+        super(activity, width);
         startCalender = Calendar.getInstance();
         startCalender.add(Calendar.DAY_OF_MONTH, -TotalDays + 1);
         year = startCalender.get(Calendar.YEAR);
         month = startCalender.get(Calendar.MONTH) + 1;
         day = startCalender.get(Calendar.DAY_OF_MONTH);
         // TODO Auto-generated constructor stub
-	}
+    }
 
 
     @Override
@@ -37,8 +37,8 @@ public class curveMonth extends com.inhand.milk.fragment.milk_amount_curve.OnePa
         amountData.clear();
         amountMin = Integer.MAX_VALUE;
         amountMax = Integer.MIN_VALUE;
-        OneDayDao oneDayDao=new OneDayDao();
-        List<OneDay> oneDays = oneDayDao.findFromDB(App.getAppContext(),TotalDays);
+        OneDayDao oneDayDao = new OneDayDao();
+        List<OneDay> oneDays = oneDayDao.findFromDB(App.getAppContext(), TotalDays);
         if (oneDays == null)
             return;
         List<float[]> maxTemperature = new ArrayList<>();
@@ -110,6 +110,7 @@ public class curveMonth extends com.inhand.milk.fragment.milk_amount_curve.OnePa
             return false;
         return false;
     }
+
     @Override
     protected void setTemperatureExcle(com.inhand.milk.fragment.milk_amount_curve.Excle excle) {
         excle.setLeftTiltle(mActivty.getResources().

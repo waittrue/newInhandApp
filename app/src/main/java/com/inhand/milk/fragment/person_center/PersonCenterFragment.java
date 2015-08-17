@@ -69,7 +69,8 @@ public class PersonCenterFragment extends TitleFragment {
             }
         });
     }
-    private void initBabyMilk(){
+
+    private void initBabyMilk() {
         if (babyMilk == null)
             babyMilk = (RelativeLayout) mView.findViewById(R.id.person_center_baby_milk_container);
         babyMilk.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +82,7 @@ public class PersonCenterFragment extends TitleFragment {
             }
         });
     }
+
     private void initSyn() {
         if (syn == null)
             syn = (RelativeLayout) mView.findViewById(R.id.person_center_syn_container);

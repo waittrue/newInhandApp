@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="@dimen/ui_loading_view_width"
-    android:layout_height="@dimen/ui_loading_view_height">
+    android:layout_width="@dimen/ui_loading_view_width"
+    android:layout_height="@dimen/ui_loading_view_height"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="@dimen/ui_loading_view_up_height">
 
         <ImageView
+            android:id="@+id/ui_loading_imageview"
             android:layout_width="@dimen/ui_loading_image_height_width"
             android:layout_height="@dimen/ui_loading_image_height_width"
-            android:id="@+id/ui_loading_imageview"
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ui_loading_view_down_height">
+        android:layout_height="@dimen/ui_loading_view_down_height"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/ui_loading_textview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center"
             android:text="Large Text"
-            android:id="@+id/ui_loading_textview"
-            android:gravity="center" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 </LinearLayout>

@@ -1,13 +1,5 @@
 package com.inhand.milk.activity;
 
-import com.inhand.milk.R;
-import com.inhand.milk.STANDAR.Standar;
-import com.inhand.milk.entity.Baby;
-import com.inhand.milk.entity.BabyInfo;
-import com.inhand.milk.fragment.fisrt_lanunch.ChooseParentsFragment;
-import com.inhand.milk.ui.firstlanunch.FirstLanunchBottom;
-import com.inhand.milk.ui.firstlanunch.SmallDotsTab;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -19,6 +11,14 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.inhand.milk.R;
+import com.inhand.milk.STANDAR.Standar;
+import com.inhand.milk.entity.Baby;
+import com.inhand.milk.entity.BabyInfo;
+import com.inhand.milk.fragment.fisrt_lanunch.ChooseParentsFragment;
+import com.inhand.milk.ui.firstlanunch.FirstLanunchBottom;
+import com.inhand.milk.ui.firstlanunch.SmallDotsTab;
 
 import java.util.Date;
 

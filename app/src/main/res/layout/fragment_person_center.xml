@@ -97,8 +97,8 @@
                 <RelativeLayout
                     android:id="@+id/person_center_baby_info_container"
                     android:layout_width="fill_parent"
-                    android:background="@drawable/user_info_setting_bg"
-                    android:layout_height="@dimen/common_settings_item_normal_height">
+                    android:layout_height="@dimen/common_settings_item_normal_height"
+                    android:background="@drawable/user_info_setting_bg">
 
                     <ImageView
                         android:layout_width="fill_parent"
@@ -133,10 +133,10 @@
 
                 <RelativeLayout
                     android:id="@+id/person_center_baby_record_container"
-                    android:background="@drawable/user_info_setting_bg"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:layout_below="@+id/person_center_baby_info_container">
+                    android:layout_below="@+id/person_center_baby_info_container"
+                    android:background="@drawable/user_info_setting_bg">
 
                     <ImageView
                         style="@style/common_settings_item_right_arrow"
@@ -168,8 +168,8 @@
                     android:id="@+id/person_center_baby_milk_container"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:background="@drawable/user_info_setting_bg"
-                    android:layout_below="@+id/person_center_baby_record_container">
+                    android:layout_below="@+id/person_center_baby_record_container"
+                    android:background="@drawable/user_info_setting_bg">
 
                     <ImageView
                         style="@style/common_settings_item_right_arrow"
@@ -205,8 +205,8 @@
                 <RelativeLayout
                     android:id="@+id/percon_center_baby_device_container"
                     android:layout_width="fill_parent"
-                    android:background="@drawable/user_info_setting_bg"
-                    android:layout_height="@dimen/common_settings_item_normal_height">
+                    android:layout_height="@dimen/common_settings_item_normal_height"
+                    android:background="@drawable/user_info_setting_bg">
 
                     <ImageView
                         android:layout_width="fill_parent"
@@ -242,8 +242,8 @@
                     android:id="@+id/person_center_syn_container"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:background="@drawable/user_info_setting_bg"
-                    android:layout_below="@+id/percon_center_baby_device_container">
+                    android:layout_below="@+id/percon_center_baby_device_container"
+                    android:background="@drawable/user_info_setting_bg">
 
                     <ImageView
                         style="@style/common_settings_item_right_arrow"

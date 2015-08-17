@@ -20,8 +20,8 @@ public class curveWeek extends com.inhand.milk.fragment.milk_amount_curve.OnePap
     private Calendar startCalender;
 
     public curveWeek(Activity activity, int width) {
-		super(activity,width);
-		// TODO Auto-generated constructor stub
+        super(activity, width);
+        // TODO Auto-generated constructor stub
         startCalender = Calendar.getInstance();
         startCalender.add(Calendar.DAY_OF_MONTH, -TotalDays + 1);
         year = startCalender.get(Calendar.YEAR);
@@ -55,7 +55,7 @@ public class curveWeek extends com.inhand.milk.fragment.milk_amount_curve.OnePap
         amountMin = Integer.MAX_VALUE;
         amountMax = Integer.MIN_VALUE;
         OneDayDao oneDayDao = new OneDayDao();
-        List<OneDay> oneDays = oneDayDao.findFromDB(App.getAppContext(),TotalDays);
+        List<OneDay> oneDays = oneDayDao.findFromDB(App.getAppContext(), TotalDays);
         if (oneDays == null) {
             return;
         }

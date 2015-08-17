@@ -22,28 +22,30 @@ import java.util.Map;
  * Created by Administrator on 2015/8/11.
  */
 public class ChooseMilkPhaseFragment extends TitleFragment {
-    private static final String KEY ="name_key";
+    private static final String KEY = "name_key";
     private PullRefreshListView pullToRefreshListView;
     private boolean interrupt;
     private Handler handler;
-    private  List<Map<String,Object>> data = new ArrayList<>();
+    private List<Map<String, Object>> data = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_choose_milk_phase, container, false);
-        setTitleview(getResources().getString(R.string.choose_milk_phase_title),2);
+        setTitleview(getResources().getString(R.string.choose_milk_phase_title), 2);
         initlistview();
         return mView;
     }
-    private void initlistview(){
-        for(int i=0;i<30;i++){
-            Map<String,Object> map = new HashMap<>();
-            map.put(KEY,"a"+String.valueOf(i));
+
+    private void initlistview() {
+        for (int i = 0; i < 30; i++) {
+            Map<String, Object> map = new HashMap<>();
+            map.put(KEY, "a" + String.valueOf(i));
             data.add(map);
         }
-        pullToRefreshListView = (PullRefreshListView)mView.findViewById(R.id.choose_milk_phase_listview);
-        final SimpleAdapter simpleAdapter = new SimpleAdapter(App.getAppContext(),data,R.layout.fragment_choose_milk_phase_listview_item,
-                new String[]{KEY},new int[]{R.id.choose_milk_phase_listview_item_name});
+        pullToRefreshListView = (PullRefreshListView) mView.findViewById(R.id.choose_milk_phase_listview);
+        final SimpleAdapter simpleAdapter = new SimpleAdapter(App.getAppContext(), data, R.layout.fragment_choose_milk_phase_listview_item,
+                new String[]{KEY}, new int[]{R.id.choose_milk_phase_listview_item_name});
         pullToRefreshListView.setAdapter(simpleAdapter);
         handler = new Handler();
         pullToRefreshListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
@@ -54,23 +56,23 @@ public class ChooseMilkPhaseFragment extends TitleFragment {
                     public void run() {
                         interrupt = true;
                     }
-                },10000);
+                }, 10000);
                 interrupt = false;
 
-                while (true){
-                    if(interrupt)
+                while (true) {
+                    if (interrupt)
                         break;
                 }
             }
 
             @Override
             public void Refresh() {
-                for(int i=0;i<10;i++){
-                    Map<String,Object> map = new HashMap<>();
-                    map.put(KEY,"b"+String.valueOf(i));
+                for (int i = 0; i < 10; i++) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put(KEY, "b" + String.valueOf(i));
                     data.add(map);
                 }
-              simpleAdapter.notifyDataSetChanged();
+                simpleAdapter.notifyDataSetChanged();
             }
         });
     }

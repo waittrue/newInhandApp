@@ -20,17 +20,13 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
-import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.activity.MainActivity;
-import com.inhand.milk.entity.Baby;
-import com.inhand.milk.entity.BabyInfo;
-import com.inhand.milk.utils.ACache;
 
 public class ChooseMilk extends FirstLaunchFragment {
 
+    private static final int TIME = 500;
     private TextView text, doc;
     private ImageView brandLeft, brandRight;
-    private static final int TIME = 500;
     private RelativeLayout iconsContainer;
 
     @Override

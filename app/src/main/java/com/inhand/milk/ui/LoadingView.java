@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.inhand.milk.R;
 
 /**
@@ -86,6 +87,18 @@ public class LoadingView extends LinearLayout {
 
 
     /**
+     * LoadingCallBack
+     * Desc:加载动画回调接口
+     */
+    public static interface LoadingCallback {
+        public void doInBackground();
+
+        public void onPreExecute();
+
+        public void onPostExecute();
+    }
+
+    /**
      * LoadingTask
      * Desc:加载动画播放时执行的任务类
      */
@@ -120,17 +133,5 @@ public class LoadingView extends LinearLayout {
             LoadingView.this.setVisibility(GONE);
             callback.onPostExecute();
         }
-    }
-
-    /**
-     * LoadingCallBack
-     * Desc:加载动画回调接口
-     */
-    public static interface LoadingCallback {
-        public void doInBackground();
-
-        public void onPreExecute();
-
-        public void onPostExecute();
     }
 }

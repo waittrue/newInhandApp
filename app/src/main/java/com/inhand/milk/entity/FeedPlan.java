@@ -29,9 +29,10 @@ public class FeedPlan extends Base {
 
     /**
      * 获得营养师推荐名称
+     *
      * @return 营养师推荐名称
      */
-    public String getRCMD(){
+    public String getRCMD() {
         return this.getString(RCMD_KEY);
     }
 
@@ -42,9 +43,10 @@ public class FeedPlan extends Base {
 
     /**
      * 获得该推荐使用次数
+     *
      * @return 该推荐使用次数
      */
-    public int getCount(){
+    public int getCount() {
         return this.getInt(COUNT_KEY);
     }
 
@@ -55,7 +57,7 @@ public class FeedPlan extends Base {
     /**
      * 增加推荐使用次数1次
      */
-    public void addCount(){
+    public void addCount() {
         this.increment(COUNT_KEY);
     }
 
@@ -88,6 +90,7 @@ public class FeedPlan extends Base {
 
     /**
      * 同步地从本地获取该喂养计划的所有条目
+     *
      * @param ctx 上下文环境
      * @return 奶粉使用说明列表
      */
@@ -101,7 +104,7 @@ public class FeedPlan extends Base {
      * 异步地缓存喂养计划条目列表到本地
      *
      * @param ctx      上下文环境
-     * @param items     待缓存喂养计划条目列表
+     * @param items    待缓存喂养计划条目列表
      * @param callback 回调接口
      */
     public void cacheItems(

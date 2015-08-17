@@ -40,13 +40,15 @@ public class PowderDao {
     /**
      * 作者：大力
      * 异步地查询所有奶粉
+     *
      * @param callback
      */
-    public void findFromCloud(final FindCallback<Powder> callback){
+    public void findFromCloud(final FindCallback<Powder> callback) {
         query.orderByAscending(Powder.PINYIN_NAME_KEY);
         query.whereNotEqualTo("isDel", true);
         query.findInBackground(callback);
     }
+
     /**
      * 同步地分页查询奶粉
      *
@@ -65,9 +67,11 @@ public class PowderDao {
             return null;
         }
     }
+
     /**
      * 作者：大力
      * 同步地分页查询所有奶粉
+     *
      * @return 奶粉列表
      */
     public List<Powder> findFromCloud() {

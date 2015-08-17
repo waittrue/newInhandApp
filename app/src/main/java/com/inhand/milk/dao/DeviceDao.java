@@ -46,7 +46,7 @@ public class DeviceDao {
     /**
      * 异步地从云端获取当前用户的设备信息
      *
-     * @param user 指定用户
+     * @param user     指定用户
      * @param callback 回调接口
      */
     public void findByUserFromCloud(
@@ -87,6 +87,7 @@ public class DeviceDao {
 
     /**
      * 同步地从缓存获得设备
+     *
      * @param ctx 上下文环境
      * @return 当前所用设备
      */

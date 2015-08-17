@@ -189,7 +189,6 @@
     </style>
 
 
-
     <style name="AdderWindowStyle">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
@@ -208,6 +207,7 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">left|center_vertical</item>
     </style>
+
     <style name="common_settings_item_right_arrow">
         <item name="android:scaleType">centerInside</item>
         <item name="android:src">@drawable/arrow_icon</item>
@@ -215,6 +215,7 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_marginRight">@dimen/common_settings_item_margin_right</item>
     </style>
+
     <style name="person_center_icon">
         <item name="android:layout_width">@dimen/person_center_icon_width_height</item>
         <item name="android:layout_height">@dimen/person_center_icon_width_height</item>
@@ -234,7 +235,7 @@
         <item name="android:layout_centerVertical">true</item>
     </style>
 
-   <!--列表下面那个分隔线的默认格式，这个是没有设置 左键局 的-->
+    <!--列表下面那个分隔线的默认格式，这个是没有设置 左键局 的-->
     <style name="listview_divider_default_style">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">@dimen/common_settings_item_line_smaller_height</item>

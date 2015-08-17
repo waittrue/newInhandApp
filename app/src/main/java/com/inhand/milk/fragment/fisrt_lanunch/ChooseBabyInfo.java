@@ -25,13 +25,14 @@ import com.inhand.milk.R;
 
 import java.util.Calendar;
 
-public class ChooseBabyInfo extends FirstLaunchFragment{
+public class ChooseBabyInfo extends FirstLaunchFragment {
 
-    private ImageView babySex,boyIcon,girlIcon,babyBirthday,babyName,girlselect,boyselect;
+    private static final int animotionTime1 = 500;
+    private ImageView babySex, boyIcon, girlIcon, babyBirthday, babyName, girlselect, boyselect;
     private EditText nameEdit;
     private TextView birthdayTextView;
-    private static final int animotionTime1 = 500;
     private int selectSex = 0;//1 boy,2 girl
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
     public void onHiddenChanged(boolean hidden) {
         // TODO Auto-generated method stub
         super.onHiddenChanged(hidden);
-        if (!hidden){
+        if (!hidden) {
             setTitle(getResources().getString(R.string.first_launch_choose_baby_info));
             girlIcon.clearAnimation();
             boyIcon.clearAnimation();
@@ -62,16 +63,16 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
     }
 
 
-    private void initViews(View view){
-        babySex = (ImageView)view.findViewById(R.id.first_launch_babyinfo_sex_icon);
-        boyIcon = (ImageView)view.findViewById(R.id.first_launch_baby_info_boy_icon);
-        girlIcon = (ImageView)view.findViewById(R.id.first_launch_baby_info_girl_icon);
-        babyBirthday = (ImageView)view.findViewById(R.id.first_launch_baby_info_birthday_icon);
-        babyName = (ImageView)view.findViewById(R.id.first_launch_baby_info_name_icon);
-        birthdayTextView = (TextView)view.findViewById(R.id.first_launch_baby_info_birthday_textView);
-        nameEdit = (EditText)view.findViewById(R.id.first_launch_baby_info_name_edittext);
-        girlselect = (ImageView)view.findViewById(R.id.first_launch_select_girl_icon);
-        boyselect = (ImageView)view.findViewById(R.id.first_launch_select_boy_icon);
+    private void initViews(View view) {
+        babySex = (ImageView) view.findViewById(R.id.first_launch_babyinfo_sex_icon);
+        boyIcon = (ImageView) view.findViewById(R.id.first_launch_baby_info_boy_icon);
+        girlIcon = (ImageView) view.findViewById(R.id.first_launch_baby_info_girl_icon);
+        babyBirthday = (ImageView) view.findViewById(R.id.first_launch_baby_info_birthday_icon);
+        babyName = (ImageView) view.findViewById(R.id.first_launch_baby_info_name_icon);
+        birthdayTextView = (TextView) view.findViewById(R.id.first_launch_baby_info_birthday_textView);
+        nameEdit = (EditText) view.findViewById(R.id.first_launch_baby_info_name_edittext);
+        girlselect = (ImageView) view.findViewById(R.id.first_launch_select_girl_icon);
+        boyselect = (ImageView) view.findViewById(R.id.first_launch_select_boy_icon);
         nameEdit.clearFocus();
         birthdayTextView.setOnClickListener(new View.OnClickListener() {
 
@@ -84,22 +85,21 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
         });
 
 
-
         nameEdit.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 // TODO Auto-generated method stub
 
-                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     //setNextclick();
                     //lanunchBottom.setNextClickable(true);
-                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
                             getActivity().getApplicationContext().INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(nameEdit.getWindowToken(),0);
+                    imm.hideSoftInputFromWindow(nameEdit.getWindowToken(), 0);
                     nameEdit.clearFocus();
                     return true;
                 }
-                if (actionId == EditorInfo.IME_ACTION_DONE){
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     nameEdit.clearFocus();
                     return true;
                 }
@@ -114,7 +114,7 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                alphAnimation(girlselect, 1,100);
+                alphAnimation(girlselect, 1, 100);
                 boyselect.setAlpha(0f);
                 selectSex = 2;
             }
@@ -124,7 +124,7 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                alphAnimation(boyselect, 1,100);
+                alphAnimation(boyselect, 1, 100);
                 girlselect.setAlpha(0f);
                 selectSex = 1;
             }
@@ -137,7 +137,8 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
         // TODO Auto-generated method stub
         return new ChooseWeight();
     }
-    private void showDatePickerDialog(){
+
+    private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -149,8 +150,8 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
                 // TODO Auto-generated method stub
-                birthdayTextView.setText(String.valueOf(year)+"年"+
-                        String.valueOf(monthOfYear+1)+"月"+String.valueOf(dayOfMonth)+"日");
+                birthdayTextView.setText(String.valueOf(year) + "年" +
+                        String.valueOf(monthOfYear + 1) + "月" + String.valueOf(dayOfMonth) + "日");
             }
         };
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
@@ -159,8 +160,7 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
     }
 
 
-
-    private void setPre(){
+    private void setPre() {
         lanunchBottom.setPreListener(new OnClickListener() {
 
             @Override
@@ -171,31 +171,32 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
             }
         });
     }
-    private void setNext(){
+
+    private void setNext() {
         lanunchBottom.setNextListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                String str =  birthdayTextView.getText().toString();
+                String str = birthdayTextView.getText().toString();
                 String name = nameEdit.getText().toString();
                 String warning = "";
                 if (selectSex == 0)
                     warning += "请选择宝宝性别";
-                if (str.equals(getResources().getString(R.string.first_launch_choose_babysex_date)) ){
-                    if(!warning.equals(""))
-                        warning+="\n";
+                if (str.equals(getResources().getString(R.string.first_launch_choose_babysex_date))) {
+                    if (!warning.equals(""))
+                        warning += "\n";
                     warning += "请选择宝宝的生日";
                 }
-                if (name.equals("") ){
-                    if(!warning.equals(""))
-                        warning+="\n";
+                if (name.equals("")) {
+                    if (!warning.equals(""))
+                        warning += "\n";
                     warning += "请输入姓名";
                 }
-                if(!warning.equals("")){
+                if (!warning.equals("")) {
                     Toast.makeText(getActivity().getApplicationContext(),
                             warning, 1000).show();
-                    return ;
+                    return;
                 }
                 outAnimation();
             }
@@ -205,19 +206,19 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
     @Override
     protected void inAnimation() {
         // TODO Auto-generated method stub
-        alphAnimation(babyBirthday,1f,animotionTime1);
-        alphAnimation(babyName,1f,animotionTime1);
-        alphAnimation(babySex,1f,animotionTime1);
-        scaleAnimation(birthdayTextView,1f,animotionTime1);
-        scaleAnimation(nameEdit,1f,animotionTime1);
+        alphAnimation(babyBirthday, 1f, animotionTime1);
+        alphAnimation(babyName, 1f, animotionTime1);
+        alphAnimation(babySex, 1f, animotionTime1);
+        scaleAnimation(birthdayTextView, 1f, animotionTime1);
+        scaleAnimation(nameEdit, 1f, animotionTime1);
 
 
-        Animation animation = new TranslateAnimation(-width/2, 0, 0, 0);
+        Animation animation = new TranslateAnimation(-width / 2, 0, 0, 0);
         animation.setDuration(animotionTime1);
         animation.setFillAfter(true);
         girlIcon.startAnimation(animation);
 
-        animation = new TranslateAnimation(width/2, 0, 0, 0);
+        animation = new TranslateAnimation(width / 2, 0, 0, 0);
         animation.setDuration(animotionTime1);
         animation.setFillAfter(true);
         boyIcon.startAnimation(animation);
@@ -241,7 +242,7 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
                 if (selectSex == 1)
                     alphAnimation(boyselect, 1f, 100);
                 else if (selectSex == 2)
-                    alphAnimation(girlselect, 1f,100);
+                    alphAnimation(girlselect, 1f, 100);
             }
         });
 
@@ -250,19 +251,19 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
     @Override
     protected void outAnimation() {
         // TODO Auto-generated method stub
-        alphAnimation(babyBirthday,0f,animotionTime1);
-        alphAnimation(babyName,0f,animotionTime1);
-        alphAnimation(babySex,0f,animotionTime1);
-        scaleAnimation(birthdayTextView,0f,animotionTime1);
-        scaleAnimation(nameEdit,0f,animotionTime1);
+        alphAnimation(babyBirthday, 0f, animotionTime1);
+        alphAnimation(babyName, 0f, animotionTime1);
+        alphAnimation(babySex, 0f, animotionTime1);
+        scaleAnimation(birthdayTextView, 0f, animotionTime1);
+        scaleAnimation(nameEdit, 0f, animotionTime1);
         boyselect.setAlpha(0f);
         girlselect.setAlpha(0f);
-        Animation animation = new TranslateAnimation(0, -width/2, 0, 0);
+        Animation animation = new TranslateAnimation(0, -width / 2, 0, 0);
         animation.setDuration(animotionTime1);
         animation.setFillAfter(true);
         girlIcon.startAnimation(animation);
 
-        animation = new TranslateAnimation(0, width/2, 0, 0);
+        animation = new TranslateAnimation(0, width / 2, 0, 0);
         animation.setDuration(animotionTime1);
         animation.setFillAfter(true);
         boyIcon.startAnimation(animation);
@@ -285,39 +286,38 @@ public class ChooseBabyInfo extends FirstLaunchFragment{
                 // TODO Auto-generated method stub
                 enterNextFragmet();
                 saveDate();
-                if(selectSex == 1){
+                if (selectSex == 1) {
                     setExtraInfo("boy");
-                }
-                else if (selectSex == 2){
+                } else if (selectSex == 2) {
                     setExtraInfo("girl");
                 }
 
             }
         });
     }
+
     /**
      * 存入 baby 的相关信息
      * str 表示 孩子的生日 格式如 ：2014年2月2号
      * name 表示孩子的姓名 格式如：张三
      * selectsex 表示孩子的性别 格式如 ：1为男，2为女
-     *
      */
-	private void saveDate(){
-		String birthday =  birthdayTextView.getText().toString();
-		String nickname = nameEdit.getText().toString();
+    private void saveDate() {
+        String birthday = birthdayTextView.getText().toString();
+        String nickname = nameEdit.getText().toString();
         String[] year = birthday.split("年");
         String[] month = year[1].split("月");
         String[] day = month[1].split("日");
-        if(month[0].length()<=1)
-            month[0] = "0"+month[0];
-        if(day[0].length()<=1)
-            day[0] = "0"+day[0];
-        birthday = year[0] +"-"+month[0]+"-"+day[0];
-        int sex=selectSex;
+        if (month[0].length() <= 1)
+            month[0] = "0" + month[0];
+        if (day[0].length() <= 1)
+            day[0] = "0" + day[0];
+        birthday = year[0] + "-" + month[0] + "-" + day[0];
+        int sex = selectSex;
         baby.setBirthday(birthday);
         baby.setNickname(nickname);
         baby.setSex(sex);
 //		Toast.makeText(getActivity().getApplicationContext(),
 //				str +":"+name+":"+String.valueOf(selectSex), 1000).show();
-	}
+    }
 }

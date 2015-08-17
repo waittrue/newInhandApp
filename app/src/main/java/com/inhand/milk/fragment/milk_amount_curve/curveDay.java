@@ -2,10 +2,8 @@ package com.inhand.milk.fragment.milk_amount_curve;
 
 import android.app.Activity;
 
-import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
-import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.utils.RecordHelper;
@@ -18,6 +16,7 @@ import java.util.List;
 public class curveDay extends com.inhand.milk.fragment.milk_amount_curve.OnePaper {
     private static final int VolunMinDiff = 80;
     private String today;
+
     public curveDay(Activity activity, int width) {
         super(activity, width);
         Date dt = new Date();

@@ -2,7 +2,6 @@ package com.inhand.milk.activity;
 
 import android.os.Bundle;
 
-import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.LoginOptFragment;
 
@@ -21,10 +20,10 @@ public class LaunchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
-     //   this.startActivity(new Intent(this,StatisticsTestActivity.class));
-       // App.logOut();
+        //   this.startActivity(new Intent(this,StatisticsTestActivity.class));
+        // App.logOut();
         getSupportFragmentManager().beginTransaction()
-              .replace(R.id.main_container, new LoginOptFragment()).commit();
+                .replace(R.id.main_container, new LoginOptFragment()).commit();
 
     }
 }

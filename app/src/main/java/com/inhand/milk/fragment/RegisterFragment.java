@@ -1,6 +1,5 @@
 package com.inhand.milk.fragment;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -22,7 +21,6 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.RequestMobileCodeCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.R;
-import com.inhand.milk.activity.LaunchActivity;
 import com.inhand.milk.entity.User;
 import com.inhand.milk.utils.PreJudgingTask;
 import com.inhand.milk.utils.Validator;
@@ -37,37 +35,31 @@ import com.inhand.milk.utils.Validator;
  */
 public class RegisterFragment extends BackHandleFragment {
 
+    private final int FADE_DURATION = 500;
+    private final int ANIM_DURATION = 400;
+    // 定义验证错误代码
+    private final int NO_ERROR = 0; //无错误
+    private final int PHONE_ERROR = 1; // 手机号码格式错误
+    private final int PASSWORD_ERROR = 2; // 密码格式错误
+    private final int PASSWORD_MISMATCH = 3; // 两次输入密码不一致
+    // 动画
+    Animation leftInAnim, rightInAnim;
+    Animation bottomOutAnim;
+    Animation fadeInAnim, fadeOutAnim;
     private LinearLayout formContainer;
     private LinearLayout optionsContainer;
     private EditText usernameEditor;
     private EditText passwordEditor;
     private EditText rePasswordEditor;
     private EditText authCodeEditor;
-
     private Button getAuthCodeBtn;
     private ImageView submitBtn;
-
     private ImageView toLogin;
     private Resources rs;
     private String username;
     private String password;
-
     private User user;
     private TimeCount timer;
-
-    // 动画
-    Animation leftInAnim, rightInAnim;
-    Animation bottomOutAnim;
-    Animation fadeInAnim, fadeOutAnim;
-
-    private final int FADE_DURATION = 500;
-    private final int ANIM_DURATION = 400;
-
-    // 定义验证错误代码
-    private final int NO_ERROR = 0; //无错误
-    private final int PHONE_ERROR = 1; // 手机号码格式错误
-    private final int PASSWORD_ERROR = 2; // 密码格式错误
-    private final int PASSWORD_MISMATCH = 3; // 两次输入密码不一致
 
     /**
      * 注册的返回逻辑是返回到登陆选项页面
@@ -76,7 +68,7 @@ public class RegisterFragment extends BackHandleFragment {
      */
     @Override
     public boolean onBackPressed() {
-        if (timer !=null){
+        if (timer != null) {
             timer.cancel();
             timer = null;
         }
@@ -179,7 +171,7 @@ public class RegisterFragment extends BackHandleFragment {
                                             // 停止验证码计时
                                             timer.cancel();
                                             // 跳转到首页入口
-                                            PreJudgingTask task=new PreJudgingTask(getActivity());
+                                            PreJudgingTask task = new PreJudgingTask(getActivity());
                                             task.execute();
                                         } else {
                                             e.printStackTrace();

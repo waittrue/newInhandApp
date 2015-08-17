@@ -29,6 +29,7 @@ public class QuickListView extends ViewGroup {
     private QuickListViewAdapter adapter;
     private LinearLayout linearLayout;
     private int quickNavigationWidth, quickNavigationHeight, width, height;
+
     public QuickListView(Context context) {
         super(context);
         init();
@@ -156,7 +157,8 @@ public class QuickListView extends ViewGroup {
             return;
         listView.setSelection(i);
     }
-    public void setOnItemClickListener(AdapterView.OnItemClickListener l){
+
+    public void setOnItemClickListener(AdapterView.OnItemClickListener l) {
         listView.setOnItemClickListener(l);
     }
 }

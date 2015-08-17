@@ -7,36 +7,36 @@ import android.view.View.OnClickListener;
 
 import com.inhand.milk.R;
 
-public class BackTitle extends BaseTitle{
+public class BackTitle extends BaseTitle {
 
-	private String mTitle;
-	private Activity mActivity;
+    private String mTitle;
+    private Activity mActivity;
 
-	public BackTitle( String title) {
-		mTitle = title;
-	}
+    public BackTitle(String title) {
+        mTitle = title;
+    }
 
-	public View getView(Activity activity) {
-		// TODO Auto-generated method stu
-		mActivity = activity;
-		OnClickListener listener =  new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				FragmentManager manager = mActivity.getFragmentManager();
-				if (manager.getBackStackEntryCount() == 0)
-					mActivity.finish();
-				else {
-					manager.popBackStack();
-					manager.beginTransaction().commit();
-				}
-			}
-		};
-		return setView(activity, R.layout.title_back,
-				activity.getResources().getDrawable(R.drawable.header_return_ico),mTitle,
-				 listener);
+    public View getView(Activity activity) {
+        // TODO Auto-generated method stu
+        mActivity = activity;
+        OnClickListener listener = new OnClickListener() {
 
-	}
-	
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                FragmentManager manager = mActivity.getFragmentManager();
+                if (manager.getBackStackEntryCount() == 0)
+                    mActivity.finish();
+                else {
+                    manager.popBackStack();
+                    manager.beginTransaction().commit();
+                }
+            }
+        };
+        return setView(activity, R.layout.title_back,
+                activity.getResources().getDrawable(R.drawable.header_return_ico), mTitle,
+                listener);
+
+    }
+
 }

@@ -1,11 +1,11 @@
 package com.inhand.milk.ui.firstlanunch;
 
-import com.inhand.milk.R;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
+
+import com.inhand.milk.R;
 
 public class SmallDotsTab extends View {
     private float dotsR;

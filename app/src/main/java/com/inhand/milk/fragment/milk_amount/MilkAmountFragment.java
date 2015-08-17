@@ -30,7 +30,6 @@ import com.inhand.milk.ui.RingWithText;
 import com.inhand.milk.utils.RecordHelper;
 import com.inhand.milk.utils.ViewHolder;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,13 +55,15 @@ public class MilkAmountFragment extends TitleFragment {
     private PinnerListViewAdapter adpter;
     private Record lastRecord;
     private int warningHighColor, warningLowColor, normalColor, progressBgColor;
-    private List<OneDay> oneDays ;
+    private List<OneDay> oneDays;
     private RecordHelper recordHelper;
     private boolean firstEnter = true;
-    public MilkAmountFragment(){
+
+    public MilkAmountFragment() {
         recordHelper = RecordHelper.getInstance();
         initOnedays();
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -139,6 +140,7 @@ public class MilkAmountFragment extends TitleFragment {
         ringWithText.setTextColor(getResources().getColor(R.color.milk_amount_ring_text_color));
         ringWithText.setTimeRing(timeRing);
     }
+
     private void initViews() {
         initListViews();
         drinkNum.setText(getResources().getString(R.string.milk_amount_drink_num_doc) + getOneDayDrinkAmount());
@@ -160,7 +162,7 @@ public class MilkAmountFragment extends TitleFragment {
         ringWithText.setListener(listener);
     }
 
-    private void initAdpter(){
+    private void initAdpter() {
         if (adpter == null) {
             adpter = new PinnerListViewAdapter(this.getActivity());
             adpter.setConfigureView(new PinnerListViewAdapter.ConfigureView() {
@@ -235,10 +237,12 @@ public class MilkAmountFragment extends TitleFragment {
             });
         }
     }
+
     private void initListViews() {
         initAdpter();
         getDataFromDB(adpter);
     }
+
     private void getDataFromDB(PinnerListViewAdapter adapter) {
         adapter.clearData();
         initOnedays();
@@ -249,18 +253,20 @@ public class MilkAmountFragment extends TitleFragment {
             List<Record> temp = oneDay.getRecords();
             int recordSize = temp.size();
             for (int j = 0; j < recordSize; j++) {
-                if(i==0&&j==0)
-                   lastRecord = temp.get(recordSize - 1 - j);
+                if (i == 0 && j == 0)
+                    lastRecord = temp.get(recordSize - 1 - j);
                 adapter.addMap(getHeadData(oneDay), getContentData(temp.get(recordSize - 1 - j)), addCount++);
             }
         }
         headlistView.setAdapter(adpter);
     }
-    private void initOnedays(){
+
+    private void initOnedays() {
         oneDays = recordHelper.getOnedays(dataLoadAmount);
-        if(oneDays == null)
+        if (oneDays == null)
             oneDays = new ArrayList<>();
     }
+
     private Map<String, Object> getHeadData(OneDay oneDay) {
         Map<String, Object> map = new HashMap<>();
         map.put(HEAD_DATA, getCalenderBefore(oneDay));
@@ -289,7 +295,7 @@ public class MilkAmountFragment extends TitleFragment {
 
     @Override
     public void refresh() {
-        if(firstEnter == false) {
+        if (firstEnter == false) {
             if (lastRecord != null) {
                 Log.i("milkAmountFragmnet", "!=null" + lastRecord.getBeginTemperature());
 
@@ -299,7 +305,7 @@ public class MilkAmountFragment extends TitleFragment {
                 }
             }
         }
-        Log.i("milkAmountFragmnet","true");
+        Log.i("milkAmountFragmnet", "true");
         initOnedays();
         getDataFromDB(adpter);
         drinkNum.setText(getResources().getString(R.string.milk_amount_drink_num_doc) + getOneDayDrinkAmount());
@@ -362,16 +368,16 @@ public class MilkAmountFragment extends TitleFragment {
 
     private String getOneDayDrinkAmount() {
         OneDay oneDay = recordHelper.getOneday(new Date());
-        if(oneDay == null)
+        if (oneDay == null)
             return "无数据";
         drinkAmount = recordHelper.getOneday(new Date()).getVolume();
-       // Log.i("milkamount",String.valueOf(drinkAmount));
+        // Log.i("milkamount",String.valueOf(drinkAmount));
         return Standar.AMOUNT_FORMAT.format(drinkAmount) + "ml";
     }
 
     private String getOneDayAdviseAmount() {
-        OneDay oneDay =  recordHelper.getOneday(new Date());
-        if(oneDay == null){
+        OneDay oneDay = recordHelper.getOneday(new Date());
+        if (oneDay == null) {
             return "无数据";
         }
         List<Record> records = oneDay.getRecords();
@@ -379,7 +385,7 @@ public class MilkAmountFragment extends TitleFragment {
         adviseAmount = 0;
         for (int i = 0; i < len; i++) {
             adviseAmount += records.get(i).getAdviceVolume();
-           // Log.i("milkamount",String.valueOf(adviseAmount));
+            // Log.i("milkamount",String.valueOf(adviseAmount));
         }
         //Log.i("milkamount",String.valueOf(adviseAmount));
         return Standar.AMOUNT_FORMAT.format(adviseAmount) + "ml";

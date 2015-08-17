@@ -18,7 +18,7 @@ public class MilkAmountCurveActivity extends SubActivity {
     @Override
     protected Fragment initFragment() {
         // TODO Auto-generated method stub
-        Fragment mFragment =new milkAmountCurve();// new Nutrition();
+        Fragment mFragment = new milkAmountCurve();// new Nutrition();
         return mFragment;
     }
 

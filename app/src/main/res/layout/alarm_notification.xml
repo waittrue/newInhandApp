@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/alarm_activity_caintainer"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00000000"
-    android:id="@+id/alarm_activity_caintainer">
+    android:orientation="vertical">
 
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/alarm_total_container"
         android:layout_width="210dp"
         android:layout_height="100dp"
         android:layout_centerInParent="true"
-        android:id="@+id/alarm_total_container">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/alarm_notification_up_bg"
             android:layout_weight="5"
-            >
+            android:background="@drawable/alarm_notification_up_bg">
 
             <TextView
+                android:id="@+id/alarm_time_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:text="09:40"
-                android:id="@+id/alarm_time_textview"
-                android:textColor="#ffffff"
-                android:layout_centerVertical="true" />
+                android:textColor="#ffffff" />
 
             <ImageView
+                android:id="@+id/alarm_milk_food_icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/alarm_milk_food_icon"
-                android:src="@drawable/alarm_milk_icon"
+                android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
-                android:layout_alignParentRight="true" />
+                android:src="@drawable/alarm_milk_icon" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/alarm_notification_down_bg"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            android:background="@drawable/alarm_notification_down_bg">
 
             <ImageView
+                android:id="@+id/alarm_icon_imageview"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:id="@+id/alarm_icon_imageview"
-                android:src="@drawable/alram_icon"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:src="@drawable/alram_icon" />
 
             <TextView
+                android:id="@+id/alarm_doc_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="小兜提醒 宝宝该饮奶"
-                android:id="@+id/alarm_doc_textview"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/alarm_icon_imageview" />
+                android:layout_toRightOf="@+id/alarm_icon_imageview"
+                android:text="小兜提醒 宝宝该饮奶" />
 
             <TextView
+                android:id="@+id/alarm_image_button"
                 android:layout_width="40dp"
                 android:layout_height="20dp"
-                android:text="确定"
-                android:id="@+id/alarm_image_button"
                 android:layout_alignParentRight="true"
-                android:textColor="#ffffff"
-                android:gravity="center"
+                android:layout_centerVertical="true"
                 android:background="@drawable/alarm_notification_button_bg"
-                android:layout_centerVertical="true" />
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="#ffffff" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

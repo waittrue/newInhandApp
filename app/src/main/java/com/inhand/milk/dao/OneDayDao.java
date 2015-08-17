@@ -33,15 +33,13 @@ import java.util.List;
  * Time: 15:40
  */
 public class OneDayDao {
-    private static final String SORT_BY = "createdAt";
-    private static final String RECORDS_COMP_FORMAT = "HH:mm";
     public static final int FIND_LIMIT_LATEST = 1; // 获得最近一天的
     public static final int FIND_LIMIT_ALL = 0;
-    private AVQuery<OneDay> query = AVQuery.getQuery(OneDay.class);
-
-
+    private static final String SORT_BY = "createdAt";
+    private static final String RECORDS_COMP_FORMAT = "HH:mm";
     protected DBHelper dbHelper;
     protected SQLiteDatabase db;
+    private AVQuery<OneDay> query = AVQuery.getQuery(OneDay.class);
 
     /**
      * 异步地根据从云端获取所有记录

@@ -1,7 +1,6 @@
 package com.inhand.milk.entity;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVException;
@@ -44,6 +43,7 @@ public class Baby extends Base implements CacheSaving<Baby> {
         this.setFeedPlan(new FeedPlan());
         this.setUser(App.getCurrentUser());
     }
+
     /**
      * 获得宝宝昵称
      *
@@ -140,15 +140,6 @@ public class Baby extends Base implements CacheSaving<Baby> {
     }
 
     /**
-     * 设置宝宝饮奶信息
-     *
-     * @param statistics 宝宝饮奶信息
-     */
-    public void setStatistics(Statistics statistics) {
-        this.put(STATISTICS_KEY, statistics);
-    }
-
-    /**
      * 获得宝宝饮奶信息
      *
      * @return 宝宝饮奶信息
@@ -163,12 +154,12 @@ public class Baby extends Base implements CacheSaving<Baby> {
     }
 
     /**
-     * 设置宝宝头像
+     * 设置宝宝饮奶信息
      *
-     * @param avatar 宝宝头像
+     * @param statistics 宝宝饮奶信息
      */
-    public void setAvatar(AVFile avatar) {
-        this.put(AVATAR_KEY, avatar);
+    public void setStatistics(Statistics statistics) {
+        this.put(STATISTICS_KEY, statistics);
     }
 
     /**
@@ -178,6 +169,15 @@ public class Baby extends Base implements CacheSaving<Baby> {
      */
     public AVFile getAvatar() {
         return this.getAVFile(AVATAR_KEY);
+    }
+
+    /**
+     * 设置宝宝头像
+     *
+     * @param avatar 宝宝头像
+     */
+    public void setAvatar(AVFile avatar) {
+        this.put(AVATAR_KEY, avatar);
     }
 
     /**

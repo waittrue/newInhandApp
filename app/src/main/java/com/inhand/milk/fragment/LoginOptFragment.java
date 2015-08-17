@@ -1,7 +1,5 @@
 package com.inhand.milk.fragment;
 
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -21,9 +19,6 @@ import android.widget.LinearLayout;
 import com.avos.avoscloud.AVUser;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
-import com.inhand.milk.activity.FirstLanunchActivity;
-import com.inhand.milk.activity.MainActivity;
-import com.inhand.milk.activity.WelcomeActivity;
 import com.inhand.milk.entity.User;
 import com.inhand.milk.utils.PreJudgingTask;
 
@@ -36,6 +31,7 @@ import com.inhand.milk.utils.PreJudgingTask;
  * Created by: Wooxxx
  */
 public class LoginOptFragment extends BaseFragment {
+    private final int ANIM_DURATION = 400;
     private ImageView logo;
     private LinearLayout optContainer;
     // 两个登录选项
@@ -44,7 +40,6 @@ public class LoginOptFragment extends BaseFragment {
     // 加载动画
     private Animation logoInAnim;
     private Animation logoOutAnim;
-    private final int ANIM_DURATION = 400;
 
     @Nullable
     @Override
@@ -172,10 +167,9 @@ public class LoginOptFragment extends BaseFragment {
             // 根据用户是否含有宝宝判断是否需要进入宝宝信息填写
             if (App.logged()) {
                 Log.d("usersex", String.valueOf(AVUser.getCurrentUser(User.class).getSex()));
-                PreJudgingTask task=new PreJudgingTask(getActivity());
+                PreJudgingTask task = new PreJudgingTask(getActivity());
                 task.execute();
-            }
-            else
+            } else
                 logo.startAnimation(logoInAnim);
         }
     }

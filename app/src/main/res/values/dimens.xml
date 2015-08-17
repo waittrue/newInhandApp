@@ -139,9 +139,6 @@
     <!-- tempreture_amount  这里有很多遗漏的问题，主要是名字容易混淆-->
 
 
-
-
-
     <dimen name="temperature_milk_up_excle_icon_height">20dp</dimen>
     <dimen name="temperature_milk_excle_margin">10dp</dimen>
 
@@ -343,7 +340,7 @@
     <dimen name="health_last_drink_item_bg_corner_radius">10dp</dimen>
 
     <!--weight_fragment-->
-    <dimen name ="weight_fragment_up_total_height">15dp</dimen>
+    <dimen name="weight_fragment_up_total_height">15dp</dimen>
     <dimen name="weight_fragment_title_height">50dp</dimen>
     <dimen name="weight_fragment_line_height">2.5dp</dimen>
     <dimen name="weight_fragment_line_margin_top">5dp</dimen>
@@ -386,7 +383,7 @@
     <dimen name="weight_fragment_adder_ruler_button_margin_top">10dp</dimen>
 
 
-<!-- milk_amount_curve-->
+    <!-- milk_amount_curve-->
     <dimen name="milk_amount_curve_total_tilte_height">100dp</dimen>
     <dimen name="milk_amount_curve_up_tilte_height">40dp</dimen>
     <dimen name="milk_amount_curve_tilte_height">35dp</dimen>

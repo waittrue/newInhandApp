@@ -26,8 +26,8 @@ import java.util.List;
  */
 public class FeedItemDao {
 
-    private AVQuery<FeedItem> query = AVQuery.getQuery(FeedItem.class);
     public static final String FIND_ORDER = "createdAt";
+    private AVQuery<FeedItem> query = AVQuery.getQuery(FeedItem.class);
 
     /**
      * 从云端异步地根据喂养计划获得该计划下所有条目

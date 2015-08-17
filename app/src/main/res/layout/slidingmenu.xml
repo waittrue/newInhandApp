@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.jeremyfeinstein.slidingmenu.lib.SlidingMenu xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/slidingmenu"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    style="@style/slidingmenu">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,9 +27,9 @@
                 android:id="@+id/sliding_userinfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/avatar"
+                android:orientation="vertical"
                 android:padding="@dimen/sliding_padding">
 
                 <TextView
@@ -74,16 +74,16 @@
                     android:layout_width="@dimen/sliding_footer_iconSize"
                     android:layout_height="@dimen/sliding_footer_iconSize"
                     android:gravity="center_vertical"
-                    android:src="@drawable/common_settings"
-                    android:scaleType="center" />
+                    android:scaleType="center"
+                    android:src="@drawable/common_settings" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@string/settings"
-                    android:textSize="@dimen/sliding_footer_fontSize"
-                    android:textColor="@color/default_ftg" />
+                    android:textColor="@color/default_ftg"
+                    android:textSize="@dimen/sliding_footer_fontSize" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,27 +95,27 @@
                 <ImageView
                     android:layout_width="@dimen/sliding_footer_iconSize"
                     android:layout_height="@dimen/sliding_footer_iconSize"
-                    android:src="@drawable/common_settings"
                     android:gravity="center_vertical"
-                    android:scaleType="center" />
+                    android:scaleType="center"
+                    android:src="@drawable/common_settings" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@string/skin"
-                    android:textSize="@dimen/sliding_footer_fontSize"
-                    android:textColor="@color/default_ftg" />
+                    android:textColor="@color/default_ftg"
+                    android:textSize="@dimen/sliding_footer_fontSize" />
             </LinearLayout>
         </LinearLayout>
 
         <ListView
             android:id="@+id/list"
             style="@style/sliding_list"
-            android:layout_below="@id/divider"
-            android:layout_above="@id/sliding_footer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/sliding_footer"
+            android:layout_below="@id/divider"
             android:divider="@android:color/transparent" />
 
     </RelativeLayout>

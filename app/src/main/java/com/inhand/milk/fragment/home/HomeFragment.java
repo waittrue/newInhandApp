@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
@@ -26,10 +27,12 @@ public class HomeFragment extends TitleFragment {
     private TextView adviseAmount, adviseT, lastAmount, lastT;
     private Record record;
     private RecordHelper recordHelper;
-    public HomeFragment(){
+
+    public HomeFragment() {
         recordHelper = RecordHelper.getInstance();
         initData();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,22 +51,22 @@ public class HomeFragment extends TitleFragment {
 
     private boolean initData() {
         Record tempRecord;
-        tempRecord =  recordHelper.getLastRecord();
-        if(tempRecord  == null ) {
+        tempRecord = recordHelper.getLastRecord();
+        if (tempRecord == null) {
             initNoDateVaribles();
             return true;
         }
-        if(record == null)
+        if (record == null)
             record = tempRecord;
-        else if(record.equals(tempRecord)) {
-            Log.d("Record","true");
+        else if (record.equals(tempRecord)) {
+            Log.d("Record", "true");
             return false;
         }
         record = tempRecord;
         lastTString = Standar.TEMPERATURE_FORMAT.format((record.getBeginTemperature() + record.getEndTemperature()) / 2)
                 + "°C";
         lastAmountString = String.valueOf(record.getVolume()) + "ml";
-        Log.i("home",String.valueOf(record.getAdviceVolume()));
+        Log.i("home", String.valueOf(record.getAdviceVolume()));
         adviseAmountString = String.valueOf(record.getAdviceVolume()) + "ml";
         adviseTString = "35°C";
         score = record.getScore();

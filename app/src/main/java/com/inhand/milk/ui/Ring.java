@@ -260,6 +260,8 @@ public class Ring extends View {
         first = false;
         handler.removeCallbacks(runnabel);
         runnabel = new Runnable() {
+            float temp = maxSweepAngle - sweepAngle;
+
             @Override
             public void run() {
                 // TODO Auto-generated method stub
@@ -274,8 +276,6 @@ public class Ring extends View {
                     first = true;
                 }
             }
-
-            float temp = maxSweepAngle - sweepAngle;
 
         };
         handler.postDelayed(runnabel, 2);

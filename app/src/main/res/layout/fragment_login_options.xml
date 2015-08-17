@@ -10,12 +10,12 @@
 
     <LinearLayout
         android:id="@+id/login_options_container"
-        android:layout_below="@id/logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layoutAnimation="@anim/login_options_layout_in"
+        android:layout_below="@id/logo"
         android:animateLayoutChanges="true"
+        android:layoutAnimation="@anim/login_options_layout_in"
+        android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
@@ -52,9 +52,9 @@
 
     <ImageView
         android:id="@+id/copyright"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/copyright_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/common_copyright" />
 </RelativeLayout>

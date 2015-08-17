@@ -14,21 +14,22 @@ import bluetooth.OneDayMessageTest;
 
 
 public class MainActivity extends ActionBarActivity {
-    private EditText advise,time,startT,endT,amount;
-    private Button  send,makeDataSend;
-    private Bluetooth bluetooth;
     byte[] sendMessage = new byte[100];
+    private EditText advise, time, startT, endT, amount;
+    private Button send, makeDataSend;
+    private Bluetooth bluetooth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        advise = (EditText)findViewById(R.id.advise);
-        time = (EditText)findViewById(R.id.time);
-        startT = (EditText)findViewById(R.id.start_temperature);
-        endT = (EditText)findViewById(R.id.end_temperature);
-        amount = (EditText)findViewById(R.id.amount);
-        send = (Button)findViewById(R.id.send);
-        makeDataSend = (Button)findViewById(R.id.makeSend);
+        advise = (EditText) findViewById(R.id.advise);
+        time = (EditText) findViewById(R.id.time);
+        startT = (EditText) findViewById(R.id.start_temperature);
+        endT = (EditText) findViewById(R.id.end_temperature);
+        amount = (EditText) findViewById(R.id.amount);
+        send = (Button) findViewById(R.id.send);
+        makeDataSend = (Button) findViewById(R.id.makeSend);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override

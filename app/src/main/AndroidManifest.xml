@@ -15,31 +15,30 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
 
     <application
         android:name="App"
         android:allowBackup="true"
-        android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
             android:name="com.inhand.milk.activity.LaunchActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.WelcomeActivity">
-        </activity>
+        <activity android:name=".activity.WelcomeActivity"></activity>
         <activity android:name=".activity.FamilyActivity" />
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.SyncTestActivity" />
@@ -47,96 +46,82 @@
         <activity
             android:name="com.inhand.milk.activity.MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask"></activity>
 
         <activity
             android:name="com.inhand.milk.activity.HealthNutritionActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
 
         <activity
             android:name="com.inhand.milk.activity.StaticsDetailsActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
 
         <activity
             android:name="com.inhand.milk.activity.FirstLanunchActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
 
         <activity
             android:name="com.inhand.milk.activity.BluetoothPairedAcivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.inhand.milk.activity.HealthBabyInfoActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.inhand.milk.activity.HealthPromptActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.inhand.milk.activity.HealthDrinkLastActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.inhand.milk.activity.MilkAmountCurveActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.inhand.milk.activity.UserInfoSettingsActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.inhand.milk.activity.PersonCenterBabyInfoActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
 
         <activity
             android:name=".activity.EatingCustomPlanActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".activity.EatingCustomFixActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".activity.MilkChooseActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.inhand.milk.fragment.weight.AdderWindow"
-            android:theme="@style/AdderWindowStyle">
-            </activity>
-        <activity android:name=".activity.AlarmActivity"
-            android:launchMode="singleInstance"
+            android:theme="@style/AdderWindowStyle"></activity>
+        <activity
+            android:name=".activity.AlarmActivity"
             android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
             android:taskAffinity=""
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar">
-        </activity>
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"></activity>
 
-        <activity android:name=".activity.AlarmFloatActivity"
-            android:launchMode="singleInstance"
+        <activity
+            android:name=".activity.AlarmFloatActivity"
             android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
             android:taskAffinity=""
-            android:theme="@android:style/Theme.Translucent"
-            />
-        <receiver android:name=".BroadcastReceiver.AlarmReceiver"
-            android:process=":remote">
-        </receiver>
+            android:theme="@android:style/Theme.Translucent" />
+
+        <receiver
+            android:name=".BroadcastReceiver.AlarmReceiver"
+            android:process=":remote"></receiver>
         <receiver android:name=".BroadcastReceiver.StartingUpReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <!-- 下面是测试Activity -->
-        <activity android:name=".test.BabyInfoTestActivity"/>
-        <activity android:name=".test.DeviceTestActivity"/>
-        <activity android:name=".test.MainActivity"/>
-        <activity android:name=".test.StatisticsTestActivity"/>
-        <activity android:name=".test.SyncTestActivity"/>
+        <activity android:name=".test.BabyInfoTestActivity" />
+        <activity android:name=".test.DeviceTestActivity" />
+        <activity android:name=".test.MainActivity" />
+        <activity android:name=".test.StatisticsTestActivity" />
+        <activity android:name=".test.SyncTestActivity" />
     </application>
 
 </manifest>

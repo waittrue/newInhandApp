@@ -1,13 +1,7 @@
 package com.inhand.milk.STANDAR;
 
-import com.inhand.milk.App;
-import com.inhand.milk.dao.OneDayDao;
-import com.inhand.milk.entity.OneDay;
-import com.inhand.milk.entity.Record;
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/6/3.
@@ -24,6 +18,8 @@ public class Standar {
     public final static float DRINK_END_MAX_TP = (float) 34.5;
     public final static float DRINK_END_MIN_TP = (float) 30.4;
     public final static int DRINK_MIN_SCORE = 60;
+    public static final String SOFT_VERSION = "1.0";
+    public static final String HARD_VERSION = "1.0";
     final static float AMOUNT_SCORE = 55;
     final static float TEMPERATURE_SCORE = 35;
     final static float TIME_SCORE = 10, TEMPREATURE_HIGH = 40, TEMPREATURE_LOW = 37, STANDAR_TIME = 30;
@@ -31,8 +27,6 @@ public class Standar {
     public static DecimalFormat AMOUNT_FORMAT = new DecimalFormat("###");
     public static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
-    public static final String SOFT_VERSION = "1.0";
-    public static final String HARD_VERSION = "1.0";
 
     public static float getRecord(float advise, float amount, float temperatureHigh, float temperatureLow, float time) {
         float ratio, sum = 0;

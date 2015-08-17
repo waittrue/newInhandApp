@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/title"></LinearLayout>
+        android:orientation="vertical"></LinearLayout>
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:id="@+id/scrollView"
         android:layout_weight="1">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/user_info_head_image"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/common_settings_item_bigger_item_height"
                 android:layout_marginTop="@dimen/common_settings_item_margin_top"
-                android:id="@+id/user_info_head_image"
                 android:background="@drawable/user_info_setting_bg">
 
                 <ImageView
+                    android:id="@+id/imageView5"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                    android:id="@+id/imageView5"
-                    android:src="@color/common_settings_item_line_color"
-                    android:layout_alignParentTop="true" />
+                    android:layout_alignParentTop="true"
+                    android:src="@color/common_settings_item_line_color" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/user_info_head_doc"
-                    android:layout_marginLeft="@dimen/common_settings_item_margin_left"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+                    android:text="@string/user_info_head_doc"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/common_settings_item_left_text_color"
                     android:textSize="@dimen/common_settings_item_text_size" />
 
                 <ImageView
+                    android:id="@+id/user_info_headimage_imageview"
                     android:layout_width="@dimen/common_settings_item_image_height_width"
                     android:layout_height="@dimen/common_settings_item_image_height_width"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:scaleType="fitStart"
-                    android:src="@drawable/app_welcome"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/common_settings_item_margin_right"
-                    android:id="@+id/user_info_headimage_imageview" />
+                    android:scaleType="fitStart"
+                    android:src="@drawable/app_welcome" />
 
                 <ImageView
+                    android:id="@+id/imageView6"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                    android:id="@+id/imageView6"
                     android:layout_alignParentBottom="true"
                     android:src="@color/common_settings_item_line_color" />
             </RelativeLayout>
@@ -71,156 +71,156 @@
                 android:background="@color/color_white">
 
                 <RelativeLayout
+                    android:id="@+id/person_center_name_container"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:background="@drawable/user_info_setting_bg"
-                    android:id="@+id/person_center_name_container">
+                    android:background="@drawable/user_info_setting_bg">
 
                     <ImageView
+                        android:id="@+id/imageView4"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:id="@+id/imageView4"
                         android:src="@color/common_settings_item_line_color" />
 
                     <TextView
+                        android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/user_info_name"
-                        android:id="@+id/textView"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+                        android:text="@string/user_info_name"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/common_settings_item_left_text_color"
                         android:textSize="@dimen/common_settings_item_text_size" />
 
                     <ImageView
+                        android:id="@+id/arrow"
                         android:layout_width="@dimen/common_settings_item_text_size"
                         android:layout_height="@dimen/common_settings_item_text_size"
-                        android:scaleType="centerInside"
-                        android:id = "@+id/arrow"
-                        android:src="@drawable/arrow_icon"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_settings_item_margin_right"
-                        android:layout_centerVertical="true" />
+                        android:scaleType="centerInside"
+                        android:src="@drawable/arrow_icon" />
 
                     <TextView
+                        android:id="@+id/user_info_name_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="等silence"
-                        android:id="@+id/user_info_name_textview"
-                        android:layout_toLeftOf="@+id/arrow"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_settings_item_right_text_margin_right"
+                        android:layout_toLeftOf="@+id/arrow"
+                        android:text="等silence"
                         android:textColor="@color/common_settings_item_right_text_color"
                         android:textSize="@dimen/common_settings_item_text_size" />
 
                     <ImageView
+                        android:id="@+id/imageView8"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:id="@+id/imageView8"
-                        android:src="@color/common_settings_item_line_color"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/common_settings_item_margin_left" />
+                        android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+                        android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/person_center_sex_container"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
                     android:layout_below="@+id/person_center_name_container"
-                    android:background="@drawable/user_info_setting_bg"
-                    android:id="@+id/person_center_sex_container">
+                    android:background="@drawable/user_info_setting_bg">
 
                     <ImageView
+                        android:id="@+id/imageView10"
                         android:layout_width="@dimen/common_settings_item_text_size"
                         android:layout_height="@dimen/common_settings_item_text_size"
-                        android:id="@+id/imageView10"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/arrow_icon"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_settings_item_margin_right"
-                        android:layout_centerVertical="true" />
+                        android:scaleType="centerInside"
+                        android:src="@drawable/arrow_icon" />
 
                     <TextView
+                        android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/user_info_sex"
-                        android:id="@+id/textView3"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+                        android:text="@string/user_info_sex"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/common_settings_item_left_text_color"
                         android:textSize="@dimen/common_settings_item_text_size" />
 
                     <TextView
+                        android:id="@+id/user_info_sex_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="男性"
-                        android:id="@+id/user_info_sex_textview"
-                        android:layout_toLeftOf="@+id/imageView10"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_settings_item_right_text_margin_right"
+                        android:layout_toLeftOf="@+id/imageView10"
+                        android:text="男性"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/common_settings_item_right_text_color"
                         android:textSize="@dimen/common_settings_item_text_size" />
 
                     <ImageView
+                        android:id="@+id/imageView11"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:id="@+id/imageView11"
-                        android:src="@color/common_settings_item_line_color"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/common_settings_item_margin_left" />
+                        android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+                        android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/user_info_city"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:id="@+id/user_info_city"
-                    android:background="@drawable/user_info_setting_bg"
-                    android:layout_below="@+id/person_center_sex_container">
+                    android:layout_below="@+id/person_center_sex_container"
+                    android:background="@drawable/user_info_setting_bg">
 
                     <ImageView
+                        android:id="@+id/imageView9"
                         android:layout_width="@dimen/common_settings_item_text_size"
                         android:layout_height="@dimen/common_settings_item_text_size"
-                        android:id="@+id/imageView9"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/arrow_icon"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_settings_item_margin_right"
-                        android:layout_centerVertical="true" />
+                        android:scaleType="centerInside"
+                        android:src="@drawable/arrow_icon" />
 
                     <TextView
+                        android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/user_info_city"
-                        android:id="@+id/textView2"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+                        android:text="@string/user_info_city"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/common_settings_item_left_text_color"
                         android:textSize="@dimen/common_settings_item_text_size" />
 
                     <TextView
+                        android:id="@+id/user_info_city_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="成都市"
-                        android:id="@+id/user_info_city_textview"
-                        android:layout_toLeftOf="@+id/imageView9"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_settings_item_right_text_margin_right"
+                        android:layout_toLeftOf="@+id/imageView9"
+                        android:text="成都市"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/common_settings_item_right_text_color"
                         android:textSize="@dimen/common_settings_item_text_size" />
 
                     <ImageView
+                        android:id="@+id/imageView12"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:id="@+id/imageView12"
-                        android:src="@color/common_settings_item_line_color"
-                        android:layout_alignParentBottom="true" />
+                        android:layout_alignParentBottom="true"
+                        android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -231,133 +231,133 @@
                 android:background="@color/color_white">
 
                 <RelativeLayout
+                    android:id="@+id/user_info_telephone"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:background="@drawable/user_info_setting_bg"
-                    android:id="@+id/user_info_telephone" >
+                    android:background="@drawable/user_info_setting_bg">
 
                     <ImageView
+                        android:id="@+id/imageView7"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:id="@+id/imageView7"
                         android:src="@color/common_settings_item_line_color" />
 
                     <ImageView
+                        android:id="@+id/imageView13"
                         android:layout_width="@dimen/common_settings_item_text_size"
                         android:layout_height="@dimen/common_settings_item_text_size"
-                        android:id="@+id/imageView13"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/arrow_icon"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_settings_item_margin_right"
-                        android:layout_centerVertical="true" />
+                        android:scaleType="centerInside"
+                        android:src="@drawable/arrow_icon" />
 
                     <TextView
+                        android:id="@+id/textView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/user_info_telephone"
-                        android:id="@+id/textView5"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+                        android:text="@string/user_info_telephone"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/common_settings_item_left_text_color"
                         android:textSize="@dimen/common_settings_item_text_size" />
 
                     <TextView
+                        android:id="@+id/user_info_telephone_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="18980469296"
-                        android:id="@+id/user_info_telephone_textview"
-                        android:layout_toLeftOf="@+id/imageView13"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_settings_item_right_text_margin_right"
+                        android:layout_toLeftOf="@+id/imageView13"
+                        android:text="18980469296"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/common_settings_item_right_text_color"
                         android:textSize="@dimen/common_settings_item_text_size" />
 
                     <ImageView
+                        android:id="@+id/imageView14"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:id="@+id/imageView14"
-                        android:src="@color/common_settings_item_line_color"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/common_settings_item_margin_left" />
+                        android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+                        android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/user_info_email"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/common_settings_item_normal_height"
-                    android:id="@+id/user_info_email"
-                    android:background="@drawable/user_info_setting_bg"
-                    android:layout_below="@+id/user_info_telephone">
+                    android:layout_below="@+id/user_info_telephone"
+                    android:background="@drawable/user_info_setting_bg">
 
                     <ImageView
+                        android:id="@+id/imageView17"
                         android:layout_width="@dimen/common_settings_item_text_size"
                         android:layout_height="@dimen/common_settings_item_text_size"
-                        android:id="@+id/imageView17"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/arrow_icon"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_settings_item_margin_right"
-                        android:layout_centerVertical="true" />
+                        android:scaleType="centerInside"
+                        android:src="@drawable/arrow_icon" />
 
                     <TextView
+                        android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/user_info_email"
-                        android:id="@+id/textView9"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_settings_item_margin_left"
+                        android:text="@string/user_info_email"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/common_settings_item_left_text_color"
                         android:textSize="@dimen/common_settings_item_text_size" />
 
                     <TextView
+                        android:id="@+id/user_info_email_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="尚未设置"
-                        android:id="@+id/user_info_email_textview"
-                        android:layout_toLeftOf="@+id/imageView17"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_settings_item_right_text_margin_right"
+                        android:layout_toLeftOf="@+id/imageView17"
+                        android:text="尚未设置"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/common_settings_item_right_text_color"
                         android:textSize="@dimen/common_settings_item_text_size" />
 
                     <ImageView
+                        android:id="@+id/imageView18"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                        android:id="@+id/imageView18"
-                        android:src="@color/common_settings_item_line_color"
-                        android:layout_alignParentBottom="true" />
+                        android:layout_alignParentBottom="true"
+                        android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
     <RelativeLayout
+        android:id="@+id/user_info_log_out"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/user_info_logout_height"
-        android:id="@+id/user_info_log_out"
         android:background="@color/color_white">
 
         <ImageView
+            android:id="@+id/imageView15"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/common_settings_item_line_smaller_height"
-            android:id="@+id/imageView15"
-            android:src="@color/common_settings_item_line_color"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:src="@color/common_settings_item_line_color" />
 
         <TextView
+            android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/user_info_log_out"
-            android:id="@+id/textView7"
             android:layout_centerInParent="true"
-            android:textSize="@dimen/user_info_log_out_text_size"
-            android:textColor="@color/user_info_log_out_text_color" />
+            android:text="@string/user_info_log_out"
+            android:textColor="@color/user_info_log_out_text_color"
+            android:textSize="@dimen/user_info_log_out_text_size" />
 
 
     </RelativeLayout>

@@ -174,7 +174,7 @@ public class ChooseHeight extends FirstLaunchFragment {
         });
     }
     /*
-	 * num.getText().toString() 返回身高单位厘米
+     * num.getText().toString() 返回身高单位厘米
 	 */
 
     private void save() {

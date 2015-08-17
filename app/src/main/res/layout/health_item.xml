@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/health_item_height" >
+        android:layout_height="@dimen/health_item_height">
 
         <ImageView
             android:id="@+id/health_item_icon_container"
@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/health_item_texts_container_margin_icon_left"
             android:layout_toRightOf="@id/health_item_icon_container"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/health_item_name"
@@ -63,7 +63,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="@dimen/health_item_dividing_line_height"
-            android:layout_alignParentBottom="true" >
+            android:layout_alignParentBottom="true">
 
             <ImageView
                 android:layout_width="@dimen/health_item_dividing_line_margin_left"
@@ -71,7 +71,7 @@
                 android:src="@color/health_listview_color" />
 
             <ImageView
-               	android:layout_width="0dp"
+                android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:src="@color/health_item_dividing_line_color" />

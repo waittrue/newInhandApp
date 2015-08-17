@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/color_white"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"></LinearLayout>
+        android:orientation="vertical"></LinearLayout>
 
     <ListView
+        android:id="@+id/health_last_drink_listview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/health_last_drink_listview"
-        android:scrollbars="none"
-        android:overScrollMode="never"
-        android:listSelector="@android:color/transparent"
         android:divider="#00000000"
-        android:headerDividersEnabled="false" />
+        android:headerDividersEnabled="false"
+        android:listSelector="@android:color/transparent"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
 </LinearLayout>

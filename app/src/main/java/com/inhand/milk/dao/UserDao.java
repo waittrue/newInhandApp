@@ -19,7 +19,6 @@ public class UserDao {
     private AVQuery<User> query = AVQuery.getQuery(User.class);
 
 
-
     /**
      * 异步地根据用户名查找用户
      *
@@ -27,7 +26,7 @@ public class UserDao {
      * @param callback 回调接口
      */
     public void findByUsername(final String username,
-                                          final FindCallback<User> callback) {
+                               final FindCallback<User> callback) {
         query.whereEqualTo("username", username);
         query.findInBackground(callback);
     }

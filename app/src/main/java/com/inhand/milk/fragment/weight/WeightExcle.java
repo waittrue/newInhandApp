@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Shader;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -22,18 +21,18 @@ import java.util.List;
  */
 public class WeightExcle extends View {
     private static final String TAG = "WeightExcle";
+    private final static float MAXVALUE = 10000, MINVALUE = -2;
+    private final static int MAXDATE = 40, MINDATE = -1, CLICKLARGER = 10;
+    private static float bottomHeight;
+    private static String[] leftTexts, bottomText;
     private int width, height;
     private int maxDate = MINDATE, minDate = MAXDATE;
     private float leftTextCenter, lineWidth, textLineWidth, leftTextSize, bottomTextSize, pointShowTextSize,
             bottomTextMargin, startX, endX, circleR, maxY, leftLineMargin;
     private float maxValue = MINVALUE, minValue = MAXVALUE, maxPointValue = MINVALUE, minPointValue = MAXVALUE;
-    private final static float MAXVALUE = 10000, MINVALUE = -2;
-    private final static int MAXDATE = 40, MINDATE = -1, CLICKLARGER = 10;
-    private static float bottomHeight;
     private int leftTextColor = Color.GREEN, standerAreaColor = Color.BLACK, lineColor = Color.WHITE,
             shaderStartColor = 0xff41fb98, shaderEndColor = 0x0041fb98, bottomTextColor = Color.WHITE,
-            pointShowColor = Color.WHITE,pointBgColor = Color.WHITE,pointInnerColor = Color.GREEN;
-    private static String[] leftTexts, bottomText;
+            pointShowColor = Color.WHITE, pointBgColor = Color.WHITE, pointInnerColor = Color.GREEN;
     private float[] standerLeft, standerRight;
     private int MonthDays, showPoint;
     private List<List<Object>> points;
@@ -53,22 +52,25 @@ public class WeightExcle extends View {
         init();
 
     }
-    private int colorAddAlpha(float alpha,int color){
-        int result ;
-        result = Color.argb((int)(alpha*256),Color.red(color),Color.green(color),Color.blue(color));
+
+    private int colorAddAlpha(float alpha, int color) {
+        int result;
+        result = Color.argb((int) (alpha * 256), Color.red(color), Color.green(color), Color.blue(color));
         return result;
     }
-    private void initColors(){
-        standerAreaColor = colorAddAlpha(0.5f,getResources().getColor(R.color.public_darkin_dark_color));
+
+    private void initColors() {
+        standerAreaColor = colorAddAlpha(0.5f, getResources().getColor(R.color.public_darkin_dark_color));
         lineColor = getResources().getColor(R.color.public_darkin_highlight_a_color);
         leftTextColor = colorAddAlpha(0.9f, getResources().getColor(R.color.public_darkin_highlight_a_color));
         bottomTextColor = colorAddAlpha(0.9f, getResources().getColor(R.color.public_darkin_highlight_a_color));
-        shaderStartColor =colorAddAlpha(0.8f, getResources().getColor(R.color.record_curve_shadow_color));
-        shaderEndColor = colorAddAlpha(0.0f,getResources().getColor(R.color.record_curve_shadow_color));
+        shaderStartColor = colorAddAlpha(0.8f, getResources().getColor(R.color.record_curve_shadow_color));
+        shaderEndColor = colorAddAlpha(0.0f, getResources().getColor(R.color.record_curve_shadow_color));
         pointBgColor = lineColor;
         pointInnerColor = getResources().getColor(R.color.public_main_a_color);
         pointShowColor = Color.WHITE;
     }
+
     private void init() {
         bottomText = this.getResources().getStringArray(R.array.weight_excle_bottom_texts);
         leftTexts = this.getResources().getStringArray(R.array.weight_excle_left_texts);
@@ -159,19 +161,18 @@ public class WeightExcle extends View {
         maxDate = maxDate > date ? maxDate : date;
         minDate = minDate < date ? minDate : date;
         showPoint = maxDate;
-    //    Log.i(TAG,String.valueOf(list));
-        if(points.isEmpty()) {
+        //    Log.i(TAG,String.valueOf(list));
+        if (points.isEmpty()) {
             points.add(list);
-          //  Log.i(TAG, "empty:"+String.valueOf(points.size()));
-        }
-        else {
+            //  Log.i(TAG, "empty:"+String.valueOf(points.size()));
+        } else {
             int len = points.size();
-         //   Log.i(TAG,"len"+String.valueOf(len));
-            for(int i=0;i<len;i++){
+            //   Log.i(TAG,"len"+String.valueOf(len));
+            for (int i = 0; i < len; i++) {
                 List<Object> temp = points.get(i);
-                if((Integer)temp.get(0) >date){
-                    points.add(i,list);
-         //           Log.i(TAG,String.valueOf(points.size())+":"+String.valueOf(i));
+                if ((Integer) temp.get(0) > date) {
+                    points.add(i, list);
+                    //           Log.i(TAG,String.valueOf(points.size())+":"+String.valueOf(i));
                     return;
                 }
             }

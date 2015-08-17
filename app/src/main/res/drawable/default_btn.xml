@@ -5,7 +5,7 @@
             <stroke android:width="0dip" android:color="#f403c9" />
             <corners android:radius="5dip" />
             <solid android:color="@color/default_btn_clicked" />
-            <padding android:left="10dp" android:top="10dp" android:right="10dp" android:bottom="10dp" />
+            <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
         </shape>
     </item>
 
@@ -14,7 +14,7 @@
             <stroke android:width="0dip" android:color="#f403c9" />
             <corners android:radius="5dip" />
             <solid android:color="@color/default_bkg" />
-            <padding android:left="10dp" android:top="10dp" android:right="10dp" android:bottom="10dp" />
+            <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
         </shape>
     </item>
 </selector>

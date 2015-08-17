@@ -1,16 +1,12 @@
 package com.inhand.milk.fragment.Eating;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.content.Context;
-import android.media.Image;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -25,25 +21,27 @@ import com.inhand.milk.R;
  */
 public class EatingPopUpWindow {
     private View mview;
-    private LinearLayout content,outside;
+    private LinearLayout content, outside;
     private PopupWindow popupWindow;
     private Context context;
-    private ImageView leftImageView,rightImageView;
-    private View.OnClickListener rightListener,leftListener;
-    public  EatingPopUpWindow(Context context){
+    private ImageView leftImageView, rightImageView;
+    private View.OnClickListener rightListener, leftListener;
+
+    public EatingPopUpWindow(Context context) {
         this.context = context;
         initView(context);
     }
-    private void initView(Context context){
+
+    private void initView(Context context) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         mview = layoutInflater.inflate(R.layout.eating_popupwindow, null);
         popupWindow = new PopupWindow(mview, WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT, true);
         popupWindow.setFocusable(true);
-        content = (LinearLayout)mview.findViewById(R.id.eating_pop_content);
-        outside = (LinearLayout)mview.findViewById(R.id.eating_pop_outside);
-        leftImageView = (ImageView)mview.findViewById(R.id.eating_pop_recommend);
-        rightImageView = (ImageView)mview.findViewById(R.id.eating_pop_custom);
+        content = (LinearLayout) mview.findViewById(R.id.eating_pop_content);
+        outside = (LinearLayout) mview.findViewById(R.id.eating_pop_outside);
+        leftImageView = (ImageView) mview.findViewById(R.id.eating_pop_recommend);
+        rightImageView = (ImageView) mview.findViewById(R.id.eating_pop_custom);
 
         outside.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,26 +51,30 @@ public class EatingPopUpWindow {
         });
 
     }
+
     public void show() {
         mview.setVisibility(View.VISIBLE);
         popupWindow.showAtLocation(mview, Gravity.BOTTOM, 0, 0);
         setLeftImageViewAnimation();
         setRightImageViewAnimation();
     }
-    public void setRightButtonListener(View.OnClickListener listener){
+
+    public void setRightButtonListener(View.OnClickListener listener) {
         rightListener = listener;
         rightImageView.setOnClickListener(listener);
     }
-    public void setLeftButtonListener(View.OnClickListener listener){
+
+    public void setLeftButtonListener(View.OnClickListener listener) {
         leftListener = listener;
         leftImageView.setOnClickListener(listener);
     }
-    private void setLeftImageViewAnimation(){
+
+    private void setLeftImageViewAnimation() {
         float width = App.getWindowWidth(context);
-        float ImageWidth = ((float)context.getResources().getDimensionPixelOffset(R.dimen.eating_pop_btn_width_height))/284*233 ;
-        Animation first = new TranslateAnimation(-width/2,(width/2 - ImageWidth)/2,0,0);
+        float ImageWidth = ((float) context.getResources().getDimensionPixelOffset(R.dimen.eating_pop_btn_width_height)) / 284 * 233;
+        Animation first = new TranslateAnimation(-width / 2, (width / 2 - ImageWidth) / 2, 0, 0);
         first.setDuration(200);
-        final Animation second = new TranslateAnimation((width/2 - ImageWidth)/2,0,0,0);
+        final Animation second = new TranslateAnimation((width / 2 - ImageWidth) / 2, 0, 0, 0);
         second.setDuration(200);
         first.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -93,12 +95,13 @@ public class EatingPopUpWindow {
         leftImageView.startAnimation(first);
 
     }
-    private void setRightImageViewAnimation(){
+
+    private void setRightImageViewAnimation() {
         float width = App.getWindowWidth(context);
-        float ImageWidth = ((float)context.getResources().getDimensionPixelOffset(R.dimen.eating_pop_btn_width_height))/284*233 ;
-        Animation first = new TranslateAnimation(width/2,-(width/2 - ImageWidth)/2,0,0);
+        float ImageWidth = ((float) context.getResources().getDimensionPixelOffset(R.dimen.eating_pop_btn_width_height)) / 284 * 233;
+        Animation first = new TranslateAnimation(width / 2, -(width / 2 - ImageWidth) / 2, 0, 0);
         first.setDuration(200);
-        final Animation second = new TranslateAnimation(-(width/2 - ImageWidth)/2,0,0,0);
+        final Animation second = new TranslateAnimation(-(width / 2 - ImageWidth) / 2, 0, 0, 0);
         second.setDuration(200);
         first.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -119,7 +122,8 @@ public class EatingPopUpWindow {
         rightImageView.startAnimation(first);
 
     }
-    private void dismiss(){
+
+    private void dismiss() {
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.popupwindow_out);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -129,8 +133,8 @@ public class EatingPopUpWindow {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                 mview.setVisibility(View.GONE);
-                 //popupWindow.dismiss();
+                mview.setVisibility(View.GONE);
+                //popupWindow.dismiss();
             }
 
             @Override
@@ -140,15 +144,16 @@ public class EatingPopUpWindow {
         });
         content.startAnimation(animation);
     }
-    public void dismissWithoutAnimation(){
-        Handler handler  = new Handler();
+
+    public void dismissWithoutAnimation() {
+        Handler handler = new Handler();
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 popupWindow.dismiss();
             }
         };
-       handler.postDelayed(runnable,300);
+        handler.postDelayed(runnable, 300);
     }
 
 }

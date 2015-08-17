@@ -17,9 +17,9 @@
         android:layout_weight="1">
 
         <view
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:id="@+id/choose_milk_phase_listview"
             class="com.inhand.milk.ui.PullRefreshListView"
-            android:id="@+id/choose_milk_phase_listview" />
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
     </LinearLayout>
 </LinearLayout>

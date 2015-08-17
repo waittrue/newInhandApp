@@ -4,12 +4,11 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import com.inhand.milk.fragment.Eating.EatingCustomFixFragment;
-import com.inhand.milk.fragment.Eating.EatingCustomFragment;
 
 /**
  * Created by Administrator on 2015/8/1.
  */
-public class EatingCustomFixActivity extends  SubActivity {
+public class EatingCustomFixActivity extends SubActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

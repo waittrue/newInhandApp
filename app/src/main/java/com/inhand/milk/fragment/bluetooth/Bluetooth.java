@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,13 +20,11 @@ import com.inhand.milk.App;
 import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.activity.BluetoothPairedAcivity;
 import com.inhand.milk.dao.DeviceDao;
-import com.inhand.milk.entity.Base;
 import com.inhand.milk.entity.Device;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -48,6 +45,29 @@ public class Bluetooth {
     private AcceptThread acceptThread;
     private ConnectThread connectThread;
     private bluetoothDiscoverListener mListener;
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            //Toast.makeText(activity.getApplicationContext(),"aa", Toast.LENGTH_SHORT).show();
+            // When discovery finds a device
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // Get the BluetoothDevice object from the Intent
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if (mListener != null)
+                    mListener.discoverFound(device);
+                Toast.makeText(activity.getApplicationContext(), device.getName(), Toast.LENGTH_LONG).show();
+            } else if (ACTION_DISCOVERY_FINISHED.equals(action)) {
+                Toast.makeText(activity.getApplicationContext(), "finish_discover", Toast.LENGTH_SHORT).show();
+                activity.unregisterReceiver(mReceiver);
+                if (mListener != null)
+                    mListener.discoverFiished();
+            } else if (bluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+                Toast.makeText(activity, "discover start", Toast.LENGTH_SHORT).show();
+                if (mListener != null)
+                    mListener.discoverStarted();
+            }
+        }
+    };
 
     private Bluetooth() {
         // TODO Auto-generated constructor stub
@@ -75,30 +95,6 @@ public class Bluetooth {
         if (instance == null)
             instance = new Bluetooth();
     }
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            //Toast.makeText(activity.getApplicationContext(),"aa", Toast.LENGTH_SHORT).show();
-            // When discovery finds a device
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Get the BluetoothDevice object from the Intent
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (mListener != null)
-                    mListener.discoverFound(device);
-                Toast.makeText(activity.getApplicationContext(), device.getName(), Toast.LENGTH_LONG).show();
-            } else if (ACTION_DISCOVERY_FINISHED.equals(action)) {
-                Toast.makeText(activity.getApplicationContext(), "finish_discover", Toast.LENGTH_SHORT).show();
-                activity.unregisterReceiver(mReceiver);
-                if (mListener != null)
-                    mListener.discoverFiished();
-            } else if (bluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                Toast.makeText(activity, "discover start", Toast.LENGTH_SHORT).show();
-                if (mListener != null)
-                    mListener.discoverStarted();
-            }
-        }
-    };
 
     public static Bluetooth getInstance() {
         if (instance == null)
@@ -192,7 +188,7 @@ public class Bluetooth {
 
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
         String defalutMac = getDefaultMac();
-        if(defalutMac == null)
+        if (defalutMac == null)
             return null;
         Log.i("bluetooth", String.valueOf(pairedDevices.size()));
         if (pairedDevices.size() > 0) {
@@ -208,12 +204,13 @@ public class Bluetooth {
 
     /**
      * 返回绑定的蓝牙的mac地址
+     *
      * @return 蓝牙mac地址
      */
     private String getDefaultMac() {
         final DeviceDao deviceDao = new DeviceDao();
         Device device = deviceDao.getFromCache(App.getAppContext());
-        if(device == null)
+        if (device == null)
             return null;
         Log.i("bluetooth_get_dev", device.getMac());
         return device.getMac();

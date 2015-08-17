@@ -1,6 +1,7 @@
 package com.inhand.milk.activity;
 
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
@@ -15,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
-import android.app.AlertDialog.Builder;
+
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
 import com.inhand.milk.fragment.footer_navigation.FooterNavigation;
@@ -25,19 +26,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
- *
  * @author Administrator
- *主要的activity，管理进入app后的几个fragment
+ *         主要的activity，管理进入app后的几个fragment
  */
 
 
 public class MainActivity extends BaseActivity {
 
-    private FooterNavigation buttons ;
-    private Bluetooth bluetooth ;
+    private FooterNavigation buttons;
+    private Bluetooth bluetooth;
     private SlidingMenu menu;
-    private OnClickListener  onClickListener;
+    private OnClickListener onClickListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +48,8 @@ public class MainActivity extends BaseActivity {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         buttons = new FooterNavigation();
-        fragmentTransaction.add(R.id.Activity_buttons_fragments_container, buttons,"buttons");
+        fragmentTransaction.add(R.id.Activity_buttons_fragments_container, buttons, "buttons");
         fragmentTransaction.commit();
-
 
 
         Handler handler = new Handler();
@@ -61,7 +62,7 @@ public class MainActivity extends BaseActivity {
                 bluetooth.asClient();
             }
         };
-        handler.postDelayed(runnable,300);
+        handler.postDelayed(runnable, 300);
         setSlidingMenu();
         onClickListener = new OnClickListener() {
             @Override
@@ -83,7 +84,7 @@ public class MainActivity extends BaseActivity {
     }
     */
 
-    private void setSlidingMenu(){
+    private void setSlidingMenu() {
         menu = new SlidingMenu(this);
         menu.setMode(SlidingMenu.LEFT);
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
@@ -93,43 +94,43 @@ public class MainActivity extends BaseActivity {
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 
         View view = getLayoutInflater().inflate(R.layout.menu, null);
-        RelativeLayout userInfo = (RelativeLayout)view.findViewById(R.id.menu_user_info);
+        RelativeLayout userInfo = (RelativeLayout) view.findViewById(R.id.menu_user_info);
         userInfo.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this,UserInfoSettingsActivity.class);
+                intent.setClass(MainActivity.this, UserInfoSettingsActivity.class);
                 startActivity(intent);
             }
         });
-        menu.setMenu(view );
+        menu.setMenu(view);
 
 
-        ListView listView = (ListView)view.findViewById(R.id.detals_listView);
-        List< Map<String,Object> > listitems = new ArrayList<Map<String,Object>>();
+        ListView listView = (ListView) view.findViewById(R.id.detals_listView);
+        List<Map<String, Object>> listitems = new ArrayList<Map<String, Object>>();
         Map<String, Object> map1 = new HashMap<>();
         Map<String, Object> map2 = new HashMap<>();
         Map<String, Object> map3 = new HashMap<>();
-        String string[]  = getResources().getStringArray(R.array.menu_item_texts);
+        String string[] = getResources().getStringArray(R.array.menu_item_texts);
         map1.put("image", R.drawable.menu_family_icon);
-        map1.put("text",string[0]);
+        map1.put("text", string[0]);
         map2.put("image", R.drawable.menu_milk_settings_icon);
-        map2.put("text",string[1]);
+        map2.put("text", string[1]);
         map3.put("image", R.drawable.menu_advise_icon);
-        map3.put("text",string[2]);
+        map3.put("text", string[2]);
 
         listitems.add(map1);
         listitems.add(map2);
         listitems.add(map3);
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(this, listitems, R.layout.menu_item,
-                new String[] {"image","text"},
-                new int[] { R.id.menu_image,  R.id.menu_text}  );
+                new String[]{"image", "text"},
+                new int[]{R.id.menu_image, R.id.menu_text});
         listView.setAdapter(simpleAdapter);
 
     }
 
-    public android.view.View.OnClickListener getMyOnclickListener(){
+    public android.view.View.OnClickListener getMyOnclickListener() {
         return onClickListener;
     }
 
@@ -153,7 +154,7 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public Bluetooth getBluetooth(){
+    public Bluetooth getBluetooth() {
         return bluetooth;
     }
 

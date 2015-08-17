@@ -47,16 +47,27 @@ public class CustomViewAbove extends ViewGroup {
             return t * t * t * t * t + 1.0f;
         }
     };
-
+    /**
+     * Sentinel value for no current active pointer.
+     * Used by {@link #mActivePointerId}.
+     */
+    private static final int INVALID_POINTER = -1;
+    /**
+     * ID of the active pointer. This is used to retain consistency during
+     * drags/flings if multiple pointers are used.
+     */
+    protected int mActivePointerId = INVALID_POINTER;
+    /**
+     * Determines speed during touch scrolling
+     */
+    protected VelocityTracker mVelocityTracker;
+    protected int mMaximumVelocity;
+    protected int mTouchMode = SlidingMenu.TOUCHMODE_MARGIN;
     private View mContent;
-
     private int mCurItem;
     private Scroller mScroller;
-
     private boolean mScrollingCacheEnabled;
-
     private boolean mScrolling;
-
     private boolean mIsBeingDragged;
     private boolean mIsUnableToDrag;
     private int mTouchSlop;
@@ -66,87 +77,23 @@ public class CustomViewAbove extends ViewGroup {
      */
     private float mLastMotionX;
     private float mLastMotionY;
-    /**
-     * ID of the active pointer. This is used to retain consistency during
-     * drags/flings if multiple pointers are used.
-     */
-    protected int mActivePointerId = INVALID_POINTER;
-    /**
-     * Sentinel value for no current active pointer.
-     * Used by {@link #mActivePointerId}.
-     */
-    private static final int INVALID_POINTER = -1;
-
-    /**
-     * Determines speed during touch scrolling
-     */
-    protected VelocityTracker mVelocityTracker;
     private int mMinimumVelocity;
-    protected int mMaximumVelocity;
     private int mFlingDistance;
-
     private CustomViewBehind mViewBehind;
     //	private int mMode;
     private boolean mEnabled = true;
-
     private OnPageChangeListener mOnPageChangeListener;
     private OnPageChangeListener mInternalPageChangeListener;
-
     //	private OnCloseListener mCloseListener;
     //	private OnOpenListener mOpenListener;
     private OnClosedListener mClosedListener;
     private OnOpenedListener mOpenedListener;
 
-    private List<View> mIgnoredViews = new ArrayList<View>();
-
     //	private int mScrollState = SCROLL_STATE_IDLE;
-
-    /**
-     * Callback interface for responding to changing state of the selected page.
-     */
-    public interface OnPageChangeListener {
-
-        /**
-         * This method will be invoked when the current page is scrolled, either as part
-         * of a programmatically initiated smooth scroll or a user initiated touch scroll.
-         *
-         * @param position             Position index of the first page currently being displayed.
-         *                             Page position+1 will be visible if positionOffset is nonzero.
-         * @param positionOffset       Value from [0, 1) indicating the offset from the page at position.
-         * @param positionOffsetPixels Value in pixels indicating the offset from position.
-         */
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
-
-        /**
-         * This method will be invoked when a new page becomes selected. Animation is not
-         * necessarily complete.
-         *
-         * @param position Position index of the new selected page.
-         */
-        public void onPageSelected(int position);
-
-    }
-
-    /**
-     * Simple implementation of the {@link com.jeremyfeinstein.slidingmenu.lib.CustomViewAbove.OnPageChangeListener} interface with stub
-     * implementations of each method. Extend this if you do not intend to override
-     * every method of {@link com.jeremyfeinstein.slidingmenu.lib.CustomViewAbove.OnPageChangeListener}.
-     */
-    public static class SimpleOnPageChangeListener implements OnPageChangeListener {
-
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            // This space for rent
-        }
-
-        public void onPageSelected(int position) {
-            // This space for rent
-        }
-
-        public void onPageScrollStateChanged(int state) {
-            // This space for rent
-        }
-
-    }
+    private List<View> mIgnoredViews = new ArrayList<View>();
+    private boolean mQuickReturn = false;
+    // variables for drawing
+    private float mScrollX = 0.0f;
 
     public CustomViewAbove(Context context) {
         this(context, null);
@@ -188,17 +135,6 @@ public class CustomViewAbove extends ViewGroup {
     }
 
     /**
-     * Set the currently selected page. If the CustomViewPager has already been through its first
-     * layout there will be a smooth animated transition between the current item and the
-     * specified item.
-     *
-     * @param item Item index to select
-     */
-    public void setCurrentItem(int item) {
-        setCurrentItemInternal(item, true, false);
-    }
-
-    /**
      * Set the currently selected page.
      *
      * @param item         Item index to select
@@ -210,6 +146,17 @@ public class CustomViewAbove extends ViewGroup {
 
     public int getCurrentItem() {
         return mCurItem;
+    }
+
+    /**
+     * Set the currently selected page. If the CustomViewPager has already been through its first
+     * layout there will be a smooth animated transition between the current item and the
+     * specified item.
+     *
+     * @param item Item index to select
+     */
+    public void setCurrentItem(int item) {
+        setCurrentItemInternal(item, true, false);
     }
 
     void setCurrentItemInternal(int item, boolean smoothScroll, boolean always) {
@@ -430,15 +377,15 @@ public class CustomViewAbove extends ViewGroup {
         invalidate();
     }
 
+    public View getContent() {
+        return mContent;
+    }
+
     public void setContent(View v) {
         if (mContent != null)
             this.removeView(mContent);
         mContent = v;
         addView(mContent);
-    }
-
-    public View getContent() {
-        return mContent;
     }
 
     public void setCustomViewBehind(CustomViewBehind cvb) {
@@ -483,7 +430,6 @@ public class CustomViewAbove extends ViewGroup {
         mContent.setPadding(i, mContent.getPaddingTop(),
                 mContent.getPaddingRight(), mContent.getPaddingBottom());
     }
-
 
     @Override
     public void computeScroll() {
@@ -563,14 +509,12 @@ public class CustomViewAbove extends ViewGroup {
         mScrolling = false;
     }
 
-    protected int mTouchMode = SlidingMenu.TOUCHMODE_MARGIN;
+    public int getTouchMode() {
+        return mTouchMode;
+    }
 
     public void setTouchMode(int i) {
         mTouchMode = i;
-    }
-
-    public int getTouchMode() {
-        return mTouchMode;
     }
 
     private boolean thisTouchAllowed(MotionEvent ev) {
@@ -608,8 +552,6 @@ public class CustomViewAbove extends ViewGroup {
             mActivePointerId = INVALID_POINTER;
         return activePointerIndex;
     }
-
-    private boolean mQuickReturn = false;
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -663,7 +605,6 @@ public class CustomViewAbove extends ViewGroup {
         }
         return mIsBeingDragged || mQuickReturn;
     }
-
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
@@ -832,9 +773,6 @@ public class CustomViewAbove extends ViewGroup {
         mViewBehind.drawSelector(mContent, canvas, getPercentOpen());
     }
 
-    // variables for drawing
-    private float mScrollX = 0.0f;
-
     private void onSecondaryPointerUp(MotionEvent ev) {
         if (DEBUG) Log.v(TAG, "onSecondaryPointerUp called");
         final int pointerIndex = MotionEventCompat.getActionIndex(ev);
@@ -914,7 +852,6 @@ public class CustomViewAbove extends ViewGroup {
 
         return checkV && ViewCompat.canScrollHorizontally(v, -dx);
     }
-
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -1003,6 +940,53 @@ public class CustomViewAbove extends ViewGroup {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Callback interface for responding to changing state of the selected page.
+     */
+    public interface OnPageChangeListener {
+
+        /**
+         * This method will be invoked when the current page is scrolled, either as part
+         * of a programmatically initiated smooth scroll or a user initiated touch scroll.
+         *
+         * @param position             Position index of the first page currently being displayed.
+         *                             Page position+1 will be visible if positionOffset is nonzero.
+         * @param positionOffset       Value from [0, 1) indicating the offset from the page at position.
+         * @param positionOffsetPixels Value in pixels indicating the offset from position.
+         */
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
+
+        /**
+         * This method will be invoked when a new page becomes selected. Animation is not
+         * necessarily complete.
+         *
+         * @param position Position index of the new selected page.
+         */
+        public void onPageSelected(int position);
+
+    }
+
+    /**
+     * Simple implementation of the {@link com.jeremyfeinstein.slidingmenu.lib.CustomViewAbove.OnPageChangeListener} interface with stub
+     * implementations of each method. Extend this if you do not intend to override
+     * every method of {@link com.jeremyfeinstein.slidingmenu.lib.CustomViewAbove.OnPageChangeListener}.
+     */
+    public static class SimpleOnPageChangeListener implements OnPageChangeListener {
+
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            // This space for rent
+        }
+
+        public void onPageSelected(int position) {
+            // This space for rent
+        }
+
+        public void onPageScrollStateChanged(int state) {
+            // This space for rent
+        }
+
     }
 
 }

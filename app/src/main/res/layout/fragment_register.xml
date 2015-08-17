@@ -25,42 +25,43 @@
             android:layout_marginBottom="15dp"
             android:drawableLeft="@drawable/register_icon_phone"
             android:drawableStart="@drawable/register_icon_phone"
-            android:inputType="phone"
+            android:gravity="left"
             android:hint="@string/login_name_hint"
-            android:gravity="left" />
+            android:inputType="phone" />
 
         <EditText
             android:id="@+id/password"
             style="@style/log_reg_form"
             android:layout_marginBottom="15dp"
-            android:drawableStart="@drawable/login_details_icon_password"
             android:drawableLeft="@drawable/login_details_icon_password"
-            android:inputType="textPassword"
+            android:drawableStart="@drawable/login_details_icon_password"
+            android:gravity="left"
             android:hint="@string/reg_pwd_hint"
-            android:gravity="left" />
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/re_password"
             style="@style/log_reg_form"
             android:layout_marginBottom="15dp"
-            android:drawableStart="@drawable/login_details_icon_password"
             android:drawableLeft="@drawable/login_details_icon_password"
-            android:inputType="textPassword"
+            android:drawableStart="@drawable/login_details_icon_password"
+            android:gravity="left"
             android:hint="@string/reg_repwd_hint"
-            android:gravity="left" />
+            android:inputType="textPassword" />
 
         <FrameLayout
             android:id="@+id/register_auth_code_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
                 android:id="@+id/auth_code"
                 style="@style/log_reg_form"
-                android:drawableStart="@drawable/register_icon_auth_code"
                 android:drawableLeft="@drawable/register_icon_auth_code"
-                android:inputType="textPassword"
+                android:drawableStart="@drawable/register_icon_auth_code"
+                android:gravity="left"
                 android:hint="@string/reg_ac_hint"
-                android:gravity="left" />
+                android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/get_auth_code_btn"
@@ -69,9 +70,9 @@
                 android:layout_gravity="right"
                 android:background="@drawable/common_bandage"
                 android:padding="15dp"
-                android:textSize="18sp"
+                android:text="@string/reg_ac_btn"
                 android:textColor="@color/common_bandage_font"
-                android:text="@string/reg_ac_btn" />
+                android:textSize="18sp" />
         </FrameLayout>
     </LinearLayout>
 
@@ -83,9 +84,9 @@
             android:id="@+id/to_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/register_btn_to_login"
+            android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginEnd="15dp" />
+            android:src="@drawable/register_btn_to_login" />
 
         <ImageView
             android:id="@+id/submit_btn"

@@ -7,8 +7,8 @@
         android:id="@+id/footer_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/footer_background"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:gravity="center"></LinearLayout>
+        android:background="@drawable/footer_background"
+        android:gravity="center"
+        android:orientation="horizontal"></LinearLayout>
 </RelativeLayout>

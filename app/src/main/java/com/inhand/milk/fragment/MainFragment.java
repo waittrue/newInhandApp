@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.inhand.milk.activity.MainActivity;
-
 /**
  * MainFragment
  * Desc: 主窗口的Fragment基类

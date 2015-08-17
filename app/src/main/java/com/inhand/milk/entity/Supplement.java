@@ -22,9 +22,10 @@ public class Supplement extends Base {
 
     /**
      * 获得辅食名称
-     * @return  辅食名称
+     *
+     * @return 辅食名称
      */
-    public String getName(){
+    public String getName() {
         return this.getString(NAME_KEY);
     }
 
@@ -34,9 +35,10 @@ public class Supplement extends Base {
 
     /**
      * 获得辅食食材
+     *
      * @return 辅食食材
      */
-    public String getIngredients(){
+    public String getIngredients() {
         return this.getString(INGREDIENTS_KEY);
     }
 
@@ -44,11 +46,13 @@ public class Supplement extends Base {
     public void setIngredients(String ingredients) {
         this.put(INGREDIENTS_KEY, ingredients);
     }
+
     /**
      * 获得辅食做法
+     *
      * @return 辅食做法
      */
-    public String getCookingMethod(){
+    public String getCookingMethod() {
         return this.getString(COOKING_METHOD_KEY);
     }
 
@@ -58,9 +62,10 @@ public class Supplement extends Base {
 
     /**
      * 获得辅食描述
+     *
      * @return 辅食描述
      */
-    public String getDesc(){
+    public String getDesc() {
         return this.getString(DESC_KEY);
     }
 
@@ -70,9 +75,10 @@ public class Supplement extends Base {
 
     /**
      * 获得辅食针对年龄段
+     *
      * @return 辅食针对年龄段
      */
-    public String getForAge(){
+    public String getForAge() {
         return this.getString(FOR_AGE_KEY);
     }
 

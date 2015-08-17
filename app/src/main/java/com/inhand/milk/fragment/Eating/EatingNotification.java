@@ -15,30 +15,33 @@ import java.util.Date;
  */
 public class EatingNotification {
     private NotificationManager notificationManager;
-    EatingNotification(){
+
+    EatingNotification() {
         notificationManager = (NotificationManager) App.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
     }
-    public void start(int hour,int minute){
+
+    public void start(int hour, int minute) {
         Date date = new Date();
-        int mHour,mMinute;
+        int mHour, mMinute;
         mHour = date.getHours();
         mMinute = date.getMinutes();
-        int diff ;
-        diff = (hour - mHour)*60 + (minute - mMinute);
-        diff = diff*60;
-        Log.i("aaaaa",String.valueOf(diff));
-        if(diff <0)
+        int diff;
+        diff = (hour - mHour) * 60 + (minute - mMinute);
+        diff = diff * 60;
+        Log.i("aaaaa", String.valueOf(diff));
+        if (diff < 0)
             return;
 
         Notification notification = new Notification();
-        notification.when = System.currentTimeMillis() + diff*1000;
+        notification.when = System.currentTimeMillis() + diff * 1000;
         notification.icon = R.drawable.ic_launcher;
         notification.defaults = Notification.DEFAULT_ALL;
         notification.tickerText = "zhege shi shenme ";
-        notification.setLatestEventInfo(App.getAppContext(),"setlatest","aaaaaaaaaaaaa",null);
-        notificationManager.notify(1,notification);
+        notification.setLatestEventInfo(App.getAppContext(), "setlatest", "aaaaaaaaaaaaa", null);
+        notificationManager.notify(1, notification);
     }
-    public  void cancleAll(){
+
+    public void cancleAll() {
         notificationManager.cancelAll();
     }
 }

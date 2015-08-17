@@ -61,7 +61,7 @@ public class BabyInfo extends Base implements CacheSaving<BabyInfo> {
      * @return 身高
      */
     public float getHeight() {
-        return this.getNumber(HEIGHT_KEY) == null?0:this.getNumber(HEIGHT_KEY).floatValue();
+        return this.getNumber(HEIGHT_KEY) == null ? 0 : this.getNumber(HEIGHT_KEY).floatValue();
     }
 
     /**
@@ -79,7 +79,7 @@ public class BabyInfo extends Base implements CacheSaving<BabyInfo> {
      * @return 体重
      */
     public float getWeight() {
-        return this.getNumber(WEIGHT_KEY) == null?0:this.getNumber(WEIGHT_KEY).floatValue();
+        return this.getNumber(WEIGHT_KEY) == null ? 0 : this.getNumber(WEIGHT_KEY).floatValue();
     }
 
     /**
@@ -97,7 +97,7 @@ public class BabyInfo extends Base implements CacheSaving<BabyInfo> {
      * @return 头围
      */
     public float getHeadSize() {
-        return this.getNumber(HEAD_SIZE_KEY) == null?0:this.getNumber(HEAD_SIZE_KEY).floatValue();
+        return this.getNumber(HEAD_SIZE_KEY) == null ? 0 : this.getNumber(HEAD_SIZE_KEY).floatValue();
     }
 
     /**

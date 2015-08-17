@@ -12,6 +12,7 @@ import com.inhand.milk.fragment.person_center.PersonCenterBabyFragment;
  */
 public class PersonCenterBabyInfoActivity extends UserInfoSettingsActivity {
     private String birth;
+
     @Override
     protected void initData() {
         Baby baby = App.getCurrentBaby();
@@ -31,16 +32,19 @@ public class PersonCenterBabyInfoActivity extends UserInfoSettingsActivity {
         setBirth(birth);
         setSex(sex);
     }
-    public String getBirth(){
+
+    public String getBirth() {
         return birth;
     }
-    public void setBirth(String str){
+
+    public void setBirth(String str) {
         birth = str;
     }
+
     @Override
     protected Fragment initFragment() {
         // TODO Auto-generated method stub
-        return  new PersonCenterBabyFragment();// new Nutrition();
+        return new PersonCenterBabyFragment();// new Nutrition();
     }
 
 }

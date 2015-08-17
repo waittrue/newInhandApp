@@ -1,88 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:background="#66000000"
     android:id="@+id/popupwindow_selected_whole_window"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#66000000"
+    android:orientation="vertical">
+
     <LinearLayout
+        android:id="@+id/popupwindow_selected_white_space"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:id="@+id/popupwindow_selected_white_space"
         android:layout_weight="1"></LinearLayout>
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:orientation="vertical"
-    android:id="@+id/popupwindow_selected_content"
-    android:layout_height="wrap_content">
+
     <LinearLayout
+        android:id="@+id/popupwindow_selected_content"
         android:layout_width="fill_parent"
-        android:orientation="vertical"
-        android:layout_height="@dimen/popupwindow_selected_2item_height"
-        android:background="@drawable/popupwindow_selected_corner_bg"
-        android:layout_marginLeft="@dimen/popupwindow_selected_margin"
-        android:layout_marginRight="@dimen/popupwindow_selected_margin">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/popupwindow_selected_item_height"
-            android:id="@+id/popupwindow_selected_first_item">
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/common_settings_item_line_smaller_height"
-                android:id="@+id/imageView16"
-                android:background="@color/common_settings_item_line_color"
-                android:layout_alignParentBottom="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/user_info_popupwindow_choose_photo"
-                android:id="@+id/popupwindow_selected_first_textview"
-                android:layout_centerInParent="true"
-                android:textColor="@color/popupwindow_selected_text_color"
-                android:textSize="@dimen/popupwindow_selected_text_size" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/popupwindow_selected_item_height"
+            android:layout_height="@dimen/popupwindow_selected_2item_height"
+            android:layout_marginLeft="@dimen/popupwindow_selected_margin"
+            android:layout_marginRight="@dimen/popupwindow_selected_margin"
             android:background="@drawable/popupwindow_selected_corner_bg"
-            android:id="@+id/popupwindow_selected_seconde_item">
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/popupwindow_selected_first_item"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/popupwindow_selected_item_height">
+
+                <ImageView
+                    android:id="@+id/imageView16"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/common_settings_item_line_smaller_height"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/common_settings_item_line_color" />
+
+                <TextView
+                    android:id="@+id/popupwindow_selected_first_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/user_info_popupwindow_choose_photo"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/popupwindow_selected_text_color"
+                    android:textSize="@dimen/popupwindow_selected_text_size" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/popupwindow_selected_seconde_item"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/popupwindow_selected_item_height"
+                android:background="@drawable/popupwindow_selected_corner_bg">
+
+                <TextView
+                    android:id="@+id/popupwindow_selected_seconde_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/user_info_popupwindow_create_photo"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/popupwindow_selected_text_color"
+                    android:textSize="@dimen/popupwindow_selected_text_size" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/popupwindow_selected_cancle"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/popupwindow_selected_item_height"
+            android:layout_marginBottom="@dimen/popupwindow_selected_margin"
+            android:layout_marginLeft="@dimen/popupwindow_selected_margin"
+            android:layout_marginRight="@dimen/popupwindow_selected_margin"
+            android:layout_marginTop="@dimen/popupwindow_selected_margin"
+            android:background="@drawable/popupwindow_selected_corner_bg">
 
             <TextView
+                android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/user_info_popupwindow_create_photo"
-                android:id="@+id/popupwindow_selected_seconde_textview"
                 android:layout_centerInParent="true"
+                android:text="取消"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/popupwindow_selected_text_color"
                 android:textSize="@dimen/popupwindow_selected_text_size" />
         </RelativeLayout>
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/popupwindow_selected_item_height"
-        android:background="@drawable/popupwindow_selected_corner_bg"
-        android:layout_marginTop="@dimen/popupwindow_selected_margin"
-        android:id="@+id/popupwindow_selected_cancle"
-        android:layout_marginRight="@dimen/popupwindow_selected_margin"
-        android:layout_marginLeft="@dimen/popupwindow_selected_margin"
-        android:layout_marginBottom="@dimen/popupwindow_selected_margin">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="取消"
-            android:id="@+id/textView12"
-            android:layout_centerInParent="true"
-            android:textColor="@color/popupwindow_selected_text_color"
-            android:textSize="@dimen/popupwindow_selected_text_size" />
-    </RelativeLayout>
-</LinearLayout>
 </LinearLayout>

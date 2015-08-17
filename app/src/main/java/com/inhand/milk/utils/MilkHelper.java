@@ -5,13 +5,15 @@ package com.inhand.milk.utils;
  */
 public class MilkHelper {
     private static MilkHelper instance = null;
-    private MilkHelper(){
+
+    private MilkHelper() {
 
     }
-    public static MilkHelper getInstance(){
-        if(instance == null){
-            synchronized (MilkHelper.class){
-                if(instance == null)
+
+    public static MilkHelper getInstance() {
+        if (instance == null) {
+            synchronized (MilkHelper.class) {
+                if (instance == null)
                     instance = new MilkHelper();
             }
         }

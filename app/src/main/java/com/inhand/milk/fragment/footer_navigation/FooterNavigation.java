@@ -24,6 +24,7 @@ import java.util.Map;
 
 public class FooterNavigation extends Fragment {
 
+    private static final int pressed = 1, unpressed = 2;
     private View view;
     private HomeFragment home;
     private HealthFragment health;
@@ -33,8 +34,23 @@ public class FooterNavigation extends Fragment {
     private FooterButtonsManager buttonsManager;
     private FragmentManager fragmentManager;
     private EatingFragment eatingFragment;
-    private static final int pressed = 1, unpressed = 2;
     private Map<ImageButton, Map<Integer, Integer>> src = new HashMap<>();
+    private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ImageButton imageButton = (ImageButton) v.getTag();
+                for (ImageButton temp : src.keySet()) {
+                    Map<Integer, Integer> map = src.get(temp);
+                    if (temp.equals(imageButton)) {
+                        temp.setImageDrawable(getResources().getDrawable(map.get(pressed)));
+                    } else
+                        temp.setImageDrawable(getResources().getDrawable(map.get(unpressed)));
+                }
+            }
+            return false;
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +69,6 @@ public class FooterNavigation extends Fragment {
         Log.i("buttons", "onStart");
         //attachHome();
     }
-
 
     private void initButtons() {
         fragmentManager = getFragmentManager();
@@ -88,7 +103,7 @@ public class FooterNavigation extends Fragment {
                 initMap(button, R.drawable.footer_eating_ico, R.drawable.footer_eating_cur_ico);
                 button.setOnTouchListener(onTouchListener);
                 //buttonsManager.addButtons(button, health);
-                buttonsManager.addButtons(button,eatingFragment);
+                buttonsManager.addButtons(button, eatingFragment);
 
                 button = (RelativeLayout) view.findViewById(R.id.buttons_person_center);
                 imageButton = (ImageButton) view.findViewById(R.id.buttons_person_center_button);
@@ -116,23 +131,6 @@ public class FooterNavigation extends Fragment {
         map.put(pressed, pd);
         src.put((ImageButton) button.getTag(), map);
     }
-
-    private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                ImageButton imageButton = (ImageButton) v.getTag();
-                for (ImageButton temp : src.keySet()) {
-                    Map<Integer, Integer> map = src.get(temp);
-                    if (temp.equals(imageButton)) {
-                        temp.setImageDrawable(getResources().getDrawable(map.get(pressed)));
-                    } else
-                        temp.setImageDrawable(getResources().getDrawable(map.get(unpressed)));
-                }
-            }
-            return false;
-        }
-    };
 }
 
 	

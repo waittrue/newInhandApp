@@ -17,21 +17,23 @@ import com.inhand.milk.R;
  * Created by Administrator on 2015/7/14.
  */
 public class DefaultLoadingView extends Dialog {
+    private static final String TAG = "DEFAULTLOADomgView";
+    private static final int TimeDelay = 800;
     private String doc;
     private Drawable drawable;
     private ImageView imageView;
     private TextView textView;
-    private Animation animation ;
+    private Animation animation;
     private boolean finish;
-    private static final String TAG = "DEFAULTLOADomgView";
-    private static final int TimeDelay = 800;
-    public DefaultLoadingView(Context context,String doc,Drawable drawable) {
+
+    public DefaultLoadingView(Context context, String doc, Drawable drawable) {
         super(context);
         this.doc = doc;
         this.drawable = drawable;
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
-    public DefaultLoadingView(Context context,String doc){
+
+    public DefaultLoadingView(Context context, String doc) {
         super(context);
         drawable = context.getResources().getDrawable(R.drawable.ic_launcher);
         this.doc = doc;
@@ -42,42 +44,60 @@ public class DefaultLoadingView extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loading_view_layout);
-        animation = AnimationUtils.loadAnimation(getContext(),R.anim.loading_view_animation);
-        textView = (TextView)findViewById(R.id.ui_loading_textview);
-        imageView = (ImageView)findViewById(R.id.ui_loading_imageview);
+        animation = AnimationUtils.loadAnimation(getContext(), R.anim.loading_view_animation);
+        textView = (TextView) findViewById(R.id.ui_loading_textview);
+        imageView = (ImageView) findViewById(R.id.ui_loading_imageview);
         textView.setText(doc);
         imageView.setImageDrawable(drawable);
     }
-    public void setdoc(String doc){
+
+    public void setdoc(String doc) {
         this.doc = doc;
         textView.setText(doc);
     }
-    public void loading(LoadingCallback loadingCallback){
+
+    public void loading(LoadingCallback loadingCallback) {
         LoadingTask task = new LoadingTask(loadingCallback);
         task.execute();
     }
-    public void disppear(){
+
+    public void disppear() {
         this.dismiss();
     }
-    public void disppear(Drawable drawable,String doc,int time){
+
+    public void disppear(Drawable drawable, String doc, int time) {
         imageView.clearAnimation();
-        if(drawable != null){
+        if (drawable != null) {
             imageView.setImageDrawable(drawable);
         }
-        if(doc != null)
+        if (doc != null)
             textView.setText(doc);
         android.os.Handler handler = new android.os.Handler();
-        Runnable runnable  = new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 DefaultLoadingView.this.dismiss();
             }
         };
-        handler.postDelayed(runnable,time*1000);
+        handler.postDelayed(runnable, time * 1000);
     }
-    private class LoadingTask extends AsyncTask{
-        private LoadingCallback loadingCallback ;
+
+    /**
+     * LoadingCallBack
+     * Desc:���ض����ص��ӿ�
+     */
+    public static interface LoadingCallback {
+        public void doInBackground();
+
+        public void onPreExecute();
+
+        public void onPostExecute();
+    }
+
+    private class LoadingTask extends AsyncTask {
+        private LoadingCallback loadingCallback;
         private DefaultLoadingView defaultLoadingView;
+
         public LoadingTask(LoadingCallback loadingCallback) {
             super();
             this.loadingCallback = loadingCallback;
@@ -119,16 +139,5 @@ public class DefaultLoadingView extends Dialog {
             loadingCallback.doInBackground();
             return null;
         }
-    }
-    /**
-     * LoadingCallBack
-     * Desc:���ض����ص��ӿ�
-     */
-    public static interface LoadingCallback {
-        public void doInBackground();
-
-        public void onPreExecute();
-
-        public void onPostExecute();
     }
 }

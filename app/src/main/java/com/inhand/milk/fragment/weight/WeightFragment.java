@@ -37,6 +37,8 @@ import java.util.Map;
 public class WeightFragment extends TitleFragment {
     public static final int WEIGHT_ADD = 1;
     private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
+    private static final String TAG = "weightFragment";
+    private static WeightStanderPares weightStanderPares = WeightStanderPares.getInstance();
     private WeightExcle weightExcle;
     private int lastPositon = -1;
     private RingWithText ringWithText;
@@ -44,12 +46,10 @@ public class WeightFragment extends TitleFragment {
     private int sweepStartColor, sweepEndColor;
     private Baby baby;
     private Map<Integer, Map<Integer, Float>> monthToweights = new HashMap<>();
-    private static final String TAG = "weightFragment";
-    private static WeightStanderPares weightStanderPares = WeightStanderPares.getInstance();
     private float currentStanderMin = 0, currentStanderMax;
     private WeightTab weightTab;
     private WeightHelper weightHelper;
-    private TextView leftUp,rightUp;
+    private TextView leftUp, rightUp;
 
     public WeightFragment() {
         initData();
@@ -58,17 +58,17 @@ public class WeightFragment extends TitleFragment {
     /**
      * 初始化一些基本数据
      */
-    private void  initData() {
-            baby = App.getCurrentBaby();
-            weightHelper = weightHelper.getInstance();
-            initCurrentStander();
+    private void initData() {
+        baby = App.getCurrentBaby();
+        weightHelper = weightHelper.getInstance();
+        initCurrentStander();
     }
 
     @Override
     public void refresh() {
         Log.i(TAG, "refresh");
         initCurrentStander();
-        int months = Calculator.getBabyMonthAge( weightHelper.getLastWeightDate());
+        int months = Calculator.getBabyMonthAge(weightHelper.getLastWeightDate());
         weightTab.setTabNum(months + 1);
         lastPositon = months;
         weightTab.initTabs();
@@ -80,11 +80,10 @@ public class WeightFragment extends TitleFragment {
     }
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       // Log.i(TAG, "oncreateView");
+        // Log.i(TAG, "oncreateView");
         mView = inflater.inflate(R.layout.fragment_weight, container, false);
         initViews(mView);
         return mView;
@@ -92,6 +91,7 @@ public class WeightFragment extends TitleFragment {
 
     /**
      * 初始化所有这个页面的view
+     *
      * @param view 父view
      */
     private void initViews(View view) {
@@ -116,16 +116,16 @@ public class WeightFragment extends TitleFragment {
 
     private void inAnimation() {
         //floatAdderWindow.show();
-        Intent intent =new Intent(getActivity(), AdderWindow.class);
+        Intent intent = new Intent(getActivity(), AdderWindow.class);
         this.startActivityForResult(intent, WEIGHT_ADD);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == AdderWindow.ADDERWINDOW_RESULT){
-            if( data.getBooleanExtra(AdderWindow.ADDERWINDOW_KEY,false) == true) {
-                Log.d(TAG,"onactivityResult");
+        if (resultCode == AdderWindow.ADDERWINDOW_RESULT) {
+            if (data.getBooleanExtra(AdderWindow.ADDERWINDOW_KEY, false) == true) {
+                Log.d(TAG, "onactivityResult");
                 refresh();
             }
         }
@@ -158,10 +158,11 @@ public class WeightFragment extends TitleFragment {
         String time = simpleDateFormat.format(weightHelper.getLastWeightDate());
         return str + time;
     }
-    private void updateRelativeTexts(){
+
+    private void updateRelativeTexts() {
         String upString = decimalFormat.format(weightHelper.getCurrentWeight());
         leftUp.setText(upString);
-        rightUp.setText( getCurrentStander());
+        rightUp.setText(getCurrentStander());
         initBottomTextView(mView);
         ringWithText.setTexts(getRingWithTextStrings());
 
@@ -300,6 +301,7 @@ public class WeightFragment extends TitleFragment {
         }
 
     }
+
     private String getCurrentStander() {
         DecimalFormat decimalFormat = new DecimalFormat("##.#");
         return decimalFormat.format(currentStanderMin) + "~" + decimalFormat.format(currentStanderMax);
@@ -358,14 +360,15 @@ public class WeightFragment extends TitleFragment {
 
     private void addPoints(WeightExcle weightExcle, int position) {
         weightExcle.clearPoints();
-        Map<Integer, Float>  date = weightHelper.getWeights(position);
-        for(int key:date.keySet()){
-            weightExcle.addPoint(key,date.get(key));
+        Map<Integer, Float> date = weightHelper.getWeights(position);
+        for (int key : date.keySet()) {
+            weightExcle.addPoint(key, date.get(key));
         }
     }
 
     /**
      * 初始化上面那个滑动条
+     *
      * @param view 用来查找id的父view
      */
     private void initWeightTab(View view) {
@@ -387,9 +390,6 @@ public class WeightFragment extends TitleFragment {
     }
 
 
-
-
-
     private void monthToWeightExcle(WeightExcle weightExcle, int position) {
         weightExcle.clearPoints();
         weightExcle.clearStander();
@@ -406,6 +406,7 @@ public class WeightFragment extends TitleFragment {
 
     /**
      * 计算该月最大有多少天
+     *
      * @param position 离今天又几个月
      * @return 返回该月有多少天
      */
@@ -415,6 +416,7 @@ public class WeightFragment extends TitleFragment {
         int result = calendar.getActualMaximum(Calendar.DATE);
         return result;
     }
+
     private void initLine(View view) {
         ImageView imageView = new ImageView(this.getActivity());
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.weight_fragment_line_container);

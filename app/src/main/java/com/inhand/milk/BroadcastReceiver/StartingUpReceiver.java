@@ -15,7 +15,7 @@ public class StartingUpReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         AlarmSeting alarmSeting = new AlarmSeting(context);
         EatingPlanHelper eatingPlanHelper = new EatingPlanHelper();
-        alarmSeting.start(eatingPlanHelper.getPlanTime(),eatingPlanHelper.getIsMilk());
+        alarmSeting.start(eatingPlanHelper.getPlanTime(), eatingPlanHelper.getIsMilk());
         Log.i("AlarmReceiver", "ffffffffffffffffffffffffffff");
     }
 }

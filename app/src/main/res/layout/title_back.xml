@@ -2,14 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_title_height"
-        android:background="@drawable/header_short_bg_a"
-         >
+        android:background="@drawable/header_short_bg_a">
 
         <TextView
             android:id="@+id/title_text"
@@ -22,7 +21,7 @@
             android:text="@string/details_milk_title_string"
             android:textColor="@color/main_title_text_color"
             android:textSize="@dimen/main_title_text_size" />
-        
+
         <ImageView
             android:id="@+id/title_left_icon"
             android:layout_width="@dimen/main_title_left_return_icon_width"
@@ -31,28 +30,28 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/main_title_icon_marin_left_right"
             android:layout_marginTop="@dimen/main_title_left_return_icon_margin_top"
-            android:src="@drawable/header_return_ico"
+            android:scaleType="centerInside"
+            android:src="@drawable/header_return_ico" />
+
+        <ImageView
+            android:id="@+id/title_right_icon"
+            android:layout_width="@dimen/main_title_right_icon_width"
+            android:layout_height="@dimen/main_title_right_icon_height"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/main_title_icon_marin_left_right"
+            android:layout_marginTop="@dimen/main_title_right_icon_margin_top"
             android:scaleType="centerInside" />
 
-         <ImageView
-             android:id="@+id/title_right_icon"
-             android:layout_width="@dimen/main_title_right_icon_width"
-             android:layout_height="@dimen/main_title_right_icon_height"
-             android:layout_alignParentRight="true"
-             android:layout_marginRight="@dimen/main_title_icon_marin_left_right"
-             android:layout_marginTop="@dimen/main_title_right_icon_margin_top"
-             android:scaleType="centerInside" />
         <TextView
             android:id="@+id/title_right_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:layout_marginRight="@dimen/main_title_icon_marin_left_right"
             android:layout_marginTop="@dimen/main_title_margin_top"
             android:textColor="@color/main_title_text_color"
-            android:textSize="@dimen/main_title_text_size"
-            />
+            android:textSize="@dimen/main_title_text_size" />
     </RelativeLayout>
 
 </LinearLayout>

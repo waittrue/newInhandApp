@@ -2,30 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"  
-  	android:focusableInTouchMode="true"
     android:background="@color/color_white"
-    android:orientation="vertical" >
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-    
+
     <LinearLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:orientation="vertical"></LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/baby_info_activity_icon_container_height" >
+        android:layout_height="@dimen/baby_info_activity_icon_container_height">
 
         <ImageView
             android:id="@+id/imageView1"
@@ -47,7 +46,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/baby_info_activity_boy_textview"
@@ -73,7 +72,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/baby_info_activity_icon_container_height"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -94,18 +93,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="@dimen/baby_info_activity_icon_margin_left"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/baby_info_activity_choose_date_textview"
@@ -122,14 +120,13 @@
         <LinearLayout
             android:layout_width="@dimen/baby_info_activity_icon_margin_left"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/baby_info_activity_icon_container_height"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -150,18 +147,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="@dimen/baby_info_activity_icon_margin_left"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <EditText
                 android:id="@+id/baby_info_activity_choose_name_textview"
@@ -172,7 +168,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:hint="@string/baby_info_activity_baby_name_hint_text"
-                android:textSize="@dimen/baby_info_activity_textview_text_size" >
+                android:textSize="@dimen/baby_info_activity_textview_text_size">
 
                 <requestFocus />
             </EditText>
@@ -181,8 +177,7 @@
         <LinearLayout
             android:layout_width="@dimen/baby_info_activity_icon_margin_left"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -190,7 +185,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/baby_info_activity_save_button"

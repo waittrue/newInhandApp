@@ -27,9 +27,8 @@ import java.util.List;
  */
 public class PowderTipDao {
 
-    private AVQuery<PowderTip> query = AVQuery.getQuery(PowderTip.class);
     public static final String FIND_SORT = "sort";
-
+    private AVQuery<PowderTip> query = AVQuery.getQuery(PowderTip.class);
 
     /**
      * 异步地获得某奶粉对应的所有使用方法
