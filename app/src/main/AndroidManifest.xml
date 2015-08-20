@@ -27,101 +27,114 @@
     <application
         android:name="App"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
             android:name="com.inhand.milk.activity.LaunchActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.WelcomeActivity"></activity>
-        <activity android:name=".activity.FamilyActivity" />
-        <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.SyncTestActivity" />
-
+        <activity android:name=".activity.WelcomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.FamilyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SettingsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.inhand.milk.activity.MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask"></activity>
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
 
         <activity
             android:name="com.inhand.milk.activity.HealthNutritionActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
 
         <activity
             android:name="com.inhand.milk.activity.StaticsDetailsActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
 
         <activity
             android:name="com.inhand.milk.activity.FirstLanunchActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
 
         <activity
             android:name="com.inhand.milk.activity.BluetoothPairedAcivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
         <activity
             android:name="com.inhand.milk.activity.HealthBabyInfoActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
         <activity
             android:name="com.inhand.milk.activity.HealthPromptActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
         <activity
             android:name="com.inhand.milk.activity.HealthDrinkLastActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
         <activity
             android:name="com.inhand.milk.activity.MilkAmountCurveActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
         <activity
             android:name="com.inhand.milk.activity.UserInfoSettingsActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
         <activity
             android:name="com.inhand.milk.activity.PersonCenterBabyInfoActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
 
         <activity
             android:name=".activity.EatingCustomPlanActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
         <activity
             android:name=".activity.EatingCustomFixActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
         <activity
             android:name=".activity.MilkChooseActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
         <activity
             android:name="com.inhand.milk.fragment.weight.AdderWindow"
-            android:theme="@style/AdderWindowStyle"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AdderWindowStyle"/>
         <activity
             android:name=".activity.AlarmActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity=""
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"/>
 
         <activity
             android:name=".activity.AlarmFloatActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity=""
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
 
         <receiver
             android:name=".BroadcastReceiver.AlarmReceiver"
-            android:process=":remote"></receiver>
+            android:process=":remote"/>
         <receiver android:name=".BroadcastReceiver.StartingUpReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <!-- 下面是测试Activity -->
-        <activity android:name=".test.BabyInfoTestActivity" />
-        <activity android:name=".test.DeviceTestActivity" />
-        <activity android:name=".test.MainActivity" />
-        <activity android:name=".test.StatisticsTestActivity" />
-        <activity android:name=".test.SyncTestActivity" />
     </application>
 
 </manifest>

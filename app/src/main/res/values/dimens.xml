@@ -200,7 +200,7 @@
     <dimen name="first_lanunch_babyinfo_icon_height">100dp</dimen>
     <dimen name="first_lanunch_babyinfo_icon_width">100dp</dimen>
     <dimen name="first_lanunch_selected_icon_height">30dp</dimen>
-    <dimen name="first_lanunch_weight_num_text_size">40dp</dimen>
+    <dimen name="first_lanunch_weight_num_text_size">30dp</dimen>
     <dimen name="first_lanunch_weight_unit_text_size">20dp</dimen>
     <dimen name="first_lanunch_weight_girl_boy_icon_width">120dp</dimen>
     <dimen name="first_lanunch_weight_girl_boy_icon_height">200dp</dimen>

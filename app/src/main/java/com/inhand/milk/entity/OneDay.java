@@ -11,12 +11,15 @@ import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.helper.JSONHelper;
+import com.inhand.milk.utils.Calculator;
 import com.inhand.milk.utils.LocalSaveTask;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,18 +57,58 @@ public class OneDay extends Base implements DBSaving<OneDay> {
     }
 
     public List<Record> getRecords() {
+    /*
         JSONArray array = this.getJSONArray(RECORDS_KEY);
         String recordsJson = JSONHelper.getValidCloudJSON(array.toString());
         return JSON.parseArray(recordsJson, Record.class);
+        */
+
+        List<Record> records = new ArrayList<>();
+        JSONArray array = this.getJSONArray(RECORDS_KEY);
+        if(array == null)
+            return  null;
+        for(int i= 0;i<array.length();i++){
+            Record record;
+            try {
+                String json = array.getString(i);
+                record = JSON.parseObject(json,Record.class);
+            }catch (JSONException e){
+                e.printStackTrace();
+                continue;
+            }
+            records.add(record);
+        }
+        return records;
+
+/*
+        List<Record> records = JSON.parseArray(this.getString(RECORDS_KEY), Record.class);
+        return  records;
+        */
+
     }
 
     public void setRecords(List<Record> records) {
+/*
         JSONArray array = new JSONArray();
         for (Record record : records) {
             JSONObject obj = record.toJsonObj();
             array.put(obj);
         }
         this.put(RECORDS_KEY, array);
+*/
+        JSONArray array = new JSONArray();{
+            for (Record record:records){
+                String obj = JSON.toJSONString(record);
+                array.put(obj);
+            }
+        }
+        this.put(RECORDS_KEY,array);
+        if(records != null)
+           this.setVolume(Calculator.calcVolume(records));
+/*
+        String json = JSON.toJSONString(records);
+        this.put(RECORDS_KEY,json);
+*/
     }
 
     public String getDate() {

@@ -18,6 +18,8 @@ import com.inhand.milk.R;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.firstlanunch.Ruler;
 
+import java.text.DecimalFormat;
+
 public class ChooseWeight extends FirstLaunchFragment {
 
     private static final int time = 500;
@@ -75,7 +77,7 @@ public class ChooseWeight extends FirstLaunchFragment {
                 // TODO Auto-generated method stub
                 float xx = ScrollView.getScrollX();
                 xx = xx / spacing * spacingnum / 10f;
-                num.setText(String.format("%.1f", xx));
+                num.setText(decimal.format(xx));
             }
         });
 

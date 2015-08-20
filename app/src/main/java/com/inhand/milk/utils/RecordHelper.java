@@ -11,6 +11,8 @@ import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.helper.SyncHelper;
 
+import java.security.InvalidParameterException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -89,6 +91,28 @@ public class RecordHelper {
     }
 
     /**
+     * 返回最近的limit个oneday
+     * @param limit 限制返回的个数
+     * @return list oneday或者null
+     */
+    public List<OneDay> getOnedaysBylimit(int limit){
+        OneDayDao oneDayDao = new OneDayDao();
+        List<OneDay> oneDays = oneDayDao.findFromDB(App.getAppContext(),limit);
+        if(oneDays == null || oneDays.isEmpty())
+            return null;
+        for(OneDay oneDay:oneDays){
+            Date date = null;
+            try {
+                date = Standar.DATE_FORMAT.parse(oneDay.getDate());
+            }catch (ParseException e){
+                e.printStackTrace();
+                continue;
+            }
+            getOneday(date);
+        }
+        return oneDays;
+    }
+    /**
      * 返回今天的oneday
      *
      * @return oneday；
@@ -131,9 +155,6 @@ public class RecordHelper {
         if (oneDay == null)
             return;
         data.put(date, oneDay);
-        List<Record> records = oneDay.getRecords();
-        if (records == null || records.isEmpty())
-            return;
     }
 
     /**
@@ -173,6 +194,9 @@ public class RecordHelper {
      * @param oneDay 需要存储的oneyday
      */
     public void saveOneday(final OneDay oneDay) {
+        //这里的代码有点诡异，理论上这里需要的同步到云端和本地，但是这里只存到本地，同步到云端等到
+        //调用同步接口的时候
+        /*
         oneDay.saveInCloud(new SaveCallback() {
             @Override
             public void done(AVException e) {
@@ -183,6 +207,7 @@ public class RecordHelper {
                 }
             }
         });
+        */
         oneDay.saveInDB(App.getAppContext(), new LocalSaveTask.LocalSaveCallback() {
             @Override
             public void done() {

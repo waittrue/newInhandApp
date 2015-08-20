@@ -54,7 +54,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/common_settings_item_margin_right"
                     android:scaleType="fitStart"
-                    android:src="@drawable/app_welcome" />
+                    android:src="@drawable/ic_launcher" />
 
                 <ImageView
                     android:id="@+id/imageView6"

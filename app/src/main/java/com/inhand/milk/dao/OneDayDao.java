@@ -1,10 +1,12 @@
 package com.inhand.milk.dao;
 
 
+import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
@@ -18,6 +20,9 @@ import com.inhand.milk.helper.JSONHelper;
 import com.inhand.milk.utils.Calculator;
 import com.inhand.milk.utils.LocalFindTask;
 
+import org.json.JSONObject;
+
+import java.lang.annotation.Target;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,7 +76,7 @@ public class OneDayDao {
         query.whereEqualTo(OneDay.BABY_KEY, App.getCurrentBaby());
         query.orderByDescending(SORT_BY);
         if (limit > 0)
-            query.limit(0);
+            query.limit(limit);
         try {
             oneDays = query.find();
         } catch (AVException e) {
@@ -120,9 +125,11 @@ public class OneDayDao {
      * @param oneDay 待更新记录
      */
     public void updateOrSaveInCloud(OneDay oneDay) throws AVException {
+        Log.i("init","updateorSaveIncloud");
         OneDay old = findOneFromCloud(oneDay.getDate());
         if (old == null) {
             //不存在则新建
+            Log.i("init","updateorSaveIncloud_ no oneday");
             oneDay.save();
         } else {
             merge(oneDay, old);
@@ -295,6 +302,8 @@ public class OneDayDao {
             String json = cursor.getString(cursor.getColumnIndex(
                     DBHelper.COLUMN_JSON
             ));
+            cursor.close();
+            dbHelper.closeDatabase();
             return JSON.parseObject(json, OneDay.class);
         }
         cursor.close();
@@ -509,6 +518,7 @@ public class OneDayDao {
      * @param oneDay 传入的当天记录
      */
     public void updateOrSaveInDB(final Context ctx, OneDay oneDay) {
+      //  Log.i("initbaby","updateorsaveindb");
         dbHelper = DBHelper.getInstance(ctx);
         db = dbHelper.openDatabase();
         String date = oneDay.getDate();
@@ -516,19 +526,26 @@ public class OneDayDao {
                 + App.getCurrentBaby().getObjectId();
         String whereClause = DBHelper.COLUMN_COMP + "=?";
         String[] whereArgs = {compStr};
-        String oneDayJSON = JSONHelper.getValidJSON(oneDay.toJSONObject().toString());
+
+        //这个地方是json 而后面一个用的是fastjson.  大力
+        //String oneDayJSON = JSONHelper.getValidJSON(oneDay.toJSONObject().toString());
+        String oneDayJSON = oneDay.toString();
         OneDay old = findOneFromDB(ctx, date);
+
         // 如果已存在且版本不一致,则更新
         if (old != null) {
             merge(oneDay, old);
-            String oldJSON = JSONHelper.getValidJSON(old.toJSONObject().toString());
-            //保存跟新当前版本标识
+            //这个地方是json 而后面一个用的是fastjson.  大力
+           // String oldJSON = JSONHelper.getValidJSON(old.toJSONObject().toString());
+            String oldJSON = old.toString();
+           // 保存跟新当前版本标识
             ContentValues cv = new ContentValues();
             cv.put(DBHelper.COLUMN_JSON, oldJSON);
             cv.put(DBHelper.COLUMN_VERSION, old.getVersion());
             db.update(OneDay.ONEDAY_CLASS, cv, whereClause, whereArgs);
         } else {
             //否则直接插入
+            Log.i("initbaby","insert");
             dbHelper.insertToJson(
                     OneDay.ONEDAY_CLASS,
                     oneDayJSON,
@@ -556,12 +573,14 @@ public class OneDayDao {
      * @param ctx 上下文环境
      */
     public void syncCloud(final Context ctx) throws AVException {
+        Log.i("initBaby","onedaydao_syncCloud");
         query = AVQuery.getQuery(OneDay.class);
         //从云端抓取所有
         List<OneDay> daysInCloud = findFromCloud(FIND_LIMIT_ALL);
-
+        Log.i("init_cloud dys",String.valueOf(daysInCloud.size()));
         //从本地抓取所有
         List<OneDay> daysInDB = findFromDB(ctx, FIND_LIMIT_ALL);
+        Log.i("init_db days",String.valueOf(daysInDB.size()));
 
         //否则，比较更新
         for (int i = 0; i < daysInCloud.size(); i++) {
@@ -573,9 +592,11 @@ public class OneDayDao {
                 OneDay db = daysInDB.get(i);
                 String dbDate = db.getDate();
                 String dbVersion = db.getVersion();
+                Log.i("init","not version but same date before:"+dbVersion+":"+cloudVersion);
                 //同一天的不同版本需要更新（云端，本地同时需要更新）
                 if (dbDate.equals(cloudDate) &&
                         !dbVersion.equals(cloudVersion)) {
+                    Log.i("init","not version but same date");
                     //保证有效存储
                     db.setObjectId(cloud.getObjectId());
                     //云端并入本地
@@ -605,6 +626,7 @@ public class OneDayDao {
      * @param dst 合并对象2，其中2也作为输出合并的对象
      */
     private void merge(OneDay src, OneDay dst) {
+        Log.i("init_merge","init_merge---------------");
         //进行版本比较后合并
         SimpleDateFormat sdf = new SimpleDateFormat(OneDay.VERSION_FORMAT);
         //以较新版本作为新版本
@@ -673,6 +695,7 @@ public class OneDayDao {
         //合并后刷新版本
         dst.setVersion(version);
         dst.setRecords(records);
+        Log.i("init_merge_records",String.valueOf(records));
         //更新分数，奶量
         dst.setScore(src.getScore() + dst.getScore());
         dst.setVolume(Calculator.calcVolume(records));

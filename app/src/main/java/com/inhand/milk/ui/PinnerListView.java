@@ -16,7 +16,7 @@ public class PinnerListView extends ListView {
     private static final String TAG = "PinnerListView";
     private PinnerListViewAdapter myAdapter;
     private View head = null;
-
+    private  boolean needHead;
     public PinnerListView(Context context) {
         super(context);
     }
@@ -53,9 +53,12 @@ public class PinnerListView extends ListView {
 
     private void adapteHead() {
         if (myAdapter != null) {
-            head = myAdapter.getListViewHead(getFirstVisiblePosition(), head);
-            if (head == null)
-                return;
+            if ( myAdapter.getListViewHead(getFirstVisiblePosition(), head) == null){
+                needHead = false;
+            }
+            else
+                needHead = true;
+
         }
     }
 
@@ -96,7 +99,7 @@ public class PinnerListView extends ListView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         adapteHead();
-        if (head != null)
+        if (head != null && needHead)
             measureChild(head, widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -104,7 +107,7 @@ public class PinnerListView extends ListView {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         Log.i("pinnerListView", "onlayout");
-        if (head != null)
+        if (head != null && needHead)
             layoutHead();
     }
 
@@ -112,9 +115,9 @@ public class PinnerListView extends ListView {
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         adapteHead();
-        if (head != null)
+        if (head != null && needHead)
             layoutHead();
-        if (head != null)
+        if (head != null && needHead )
             drawChild(canvas, head, getDrawingTime());
     }
 }

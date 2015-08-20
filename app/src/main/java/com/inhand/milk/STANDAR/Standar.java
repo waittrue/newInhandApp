@@ -23,8 +23,8 @@ public class Standar {
     final static float AMOUNT_SCORE = 55;
     final static float TEMPERATURE_SCORE = 35;
     final static float TIME_SCORE = 10, TEMPREATURE_HIGH = 40, TEMPREATURE_LOW = 37, STANDAR_TIME = 30;
-    public static DecimalFormat TEMPERATURE_FORMAT = new DecimalFormat("##.#");
-    public static DecimalFormat AMOUNT_FORMAT = new DecimalFormat("###");
+    public static DecimalFormat TEMPERATURE_FORMAT = new DecimalFormat("00.0");
+    public static DecimalFormat AMOUNT_FORMAT = new DecimalFormat("##0");
     public static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 

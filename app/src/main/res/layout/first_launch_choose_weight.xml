@@ -41,6 +41,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="false"
                         android:layout_alignParentTop="false"
+                        android:textColor="@color/color_white"
                         android:gravity="bottom"
                         android:text="0.0"
                         android:textSize="@dimen/first_lanunch_weight_num_text_size" />
@@ -51,6 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_toRightOf="@+id/first_launch_weight_num_textview"
+                        android:textColor="@color/color_white"
                         android:text="kg"
                         android:textSize="@dimen/first_lanunch_weight_unit_text_size" />
                 </RelativeLayout>

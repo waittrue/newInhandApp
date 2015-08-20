@@ -47,7 +47,6 @@ public class PopupWindowSelected {
         headPopupWiondow = new PopupWindow(popView, WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT, true);
         headPopupWiondow.setFocusable(true);
-        //headPopupWiondow.setAnimationStyle(R.style.AnimationPopupwindow);
         cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +80,7 @@ public class PopupWindowSelected {
     }
 
     public void dismiss() {
+
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.popupwindow_out);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -91,6 +91,7 @@ public class PopupWindowSelected {
             @Override
             public void onAnimationEnd(Animation animation) {
                 popupWindowWhole.setVisibility(View.GONE);
+                headPopupWiondow.dismiss();
             }
 
             @Override
@@ -99,6 +100,7 @@ public class PopupWindowSelected {
             }
         });
         popupWindowContent.startAnimation(animation);
+
     }
 
 }

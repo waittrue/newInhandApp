@@ -12,6 +12,7 @@ import com.inhand.milk.App;
 import com.inhand.milk.dao.BabyDao;
 import com.inhand.milk.dao.BabyInfoDao;
 import com.inhand.milk.dao.FeedItemDao;
+import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.dao.PowderTipDao;
 import com.inhand.milk.helper.SyncHelper;
 
@@ -152,10 +153,8 @@ public class User extends AVUser {
         // 首先判断本地缓存中是否有Baby
         if (App.getCurrentBaby() == null) {
             // 若没有，再判断云端是否有宝宝，若有，选择第一个宝宝将其缓存
-            Log.d("initBaby", "currentbaby == null");
             List<Baby> babies = fetchBabies();
             if (babies != null) {
-                Log.d("initBaby", "babies != null");
                 if (babies.size() == 0)
                     return NO_BABY;
                 Baby baby = babies.get(0);
@@ -167,7 +166,6 @@ public class User extends AVUser {
                 return NETWORK_ERROR;
             }
         }
-        Log.d("initBaby", "currentbaby != null");
         return HAS_BABY;
     }
 
@@ -178,6 +176,7 @@ public class User extends AVUser {
      * @param baby 宝宝
      */
     private void initBaby(final Context ctx, Baby baby) {
+        Log.i("user","initBaby");
         // 缓存奶粉信息
         Powder powder = baby.getPowder();
         if (powder != null) {
@@ -194,7 +193,7 @@ public class User extends AVUser {
         baby.saveInCache(ctx);
 
         //缓存babyinfo 这部分是大力加的；
-        Log.d("initBaby", "saveinache_start");
+      //  Log.d("initBaby", "saveinache_start");
         BabyInfoDao babyInfoDao = new BabyInfoDao();
         List<BabyInfo> babyInfos = babyInfoDao.findByBabyFromCloud(baby);
         if (babyInfos == null)
@@ -205,22 +204,32 @@ public class User extends AVUser {
                 babyInfo.saveInCache(App.getAppContext());
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.i("initBaby", "failed");
+                //Log.i("initBaby", "failed");
             }
-            Log.d("initBaby", "saveinache");
+          //  Log.d("initBaby", "saveinache");
         }
-        //同步oneday
+        //同步oneday,这里应该用同步的方法，不能用异步。
+        OneDayDao oneDayDao = new OneDayDao();
+        try {
+            oneDayDao.syncCloud(App.getAppContext());
+        }catch (AVException e){
+            Log.i("init","oneday sync failed");
+            return;
+        }
+        Log.i("init","oneday sync sucess");
+        /*
         SyncHelper.syncCloud(App.getAppContext(), new SyncHelper.SyncCallback() {
             @Override
             public void done(AVException e) {
                 if (e != null) {
                     e.printStackTrace();
-                    Log.i("user_initbaby", "syncCloud failed");
+                    Log.i("initbaby", "syncCloud failed");
                     return;
                 }
-                Log.i("user_initbaby", "syncCloud success");
+                Log.i("initbaby", "syncCloud success");
             }
         });
+        */
     }
 
 }

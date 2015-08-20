@@ -1,8 +1,12 @@
-package com.inhand.milk.fragment.user_info_settings;
+package com.inhand.milk.fragment.person_center.user_info_settings;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.inhand.milk.App;
 import com.inhand.milk.R;
+import com.inhand.milk.activity.LaunchActivity;
 import com.inhand.milk.activity.UserInfoSettingsActivity;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.ui.PopupWindowSelected;
@@ -19,7 +25,7 @@ import com.inhand.milk.ui.PopupWindowSelected;
  * Created by Administrator on 2015/7/2.
  */
 public class UserInfoSettingsFragment extends TitleFragment {
-    private RelativeLayout head, name, sex, city, telephone, email;
+    private RelativeLayout head, name, sex, city, telephone, email,logout;
     private ImageView headImageview;
     private TextView sexTextview, nameTextView, telephoneTextView, emailTextView, cityTextView;
     private String man, woman;
@@ -52,12 +58,14 @@ public class UserInfoSettingsFragment extends TitleFragment {
         city = (RelativeLayout) view.findViewById(R.id.user_info_city);
         telephone = (RelativeLayout) view.findViewById(R.id.user_info_telephone);
         email = (RelativeLayout) view.findViewById(R.id.user_info_email);
+        logout = (RelativeLayout)view.findViewById(R.id.user_info_log_out);
         setHead(head);
         setSex(sex);
         setname(name);
         setEmail(email);
         setCity(city);
         setTelephone(telephone);
+        setLogout(logout);
     }
 
     @Override
@@ -192,6 +200,36 @@ public class UserInfoSettingsFragment extends TitleFragment {
             }
         });
     }
+    private void setLogout(RelativeLayout logout){
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alert = new AlertDialog.Builder(getActivity()).create();
+                alert.setMessage("确定退出登陆");
+                alert.setTitle("提示");
+                alert.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+                        App.logOut();
+                        Intent intent = new Intent(getActivity(), LaunchActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                });
+
+                alert.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+                alert.show();
+            }
+        });
+    }
 
 }

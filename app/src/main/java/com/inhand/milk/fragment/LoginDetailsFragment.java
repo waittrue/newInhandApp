@@ -1,5 +1,6 @@
 package com.inhand.milk.fragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +22,11 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
+import com.inhand.milk.activity.FirstLanunchActivity;
+import com.inhand.milk.activity.MainActivity;
 import com.inhand.milk.entity.User;
+import com.inhand.milk.ui.DefaultLoadingView;
+import com.inhand.milk.ui.LoadingView;
 import com.inhand.milk.utils.PreJudgingTask;
 
 /**
@@ -49,6 +54,10 @@ public class LoginDetailsFragment extends BaseFragment {
     private ImageView toReg;
     private ImageView submitBtn;
     private Resources rs;
+
+    //大力加的
+    private  boolean success ;
+    private int errorCode;
 
     @Nullable
     @Override
@@ -91,7 +100,7 @@ public class LoginDetailsFragment extends BaseFragment {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+               login();
             }
         });
 
@@ -165,9 +174,9 @@ public class LoginDetailsFragment extends BaseFragment {
      * 登录方法
      */
     private void login() {
-        String username = usernameEditor.getText()
+        final String username = usernameEditor.getText()
                 .toString();
-        String password = passwordEditor.getText()
+        final String password = passwordEditor.getText()
                 .toString();
         // 基本验证
         if (username.length() == 0) {
@@ -183,6 +192,54 @@ public class LoginDetailsFragment extends BaseFragment {
             return;
         }
         //进行登录
+        final DefaultLoadingView defaultLoadingView = new DefaultLoadingView(getActivity(),"同步中");
+        DefaultLoadingView.LoadingCallback callback = new DefaultLoadingView.LoadingCallback() {
+            @Override
+            public void doInBackground() {
+                success = true;
+                try {
+                    AVUser.logIn(username,password);
+                } catch (AVException e) {
+                    e.printStackTrace();
+                    success = false;
+                    return;
+                }
+                errorCode = App.getCurrentUser().hasBaby(getActivity());
+                }
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onPostExecute() {
+                defaultLoadingView.disppear();
+                if(success){
+                    Log.d("errorCode", errorCode + "");
+                    switch (errorCode) {
+                        case User.HAS_BABY:
+                            Log.d("User has baby", "has");
+                            getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+                            getActivity().finish();
+                            break;
+                        case User.NO_BABY:
+                            Log.d("User has baby", "none");
+                            getActivity().startActivity(new Intent( getActivity(), FirstLanunchActivity.class));
+                            getActivity().finish();
+                            break;
+                        case User.NETWORK_ERROR:
+                            Log.d("User has baby", "network error");
+                            break;
+                    }
+                }
+                else {
+                    usernameEditor.setError(rs.getString(R.string.login_error));
+                    usernameEditor.requestFocus();
+                }
+            }
+        };
+        defaultLoadingView.loading(callback);
+                /*
         AVUser.logInInBackground(username, password,
                 new LogInCallback<User>() {
                     @Override
@@ -198,5 +255,7 @@ public class LoginDetailsFragment extends BaseFragment {
                         }
                     }
                 }, User.class);
+                */
+
     }
 }

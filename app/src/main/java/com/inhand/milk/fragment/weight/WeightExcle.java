@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.inhand.milk.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -300,7 +301,8 @@ public class WeightExcle extends View {
         paint.setAntiAlias(true);
         paint.setColor(pointShowColor);
         paint.setTextSize(pointShowTextSize);
-        canvas.drawText(String.valueOf(value), x, y - circleR * 1.2f, paint);
+        DecimalFormat decimalFormat = new DecimalFormat("##0.00");
+        canvas.drawText(decimalFormat.format(value), x, y - circleR * 1.2f, paint);
     }
 
     private void drawBottomText(Canvas canvas) {
@@ -330,6 +332,9 @@ public class WeightExcle extends View {
         Path path = new Path();
 
         float x, y;
+        if(points == null || points.isEmpty()){
+            return;
+        }
         int count = points.size();
         List list;
         list = points.get(0);

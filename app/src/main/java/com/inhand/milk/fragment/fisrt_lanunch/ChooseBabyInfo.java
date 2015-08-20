@@ -73,7 +73,7 @@ public class ChooseBabyInfo extends FirstLaunchFragment {
         nameEdit = (EditText) view.findViewById(R.id.first_launch_baby_info_name_edittext);
         girlselect = (ImageView) view.findViewById(R.id.first_launch_select_girl_icon);
         boyselect = (ImageView) view.findViewById(R.id.first_launch_select_boy_icon);
-        nameEdit.clearFocus();
+       // nameEdit.clearFocus();
         birthdayTextView.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -84,7 +84,7 @@ public class ChooseBabyInfo extends FirstLaunchFragment {
             }
         });
 
-
+/*
         nameEdit.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -106,7 +106,7 @@ public class ChooseBabyInfo extends FirstLaunchFragment {
                 return false;
             }
         });
-
+*/
         girlselect.setAlpha(0f);
         boyselect.setAlpha(0f);
         girlIcon.setOnClickListener(new OnClickListener() {

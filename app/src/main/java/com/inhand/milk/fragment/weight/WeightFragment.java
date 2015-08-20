@@ -40,7 +40,7 @@ import java.util.Map;
  */
 public class WeightFragment extends TitleFragment {
     public static final int WEIGHT_ADD = 1;
-    private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
+    private static final DecimalFormat decimalFormat = new DecimalFormat("##0.00");
     private static final String TAG = "weightFragment";
     private static WeightStanderPares weightStanderPares = WeightStanderPares.getInstance();
     private WeightExcle weightExcle;
@@ -158,7 +158,18 @@ public class WeightFragment extends TitleFragment {
     private void updateRelativeTexts() {
         String upString = decimalFormat.format(weightHelper.getCurrentWeight());
         leftUp.setText(upString);
+        float upLeftMargin = App.getWindowWidth(getActivity()) / 2 - ringWithText.getR() - leftUp.getPaint().measureText(upString);
+        upLeftMargin = upLeftMargin / 2;
+        (( RelativeLayout.LayoutParams)leftUp.getLayoutParams()).leftMargin = (int)upLeftMargin;
+        leftUp.requestLayout();
+
         rightUp.setText(getCurrentStander());
+        float upRightMargin = App.getWindowWidth(getActivity()) / 2 - ringWithText.getR() - rightUp.getPaint().measureText(rightUp.getText().toString());
+        upRightMargin = upRightMargin / 2;
+        (( RelativeLayout.LayoutParams)rightUp.getLayoutParams()).rightMargin = (int)upRightMargin;
+        rightUp.requestLayout();
+
+
         initBottomTextView(mView);
         ringWithText.setTexts(getRingWithTextStrings());
 
@@ -166,6 +177,7 @@ public class WeightFragment extends TitleFragment {
 
     private void initRelativeLeftTexts(RelativeLayout relativeLayout) {
         leftUp = new TextView(getActivity());
+        leftUp.setGravity(Gravity.CENTER);
         TextView leftDown = new TextView(getActivity());
         String upString = decimalFormat.format(weightHelper.getCurrentWeight());
         String downString = getResources().getString(R.string.weight_left_down_text);
@@ -209,6 +221,7 @@ public class WeightFragment extends TitleFragment {
 
     private void initRelativeRightTexts(RelativeLayout relativeLayout) {
         rightUp = new TextView(getActivity());
+        rightUp.setGravity(Gravity.CENTER);
         TextView rightDown = new TextView(getActivity());
         String upString = getCurrentStander();
         String downString = getResources().getString(R.string.weight_right_down_text);
@@ -357,6 +370,8 @@ public class WeightFragment extends TitleFragment {
     private void addPoints(WeightExcle weightExcle, int position) {
         weightExcle.clearPoints();
         Map<Integer, Float> date = weightHelper.getWeights(position);
+        if(date == null || date.isEmpty())
+            return;
         for (int key : date.keySet()) {
             weightExcle.addPoint(key, date.get(key));
         }

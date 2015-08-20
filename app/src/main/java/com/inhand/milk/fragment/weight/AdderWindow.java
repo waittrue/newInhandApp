@@ -39,7 +39,7 @@ public class AdderWindow extends Activity {
     private static final String TAG = "AdderWindow";
     private static final int AnimationDuration = 300;
     private static final int spacenum = 2;
-    private static final DecimalFormat decimalFormat = new DecimalFormat("###.##");
+    private static final DecimalFormat decimalFormat = new DecimalFormat("##0.00");
     private LinearLayout outerLayer, rulerContainer;
     private TextView numTextView;
     private int space;
@@ -74,6 +74,8 @@ public class AdderWindow extends Activity {
     private void hidden() {
         //windowManager.removeView(view);
         finish();
+        //对于这个Activity 在style里面是取消了所有的动画，但是有些手机不行，所以添加了如此的动画
+        overridePendingTransition(R.anim.no_animation_in,R.anim.no_animation_out);
     }
 
     private void initOuter() {
@@ -175,6 +177,7 @@ public class AdderWindow extends Activity {
         int height = App.getWindowHeight(this);
         Animation animation = new TranslateAnimation(0, 0, 0, height / 2);
         animation.setDuration(AnimationDuration);
+        animation.setFillAfter(true);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -183,6 +186,7 @@ public class AdderWindow extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+
                 hidden();
             }
 

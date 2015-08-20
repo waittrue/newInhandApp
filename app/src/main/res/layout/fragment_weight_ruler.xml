@@ -69,7 +69,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/weight_fragment_adder_doc_text"
                     android:gravity="left|center_vertical"
-                    android:text="0.0"
+                    android:text="0.00"
                     android:textColor="@color/public_main_a_color"
                     android:textSize="@dimen/weight_fragment_adder_num_text_size" />
             </RelativeLayout>

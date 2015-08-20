@@ -69,7 +69,7 @@ public class ChooseHead extends FirstLaunchFragment {
                 // TODO Auto-generated method stub
                 float xx = ScrollView.getScrollX();
                 xx = xx / spacing * spacingnum / 10f;
-                num.setText(String.format("%.1f", xx));
+                num.setText(decimal.format(xx));
             }
         });
 

@@ -62,6 +62,8 @@ public class Calculator {
             birthDay = Standar.DATE_FORMAT.parse(birth);
         } catch (ParseException e) {
             e.printStackTrace();
+            InvalidParameterException ee = new InvalidParameterException("宝宝生日解析出问题");
+            throw ee;
         }
         birthCalendar.setTime(birthDay);
         Calendar todayCalendr = Calendar.getInstance();

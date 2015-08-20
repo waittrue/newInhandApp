@@ -1,4 +1,4 @@
-package com.inhand.milk.fragment.user_info_settings;
+package com.inhand.milk.fragment.person_center.user_info_settings;
 
 import android.content.Context;
 import android.util.Xml;

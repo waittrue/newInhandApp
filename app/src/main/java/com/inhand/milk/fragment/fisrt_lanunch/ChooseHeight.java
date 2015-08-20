@@ -78,7 +78,7 @@ public class ChooseHeight extends FirstLaunchFragment {
                 // TODO Auto-generated method stub
                 float xx = scrollView.getScrollY();
                 xx = xx / spacing * spacingnum / 10f;
-                num.setText(String.format("%.1f", xx));
+                num.setText(decimal.format(xx));
                 //   Log.i("height:totoal",String.valueOf(test.getWidth()));
                 Log.i("height:num", String.valueOf(num.getWidth()));
                 Log.i("height:unit", String.valueOf(unit.getWidth()));

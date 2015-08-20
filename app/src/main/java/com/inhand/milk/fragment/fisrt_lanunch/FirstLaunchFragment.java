@@ -16,13 +16,15 @@ import com.inhand.milk.entity.Baby;
 import com.inhand.milk.entity.BabyInfo;
 import com.inhand.milk.ui.firstlanunch.FirstLanunchBottom;
 
+import java.text.DecimalFormat;
+
 public abstract class FirstLaunchFragment extends Fragment {
     private static String extraInfo;
     protected FirstLanunchBottom lanunchBottom;
     protected Baby baby;
     protected float width;
     protected BabyInfo babyInfo;
-
+    protected static final DecimalFormat decimal = new DecimalFormat("##0.0");
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

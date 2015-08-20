@@ -154,6 +154,7 @@ public class WeightHelper {
      */
     private void addOneWeight(BabyInfo babyInfo) {
         String birth = babyInfo.getAge();
+        Log.i(TAG,birth);
         Date date = null;
         try {
             date = Standar.DATE_FORMAT.parse(birth);

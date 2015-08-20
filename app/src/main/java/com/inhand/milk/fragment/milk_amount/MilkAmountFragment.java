@@ -67,6 +67,7 @@ public class MilkAmountFragment extends TitleFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i("init","milkamount_fragmnet_oncreateview");
         mView = inflater.inflate(R.layout.fragment_milk_amount, container, false);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -246,6 +247,8 @@ public class MilkAmountFragment extends TitleFragment {
     private void getDataFromDB(PinnerListViewAdapter adapter) {
         adapter.clearData();
         initOnedays();
+        if(oneDays.isEmpty())
+            return;
         int len = oneDays.size();
         int addCount = 0;
         for (int i = 0; i < len; i++) {
@@ -263,6 +266,9 @@ public class MilkAmountFragment extends TitleFragment {
 
     private void initOnedays() {
         oneDays = recordHelper.getOnedays(dataLoadAmount);
+        if(oneDays != null)
+            return;
+        oneDays = recordHelper.getOnedaysBylimit(dataLoadAmount);
         if (oneDays == null)
             oneDays = new ArrayList<>();
     }
@@ -306,7 +312,6 @@ public class MilkAmountFragment extends TitleFragment {
             }
         }
         Log.i("milkAmountFragmnet", "true");
-        initOnedays();
         getDataFromDB(adpter);
         drinkNum.setText(getResources().getString(R.string.milk_amount_drink_num_doc) + getOneDayDrinkAmount());
         adviseNum.setText(getResources().getString(R.string.milk_amount_advise_num_doc) + getOneDayAdviseAmount());

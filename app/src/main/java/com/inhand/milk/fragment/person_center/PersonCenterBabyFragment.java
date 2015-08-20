@@ -20,7 +20,7 @@ import com.inhand.milk.activity.UserInfoSettingsActivity;
 import com.inhand.milk.dao.BabyDao;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.fragment.TitleFragment;
-import com.inhand.milk.fragment.user_info_settings.UserinfoNameFragment;
+import com.inhand.milk.fragment.person_center.user_info_settings.UserinfoNameFragment;
 import com.inhand.milk.ui.DefaultLoadingView;
 import com.inhand.milk.ui.PopupWindowSelected;
 import com.inhand.milk.utils.LocalSaveTask;
@@ -250,7 +250,13 @@ public class PersonCenterBabyFragment extends TitleFragment {
         datePickerDialog = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String str = String.valueOf(year) + "年" + String.valueOf(monthOfYear + 1) + "月" + String.valueOf(dayOfMonth) + "日";
+                String month = String.valueOf(monthOfYear +1);
+                if(month.length() == 1)
+                    month = "0"+month;
+                String day = String.valueOf(dayOfMonth);
+                if(day.length() == 1)
+                    day = "0"+day;
+                String str = String.valueOf(year) + "-" + month + "-" + day;
                 babyBirthTextView.setText(str);
                 loadingView.loading(birthCallBack);
             }
@@ -260,6 +266,7 @@ public class PersonCenterBabyFragment extends TitleFragment {
             @Override
             public void doInBackground() {
                 String birth = babyBirthTextView.getText().toString();
+
                 baby.setBirthday(birth);
                 try {
                     baby.save();

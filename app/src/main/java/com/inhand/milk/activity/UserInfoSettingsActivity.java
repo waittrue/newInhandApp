@@ -16,7 +16,7 @@ import android.provider.MediaStore;
 import android.widget.Toast;
 
 import com.inhand.milk.R;
-import com.inhand.milk.fragment.user_info_settings.UserInfoSettingsFragment;
+import com.inhand.milk.fragment.person_center.user_info_settings.UserInfoSettingsFragment;
 
 import java.io.File;
 import java.io.FileNotFoundException;

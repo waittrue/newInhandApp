@@ -19,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
 import com.inhand.milk.R;
+import com.inhand.milk.dao.OneDayDao;
+import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
 import com.inhand.milk.fragment.footer_navigation.FooterNavigation;
 import com.inhand.milk.utils.RecordHelper;
@@ -42,6 +44,7 @@ public class MainActivity extends BaseActivity {
     private Bluetooth bluetooth;
     private SlidingMenu menu;
     private OnClickListener onClickListener;
+    private boolean first = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,25 +57,17 @@ public class MainActivity extends BaseActivity {
         fragmentTransaction.add(R.id.Activity_buttons_fragments_container, buttons, "buttons");
         fragmentTransaction.commit();
 
-
-        Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                bluetooth = Bluetooth.getInstance();
-                bluetooth.setActivity(MainActivity.this);
-                bluetooth.openBlue();
-                bluetooth.asClient();
-            }
-        };
-        handler.postDelayed(runnable, 300);
-
         //开启同步跟新的线程
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                Log.i("initbaby", "sync_start==================");
                 WeightHelper.getInstance().sync();
                 RecordHelper.getInstance().syncRecord();
+                OneDayDao oneDayDao = new OneDayDao();
+                Log.i("initbaby","onedays from cloud");
+                List<OneDay> oneDays = oneDayDao.findFromCloud(100);
+                Log.i("initbaby",String.valueOf(oneDays.size()));
             }
         });
         thread.start();
@@ -99,6 +94,18 @@ public class MainActivity extends BaseActivity {
         }
     }
     */
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(first){
+        bluetooth = Bluetooth.getInstance();
+        bluetooth.setActivity(MainActivity.this);
+        bluetooth.openBlue();
+        bluetooth.asClient();
+        }
+        first = false;
+    }
 
     private void setSlidingMenu() {
         menu = new SlidingMenu(this);
