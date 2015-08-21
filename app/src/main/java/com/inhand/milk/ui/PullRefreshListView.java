@@ -35,7 +35,7 @@ public class PullRefreshListView extends ListView implements AbsListView.OnScrol
             RELASE_REFRESH_STRING = "释放刷新";
     private static final int LOADING_DRAW = R.drawable.ic_launcher;
     private static final int PULL_DRAW = R.drawable.pullto_refresh_icon;
-    private static final int SMOOTH_SCROLL_TIME = 1000;
+    private static final int SMOOTH_SCROLL_TIME = 300;
     private final Handler scrollHander = new Handler();
     private int mCurrentScrollState;
     private int mRefreshState;
@@ -51,7 +51,7 @@ public class PullRefreshListView extends ListView implements AbsListView.OnScrol
     private int mLastMotionY;
     private boolean normalFooter = true;
     private OnRefreshListener mOnRefreshListener;
-    private boolean ableRefrsh = true;
+    private boolean ableRefrsh = false;
     private boolean dataChanged = true;
     private boolean smoothScroll;
 
@@ -111,7 +111,7 @@ public class PullRefreshListView extends ListView implements AbsListView.OnScrol
         setFooterView();
         measureView(mBottomRefreshView);
         mBottomViewHeight = mBottomRefreshView.getMeasuredHeight();
-
+        initViews();
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
@@ -277,7 +277,7 @@ public class PullRefreshListView extends ListView implements AbsListView.OnScrol
                 normalFooter = false;
                 int totalHeight = 0;
                 for (int i = count; i >= 1; i--)
-                    totalHeight += getChildAt(i).getMeasuredHeight();
+                    totalHeight += getChildAt(i).getHeight();
                 mBottomInnormalHeight = getHeight() - totalHeight;
                 Log.i(TAG, String.valueOf(mBottomInnormalHeight));
             } else {
@@ -296,6 +296,12 @@ public class PullRefreshListView extends ListView implements AbsListView.OnScrol
         }
         resetHeader();
 
+        initViews();
+        mRefreshState = TAP_TO_REFRESH;
+        Log.i(TAG, "TAP_TO_REFRESH");
+    }
+
+    private void initViews() {
         if (ableRefrsh == true) {
             if (normalFooter == true) {
                 mBottomRefreshImage.setVisibility(VISIBLE);
@@ -312,10 +318,7 @@ public class PullRefreshListView extends ListView implements AbsListView.OnScrol
             mRefreshViewImage.setVisibility(GONE);
             mRefreshViewText.setVisibility(GONE);
         }
-        mRefreshState = TAP_TO_REFRESH;
-        Log.i(TAG, "TAP_TO_REFRESH");
     }
-
     private void resetHeader() {
 
         resetHeaderPadding();
@@ -489,7 +492,7 @@ public class PullRefreshListView extends ListView implements AbsListView.OnScrol
                         Log.i(TAG, "innormal head visible scroll:" + String.valueOf(mRefreshView.getBottom()));
                         mRefreshState = TAP_TO_REFRESH;
                     } else if (getLastVisiblePosition() == getCount() - 1
-                            && getHeight() - mBottomRefreshView.getTop() > mBottomInnormalHeight) {
+                            && getHeight() - mBottomRefreshView.getTop() > mBottomInnormalHeight + 10) {
                         mySmoothScrollBy(-getHeight() + mBottomRefreshView.getTop() + mBottomInnormalHeight,
                                 SMOOTH_SCROLL_TIME);
                         mRefreshState = TAP_TO_REFRESH;
@@ -510,6 +513,8 @@ public class PullRefreshListView extends ListView implements AbsListView.OnScrol
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         // Log.i(TAG, "onscroll");
+        if (mRefreshView != null)
+            Log.i(TAG, "onscroll_innormal head bottom scroll:" + String.valueOf(mRefreshView.getBottom()));
         if (!ableRefrsh) {
             if (normalFooter) {
                 if (mCurrentScrollState == SCROLL_STATE_TOUCH_SCROLL) {
@@ -591,6 +596,7 @@ public class PullRefreshListView extends ListView implements AbsListView.OnScrol
     @Override
     public void setAdapter(ListAdapter adapter) {
         super.setAdapter(adapter);
+        setSelection(1);
         //����������ʾͷ��
         final Handler handler = new Handler();
         Thread thread = new Thread(new Runnable() {
@@ -607,7 +613,6 @@ public class PullRefreshListView extends ListView implements AbsListView.OnScrol
             }
         });
         thread.start();
-
     }
 
 

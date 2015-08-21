@@ -1,5 +1,7 @@
 package com.inhand.milk.fragment.person_center.choose_milk;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -7,16 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
 import com.inhand.milk.R;
-import com.inhand.milk.dao.PowderDao;
-import com.inhand.milk.entity.Powder;
+import com.inhand.milk.activity.MilkChooseActivity;
+import com.inhand.milk.dao.PowderBrandDao;
+import com.inhand.milk.entity.PowderBrand;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.ui.DefaultLoadingView;
 import com.inhand.milk.ui.PinnerListViewAdapter;
 import com.inhand.milk.ui.QuickListView;
 import com.inhand.milk.ui.QuickListViewAdapter;
+import com.inhand.milk.utils.LocalGetAvFileCallBack;
 import com.inhand.milk.utils.ViewHolder;
 
 import java.util.HashMap;
@@ -34,7 +40,7 @@ public class ChooseMilkFragment extends TitleFragment {
     private DefaultLoadingView.LoadingCallback loadingCallback;
     private QuickListView quickListView;
     private QuickListViewAdapter adapter;
-    private List<Powder> powders;
+    private List<PowderBrand> powderBrands;
     private boolean success;
 
     @Nullable
@@ -46,19 +52,21 @@ public class ChooseMilkFragment extends TitleFragment {
         loadingCallback = new DefaultLoadingView.LoadingCallback() {
             @Override
             public void doInBackground() {
-                PowderDao powderDao = new PowderDao();
+                PowderBrandDao powderBrandDao = new PowderBrandDao();
                 try {
-                    powders = powderDao.findFromCloud();
-                    if (powders == null) {
+                    powderBrands = powderBrandDao.findFromCacheOrCloud();
+                    if (powderBrands == null) {
                         Log.i(TAG, "奶粉同步失败");
                         success = false;
                         return;
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     Log.i(TAG, "奶粉同步失败");
                     success = false;
                     return;
                 }
+
                 Log.i(TAG, "奶粉同步成功");
                 success = true;
             }
@@ -81,36 +89,35 @@ public class ChooseMilkFragment extends TitleFragment {
         loadingView.loading(loadingCallback);
         return mView;
     }
-
     private void initListview() {
-        if (powders == null)
+        if (powderBrands == null)
             return;
         quickListView = (QuickListView) mView.findViewById(R.id.choose_milk_fragment_quicklistview);
         adapter = new QuickListViewAdapter(getActivity()) {
             @Override
             public String getTitle(int position) {
-                if (powders == null)
+                if (powderBrands == null)
                     return null;
-                int count = powders.size();
+                int count = powderBrands.size();
                 if (position < 0 || position >= count)
                     return null;
-                String name = powders.get(position).getPinyinName();
+                String name = powderBrands.get(position).getPinYinName();
                 String title = name.substring(0, 1).toUpperCase();
                 Log.i(TAG, title);
                 return title;
             }
         };
         quickListView.setHead(R.layout.fragment_choosemilk_listview_item);
-        int count = powders.size();
-        Powder powder;
+        int count = powderBrands.size();
+        PowderBrand powder;
         for (int i = 0; i < count; i++) {
-            powder = powders.get(i);
+            powder = powderBrands.get(i);
             Map<String, Object> title = new HashMap<>();
             Map<String, Object> content = new HashMap<>();
-            title.put(TITLE_KEY, powder.getPinyinName().substring(0, 1).toUpperCase());
+            title.put(TITLE_KEY, powder.getPinYinName().substring(0, 1).toUpperCase());
 
-            //content.put(CONTENT_IMAGE_KEY,);
-            content.put(NAME_KEY, powder.getZhName());
+            content.put(CONTENT_IMAGE_KEY, powder);
+            content.put(NAME_KEY, powder.getZhName() + "/" + powder.getEnName());
             adapter.addMap(title, content, i);
         }
         adapter.setConfigureView(new PinnerListViewAdapter.ConfigureView() {
@@ -141,6 +148,20 @@ public class ChooseMilkFragment extends TitleFragment {
                 }
                 TextView textView = ViewHolder.get(convertView, R.id.choose_milk_fragment_listview_textview);
                 textView.setText((String) map.get(NAME_KEY));
+
+                final ImageView imageView = ViewHolder.get(convertView, R.id.choose_milk_fragment_listview_milk_icon);
+                PowderBrand powderBrand = (PowderBrand) map.get(CONTENT_IMAGE_KEY);
+                powderBrand.getLogBitmap(new LocalGetAvFileCallBack() {
+                    @Override
+                    public void done(byte[] data, AVException e) {
+                        if (data == null || e != null) {
+                            return;
+                        }
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                        imageView.setImageBitmap(bitmap);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
                 return convertView;
             }
         });
@@ -149,9 +170,9 @@ public class ChooseMilkFragment extends TitleFragment {
         quickListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ((MilkChooseActivity) getActivity()).setPowderBrand(powderBrands.get(position));
                 gotoSpecialFragment(new ChooseMilkPhaseFragment());
             }
         });
     }
-
 }

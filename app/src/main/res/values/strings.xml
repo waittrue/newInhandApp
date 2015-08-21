@@ -272,7 +272,7 @@
     <!--choose milk-->
     <string name="choose_milk_title">选择奶粉品牌</string>
     <string name="choose_milk_phase_title">选择奶粉段数</string>
-
+    <string name="choose_milk_show_title">宝宝奶粉</string>
 
     <!-- pulltoRefreshListview-->
     <string name="pull_to_refresh_pull_label">下拉刷新</string>

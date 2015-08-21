@@ -19,6 +19,8 @@ import com.inhand.milk.R;
 /**
  * Created by Administrator on 2015/7/6.
  * 主要实现iphone那种右边有个快速查找的功能
+ *
+ * 这个对内容内部没有排序的功能，需要外部排好顺序
  */
 public class QuickListView extends ViewGroup {
     private static final String TAG = "quickListView";

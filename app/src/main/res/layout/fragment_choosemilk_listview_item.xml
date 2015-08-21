@@ -46,7 +46,8 @@
             android:layout_width="@dimen/choose_milk_fragment_listview_imageview_width"
             android:layout_height="@dimen/choose_milk_fragment_listview_imageview_height"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/choose_milk_fragment_listview_imageview_margin_left" />
+            android:layout_marginLeft="@dimen/choose_milk_fragment_listview_imageview_margin_left"
+            android:src="@drawable/ic_launcher" />
 
         <TextView
             android:id="@+id/choose_milk_fragment_listview_textview"

@@ -66,6 +66,10 @@ public class DefaultLoadingView extends Dialog {
     }
 
     public void disppear(Drawable drawable, String doc, int time) {
+        if (imageView == null) {
+            dismiss();
+            return;
+        }
         imageView.clearAnimation();
         if (drawable != null) {
             imageView.setImageDrawable(drawable);

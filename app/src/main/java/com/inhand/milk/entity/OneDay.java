@@ -10,13 +10,11 @@ import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.dao.OneDayDao;
-import com.inhand.milk.helper.JSONHelper;
 import com.inhand.milk.utils.Calculator;
 import com.inhand.milk.utils.LocalSaveTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,7 +39,6 @@ public class OneDay extends Base implements DBSaving<OneDay> {
     public static final String SCORE_KEY = "score";
     public static final String VERSION_KEY = "version";
     public static final String BABY_KEY = "baby";
-
     public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     public OneDay() {

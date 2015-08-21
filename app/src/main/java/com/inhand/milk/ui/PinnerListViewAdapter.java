@@ -139,7 +139,7 @@ public class PinnerListViewAdapter extends BaseAdapter {
 
     public boolean needHead(int postion) {
         if (postion >= mData.size())
-            return false;
+            return true;
         Map<String, Object> currentHead = mData.get(postion).get(HEAD);
         if (currentHead == null || currentHead.isEmpty()) {
             return false;

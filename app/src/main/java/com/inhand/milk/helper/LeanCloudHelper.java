@@ -11,6 +11,9 @@ import com.inhand.milk.entity.FeedItem;
 import com.inhand.milk.entity.FeedPlan;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Powder;
+import com.inhand.milk.entity.PowderBrand;
+import com.inhand.milk.entity.PowderDetail;
+import com.inhand.milk.entity.PowderSerie;
 import com.inhand.milk.entity.PowderTip;
 import com.inhand.milk.entity.Statistics;
 import com.inhand.milk.entity.Supplement;
@@ -47,6 +50,9 @@ public class LeanCloudHelper {
         AVObject.registerSubclass(FeedItem.class);
         AVObject.registerSubclass(Supplement.class);
         AVObject.registerSubclass(Statistics.class);
+        AVObject.registerSubclass(PowderBrand.class);
+        AVObject.registerSubclass(PowderSerie.class);
+        AVObject.registerSubclass(PowderDetail.class);
     }
 
     /**

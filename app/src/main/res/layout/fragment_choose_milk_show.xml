@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    xmlns:myview="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"></LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/choose_milk_show_fragment_milk_brand_show_height"
+        android:layout_marginRight="@dimen/choose_milk_show_fragment_left_right_margin"
+        android:layout_marginLeft="@dimen/choose_milk_show_fragment_left_right_margin"
+        android:layout_marginTop="@dimen/choose_milk_show_fragment_margin_top">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/choose_milk_show_fragment_brand_details_container_height"
+            android:background="@drawable/choose_milk_show_bg"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/choose_milk_show_fragment_brand_details_container">
+
+            <ImageView
+                android:layout_width="@dimen/choose_milk_show_fragment_brand_icon_width_height"
+                android:layout_height="@dimen/choose_milk_show_fragment_brand_icon_width_height"
+                android:id="@+id/choose_milk_show_fragment_brand_icon_imageview"
+                android:layout_marginLeft="@dimen/choose_milk_show_fragment_content_margin_left"
+                android:layout_marginBottom="@dimen/choose_milk_show_fragment_margin_bottom"
+                android:layout_alignParentBottom="true" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/choose_milk_show_fragment_brand_icon_width_height"
+                android:layout_marginLeft="@dimen/choose_milk_show_fragment_content_margin_left"
+                android:layout_toRightOf="@+id/choose_milk_show_fragment_brand_icon_imageview"
+                android:layout_alignTop="@+id/choose_milk_show_fragment_brand_icon_imageview">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:text="惠氏"
+                    android:id="@+id/choose_milk_show_fragment_brand_name_textview"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/public_main_a_color"
+                    android:textSize="@dimen/choose_milk_show_fragment_content_textsize" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:text="惠氏"
+                    android:id="@+id/choose_milk_show_fragment_brand_serie_name_textview"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/choose_milk_show_fragment_content_textsize" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:text="惠氏"
+                    android:id="@+id/choose_milk_show_fragment_brand_serie_details_name_textview"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/choose_milk_show_fragment_content_textsize" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <view
+            android:layout_width="@dimen/choose_milk_show_fragment_brand_title_width"
+            android:layout_height="@dimen/choose_milk_show_fragment_band_title_heigh"
+            class="com.inhand.milk.ui.RoundImageView"
+            myview:text="当前奶粉信息"
+            myview:backgroundcolor="@color/public_button_a_bg_color"
+            myview:textcolor="@color/color_white"
+            myview:textsize="@dimen/choose_milk_show_fragment_content_textsize"
+            android:layout_marginBottom="@dimen/choose_milk_show_fragment_brand_title_margin_bottom"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/choose_milk_show_fragment_brand_details_container" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/choose_milk_show_fragment_details_container_height"
+        android:layout_marginTop="@dimen/choose_milk_show_fragment_margin_top"
+        android:background="@drawable/choose_milk_show_bg"
+        android:layout_marginLeft="@dimen/choose_milk_show_fragment_left_right_margin"
+        android:layout_marginRight="@dimen/choose_milk_show_fragment_left_right_margin">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="单次冲调奶量："
+                android:textSize="@dimen/choose_milk_show_fragment_content_textsize"
+                android:layout_marginLeft="@dimen/choose_milk_show_fragment_content_margin_left"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/choose_milk_show_fragment_spoon_count"
+                android:layout_marginLeft="@dimen/choose_milk_show_fragment_content_margin_left"
+                android:textSize="@dimen/choose_milk_show_fragment_content_textsize"
+                android:textColor="@color/public_high_color"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="最佳冲调水量："
+                android:layout_marginLeft="@dimen/choose_milk_show_fragment_content_margin_left"
+                android:textSize="@dimen/choose_milk_show_fragment_content_textsize"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/choose_milk_show_fragment_temperature"
+                android:textColor="@color/public_high_color"
+                android:layout_marginLeft="@dimen/choose_milk_show_fragment_content_margin_left"
+                android:textSize="@dimen/choose_milk_show_fragment_content_textsize"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="每日饮奶次数："
+                android:layout_marginStart="@dimen/choose_milk_show_fragment_content_margin_left"
+                android:textSize="@dimen/choose_milk_show_fragment_content_textsize"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/choose_milk_show_fragment_drink_num"
+                android:textColor="@color/public_high_color"
+                android:layout_marginLeft="@dimen/choose_milk_show_fragment_content_margin_left"
+                android:textSize="@dimen/choose_milk_show_fragment_content_textsize"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <view
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            class="com.inhand.milk.ui.ButtonB"
+            myview:text="更换奶粉"
+            android:id="@+id/choosemilk_show_fragment_button"
+            myview:textsize="@dimen/choose_milk_show_fragment_button_textsize"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/choose_milk_show_fragment_margin_bottom" />
+    </RelativeLayout>
+
+</LinearLayout>
