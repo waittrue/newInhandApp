@@ -2,6 +2,7 @@ package com.inhand.milk.activity;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.FindCallback;
@@ -23,6 +24,7 @@ public class MilkChooseActivity extends SubActivity {
     private PowderBrand powderBrand;
     private PowderSerie powderSerie;
     private PowderDetail powderDetail;
+    private static final String TAG = "MilkChooseACtivity";
 
     public MilkChooseActivity() {
         powderBrand = new PowderBrandDao().findFromAche();
@@ -61,9 +63,11 @@ public class MilkChooseActivity extends SubActivity {
     }
 
     public void save() {
+        Log.i(TAG, "save");
         if (powderBrand != null)
             powderBrand.saveInCache();
         if (powderSerie != null) {
+            Log.i(TAG, "powderserir != null");
             powderSerie.saveInAcache();
             PowderDetailDao powderDetailDao = new PowderDetailDao();
             powderDetailDao.findFromCloudByPowderSerie(powderSerie, new FindCallback<PowderDetail>() {
@@ -73,6 +77,7 @@ public class MilkChooseActivity extends SubActivity {
                         for (PowderDetail p : list) {
                             p.saveInACache();
                             powderDetail = p;
+                            Log.i(TAG, "powderDetail success");
                         }
                     }
                 }

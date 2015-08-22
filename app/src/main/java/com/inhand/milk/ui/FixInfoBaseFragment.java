@@ -18,7 +18,6 @@ import com.inhand.milk.fragment.TitleFragment;
 public class FixInfoBaseFragment extends TitleFragment {
     protected EditText editText;
     private TextView title, leftText, rightTextview;
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.user_info_settings_fix, container, false);
         initView(mView);

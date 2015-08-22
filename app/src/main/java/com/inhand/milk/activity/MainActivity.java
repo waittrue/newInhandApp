@@ -1,6 +1,5 @@
 package com.inhand.milk.activity;
 
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.FragmentManager;
@@ -8,7 +7,6 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +16,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
+import com.inhand.milk.App;
 import com.inhand.milk.R;
-import com.inhand.milk.dao.OneDayDao;
-import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
 import com.inhand.milk.fragment.footer_navigation.FooterNavigation;
 import com.inhand.milk.utils.RecordHelper;
@@ -64,10 +61,8 @@ public class MainActivity extends BaseActivity {
                 Log.i("initbaby", "sync_start==================");
                 WeightHelper.getInstance().sync();
                 RecordHelper.getInstance().syncRecord();
-                OneDayDao oneDayDao = new OneDayDao();
-                Log.i("initbaby","onedays from cloud");
-                List<OneDay> oneDays = oneDayDao.findFromCloud(100);
-                Log.i("initbaby",String.valueOf(oneDays.size()));
+                App.getCurrentBaby().sync();
+
             }
         });
         thread.start();

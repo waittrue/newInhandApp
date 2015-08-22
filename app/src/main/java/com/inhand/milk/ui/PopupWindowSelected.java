@@ -1,6 +1,7 @@
 package com.inhand.milk.ui;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,8 +91,12 @@ public class PopupWindowSelected {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                popupWindowWhole.setVisibility(View.GONE);
-                headPopupWiondow.dismiss();
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        headPopupWiondow.dismiss();
+                    }
+                });
             }
 
             @Override

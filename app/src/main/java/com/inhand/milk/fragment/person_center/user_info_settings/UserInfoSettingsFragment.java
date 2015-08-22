@@ -1,6 +1,7 @@
 package com.inhand.milk.fragment.person_center.user_info_settings;
 
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,12 +14,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.LaunchActivity;
 import com.inhand.milk.activity.UserInfoSettingsActivity;
+import com.inhand.milk.entity.User;
 import com.inhand.milk.fragment.TitleFragment;
+import com.inhand.milk.ui.DefaultLoadingView;
 import com.inhand.milk.ui.PopupWindowSelected;
 
 /**
@@ -29,10 +34,16 @@ public class UserInfoSettingsFragment extends TitleFragment {
     private ImageView headImageview;
     private TextView sexTextview, nameTextView, telephoneTextView, emailTextView, cityTextView;
     private String man, woman;
+    private String tempString;
+    private UserinfoNameFragment nameSettingsFragment;
     private int clickColor, unclickColor = Color.WHITE;
     private PopupWindowSelected headPopupWiondow, sexPopupWindow;
-
+    private DefaultLoadingView loadingView;
+    private boolean success;
+    private User user;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        loadingView = new DefaultLoadingView(getActivity(), "同步中");
+        user = App.getCurrentUser();
         mView = inflater.inflate(R.layout.user_info_settings, container, false);
         setTitleview(getResources().getString(R.string.user_info_title), 2);
         initView(mView);
@@ -78,31 +89,30 @@ public class UserInfoSettingsFragment extends TitleFragment {
 
     private void initTextViews() {
         String noData = getResources().getString(R.string.user_info_fix_no_data);
-        String temp;
-        temp = ((UserInfoSettingsActivity) getActivity()).getName();
-        if (temp == null)
-            temp = noData;
-        nameTextView.setText(temp);
+        tempString = ((UserInfoSettingsActivity) getActivity()).getName();
+        if (tempString == null)
+            tempString = noData;
+        nameTextView.setText(tempString);
 
-        temp = ((UserInfoSettingsActivity) getActivity()).getEmail();
-        if (temp == null)
-            temp = noData;
-        emailTextView.setText(temp);
+        tempString = ((UserInfoSettingsActivity) getActivity()).getEmail();
+        if (tempString == null)
+            tempString = noData;
+        emailTextView.setText(tempString);
 
-        temp = ((UserInfoSettingsActivity) getActivity()).getTelephone();
-        if (temp == null)
-            temp = noData;
-        telephoneTextView.setText(temp);
+        tempString = ((UserInfoSettingsActivity) getActivity()).getTelephone();
+        if (tempString == null)
+            tempString = noData;
+        telephoneTextView.setText(tempString);
 
-        temp = ((UserInfoSettingsActivity) getActivity()).getCity();
-        if (temp == null)
-            temp = noData;
-        cityTextView.setText(temp);
+        tempString = ((UserInfoSettingsActivity) getActivity()).getCity();
+        if (tempString == null)
+            tempString = noData;
+        cityTextView.setText(tempString);
 
-        temp = ((UserInfoSettingsActivity) getActivity()).getSex();
-        if (temp == null)
-            temp = noData;
-        sexTextview.setText(temp);
+        tempString = ((UserInfoSettingsActivity) getActivity()).getSex();
+        if (tempString == null)
+            tempString = noData;
+        sexTextview.setText(tempString);
     }
 
     public void setHeadImageview(Bitmap bitmap) {
@@ -137,33 +147,128 @@ public class UserInfoSettingsFragment extends TitleFragment {
     }
 
     private void setname(final RelativeLayout name) {
+        final DefaultLoadingView.LoadingCallback nameCallback = new DefaultLoadingView.LoadingCallback() {
+            @Override
+            public void doInBackground() {
+                try {
+                    user.setNickname(tempString);
+                    user.save();
+                    Log.i("userinfosettting", "save success:" + user.getNickname());
+                    ((UserInfoSettingsActivity) getActivity()).setName(tempString);
+                } catch (AVException e) {
+                    success = false;
+                    Log.i("userinfosettting", "save failed");
+                }
+            }
 
+            @Override
+            public void onPreExecute() {
+                success = true;
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (success == true) {
+                    ((UserInfoSettingsActivity) getActivity()).setName(tempString);
+                    FragmentManager fragmentManager = getActivity().getFragmentManager();
+                    fragmentManager.popBackStack();
+                    fragmentManager.beginTransaction().commit();
+                    loadingView.dismiss();
+                } else {
+                    loadingView.disppear(null, "请求失败", 2);
+                }
+            }
+        };
+        nameSettingsFragment = new UserinfoNameFragment(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tempString = nameSettingsFragment.getString();
+                if (tempString == null || tempString.isEmpty()) {
+                    nameSettingsFragment.hiddenSoftInput();
+                    Toast.makeText(getActivity(), "不能填写空白", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                loadingView.loading(nameCallback);
+            }
+        });
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoSpecialFragment(new UserinfoNameFragment());
+                gotoSpecialFragment(nameSettingsFragment);
             }
         });
     }
 
     private void setSex(final RelativeLayout sex) {
+        final DefaultLoadingView.LoadingCallback manCallback = new DefaultLoadingView.LoadingCallback() {
+            @Override
+            public void doInBackground() {
+                try {
+                    user.setSex(User.MALE);
+                    user.save();
+                } catch (AVException e) {
+                    e.printStackTrace();
+                    success = false;
+                }
+            }
+
+            @Override
+            public void onPreExecute() {
+                success = true;
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (success) {
+                    sexTextview.setText(man);
+                    loadingView.dismiss();
+                } else {
+                    loadingView.disppear(null, "请求失败", 2);
+                }
+            }
+        };
+        final DefaultLoadingView.LoadingCallback womanCallback = new DefaultLoadingView.LoadingCallback() {
+            @Override
+            public void doInBackground() {
+                try {
+                    user.setSex(User.FEMALE);
+                    user.save();
+                } catch (AVException e) {
+                    e.printStackTrace();
+                    success = false;
+                }
+            }
+
+            @Override
+            public void onPreExecute() {
+                success = true;
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (success) {
+                    sexTextview.setText(woman);
+                    loadingView.dismiss();
+                } else {
+                    loadingView.disppear(null, "请求失败", 2);
+                }
+            }
+        };
         sexPopupWindow = new PopupWindowSelected(getActivity());
         sexPopupWindow.setFirstItemText(man);
         sexPopupWindow.setSecondeItemText(woman);
         sexPopupWindow.setFirstListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sexTextview.setText(man);
-                ((UserInfoSettingsActivity) getActivity()).setSex(man);
                 sexPopupWindow.dismiss();
+                loadingView.loading(manCallback);
             }
         });
         sexPopupWindow.setSecondeListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sexTextview.setText(woman);
-                ((UserInfoSettingsActivity) getActivity()).setSex(woman);
                 sexPopupWindow.dismiss();
+                loadingView.loading(womanCallback);
             }
         });
         sex.setOnClickListener(new View.OnClickListener() {

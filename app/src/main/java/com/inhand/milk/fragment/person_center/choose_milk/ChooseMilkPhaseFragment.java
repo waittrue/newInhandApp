@@ -107,7 +107,7 @@ public class ChooseMilkPhaseFragment extends TitleFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO Auto-generated method stub
-                        ((MilkChooseActivity) getActivity()).setPowderSerie(powderSeries.get(position));
+                        ((MilkChooseActivity) getActivity()).setPowderSerie(powderSeries.get(position - 1));
                         ((MilkChooseActivity) getActivity()).save();
                         getActivity().finish();
                     }

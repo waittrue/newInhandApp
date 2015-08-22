@@ -501,16 +501,16 @@
     <!-- choose milk show-->
     <dimen name="choose_milk_show_fragment_margin_top">20dp</dimen>
     <dimen name="choose_milk_show_fragment_bg_radius">10dp</dimen>
-    <dimen name="choose_milk_show_fragment_milk_brand_show_height">200dp</dimen>
-    <dimen name="choose_milk_show_fragment_details_container_height">150dp</dimen>
+    <dimen name="choose_milk_show_fragment_milk_brand_show_height">170dp</dimen>
+    <dimen name="choose_milk_show_fragment_details_container_height">120dp</dimen>
     <dimen name="choose_milk_show_fragment_left_right_margin">20dp</dimen>
-    <dimen name="choose_milk_show_fragment_brand_details_container_height">150dp</dimen>
-    <dimen name="choose_milk_show_fragment_brand_title_width">200dp</dimen>
-    <dimen name="choose_milk_show_fragment_band_title_heigh">40dp</dimen>
-    <dimen name="choose_milk_show_fragment_brand_title_margin_bottom">-30dp</dimen>
-    <dimen name="choose_milk_show_fragment_brand_icon_width_height">60dp</dimen>
+    <dimen name="choose_milk_show_fragment_brand_details_container_height">140dp</dimen>
+    <dimen name="choose_milk_show_fragment_brand_title_width">160dp</dimen>
+    <dimen name="choose_milk_show_fragment_band_title_heigh">28dp</dimen>
+    <dimen name="choose_milk_show_fragment_brand_title_margin_bottom">-14dp</dimen>
+    <dimen name="choose_milk_show_fragment_brand_icon_width_height">80dp</dimen>
     <dimen name="choose_milk_show_fragment_content_margin_left">20dp</dimen>
-    <dimen name="choose_milk_show_fragment_margin_bottom">30dp</dimen>
+    <dimen name="choose_milk_show_fragment_margin_bottom">23dp</dimen>
     <dimen name="choose_milk_show_fragment_content_textsize">15dp</dimen>
     <dimen name="choose_milk_show_fragment_button_textsize">18dp</dimen>
 </resources>

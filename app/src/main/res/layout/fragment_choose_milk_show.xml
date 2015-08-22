@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="每日饮奶次数："
-                android:layout_marginStart="@dimen/choose_milk_show_fragment_content_margin_left"
+                android:layout_marginLeft="@dimen/choose_milk_show_fragment_content_margin_left"
                 android:textSize="@dimen/choose_milk_show_fragment_content_textsize"
                 android:layout_gravity="center_vertical" />
 

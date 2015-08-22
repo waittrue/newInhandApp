@@ -14,7 +14,6 @@ import com.inhand.milk.dao.BabyInfoDao;
 import com.inhand.milk.dao.FeedItemDao;
 import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.dao.PowderTipDao;
-import com.inhand.milk.helper.SyncHelper;
 
 import java.util.List;
 
@@ -125,7 +124,7 @@ public class User extends AVUser {
      * @param email 用户email
      */
     public void setEmail(String email) {
-
+        put(EMAIL_KEY, email);
     }
 
     /**
@@ -198,38 +197,20 @@ public class User extends AVUser {
         List<BabyInfo> babyInfos = babyInfoDao.findByBabyFromCloud(baby);
         if (babyInfos == null)
             return;
-        Log.d("initBaby", String.valueOf(babyInfos.size()));
         for (BabyInfo babyInfo : babyInfos) {
             try {
                 babyInfo.saveInCache(App.getAppContext());
             } catch (Exception e) {
                 e.printStackTrace();
-                //Log.i("initBaby", "failed");
             }
-          //  Log.d("initBaby", "saveinache");
         }
         //同步oneday,这里应该用同步的方法，不能用异步。
         OneDayDao oneDayDao = new OneDayDao();
         try {
             oneDayDao.syncCloud(App.getAppContext());
         }catch (AVException e){
-            Log.i("init","oneday sync failed");
             return;
         }
-        Log.i("init","oneday sync sucess");
-        /*
-        SyncHelper.syncCloud(App.getAppContext(), new SyncHelper.SyncCallback() {
-            @Override
-            public void done(AVException e) {
-                if (e != null) {
-                    e.printStackTrace();
-                    Log.i("initbaby", "syncCloud failed");
-                    return;
-                }
-                Log.i("initbaby", "syncCloud success");
-            }
-        });
-        */
     }
 
 }

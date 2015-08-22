@@ -66,6 +66,7 @@ public class DefaultLoadingView extends Dialog {
     }
 
     public void disppear(Drawable drawable, String doc, int time) {
+        this.show();
         if (imageView == null) {
             dismiss();
             return;
@@ -76,6 +77,7 @@ public class DefaultLoadingView extends Dialog {
         }
         if (doc != null)
             textView.setText(doc);
+
         android.os.Handler handler = new android.os.Handler();
         Runnable runnable = new Runnable() {
             @Override
@@ -107,7 +109,6 @@ public class DefaultLoadingView extends Dialog {
             this.loadingCallback = loadingCallback;
             defaultLoadingView = DefaultLoadingView.this;
         }
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();

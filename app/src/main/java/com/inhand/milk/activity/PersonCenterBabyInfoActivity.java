@@ -1,6 +1,9 @@
 package com.inhand.milk.activity;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.inhand.milk.App;
@@ -12,7 +15,7 @@ import com.inhand.milk.fragment.person_center.PersonCenterBabyFragment;
  */
 public class PersonCenterBabyInfoActivity extends UserInfoSettingsActivity {
     private String birth;
-
+    private Fragment mFragment;
     @Override
     protected void initData() {
         Baby baby = App.getCurrentBaby();
@@ -42,9 +45,20 @@ public class PersonCenterBabyInfoActivity extends UserInfoSettingsActivity {
     }
 
     @Override
+    protected void setImageToHeadView(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            Bitmap photo = extras.getParcelable("data");
+            ((PersonCenterBabyFragment) mFragment).setHeadImageview(photo);
+            saveBitmap(photo);
+        }
+    }
+
+    @Override
     protected Fragment initFragment() {
         // TODO Auto-generated method stub
-        return new PersonCenterBabyFragment();// new Nutrition();
+        mFragment = new PersonCenterBabyFragment();
+        return mFragment;
     }
 
 }

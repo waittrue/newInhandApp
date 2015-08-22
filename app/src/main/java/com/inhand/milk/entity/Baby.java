@@ -2,14 +2,20 @@ package com.inhand.milk.entity;
 
 import android.content.Context;
 
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.GetDataCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.utils.ACache;
+import com.inhand.milk.utils.LocalGetAvFileCallBack;
 import com.inhand.milk.utils.LocalSaveTask;
+
+import java.util.List;
 
 
 /**
@@ -31,13 +37,15 @@ public class Baby extends Base implements CacheSaving<Baby> {
     public static final String STATISTICS_KEY = "statistics"; // 统计信息
     public static final String AVATAR_KEY = "avatar"; // 宝宝头像
     public static final String FEED_PLAN_KEY = "feedPlan"; // 营养计划
-
+    public static final String ACACEAVATAR_KEY = "baby_imageve";
     public static final String CACHE_KEY = "baby";
 
     public static int FEMALE = 2; // 女性
     public static int MALE = 1; // 男性
+    private byte[] imageBytes;
 
     public Baby() {
+        super();
         // 首次创建宝宝时，为其自动创建统计信息及喂养计划
         this.setStatistics(new Statistics());
         this.setFeedPlan(new FeedPlan());
@@ -181,6 +189,65 @@ public class Baby extends Base implements CacheSaving<Baby> {
     }
 
     /**
+     * 同步的 吧文件二进制存储到本地和云端
+     * @param bytes
+     */
+    public void saveAvatorBytes(byte[] bytes) throws AVException {
+        if (bytes == null)
+            return;
+        AVFile avFile = new AVFile("宝宝头像", bytes);
+        try {
+            avFile.save();
+            setAvatar(avFile);
+            imageBytes = bytes;
+            saveImageInAcache();
+            save();
+        } catch (AVException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 异步的获得宝宝头像的二进制
+     *
+     * @param callBack 找到的回调接口
+     */
+    public void getAvatorBytes(final LocalGetAvFileCallBack callBack) {
+        AVFile avFile = getAvatar();
+        if (avFile == null)
+            return;
+        avFile.getDataInBackground(new GetDataCallback() {
+            @Override
+            public void done(final byte[] bytes, AVException e) {
+                if (e == null && bytes != null)
+                    imageBytes = bytes;
+                callBack.done(bytes, e);
+            }
+        });
+    }
+
+    /**
+     * 同步的得到二进制值
+     *
+     * @return
+     * @throws AVException 当网络发生异常的时候
+     */
+    public byte[] getAvatorBytes() throws AVException {
+        AVFile avFile = getAvatar();
+        if (avFile == null) {
+            return null;
+        }
+        try {
+            imageBytes = avFile.getData();
+            return imageBytes;
+        } catch (AVException e) {
+            imageBytes = null;
+            throw e;
+        }
+    }
+
+    /**
      * 获得宝宝的喂养计划
      *
      * @return
@@ -240,5 +307,46 @@ public class Baby extends Base implements CacheSaving<Baby> {
         App.currentBaby = this;
     }
 
+    /**
+     * 把头像的二进制缓存起来
+     */
+    public void saveImageInAcache() {
+        ACache aCache = ACache.get(App.getAppContext());
+        if (imageBytes != null)
+            aCache.put(ACACEAVATAR_KEY + this.getObjectId(), JSON.toJSONString(imageBytes));
+    }
+
+    /**
+     * 从本地缓存中获取头像二进制
+     *
+     * @return 头像的二进制
+     */
+    public byte[] getImageFromAcache() {
+        ACache aCache = ACache.get(App.getAppContext());
+        String json = aCache.getAsString(Baby.ACACEAVATAR_KEY + this.getObjectId());
+        if (json == null)
+            return null;
+        byte[] image = JSON.parseObject(json, byte[].class);
+        return image;
+    }
+
+    /**
+     * 同步云端，从云端完全复制下来，已云端为准.
+     */
+    public void sync() {
+        AVQuery<Baby> query = AVQuery.getQuery(Baby.class);
+        query.whereEqualTo("objectId", this.getObjectId());
+        Baby baby = null;
+        try {
+            List<Baby> babies = query.find();
+            if (babies == null || babies.isEmpty())
+                return;
+            baby = babies.get(0);
+            App.currentBaby = baby;
+            baby.saveInCache(App.getAppContext());
+        } catch (AVException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -2,7 +2,6 @@ package com.inhand.milk.utils;
 
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
@@ -63,17 +62,19 @@ public class WeightHelper {
      */
     private void initData() {
         currentBaby = App.getCurrentBaby();
-        if (currentBaby == null) {
-            ACache aCache = ACache.get(App.getAppContext());
-            String json = aCache.getAsString(Baby.CACHE_KEY);
-            Log.i("baby currentbaby json", json);
-            currentBaby = JSON.parseObject(json, Baby.class);
-        }
         if (babyInfos == null)
             babyInfos = getAllBabyInfoCache();
         months2Weights();
     }
 
+    /**
+     * 重新刷新数据
+     */
+    public void refresh() {
+        babyInfos.clear();
+        monthToweights.clear();
+        initData();
+    }
     /**
      * 得到所有babyinfos的信息
      *

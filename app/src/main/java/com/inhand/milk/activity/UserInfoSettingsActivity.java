@@ -15,7 +15,9 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
+import com.inhand.milk.App;
 import com.inhand.milk.R;
+import com.inhand.milk.entity.User;
 import com.inhand.milk.fragment.person_center.user_info_settings.UserInfoSettingsFragment;
 
 import java.io.File;
@@ -31,6 +33,7 @@ public class UserInfoSettingsActivity extends SubActivity {
     private static final String IMAGE_FILE_NAME = "head_image.jpg";
     private int output_X = 480, output_Y = 480;
     private Fragment mFragment;
+    private User user;
     private String name, city, telephone, email, sex;
 
     public static String getPath(final Context context, final Uri uri) {
@@ -201,7 +204,16 @@ public class UserInfoSettingsActivity extends SubActivity {
     }
 
     protected void initData() {
-        //获取祥光数据
+        user = App.getCurrentUser();
+        setName(user.getNickname());
+        if (user.getSex() == User.MALE) {
+            setSex("男性");
+        } else {
+            setSex("女性");
+        }
+        setCity(user.getCity());
+        setEmail(user.getEmail());
+        setTelephone(user.getMobilePhoneNumber());
     }
 
     @Override
@@ -310,7 +322,7 @@ public class UserInfoSettingsActivity extends SubActivity {
     /**
      * 提取保存裁剪之后的图片数据，并设置头像部分的View
      */
-    private void setImageToHeadView(Intent intent) {
+    protected void setImageToHeadView(Intent intent) {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             Bitmap photo = extras.getParcelable("data");

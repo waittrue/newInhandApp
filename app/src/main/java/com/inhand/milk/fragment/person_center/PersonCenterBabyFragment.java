@@ -2,12 +2,15 @@ package com.inhand.milk.fragment.person_center;
 
 import android.app.DatePickerDialog;
 import android.app.FragmentManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +27,9 @@ import com.inhand.milk.fragment.person_center.user_info_settings.UserinfoNameFra
 import com.inhand.milk.ui.DefaultLoadingView;
 import com.inhand.milk.ui.PopupWindowSelected;
 import com.inhand.milk.utils.LocalSaveTask;
+import com.inhand.milk.utils.WeightHelper;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.List;
 
@@ -37,16 +42,18 @@ public class PersonCenterBabyFragment extends TitleFragment {
     private String man, woman, temp;
     private int year, monthOfyear, dayOfmonth;
     private TextView babySexTextView, babynameTextView, babyBirthTextView;
+    private ImageView babyImage;
     private DatePickerDialog datePickerDialog;
     private UserinfoNameFragment userinfoNameFragment;
     private DefaultLoadingView loadingView;
     private DefaultLoadingView.LoadingCallback sexCallBack, birthCallBack, initCallBack;
     private boolean success;
     private Baby baby;
-
+    private byte[] imageBytes;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.person_center_baby_info, container, false);
         baby = App.getCurrentBaby();
+        imageBytes = baby.getImageFromAcache();
         loadingView = new DefaultLoadingView(getActivity(), "同步中");
         setTitleview(getResources().getString(R.string.person_center_baby_info), 2);
 
@@ -70,6 +77,14 @@ public class PersonCenterBabyFragment extends TitleFragment {
                 else if (sexIndex == Baby.MALE)
                     sex = "男性";
                 name = baby.getNickname();
+                try {
+                    imageBytes = baby.getAvatorBytes();
+                    baby.saveImageInAcache();
+                    Log.i("babyinfo", "save success");
+                } catch (AVException e) {
+                    e.printStackTrace();
+                    imageBytes = null;
+                }
                 ((PersonCenterBabyInfoActivity) getActivity()).setName(name);
                 ((PersonCenterBabyInfoActivity) getActivity()).setBirth(birth);
                 ((PersonCenterBabyInfoActivity) getActivity()).setSex(sex);
@@ -105,6 +120,7 @@ public class PersonCenterBabyFragment extends TitleFragment {
 
     private void initView(View view) {
         head = (RelativeLayout) view.findViewById(R.id.person_center_baby_head_container);
+        babyImage = (ImageView) view.findViewById(R.id.user_info_headimage_imageview);
         name = (RelativeLayout) view.findViewById(R.id.person_center_name_container);
         sex = (RelativeLayout) view.findViewById(R.id.person_center_sex_container);
         birth = (RelativeLayout) view.findViewById(R.id.person_center_birth_container);
@@ -124,6 +140,12 @@ public class PersonCenterBabyFragment extends TitleFragment {
         String text;
         String noData = getResources().getString(R.string.user_info_fix_no_data);
         text = ((PersonCenterBabyInfoActivity) getActivity()).getName();
+
+        if (imageBytes != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            babyImage.setImageBitmap(bitmap);
+        }
+
         if (text == null)
             text = noData;
         babynameTextView.setText(text);
@@ -137,6 +159,7 @@ public class PersonCenterBabyFragment extends TitleFragment {
         if (text == null)
             text = noData;
         babyBirthTextView.setText(text);
+
     }
 
     private void setHead(final RelativeLayout head) {
@@ -241,6 +264,9 @@ public class PersonCenterBabyFragment extends TitleFragment {
         });
     }
 
+    private void warningDay() {
+        Toast.makeText(getActivity(), "请正确设置日期", Toast.LENGTH_LONG).show();
+    }
     private void setBirth(final RelativeLayout birth) {
 
         Calendar calendar = Calendar.getInstance();
@@ -250,6 +276,21 @@ public class PersonCenterBabyFragment extends TitleFragment {
         datePickerDialog = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar calendar1 = Calendar.getInstance();
+                if (year > calendar1.get(Calendar.YEAR)) {
+                    warningDay();
+                    return;
+                } else if (year == calendar1.get(Calendar.YEAR)) {
+                    if (monthOfYear > calendar1.get(Calendar.MONTH)) {
+                        warningDay();
+                        return;
+                    } else if (monthOfYear == calendar1.get(Calendar.MONTH)) {
+                        if (dayOfMonth > calendar1.get(Calendar.DAY_OF_MONTH)) {
+                            warningDay();
+                            return;
+                        }
+                    }
+                }
                 String month = String.valueOf(monthOfYear +1);
                 if(month.length() == 1)
                     month = "0"+month;
@@ -259,6 +300,7 @@ public class PersonCenterBabyFragment extends TitleFragment {
                 String str = String.valueOf(year) + "-" + month + "-" + day;
                 babyBirthTextView.setText(str);
                 loadingView.loading(birthCallBack);
+                WeightHelper.getInstance().refresh();
             }
         }, year, monthOfyear, dayOfmonth);
         loadingView = new DefaultLoadingView(getActivity(), "同步中");
@@ -373,4 +415,40 @@ public class PersonCenterBabyFragment extends TitleFragment {
         });
     }
 
+    public void setHeadImageview(final Bitmap bitmap) {
+        if (bitmap == null)
+            return;
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        final byte[] bytes = baos.toByteArray();
+        if (bytes == null)
+            return;
+        final DefaultLoadingView.LoadingCallback callback = new DefaultLoadingView.LoadingCallback() {
+            @Override
+            public void doInBackground() {
+                try {
+                    baby.saveAvatorBytes(bytes);
+                } catch (AVException e) {
+                    success = false;
+                }
+            }
+
+            @Override
+            public void onPreExecute() {
+                success = true;
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (success) {
+                    babyImage.setImageBitmap(bitmap);
+                    loadingView.dismiss();
+                } else {
+                    loadingView.disppear(null, "加载失败", 1);
+                }
+            }
+        };
+        loadingView.loading(callback);
+    }
 }

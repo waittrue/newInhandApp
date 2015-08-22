@@ -10,9 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.UserInfoSettingsActivity;
+import com.inhand.milk.entity.User;
 import com.inhand.milk.fragment.TitleFragment;
+import com.inhand.milk.ui.DefaultLoadingView;
 import com.inhand.milk.ui.PinnerListViewAdapter;
 import com.inhand.milk.ui.QuickListView;
 import com.inhand.milk.ui.QuickListViewAdapter;
@@ -31,6 +35,7 @@ public class UserInfoCityFragment extends TitleFragment {
     private UserInfoCityXmlPares pares;
     private QuickListView listView;
     private QuickListViewAdapter adapter;
+    private boolean success;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,11 +115,39 @@ public class UserInfoCityFragment extends TitleFragment {
         ListView innerListview = listView.getListView();
         innerListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((UserInfoSettingsActivity) getActivity()).setCity(pares.getContent(position));
-                FragmentManager manager = getActivity().getFragmentManager();
-                manager.popBackStack();
-                manager.beginTransaction().commit();
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                final DefaultLoadingView defaultLoadingView = new DefaultLoadingView(getActivity(), "同步中");
+                DefaultLoadingView.LoadingCallback callback = new DefaultLoadingView.LoadingCallback() {
+                    @Override
+                    public void doInBackground() {
+                        User user = App.getCurrentUser();
+                        user.setCity(pares.getContent(position));
+                        try {
+                            user.save();
+                        } catch (AVException e) {
+                            success = false;
+                        }
+                    }
+
+                    @Override
+                    public void onPreExecute() {
+                        success = true;
+                    }
+
+                    @Override
+                    public void onPostExecute() {
+                        if (success) {
+                            ((UserInfoSettingsActivity) getActivity()).setCity(pares.getContent(position));
+                            defaultLoadingView.dismiss();
+                        } else {
+                            defaultLoadingView.disppear(null, "加载失败", 1);
+                        }
+                        FragmentManager manager = getActivity().getFragmentManager();
+                        manager.popBackStack();
+                        manager.beginTransaction().commit();
+                    }
+                };
+                defaultLoadingView.loading(callback);
             }
         });
     }
