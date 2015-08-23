@@ -2,6 +2,7 @@ package com.inhand.milk.entity;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
@@ -19,6 +20,7 @@ import com.inhand.milk.dao.PowderTipDao;
 import com.inhand.milk.utils.ACache;
 import com.inhand.milk.utils.LocalGetAvFileCallBack;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -38,16 +40,20 @@ public class User extends AVUser {
     public static final String CITY_KEY = "city"; // 城市
     public static final String AVATAR_KEY = "avatar"; // 头像
     public static final String EMAIL_KEY = "email"; // 邮箱
+    public static final String ACACEAVATAR_KEY = "user_imageve";//缓存用户头像的二进制
+    public static final String UPDATEATIME_KEY = "updated_at_time";//缓存用户updatedat字段的值，leacloud这里有bug，应该是多加了一个时区的值
+    //为了防止跟新后出现bug，自己就做这个缓存
+
     // 判断用户是否有baby的错误码
     public static final int NO_BABY = 0;
     public static final int HAS_BABY = 1;
     public static final int NETWORK_ERROR = 2;
     public static int FEMALE = 2; // 女性
     public static int MALE = 1; // 男性
-    public static final String ACACEAVATAR_KEY = "user_imageve";
-    private byte[] imageBytes;
 
-    private static final String PASSWORD_KEY = "password";
+    private byte[] imageBytes = null;
+
+
     /**
      * 获得用户昵称
      *
@@ -291,6 +297,7 @@ public class User extends AVUser {
         if (json == null)
             return null;
         byte[] image = JSON.parseObject(json, byte[].class);
+        Log.i("User", String.valueOf(image.length));
         return image;
     }
 
@@ -320,11 +327,43 @@ public class User extends AVUser {
     }
 
     private void copyUser(User src, User dst) {
+
+        if (src.getUpdatedAt().equals(getUpdateAtInAcache())) {
+            Log.i("USer", "时间相同return:");
+            return;
+        }
         dst.setEmail(src.getEmail());
         dst.setSex(src.getSex());
         dst.setCity(src.getCity());
         dst.setNickname(src.getNickname());
         dst.setMobilePhoneNumber(src.getMobilePhoneNumber());
         dst.setAvatar(src.getAvatar());
+        try {
+            imageBytes = src.getAvatorBytes();
+            saveImageInAcache();
+        } catch (AVException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void save() throws AVException {
+        super.save();
+        saveUpdateAtInAcache();
+    }
+
+    private void saveUpdateAtInAcache() {
+        ACache aCache = ACache.get(App.getAppContext());
+        aCache.put(UPDATEATIME_KEY + getObjectId(), JSON.toJSONString(getUpdatedAt().getTime()));
+    }
+
+    private Date getUpdateAtInAcache() {
+        ACache aCache = ACache.get(App.getAppContext());
+        String time = aCache.getAsString(UPDATEATIME_KEY + getObjectId());
+        if (time == null)
+            return null;
+        long t = Long.parseLong(time);
+        Date date = new Date(t);
+        return date;
     }
 }
