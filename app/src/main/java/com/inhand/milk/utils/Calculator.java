@@ -1,7 +1,5 @@
 package com.inhand.milk.utils;
 
-import android.util.Log;
-
 import com.inhand.milk.App;
 import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Record;
@@ -56,7 +54,7 @@ public class Calculator {
     public static int getBabyMonthAge(Date date) throws InvalidParameterException {
         Calendar birthCalendar = Calendar.getInstance();
         String birth = App.getCurrentBaby().getBirthday();
-        Log.d("baby birth", birth);
+        //  Log.d("baby birth", birth);
         Date birthDay = null;
         try {
             birthDay = Standar.DATE_FORMAT.parse(birth);

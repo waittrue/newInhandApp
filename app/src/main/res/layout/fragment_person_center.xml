@@ -256,6 +256,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/common_settings_item_line_smaller_height"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/person_center_line_margin_left"
                         android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
 

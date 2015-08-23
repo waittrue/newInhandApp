@@ -8,7 +8,9 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.inhand.milk.App;
 import com.inhand.milk.R;
+import com.inhand.milk.fragment.bluetooth.Bluetooth;
 
 
 public class BaseTitle {
@@ -29,10 +31,12 @@ public class BaseTitle {
 
     protected View setView(Activity activity, int layoutId, Drawable iconLeft, String title,
                            OnClickListener listener) {
+
+
         LayoutInflater inflater = activity.getLayoutInflater();
         View view = inflater.inflate(layoutId, null);
 
-        ImageView leftIcon = (ImageView) view.findViewById(R.id.title_left_icon);
+        final ImageView leftIcon = (ImageView) view.findViewById(R.id.title_left_icon);
         leftIcon.setOnClickListener(listener);
         leftIcon.setImageDrawable(iconLeft);
 
@@ -48,6 +52,19 @@ public class BaseTitle {
             rightIcon.setOnClickListener(listenerRight);
             rightIcon.setText(rightText);
         }
+
+
+        //这个地方植入到蓝牙状态的变化图标变化的代码，这个标题理论上只能由那个5个主页面生成,不能有其他页面生成
+        Bluetooth.getInstance().addBluetoothStateChanggedListener(new Bluetooth.ConnectedChanggedListener() {
+            @Override
+            public void connectedChangged(boolean connect) {
+                if (connect) {
+                    leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_true_icon));
+                } else {
+                    leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_false_icon));
+                }
+            }
+        });
 
         return view;
     }

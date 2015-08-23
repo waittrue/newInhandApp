@@ -2,7 +2,6 @@ package com.inhand.milk.entity;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
@@ -183,7 +182,7 @@ public class User extends AVUser {
      * @param baby 宝宝
      */
     private void initBaby(final Context ctx, Baby baby) {
-        Log.i("user","initBaby");
+        //  Log.i("user","initBaby");
         // 缓存奶粉信息
         Powder powder = baby.getPowder();
         if (powder != null) {

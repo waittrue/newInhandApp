@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -171,7 +172,8 @@ public class BluetoothPairedAcivity extends BaseActivity {
     }
 
     private void pairedSuccess() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(BluetoothPairedAcivity.this);
+        Log.i("bluetoothPaired", "pairedsuccess");
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("配对成功");
         builder.setMessage("点击确定完成配对，点击取消重新配对");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -183,7 +185,7 @@ public class BluetoothPairedAcivity extends BaseActivity {
         builder.setNegativeButton("取消", null);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-        ((ImageView) currentChild.findViewById(R.id.bluetooth_paired_listview_icon)).setBackgroundResource(R.drawable.bluetooth_link_yes_ico);
+        (currentChild.findViewById(R.id.bluetooth_paired_listview_icon)).setBackgroundResource(R.drawable.bluetooth_link_yes_ico);
 
     }
 

@@ -59,7 +59,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void run() {
                 App.getCurrentUser().sync();
-                Log.i("initbaby", "登陆成功");
                 WeightHelper.getInstance().sync();
                 RecordHelper.getInstance().syncRecord();
                 App.getCurrentBaby().sync();

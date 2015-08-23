@@ -29,7 +29,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignTop="@+id/title_text"
             android:layout_marginLeft="@dimen/menu_margin_left"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            android:src="@drawable/header_connect_false_icon" />
 
         <TextView
             android:id="@+id/title_right_TextView"

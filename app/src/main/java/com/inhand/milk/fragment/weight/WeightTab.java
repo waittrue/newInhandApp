@@ -123,6 +123,8 @@ public class WeightTab extends ObservableHorizonScrollView {
                 if (WeightTab.this.getWidth() == 0) {
                     handler.postDelayed(this, 20);
                 } else {
+                    //从头滑动，好触动下面改变颜色的接口
+                    scrollTo(0, getScrollY());
                     int tempX = postionToLocal(num - 1);
                     scrollTo(tempX, getScrollY());
                     handler.removeCallbacks(this);
@@ -142,7 +144,6 @@ public class WeightTab extends ObservableHorizonScrollView {
     @Override
     protected void onScrollChanged(int x, int y, int oldx, int oldy) {
         super.onScrollChanged(x, y, oldx, oldy);
-
         int position = localToPostion(x);
         View child;
         position = position + 2;

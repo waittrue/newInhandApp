@@ -341,7 +341,7 @@
 
     <!--weight_fragment-->
     <dimen name="weight_fragment_up_total_height">15dp</dimen>
-    <dimen name="weight_fragment_title_height">50dp</dimen>
+    <dimen name="weight_fragment_title_height">55dp</dimen>
     <dimen name="weight_fragment_line_height">2.5dp</dimen>
     <dimen name="weight_fragment_line_margin_top">5dp</dimen>
     <dimen name="weight_fragment_tab_height">25dp</dimen>

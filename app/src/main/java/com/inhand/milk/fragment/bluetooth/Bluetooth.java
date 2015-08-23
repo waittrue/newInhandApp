@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,12 +26,15 @@ import com.inhand.milk.entity.Device;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 public class Bluetooth {
     public static final int REQUEST_ENABLE_BT = 1;
     private static final int MESSAGE_READ = 88;
+    private static final int CONNECTED_STATE_CHANGED = 99;
     private static final String ACTION_DISCOVERY_FINISHED = BluetoothAdapter.ACTION_DISCOVERY_FINISHED;
     private static Bluetooth instance = null;
     private static BluetoothDevice paired = null;
@@ -42,9 +46,9 @@ public class Bluetooth {
     private IntentFilter filter2 = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
     private IntentFilter filter3 = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
     private ConnectedThread connectedThread;
-    private AcceptThread acceptThread;
     private ConnectThread connectThread;
     private bluetoothDiscoverListener mListener;
+    private myHander myHander = new myHander();
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -57,12 +61,12 @@ public class Bluetooth {
                     mListener.discoverFound(device);
                 Toast.makeText(activity.getApplicationContext(), device.getName(), Toast.LENGTH_LONG).show();
             } else if (ACTION_DISCOVERY_FINISHED.equals(action)) {
-                Toast.makeText(activity.getApplicationContext(), "finish_discover", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(activity.getApplicationContext(), "finish_discover", Toast.LENGTH_SHORT).show();
                 activity.unregisterReceiver(mReceiver);
                 if (mListener != null)
                     mListener.discoverFiished();
             } else if (bluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                Toast.makeText(activity, "discover start", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(activity, "discover start", Toast.LENGTH_SHORT).show();
                 if (mListener != null)
                     mListener.discoverStarted();
             }
@@ -78,19 +82,7 @@ public class Bluetooth {
                 Toast.makeText(activity.getApplicationContext(), "你没有蓝牙设备,无法传输数据", Toast.LENGTH_LONG).show();
         }
         paired = selectFromBonded();
-    }    /*
-    private final Handler mHandler = new Handler(){
-        public void handleMessage(Message msg){
-            if(msg.what == MESSAGE_READ){
-                Toast.makeText(activity.getApplicationContext(), new String( (byte[])(msg.obj)).subSequence(0, msg.arg1) ,
-                        Toast.LENGTH_LONG).show();
-                Log.i("消息",    new String(  (byte[])(msg.obj) ))  ;
-                //( (byte[])msg.obj ).
-            }
-        }
-    };
-    */
-
+    }
     private static synchronized void synInit() {
         if (instance == null)
             instance = new Bluetooth();
@@ -258,17 +250,6 @@ public class Bluetooth {
         return socket.isConnected();
     }
 
-    public void asServer() {
-        // = true;
-        if (acceptThread == null) {
-            acceptThread = new AcceptThread();
-            acceptThread.start();
-        } else {
-            ShutConnect();
-            acceptThread = new AcceptThread();
-            acceptThread.start();
-        }
-    }
 
     public void ShutConnect() {
 
@@ -378,11 +359,11 @@ public class Bluetooth {
                 Log.i("连入", String.valueOf(mmSocket.isConnected()));
                 try {
                     Log.i("bluetooth", "连入成功—等待数据");
+                    Message message = new Message();
+                    message.what = CONNECTED_STATE_CHANGED;
+                    message.arg1 = 1;
+                    myHander.sendMessage(message);
                     bytes = mmInStream.read(buffer);
-                    // Send the obtained bytes to the UI activity
-                  /*  mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
-                            .sendToTarget();
-                            */
                     if (bluetoothData.saveData(buffer, bytes) == false) {
                         bluetoothData.handleMessage();
                         bluetoothData.saveData(buffer, bytes);
@@ -392,6 +373,10 @@ public class Bluetooth {
                 }
             }
             Log.i("连接失败", "抛出异常");
+            Message message = new Message();
+            message.what = CONNECTED_STATE_CHANGED;
+            message.arg1 = 0;
+            myHander.sendMessage(message);
             connectThread = new ConnectThread(paired);
             connectThread.start();
         }
@@ -414,56 +399,36 @@ public class Bluetooth {
         }
     }
 
-    private class AcceptThread extends Thread {
-        private final BluetoothServerSocket mmServerSocket;
 
-        public AcceptThread() {
-            // Use a temporary object that is later assigned to mmServerSocket,
-            // because mmServerSocket is final
-            BluetoothServerSocket tmp = null;
-            try {
-                // MY_UUID is the app's UUID string, also used by the client code
-                tmp = bluetoothAdapter.listenUsingRfcommWithServiceRecord("milk", uuid);
-            } catch (IOException e) {
-            }
-            mmServerSocket = tmp;
-        }
+    private List<ConnectedChanggedListener> listeners = new ArrayList<>();
 
-        public void run() {
+    public void addBluetoothStateChanggedListener(ConnectedChanggedListener listener) {
+        listeners.add(listener);
+    }
 
-            BluetoothSocket socket = null;
-            while (true) {
-                try {
-                    Log.i("bluetooth", "listening ......");
-                    socket = mmServerSocket.accept();
-                } catch (IOException e) {
-                    break;
-                }
-                // If a connection was accepted
-                if (socket != null) {
-                    Log.i("bluetooth", "accpted");
-                    try {
-                        mmServerSocket.close();
-                        connect(socket);
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-            }
-        }
-
-        // Will cancel the listening socket, and cause the thread to finish
-        public void cancel() {
-            try {
-                mmServerSocket.close();
-            } catch (IOException e) {
-            }
+    private void dispatchConnectChangge(boolean connect) {
+        for (ConnectedChanggedListener a : listeners) {
+            a.connectedChangged(connect);
         }
     }
 
+    public interface ConnectedChanggedListener {
+        public void connectedChangged(boolean connect);
+    }
 
+    //让这个在主线程中执行状态改变的函数
+    private class myHander extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == CONNECTED_STATE_CHANGED) {
+                if (msg.arg1 == 0)
+                    dispatchConnectChangge(false);
+                else
+                    dispatchConnectChangge(true);
+            }
+            super.handleMessage(msg);
+        }
+    }
 }
 
 

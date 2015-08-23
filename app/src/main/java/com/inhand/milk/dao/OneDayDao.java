@@ -1,7 +1,6 @@
 package com.inhand.milk.dao;
 
 
-import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,13 +15,9 @@ import com.inhand.milk.App;
 import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.helper.DBHelper;
-import com.inhand.milk.helper.JSONHelper;
 import com.inhand.milk.utils.Calculator;
 import com.inhand.milk.utils.LocalFindTask;
 
-import org.json.JSONObject;
-
-import java.lang.annotation.Target;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -573,14 +568,14 @@ public class OneDayDao {
      * @param ctx 上下文环境
      */
     public void syncCloud(final Context ctx) throws AVException {
-        Log.i("initBaby","onedaydao_syncCloud");
+        // Log.i("initBaby","onedaydao_syncCloud");
         query = AVQuery.getQuery(OneDay.class);
         //从云端抓取所有
         List<OneDay> daysInCloud = findFromCloud(FIND_LIMIT_ALL);
-        Log.i("init_cloud dys",String.valueOf(daysInCloud.size()));
+        //  Log.i("init_cloud dys",String.valueOf(daysInCloud.size()));
         //从本地抓取所有
         List<OneDay> daysInDB = findFromDB(ctx, FIND_LIMIT_ALL);
-        Log.i("init_db days",String.valueOf(daysInDB.size()));
+        //   Log.i("init_db days",String.valueOf(daysInDB.size()));
 
         //否则，比较更新
         for (int i = 0; i < daysInCloud.size(); i++) {
@@ -592,11 +587,11 @@ public class OneDayDao {
                 OneDay db = daysInDB.get(i);
                 String dbDate = db.getDate();
                 String dbVersion = db.getVersion();
-                Log.i("init","not version but same date before:"+dbVersion+":"+cloudVersion);
+                //    Log.i("init","not version but same date before:"+dbVersion+":"+cloudVersion);
                 //同一天的不同版本需要更新（云端，本地同时需要更新）
                 if (dbDate.equals(cloudDate) &&
                         !dbVersion.equals(cloudVersion)) {
-                    Log.i("init","not version but same date");
+                    //       Log.i("init","not version but same date");
                     //保证有效存储
                     db.setObjectId(cloud.getObjectId());
                     //云端并入本地
@@ -626,7 +621,7 @@ public class OneDayDao {
      * @param dst 合并对象2，其中2也作为输出合并的对象
      */
     private void merge(OneDay src, OneDay dst) {
-        Log.i("init_merge","init_merge---------------");
+        //  Log.i("init_merge","init_merge---------------");
         //进行版本比较后合并
         SimpleDateFormat sdf = new SimpleDateFormat(OneDay.VERSION_FORMAT);
         //以较新版本作为新版本
@@ -695,7 +690,7 @@ public class OneDayDao {
         //合并后刷新版本
         dst.setVersion(version);
         dst.setRecords(records);
-        Log.i("init_merge_records",String.valueOf(records));
+        //  Log.i("init_merge_records",String.valueOf(records));
         //更新分数，奶量
         dst.setScore(src.getScore() + dst.getScore());
         dst.setVolume(Calculator.calcVolume(records));

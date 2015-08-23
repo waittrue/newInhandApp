@@ -155,7 +155,7 @@ public class WeightHelper {
      */
     private void addOneWeight(BabyInfo babyInfo) {
         String birth = babyInfo.getAge();
-        Log.i(TAG,birth);
+        // Log.i(TAG,birth);
         Date date = null;
         try {
             date = Standar.DATE_FORMAT.parse(birth);
@@ -183,12 +183,7 @@ public class WeightHelper {
      */
     private List<BabyInfo> getAllBabyInfoCache() {
         BabyInfoDao babyInfoDao = new BabyInfoDao();
-        if (currentBaby == null)
-            Log.i("baby current", "null");
         Date birth = currentBaby.getCreatedAt();
-        if (birth == null)
-            Log.i("baby birth", "null");
-
         /*
         String birthday = currentBaby.getBirthday();
         Date birth = null;
@@ -223,7 +218,7 @@ public class WeightHelper {
                 if (count <= 0)
                     continue;
                 currentBabyInfo = tempBabyInfos.get(count - 1);
-                Log.d("baby currentbabyinfo", "not null");
+                //  Log.d("baby currentbabyinfo", "not null");
             }
         }
 
@@ -250,12 +245,12 @@ public class WeightHelper {
             public void done(AVException e) {
                 if (e != null) {
                     e.printStackTrace();
-                    Log.i(TAG, "babyinfo incloud failed");
+                    //   Log.i(TAG, "babyinfo incloud failed");
                     if(callback != null)
                         callback.done(e);
                     return;
                 }
-                Log.i(TAG, "babyinfo incloud success");
+                //    Log.i(TAG, "babyinfo incloud success");
                 babyInfo.saveInCache(App.getAppContext(), new LocalSaveTask.LocalSaveCallback() {
                     @Override
                     public void done() {
@@ -291,7 +286,7 @@ public class WeightHelper {
                         }
                         if(callback != null)
                             callback.done(null);
-                        Log.i(TAG,"weight save cloud success");
+                        // Log.i(TAG,"weight save cloud success");
                     }
                 });
             }
@@ -313,7 +308,7 @@ public class WeightHelper {
             babyInfo.saveInCache(App.getAppContext());
         }
         initData();
-        Log.i(TAG,"weight sync success");
+        //   Log.i(TAG,"weight sync success");
     }
 
     /**

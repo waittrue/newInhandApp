@@ -24,6 +24,7 @@ import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.fragment.TitleFragment;
+import com.inhand.milk.fragment.bluetooth.Bluetooth;
 import com.inhand.milk.ui.RingWithText;
 import com.inhand.milk.utils.Calculator;
 import com.inhand.milk.utils.WeightHelper;
@@ -74,7 +75,6 @@ public class WeightFragment extends TitleFragment {
 
     @Override
     public void refresh() {
-        Log.i(TAG, "refresh");
         initCurrentStander();
         int months = Calculator.getBabyMonthAge(weightHelper.getLastWeightDate());
         weightTab.setTabNum(months + 1);
@@ -91,7 +91,6 @@ public class WeightFragment extends TitleFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Log.i(TAG, "oncreateView");
         mView = inflater.inflate(R.layout.fragment_weight, container, false);
         initViews(mView);
         WEIGHT_FRAGMENT_HANDLER = new WeightFragmentHandler();
@@ -104,6 +103,7 @@ public class WeightFragment extends TitleFragment {
      * @param view 父view
      */
     private void initViews(View view) {
+        initTitle();
         initWeightTab(view);
         initLine(view);
         initWeightExcle(view);
@@ -111,6 +111,30 @@ public class WeightFragment extends TitleFragment {
         initAdder(view);
     }
 
+    private void initTitle() {
+        final ImageView leftIcon = (ImageView) mView.findViewById(R.id.title_left_icon);
+        leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_false_icon));
+        leftIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v instanceof ImageView) {
+                    ImageView imageView = (ImageView) v;
+                    imageView.getDrawable().equals(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_false_icon));
+                    Toast.makeText(App.getAppContext(), "请靠近奶瓶，连接奶瓶", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        Bluetooth.getInstance().addBluetoothStateChanggedListener(new Bluetooth.ConnectedChanggedListener() {
+            @Override
+            public void connectedChangged(boolean connect) {
+                if (connect) {
+                    leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_true_icon));
+                } else {
+                    leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_false_icon));
+                }
+            }
+        });
+    }
     private void initAdder(View view) {
         adder = (Adder) view.findViewById(R.id.weight_fragment_adder);
         adder.setBgColor(getResources().getColor(R.color.weight_fragment_adder_color));
