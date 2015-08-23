@@ -19,15 +19,12 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.LogInCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.FirstLanunchActivity;
 import com.inhand.milk.activity.MainActivity;
 import com.inhand.milk.entity.User;
 import com.inhand.milk.ui.DefaultLoadingView;
-import com.inhand.milk.ui.LoadingView;
-import com.inhand.milk.utils.PreJudgingTask;
 
 /**
  * LoginDetailsFragment
@@ -198,7 +195,8 @@ public class LoginDetailsFragment extends BaseFragment {
             public void doInBackground() {
                 success = true;
                 try {
-                    AVUser.logIn(username,password);
+                    //  AVUser.logIn(username,password);
+                    AVUser.loginByMobilePhoneNumber(username, password);
                 } catch (AVException e) {
                     e.printStackTrace();
                     success = false;

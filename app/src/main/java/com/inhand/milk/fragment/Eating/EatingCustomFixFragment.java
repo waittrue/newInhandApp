@@ -61,9 +61,9 @@ public class EatingCustomFixFragment extends TitleFragment {
         TextView foodTextView = (TextView) mView.findViewById(R.id.eating_custom_fix_food_textview);
         RelativeLayout.LayoutParams foodTextViewlp = (RelativeLayout.LayoutParams) foodTextView.getLayoutParams();
         milkTextViewlp.width = (width / 2 / 5);
-        milkTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (height / 5.5f));
+        milkTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (milkTextViewlp.width / 2));
         foodTextViewlp.width = milkTextViewlp.width;
-        foodTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (height / 5.5f));
+        foodTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (foodTextViewlp.width / 2));
 
         final CheckBox milkCheckBox = (CheckBox) mView.findViewById(R.id.eating_custom_fix_milk_checkbox);
         RelativeLayout.LayoutParams milkCheckBoxLp = (RelativeLayout.LayoutParams) milkCheckBox.getLayoutParams();

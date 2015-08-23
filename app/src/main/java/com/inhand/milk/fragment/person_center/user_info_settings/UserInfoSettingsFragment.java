@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,8 @@ import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.ui.DefaultLoadingView;
 import com.inhand.milk.ui.PopupWindowSelected;
 
+import java.io.ByteArrayOutputStream;
+
 /**
  * Created by Administrator on 2015/7/2.
  */
@@ -41,9 +44,11 @@ public class UserInfoSettingsFragment extends TitleFragment {
     private DefaultLoadingView loadingView;
     private boolean success;
     private User user;
+    private byte[] imageBytes;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         loadingView = new DefaultLoadingView(getActivity(), "同步中");
         user = App.getCurrentUser();
+        imageBytes = user.getImageFromAcache();
         mView = inflater.inflate(R.layout.user_info_settings, container, false);
         setTitleview(getResources().getString(R.string.user_info_title), 2);
         initView(mView);
@@ -88,6 +93,11 @@ public class UserInfoSettingsFragment extends TitleFragment {
     }
 
     private void initTextViews() {
+        if (imageBytes != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            headImageview.setImageBitmap(bitmap);
+        }
+
         String noData = getResources().getString(R.string.user_info_fix_no_data);
         tempString = ((UserInfoSettingsActivity) getActivity()).getName();
         if (tempString == null)
@@ -115,8 +125,40 @@ public class UserInfoSettingsFragment extends TitleFragment {
         sexTextview.setText(tempString);
     }
 
-    public void setHeadImageview(Bitmap bitmap) {
-        headImageview.setImageBitmap(bitmap);
+    public void setHeadImageview(final Bitmap bitmap) {
+        if (bitmap == null)
+            return;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        final byte[] bytes = baos.toByteArray();
+        if (bytes == null)
+            return;
+        final DefaultLoadingView.LoadingCallback callback = new DefaultLoadingView.LoadingCallback() {
+            @Override
+            public void doInBackground() {
+                try {
+                    user.saveAvatorBytes(bytes);
+                } catch (AVException e) {
+                    success = false;
+                }
+            }
+
+            @Override
+            public void onPreExecute() {
+                success = true;
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (success) {
+                    headImageview.setImageBitmap(bitmap);
+                    loadingView.dismiss();
+                } else {
+                    loadingView.disppear(null, "加载失败", 1);
+                }
+            }
+        };
+        loadingView.loading(callback);
     }
 
     private void setTelephone(final RelativeLayout telephone) {

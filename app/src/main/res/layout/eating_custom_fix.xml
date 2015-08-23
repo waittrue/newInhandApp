@@ -115,6 +115,7 @@
                     android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin"
                     android:layout_toRightOf="@+id/eating_custom_fix_milk_icon"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="@string/eating_custom_fix_milk" />
 
                 <CheckBox
@@ -128,7 +129,6 @@
                     android:button="@null"
                     android:checked="true"
                     android:clickable="false" />
-
             </RelativeLayout>
         </RelativeLayout>
 
@@ -161,6 +161,7 @@
                     android:id="@+id/eating_custom_fix_food_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:layout_marginLeft="@dimen/eating_custom_fix_name_left_margin"
                     android:layout_toRightOf="@+id/eating_custom_fix_food_icon"
                     android:text="@string/eating_custom_fix_food" />

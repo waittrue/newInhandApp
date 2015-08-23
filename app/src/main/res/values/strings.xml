@@ -240,6 +240,7 @@
     <string name="person_center_baby_milk">宝宝奶粉</string>
     <string name="person_center_baby_device">我的奶瓶</string>
     <string name="person_center_baby_syn">云端同步</string>
+    <string name="person_center_bluetooth_paired">蓝牙配对</string>
     <string name="person_center_baby_info_birth">宝宝生日</string>
 
     <!--eating fragment-->

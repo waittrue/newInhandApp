@@ -483,7 +483,6 @@
     <dimen name="eating_custom_fix_choose_food_container_height">40dp</dimen>
     <dimen name="eating_custom_fix_name_left_margin">10dp</dimen>
 
-
     <!-- choose  milk -->
     <dimen name="choose_milk_fragment_item_title_height">50dp</dimen>
     <dimen name="choose_milk_fragment_listview_title_height">50dp</dimen>

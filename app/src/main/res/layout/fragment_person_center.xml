@@ -35,7 +35,7 @@
                     android:src="@color/common_settings_item_line_color" />
 
                 <view
-                    android:id="@+id/view"
+                    android:id="@+id/person_center_user_icon"
                     class="com.inhand.milk.ui.CircleImageView"
                     android:layout_width="@dimen/person_center_info_head_image_height_width"
                     android:layout_height="@dimen/person_center_info_head_image_height_width"
@@ -57,28 +57,17 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/common_settings_item_margin_left"
-                    android:layout_toRightOf="@+id/view">
+                    android:layout_toRightOf="@+id/person_center_user_icon">
 
                     <TextView
                         android:id="@+id/person_center_user_name_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
+                        android:layout_centerVertical="true"
                         android:text="宝宝妈妈"
                         android:textColor="@color/person_center_user_name_text_color"
                         android:textSize="@dimen/person_center_user_name_text_size" />
 
-                    <TextView
-                        android:id="@+id/person_center_user_special_doc_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/person_center_user_name_text"
-                        android:layout_below="@+id/person_center_user_name_text"
-                        android:layout_marginTop="@dimen/person_center_info_text_margin"
-                        android:singleLine="true"
-                        android:text="奶瓶账号:JJD22446"
-                        android:textColor="@color/person_center_special_text_color"
-                        android:textSize="@dimen/person_center_special_doc_text_size" />
                 </RelativeLayout>
 
                 <ImageView
@@ -238,6 +227,7 @@
                         android:src="@color/common_settings_item_line_color" />
                 </RelativeLayout>
 
+
                 <RelativeLayout
                     android:id="@+id/person_center_syn_container"
                     android:layout_width="fill_parent"
@@ -261,6 +251,37 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/person_center_syn"
                         android:text="@string/person_center_baby_syn" />
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/common_settings_item_line_smaller_height"
+                        android:layout_alignParentBottom="true"
+                        android:src="@color/common_settings_item_line_color" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/person_center_bluetooth_paired_container"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/common_settings_item_normal_height"
+                    android:layout_below="@+id/person_center_syn_container"
+                    android:background="@drawable/user_info_setting_bg">
+
+                    <ImageView
+                        style="@style/common_settings_item_right_arrow"
+                        android:layout_width="@dimen/common_settings_item_text_size"
+                        android:layout_height="@dimen/common_settings_item_text_size" />
+
+                    <ImageView
+                        android:id="@+id/person_center_bluetooth_paired"
+                        style="@style/person_center_icon"
+                        android:src="@drawable/person_center_bluetooth_paired_icon" />
+
+                    <TextView
+                        style="@style/common_settings_item_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/person_center_bluetooth_paired"
+                        android:text="@string/person_center_bluetooth_paired" />
 
                     <ImageView
                         android:layout_width="fill_parent"

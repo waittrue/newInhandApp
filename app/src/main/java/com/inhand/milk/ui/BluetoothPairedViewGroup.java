@@ -1,7 +1,6 @@
 package com.inhand.milk.ui;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -111,7 +110,9 @@ public class BluetoothPairedViewGroup extends ViewGroup {
         measureChild(circle, widthMeasureSpec, heightMeasureSpec);
 
         if (ring == null) {
-            ring = new Ring(getContext(), sizeWidth / 2 * 0.9f, Color.WHITE);
+            ring = new Ring(getContext(), sizeWidth / 2 * 0.9f,
+                    getResources().getColor(R.color.home_circle_outermost));
+            ring.setSweepAngle(360);
             addView(ring);
         }
         measureChild(ring, 0, 0);

@@ -69,12 +69,13 @@ public class CircleImageView extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+        //super.onDraw(canvas);
         setScaleType(ScaleType.CENTER_CROP);
         Drawable drawable = getDrawable();
         if (null == drawable) {
             return;
         }
+
         Bitmap bitmap = drawableToBitmap(drawable);
 
         float cx = getWidth() / 2;
@@ -107,13 +108,12 @@ public class CircleImageView extends ImageView {
                 : Bitmap.Config.RGB_565;
         // 建立对应 bitmap
         Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+
         // 建立对应 bitmap 的画布
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, w, h);
         // 把 drawable 内容画到画布中
         drawable.draw(canvas);
-
-
         return bitmap;
     }
 }

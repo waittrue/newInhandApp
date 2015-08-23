@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.RequestMobileCodeCallback;
+import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.UserInfoSettingsActivity;
+import com.inhand.milk.entity.User;
 
 /**
  * Created by Administrator on 2015/7/6.
@@ -27,9 +35,12 @@ public class UserInfoTelephoneFragment extends Fragment {
     private Handler handler;
     private Runnable runnable;
     private int leftTime;
+    private User user;
+    private boolean hasCode = false;//是否有验证码。
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.user_info_settings_cellphone, container, false);
+        user = App.getCurrentUser();
         initView(mView);
         return mView;
     }
@@ -75,21 +86,74 @@ public class UserInfoTelephoneFragment extends Fragment {
         rightTextview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //这里没有校验码的核对
-                ((UserInfoSettingsActivity) getActivity()).setTelephone(editText.getText().toString());
-                FragmentManager manager = getActivity().getFragmentManager();
-                manager.popBackStack();
-                manager.beginTransaction().commit();
-                hiddenSoftInput();
+                if (hasCode == false)
+                    return;
+                String check = checkEditText.getText().toString();
+                if (check == null || check.isEmpty()) {
+                    Toast.makeText(getActivity(), "验证码不能为空", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                AVUser.verifyMobilePhoneInBackground(check, new AVMobilePhoneVerifyCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        if (e != null) {
+                            Toast.makeText(getActivity(), "验证码错误", Toast.LENGTH_LONG).show();
+                        } else {
+                            user.setMobilePhoneNumber(editText.getText().toString());
+                            user.saveInBackground();
+                            ((UserInfoSettingsActivity) getActivity()).setTelephone(editText.getText().toString());
+                            FragmentManager manager = getActivity().getFragmentManager();
+                            manager.popBackStack();
+                            manager.beginTransaction().commit();
+                            hiddenSoftInput();
+                            Log.i("userinfotelepheone", "手机验证成功");
+                        }
+                    }
+                });
+
             }
         });
         checkTextView = (TextView) view.findViewById(R.id.user_info_settings_telephone_check_button);
         checkTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startTiming();
+                String telephone = editText.getText().toString();
+                if (telephone == null || telephone.isEmpty()) {
+                    Toast.makeText(getActivity(), "不能填写空白", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (user.isMobilePhoneVerified()) {
+                    Toast.makeText(getActivity(), "号码验证过", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                user.requestMobilePhoneVerifyInBackground(telephone, new RequestMobileCodeCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        if (e != null) {
+                            if (e.getCode() == AVException.INVALID_PHONE_NUMBER) {
+                                Toast.makeText(getActivity(), " 手机格式无效", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getActivity(), " 网络错误，验证码请求失败", Toast.LENGTH_LONG).show();
+                            }
+                            return;
+                        } else {
+                            startTiming();
+                        }
+                    }
+                });
+
             }
         });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (handler == null)
+            return;
+        if (runnable == null)
+            return;
+        handler.removeCallbacks(runnable);
     }
 
     private void startTiming() {
@@ -104,6 +168,7 @@ public class UserInfoTelephoneFragment extends Fragment {
                     if (leftTime == -1) {
                         handler.removeCallbacks(runnable);
                         checkTextView.setText(getResources().getString(R.string.user_info_settings_telephone_right_text));
+                        hasCode = false;
                     } else
                         handler.postDelayed(runnable, 1000);
                 }
@@ -112,6 +177,7 @@ public class UserInfoTelephoneFragment extends Fragment {
         handler.removeCallbacks(runnable);
         leftTime = 60;
         handler.post(runnable);
+        hasCode = true;
 
     }
 

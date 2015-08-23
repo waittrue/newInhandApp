@@ -4,16 +4,21 @@ package com.inhand.milk.entity;
 import android.content.Context;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.GetDataCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.dao.BabyDao;
 import com.inhand.milk.dao.BabyInfoDao;
 import com.inhand.milk.dao.FeedItemDao;
 import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.dao.PowderTipDao;
+import com.inhand.milk.utils.ACache;
+import com.inhand.milk.utils.LocalGetAvFileCallBack;
 
 import java.util.List;
 
@@ -40,7 +45,10 @@ public class User extends AVUser {
     public static final int NETWORK_ERROR = 2;
     public static int FEMALE = 2; // 女性
     public static int MALE = 1; // 男性
+    public static final String ACACEAVATAR_KEY = "user_imageve";
+    private byte[] imageBytes;
 
+    private static final String PASSWORD_KEY = "password";
     /**
      * 获得用户昵称
      *
@@ -213,4 +221,111 @@ public class User extends AVUser {
         }
     }
 
+    /**
+     * 同步的 吧文件二进制存储到本地和云端
+     *
+     * @param bytes
+     */
+    public void saveAvatorBytes(byte[] bytes) throws AVException {
+        if (bytes == null)
+            return;
+        AVFile avFile = new AVFile("用户头像", bytes);
+        try {
+            avFile.save();
+            setAvatar(avFile);
+            imageBytes = bytes;
+            saveImageInAcache();
+            save();
+        } catch (AVException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 异步的获得用户头像的二进制
+     *
+     * @param callBack 找到的回调接口
+     */
+    public void getAvatorBytes(final LocalGetAvFileCallBack callBack) {
+        AVFile avFile = getAvatar();
+        if (avFile == null)
+            return;
+        avFile.getDataInBackground(new GetDataCallback() {
+            @Override
+            public void done(final byte[] bytes, AVException e) {
+                if (e == null && bytes != null)
+                    imageBytes = bytes;
+                callBack.done(bytes, e);
+            }
+        });
+    }
+
+    /**
+     * 同步的得到二进制值
+     *
+     * @return
+     * @throws AVException 当网络发生异常的时候
+     */
+    public byte[] getAvatorBytes() throws AVException {
+        AVFile avFile = getAvatar();
+        if (avFile == null) {
+            return null;
+        }
+        try {
+            imageBytes = avFile.getData();
+            return imageBytes;
+        } catch (AVException e) {
+            imageBytes = null;
+            throw e;
+        }
+    }
+
+    /**
+     * 从本地缓存中获取头像二进制
+     *
+     * @return 头像的二进制
+     */
+    public byte[] getImageFromAcache() {
+        ACache aCache = ACache.get(App.getAppContext());
+        String json = aCache.getAsString(User.ACACEAVATAR_KEY + this.getObjectId());
+        if (json == null)
+            return null;
+        byte[] image = JSON.parseObject(json, byte[].class);
+        return image;
+    }
+
+    /**
+     * 把头像的二进制缓存起来
+     */
+    public void saveImageInAcache() {
+        ACache aCache = ACache.get(App.getAppContext());
+        if (imageBytes != null)
+            aCache.put(ACACEAVATAR_KEY + this.getObjectId(), JSON.toJSONString(imageBytes));
+    }
+
+
+    public void sync() {
+        AVQuery<User> query = AVQuery.getQuery(User.class);
+        query.whereEqualTo("objectId", this.getObjectId());
+        try {
+            List<User> users = query.find();
+            if (users == null || users.isEmpty())
+                return;
+            copyUser(users.get(0), this);
+            this.save();
+        } catch (AVException e) {
+
+        }
+
+    }
+
+    private void copyUser(User src, User dst) {
+        dst.setEmail(src.getEmail());
+        dst.setSex(src.getSex());
+        dst.setCity(src.getCity());
+        dst.setNickname(src.getNickname());
+        dst.setMobilePhoneNumber(src.getMobilePhoneNumber());
+        dst.setAvatar(src.getAvatar());
+    }
 }

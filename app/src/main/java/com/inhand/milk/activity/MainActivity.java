@@ -58,7 +58,8 @@ public class MainActivity extends BaseActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.i("initbaby", "sync_start==================");
+                App.getCurrentUser().sync();
+                Log.i("initbaby", "登陆成功");
                 WeightHelper.getInstance().sync();
                 RecordHelper.getInstance().syncRecord();
                 App.getCurrentBaby().sync();

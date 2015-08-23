@@ -4,13 +4,15 @@ package com.inhand.milk.ui;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.graphics.SweepGradient;
 import android.os.Handler;
 import android.view.View;
+
+import com.inhand.milk.R;
 
 public class Ring extends View {
 
@@ -23,7 +25,7 @@ public class Ring extends View {
     private float x, y, r, wr, paintWidth;
     private int backgroundColor;
 
-    private float[] originalColorWeight = {0, 0.33f, 0.66f, 1.0f};//&#x4bb;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;0.25&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#xfffd;&#x133;&#xfffd;0.245
+    private float[] originalColorWeight = {0, 0.33f, 0.66f, 1.0f};//
     private int[] originalRGB = {0x04, 0x98, 0xa2,
             0x02, 0xb9, 0xb4,
             0x05, 0x7e, 0x9b,
@@ -55,6 +57,10 @@ public class Ring extends View {
         backgroundColor = color;
         fixColor();
         sortWeight();
+    }
+
+    public void setSweepAngle(float sweepAngle) {
+        this.sweepAngle = sweepAngle;
     }
 
     @Override
@@ -201,7 +207,12 @@ public class Ring extends View {
             sweepAngle = sweepAngle - 1;
         else
             sweepAngle = sweepAngle + 1;
-        selecteColor(sweepAngle, paint);
+
+        Shader shader = new LinearGradient(x - r, y + r, x + r, y - r,
+                getResources().getColor(R.color.public_main_b_color),
+                getResources().getColor(R.color.public_main_a_color), Shader.TileMode.MIRROR);
+        paint.setShader(shader);
+
 
         xx = (float) (x + r * Math.cos((temp + sweepAngle) / 180 * Math.PI));
         yy = (float) (y + r * Math.sin((temp + sweepAngle) / 180 * Math.PI));
@@ -221,7 +232,10 @@ public class Ring extends View {
         paint.setAntiAlias(true);
         paint.setStrokeWidth(paintWidth);
         RectF rectf = new RectF(x - r, y - r, x + r, y + r);
-        Shader shader = new SweepGradient(x, y, color, fixedColorWeight);
+        // Shader shader = new SweepGradient(x, y, color, fixedColorWeight);
+        Shader shader = new LinearGradient(x - r, y + r, x + r, y - r,
+                getResources().getColor(R.color.public_main_b_color),
+                getResources().getColor(R.color.public_main_a_color), Shader.TileMode.MIRROR);
         paint.setShader(shader);
         canvas.drawArc(rectf, 270, sweepAngle, false, paint);
         if (!first) {

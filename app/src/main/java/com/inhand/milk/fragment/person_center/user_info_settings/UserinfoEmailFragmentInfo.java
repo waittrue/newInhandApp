@@ -20,6 +20,7 @@ import com.inhand.milk.ui.FixInfoBaseFragment;
  */
 public class UserinfoEmailFragmentInfo extends FixInfoBaseFragment {
     private boolean success;
+    private AVException e;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         setHintString(getResources().getString(R.string.user_info_fix_Email_hint_text));
@@ -37,7 +38,7 @@ public class UserinfoEmailFragmentInfo extends FixInfoBaseFragment {
                                     user.setEmail(getString());
                                     user.save();
                                 } catch (AVException e) {
-                                    e.printStackTrace();
+                                    UserinfoEmailFragmentInfo.this.e = e;
                                     success = false;
                                 }
                             }
@@ -53,7 +54,15 @@ public class UserinfoEmailFragmentInfo extends FixInfoBaseFragment {
                                     ((UserInfoSettingsActivity) getActivity()).setEmail(getString());
                                     defaultLoadingView.dismiss();
                                 } else {
-                                    defaultLoadingView.disppear(null, "邮箱格式不对或者网络不给力", 2);
+                                    if (e.getCode() == AVException.EMAIL_TAKEN) {
+                                        defaultLoadingView.disppear(null, "邮箱已经被注册", 2);
+                                    } else if (e.getCode() == AVException.EMAIL_MISSING || e.getCode() == AVException.INVALID_EMAIL_ADDRESS
+                                            || e.getCode() == AVException.EMAIL_NOT_FOUND) {
+                                        defaultLoadingView.disppear(null, "邮箱格式不对", 2);
+                                    } else {
+                                        defaultLoadingView.disppear(null, "网络不给力", 2);
+                                    }
+
                                 }
                                 FragmentManager manager = getActivity().getFragmentManager();
                                 manager.popBackStack();
