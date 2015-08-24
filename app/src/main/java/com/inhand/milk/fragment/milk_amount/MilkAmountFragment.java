@@ -25,12 +25,12 @@ import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
+import com.inhand.milk.helper.RecordHelper;
 import com.inhand.milk.ui.MultiLayerCircle;
 import com.inhand.milk.ui.PinnerListView;
 import com.inhand.milk.ui.PinnerListViewAdapter;
 import com.inhand.milk.ui.ProgressBar;
 import com.inhand.milk.ui.RingWithText;
-import com.inhand.milk.utils.RecordHelper;
 import com.inhand.milk.utils.ViewHolder;
 
 import java.util.ArrayList;

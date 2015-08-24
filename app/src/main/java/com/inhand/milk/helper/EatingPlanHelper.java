@@ -1,4 +1,4 @@
-package com.inhand.milk.DataHelper;
+package com.inhand.milk.helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +16,10 @@ public class EatingPlanHelper {
 
     private void initPlanTime() {
         planTime.clear();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 24 * 12; i++) {
             int[] time = new int[2];
-            time[0] = 3 * i;
-            time[1] = 0;
+            time[0] = i / 12;
+            time[1] = i % 12 * 5;
             planTime.add(time);
         }
         int count = planTime.size();

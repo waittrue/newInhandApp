@@ -2,11 +2,10 @@ package com.inhand.milk.fragment.milk_amount_curve;
 
 import android.app.Activity;
 
-import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
-import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.entity.OneDay;
+import com.inhand.milk.helper.RecordHelper;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -54,8 +53,7 @@ public class curveWeek extends com.inhand.milk.fragment.milk_amount_curve.OnePap
         amountData.clear();
         amountMin = Integer.MAX_VALUE;
         amountMax = Integer.MIN_VALUE;
-        OneDayDao oneDayDao = new OneDayDao();
-        List<OneDay> oneDays = oneDayDao.findFromDB(App.getAppContext(), TotalDays);
+        List<OneDay> oneDays = RecordHelper.getInstance().getOnedays(TotalDays);
         if (oneDays == null) {
             return;
         }

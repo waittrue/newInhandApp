@@ -16,11 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.inhand.milk.App;
-import com.inhand.milk.BroadcastReceiver.AlarmSeting;
-import com.inhand.milk.DataHelper.EatingPlanHelper;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.EatingCustomPlanActivity;
+import com.inhand.milk.alarm.AlarmSeting;
 import com.inhand.milk.fragment.TitleFragment;
+import com.inhand.milk.helper.EatingPlanHelper;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.RoundImageView;
 
@@ -142,7 +142,10 @@ public class EatingFragment extends TitleFragment {
 
     private void initNotifacation() {
         AlarmSeting alarmSeting = new AlarmSeting(App.getAppContext());
-        alarmSeting.start(planTime, isMilk);
+        if (App.getAlarmOpen())
+            alarmSeting.start(planTime, isMilk);
+        else
+            alarmSeting.cancleAlarm();
     }
 
     @Override

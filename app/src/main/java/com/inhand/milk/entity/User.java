@@ -14,7 +14,6 @@ import com.avos.avoscloud.GetDataCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.dao.BabyDao;
 import com.inhand.milk.dao.BabyInfoDao;
-import com.inhand.milk.dao.FeedItemDao;
 import com.inhand.milk.dao.OneDayDao;
 import com.inhand.milk.dao.PowderTipDao;
 import com.inhand.milk.utils.ACache;
@@ -198,12 +197,14 @@ public class User extends AVUser {
         }
 
         // 缓存喂养计划信息
+        /*
         FeedPlan feedPlan = baby.getFeedPlan();
         FeedItemDao fid = new FeedItemDao();
         List<FeedItem> items = fid.findByFeedPlanFromCloud(feedPlan);
         feedPlan.cacheItems(ctx, items);
-        baby.saveInCache(ctx);
+        */
 
+        baby.saveInCache(ctx);
         //缓存babyinfo 这部分是大力加的；
       //  Log.d("initBaby", "saveinache_start");
         BabyInfoDao babyInfoDao = new BabyInfoDao();

@@ -20,8 +20,8 @@ import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
 import com.inhand.milk.fragment.footer_navigation.FooterNavigation;
-import com.inhand.milk.utils.RecordHelper;
-import com.inhand.milk.utils.WeightHelper;
+import com.inhand.milk.helper.RecordHelper;
+import com.inhand.milk.helper.WeightHelper;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;

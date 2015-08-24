@@ -35,7 +35,7 @@ public class LeanCloudHelper {
     public static void initLeanCloud(Context ctx) {
         // 注册子类
         registerSubclass();
-        AVOSCloud.initialize(ctx, "5dwer2xd20x59apeyfuq2bv5scn14078k0bzwqk6lnho6417", "65z49j48dcr57bplz9ecqlp3b8n8eq30sbkhpdawilg0z5q7");
+        AVOSCloud.initialize(ctx, "XjoYAdkHp1s3wsXxOd0br7sE", "1HrJQakITm0FHK8ls9v8oHQR");
         AVOSCloud.setDebugLogEnabled(true);
     }
 

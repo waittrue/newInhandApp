@@ -50,7 +50,7 @@ public class Excle extends View {
     protected void onDraw(Canvas canvas) {
         // TODO Auto-generated method stub
         //super.onDraw(canvas);
-        init();//����Ϊ�˻�ȡ�߶ȡ�����������
+        init();
         drawBackground(canvas);
         drawPoint(canvas);
     }
@@ -158,12 +158,21 @@ public class Excle extends View {
 
     //�����˱����������������ͱ���
     private void drawBottomText(Canvas canvas) {
+        //当没有数据的时候，最大值和最小值为0
+        if (orignalLineData.size() == 0) {
+            maxnum = minnum = 0;
+        }
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setTextSize(leftTitleSize);
         float space = (height - titleMarginTop) / (numGrid + 1);
         Rect rect = new Rect();
-
+        int diff = maxnum - minnum;
+        if (diff == 0) {
+            diff = (int) (maxnum * 0.1f);
+            maxnum += diff / 2;
+            minnum -= diff / 2;
+        }
         for (int i = 0; i < numGrid; i++) {
             if (i % 2 == 0)
                 paint.setColor(firstBgColor);
@@ -239,21 +248,25 @@ public class Excle extends View {
 
     public void initMonthText() {
         Calendar calendar = Calendar.getInstance();
-        int preday = 100, i, month, day;
+        int next = 100, i, month, day;
         for (i = 4; i > 0; i--) {
             day = calendar.get(Calendar.DATE);
-            if (day > preday) {
+            if (day > next) {
                 monthBottom[i + 1] = String.valueOf(calendar.get(Calendar.MONTH) + 1) + "月" +
-                        String.valueOf(preday) + "日";
+                        String.valueOf(next) + "日";
             }
             monthBottom[i] = String.valueOf(day);
 
-            preday = day;
+            next = day;
             calendar.roll(Calendar.DATE, -7);
         }
 
         day = calendar.get(Calendar.DATE);
         month = calendar.get(Calendar.MONTH);
+        if (day > next) {
+            monthBottom[i + 1] = String.valueOf(calendar.get(Calendar.MONTH) + 1) + "月" +
+                    String.valueOf(next) + "日";
+        }
 
         monthBottom[i] = String.valueOf(month) + "月" + String.valueOf(day) + "日";
 

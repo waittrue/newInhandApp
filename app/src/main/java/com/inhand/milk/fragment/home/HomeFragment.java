@@ -14,7 +14,7 @@ import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.TitleFragment;
-import com.inhand.milk.utils.RecordHelper;
+import com.inhand.milk.helper.RecordHelper;
 
 
 public class HomeFragment extends TitleFragment {

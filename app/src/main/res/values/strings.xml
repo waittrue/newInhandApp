@@ -87,7 +87,7 @@
     <string name="temperature_milk_day_text">日</string>
     <string name="temperature_milk_week_text">周</string>
     <string name="temperature_milk_month_text">月</string>
-    <string name="temperature_title_text">饮奶温度统计</string>
+    <string name="temperature_title_text">饮奶详情统计</string>
     <string name="temperature_excle_day_right_title">今天</string>
     <string name="temperature_excle_day_left_title">饮奶温度/°C</string>
     <string name="temperature_excle_week_right_title">本周</string>
@@ -281,4 +281,12 @@
     <string name="pull_to_refresh_refreshing_label">加载中...</string>
     <string name="pull_to_refresh_tap_label">Tap to refresh...</string>
 
+    <!--App Setting -->
+    <string name="setting_title">用户设置</string>
+    <string name="setting_alarm_sound_title">提醒声音</string>
+    <string name="setting_alarm_sound_key">sound_key</string>
+    <string name="setting_alarm_shock_title">提醒震动</string>
+    <string name="setting_alarm_shock_key">shock_key</string>
+    <string name="setting_alarm_open_close">喂养提醒</string>
+    <string name="setting_alarm_open_key">alarm_open_key</string>
 </resources>

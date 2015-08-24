@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.inhand.milk.App;
 import com.inhand.milk.R;
+import com.inhand.milk.activity.APPSettingActivity;
 import com.inhand.milk.activity.BluetoothPairedAcivity;
 import com.inhand.milk.activity.MilkChooseActivity;
 import com.inhand.milk.activity.PersonCenterBabyInfoActivity;
@@ -32,11 +32,9 @@ public class PersonCenterFragment extends TitleFragment {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Intent intent = new Intent(getActivity(), MilkAmountCurveActivity.class);
+                Intent intent = new Intent(getActivity(), APPSettingActivity.class);
                 getActivity().startActivity(intent);
-                */
-                Toast.makeText(getActivity(), "shezhi", Toast.LENGTH_SHORT).show();
+
             }
         };
         setTitleview(getResources().getString(R.string.person_center_fragment_title), 0,

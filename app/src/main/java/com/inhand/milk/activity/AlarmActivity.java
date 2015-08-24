@@ -18,9 +18,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.inhand.milk.App;
-import com.inhand.milk.BroadcastReceiver.AlarmReceiver;
-import com.inhand.milk.BroadcastReceiver.AlarmSeting;
 import com.inhand.milk.R;
+import com.inhand.milk.alarm.AlarmReceiver;
+import com.inhand.milk.alarm.AlarmSeting;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

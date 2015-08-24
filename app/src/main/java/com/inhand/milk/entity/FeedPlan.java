@@ -78,8 +78,6 @@ public class FeedPlan extends Base {
                 items = fetchItems(ctx);
                 return super.doInBackground(voids);
             }
-
-
             @Override
             protected void onPostExecute(Void aVoid) {
                 callback.done(items);

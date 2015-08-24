@@ -3,9 +3,10 @@ package com.inhand.milk;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
@@ -59,6 +60,18 @@ public class App extends Application {
     public static Context getAppContext() {
         return context;
     }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        //初始化LeanCloud
+        LeanCloudHelper.initLeanCloud(this);
+        initCurrentBaby();
+        context = getApplicationContext();
+        Typeface_arial = Typeface.createFromAsset(context.getAssets(), "ttf/arial.ttf");
+
+    }
+
 
     /*获取状态栏高度*/
     public static int getStatusHeight(Activity activity) {
@@ -143,17 +156,6 @@ public class App extends Application {
         AVUser.logOut();
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        //初始化LeanCloud
-        LeanCloudHelper.initLeanCloud(this);
-        initCurrentBaby();
-        context = getApplicationContext();
-        Typeface_arial = Typeface.createFromAsset(context.getAssets(), "ttf/arial.ttf");
-
-    }
-
     public void initCurrentBaby() {
         if (currentBaby == null) {
             ACache aCache = ACache.get(this);
@@ -167,5 +169,35 @@ public class App extends Application {
             }
             Log.d("baby currentBaby", Standar.DATE_FORMAT.format(currentBaby.getCreatedAt()));
         }
+    }
+
+    /**
+     * 是否闹钟开启
+     *
+     * @return
+     */
+    public static boolean getAlarmOpen() {
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(context);
+        return shp.getBoolean(App.getAppContext().getResources().getString(R.string.setting_alarm_open_key), true);
+    }
+
+    /**
+     * 是否闹钟声音开启
+     *
+     * @return
+     */
+    public static boolean getAlarmSound() {
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(context);
+        return shp.getBoolean(App.getAppContext().getResources().getString(R.string.setting_alarm_sound_key), true);
+    }
+
+    /**
+     * 是否闹钟震动开启
+     *
+     * @return
+     */
+    public static boolean getAlarmShock() {
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(context);
+        return shp.getBoolean(App.getAppContext().getResources().getString(R.string.setting_alarm_shock_key), true);
     }
 }

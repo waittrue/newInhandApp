@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,9 +24,9 @@ import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
+import com.inhand.milk.helper.WeightHelper;
 import com.inhand.milk.ui.RingWithText;
 import com.inhand.milk.utils.Calculator;
-import com.inhand.milk.utils.WeightHelper;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -78,12 +77,13 @@ public class WeightFragment extends TitleFragment {
     public void refresh() {
         initCurrentStander();
         int months = Calculator.getBabyMonthAge(weightHelper.getLastWeightDate());
-        weightTab.setTabNum(babyCreateMonths, months + 1);
-        lastPositon = months;
-        weightTab.initTabs();
+        if (months - babyCreateMonths + 1 != weightTab.getViewCount()) {
+            weightTab.setTabNum(babyCreateMonths, months);
+            lastPositon = months - babyCreateMonths;
+            weightTab.initTabs();
+        }
 
-        initWeightTab(mView);
-        monthToWeightExcle(weightExcle, lastPositon);
+        monthToWeightExcle(weightExcle, lastPositon + babyCreateMonths);
         weightExcle.invalidate();
         updateRelativeTexts();
     }
@@ -326,9 +326,6 @@ public class WeightFragment extends TitleFragment {
         } else if (baby.getSex() == Baby.MALE) {
             currentStanderMin = weightStanderPares.getBoyMin(months);
             currentStanderMax = weightStanderPares.getBoyMax(months);
-            Log.i(TAG, "month:" + String.valueOf(months));
-            Log.i(TAG, "month max:" + String.valueOf(currentStanderMax));
-            Log.i(TAG, "month min:" + String.valueOf(currentStanderMin));
             nextStandermin = weightStanderPares.getBoyMin(months + 1);
             nextMaxStandermax = weightStanderPares.getBoyMax(months + 1);
             currentStanderMax = (nextMaxStandermax - currentStanderMax) / 30 * diffDay + currentStanderMax;
@@ -393,9 +390,9 @@ public class WeightFragment extends TitleFragment {
         monthToWeightExcle(weightExcle, lastPositon);
     }
 
-    private void addPoints(WeightExcle weightExcle, int position) {
+    private void addPoints(WeightExcle weightExcle, int monthAge) {
         weightExcle.clearPoints();
-        Map<Integer, Float> date = weightHelper.getWeights(babyCreateMonths + position);
+        Map<Integer, Float> date = weightHelper.getWeights(monthAge);
         if(date == null || date.isEmpty())
             return;
         for (int key : date.keySet()) {
@@ -411,8 +408,8 @@ public class WeightFragment extends TitleFragment {
     private void initWeightTab(View view) {
         weightTab = (WeightTab) view.findViewById(R.id.weight_tabs);
         int months = Calculator.getBabyMonthAge(new Date());
-        weightTab.setTabNum(babyCreateMonths, months + 1);
-        lastPositon = months;
+        weightTab.setTabNum(babyCreateMonths, months);
+        lastPositon = months - babyCreateMonths;
         weightTab.initTabs();
         weightTab.setStopLisetner(new WeightTab.StopLisetner() {
             @Override
@@ -420,25 +417,25 @@ public class WeightFragment extends TitleFragment {
                 if (lastPositon == position)
                     return;
                 lastPositon = position;
-                monthToWeightExcle(weightExcle, position);
+                monthToWeightExcle(weightExcle, position + babyCreateMonths);
                 weightExcle.invalidate();
             }
         });
     }
 
 
-    private void monthToWeightExcle(WeightExcle weightExcle, int position) {
+    private void monthToWeightExcle(WeightExcle weightExcle, int monthAge) {
         weightExcle.clearPoints();
         weightExcle.clearStander();
-        addPoints(weightExcle, position);
+        addPoints(weightExcle, monthAge);
         if (baby.getSex() == Baby.FEMALE) {
-            weightExcle.setStanderLeft(weightStanderPares.getGirlMin(position), weightStanderPares.getGirlMax(position));
-            weightExcle.setStanderRight(weightStanderPares.getGirlMin(position + 1), weightStanderPares.getGirlMax(position + 1));
+            weightExcle.setStanderLeft(weightStanderPares.getGirlMin(monthAge), weightStanderPares.getGirlMax(monthAge));
+            weightExcle.setStanderRight(weightStanderPares.getGirlMin(monthAge + 1), weightStanderPares.getGirlMax(monthAge + 1));
         } else if (baby.getSex() == Baby.MALE) {
-            weightExcle.setStanderLeft(weightStanderPares.getBoyMin(position), weightStanderPares.getBoyMax(position));
-            weightExcle.setStanderRight(weightStanderPares.getBoyMin(position + 1), weightStanderPares.getBoyMax(position + 1));
+            weightExcle.setStanderLeft(weightStanderPares.getBoyMin(monthAge), weightStanderPares.getBoyMax(monthAge));
+            weightExcle.setStanderRight(weightStanderPares.getBoyMin(monthAge + 1), weightStanderPares.getBoyMax(monthAge));
         }
-        weightExcle.setMonthDays(getMonthDays(position));
+        weightExcle.setMonthDays(getMonthDays(Calculator.getBabyMonthAge(new Date()) - monthAge));
     }
 
     /**

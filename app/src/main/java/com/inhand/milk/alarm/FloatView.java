@@ -1,4 +1,4 @@
-package com.inhand.milk.BroadcastReceiver;
+package com.inhand.milk.alarm;
 
 import android.content.Context;
 import android.util.TypedValue;

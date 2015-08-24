@@ -108,6 +108,10 @@
             android:screenOrientation="portrait"
             android:label="@string/app_name"/>
         <activity
+            android:name=".activity.APPSettingActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+        <activity
             android:name="com.inhand.milk.fragment.weight.AdderWindow"
             android:screenOrientation="portrait"
             android:theme="@style/AdderWindowStyle"/>
@@ -128,9 +132,9 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <receiver
-            android:name=".BroadcastReceiver.AlarmReceiver"
+            android:name=".alarm.AlarmReceiver"
             android:process=":remote"/>
-        <receiver android:name=".BroadcastReceiver.StartingUpReceiver">
+        <receiver android:name=".alarm.StartingUpReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

@@ -1,7 +1,6 @@
 package com.inhand.milk.fragment.weight;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,11 +19,10 @@ import com.avos.avoscloud.SaveCallback;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.STANDAR.Standar;
-import com.inhand.milk.activity.MainActivity;
 import com.inhand.milk.entity.BabyInfo;
+import com.inhand.milk.helper.WeightHelper;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.firstlanunch.Ruler;
-import com.inhand.milk.utils.WeightHelper;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;

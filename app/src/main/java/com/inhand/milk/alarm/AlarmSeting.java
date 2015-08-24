@@ -1,4 +1,4 @@
-package com.inhand.milk.BroadcastReceiver;
+package com.inhand.milk.alarm;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -26,11 +26,7 @@ public class AlarmSeting {
     }
 
     public void start(List<int[]> time, boolean[] isMilk) {
-        for (int i = 0; i < 20; i++) {
-            Intent intent = new Intent(activity, AlarmReceiver.class);
-            PendingIntent sender = PendingIntent.getBroadcast(activity, i, intent, 0);
-            alarmManager.cancel(sender);
-        }
+        cancleAlarm();
         if (time == null || isMilk == null)
             return;
         int count = time.size();
@@ -65,6 +61,13 @@ public class AlarmSeting {
 
     }
 
+    public void cancleAlarm() {
+        for (int i = 0; i < 24 * 12; i++) {
+            Intent intent = new Intent(activity, AlarmReceiver.class);
+            PendingIntent sender = PendingIntent.getBroadcast(activity, i, intent, 0);
+            alarmManager.cancel(sender);
+        }
+    }
     private void setAlarm(int[] time, int flag, boolean isMilk, boolean over) {
         Intent intent = new Intent(activity, AlarmReceiver.class);
         intent.putExtra(MilkKey, isMilk);

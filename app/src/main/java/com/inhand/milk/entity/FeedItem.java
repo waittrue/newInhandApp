@@ -12,8 +12,8 @@ import com.avos.avoscloud.AVClassName;
  */
 @AVClassName(FeedItem.FEED_ITEM_CLASS_KEY)
 public class FeedItem extends Base {
-    public static final String FEED_ITEM_CLASS_KEY = "Milk_FeedItem";
-    public static final String FEED_PLAN_KEY = "feedPlan"; // 所属喂养计划
+    public static final String FEED_ITEM_CLASS_KEY = "Milk_FeedPlanDetail";
+    public static final String FEED_PLAN_KEY = "feedPlanCate"; // 所属喂养计划
     public static final String TIME_KEY = "time"; // 喂养时间
     public static final String SUPPLEMENT_KEY = "supplement"; // 辅食
     public static final String TYPE_KEY = "type"; // 喂食方式

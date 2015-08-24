@@ -1,21 +1,16 @@
-package com.inhand.milk.BroadcastReceiver;
+package com.inhand.milk.alarm;
 
 import android.app.KeyguardManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.WindowManager;
 
-import com.inhand.milk.R;
+import com.inhand.milk.App;
 import com.inhand.milk.activity.AlarmActivity;
 import com.inhand.milk.activity.AlarmFloatActivity;
 
@@ -26,10 +21,9 @@ public class AlarmReceiver extends BroadcastReceiver {
     private static final String TAG = "AlarmReceiver";
     private static MediaPlayer mMediaPlayer = null;
     private static Vibrator vibrator = null;
-    private WindowManager mWindowManager;
-    private View floatView;
-
     public static void playSound(Context context) {
+        if (App.getAlarmOpen() == false || App.getAlarmSound() == false)
+            return;
         stopSound();
         Uri notification = RingtoneManager.getActualDefaultRingtoneUri(context,
                 RingtoneManager.TYPE_RINGTONE);
@@ -50,6 +44,9 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     public static void vibrator(Context context) {
+
+        if (App.getAlarmOpen() == false || App.getAlarmShock() == false)
+            return;
         stopVibrator();
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         long[] pattern = {1000, 2000, 1000, 3000}; // 停止 开启 停止 开启
@@ -65,12 +62,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("AlarmReceiver", "ffffffffffffffffffffffffffff");
+        if (App.getAlarmOpen() == false)
+            return;
         boolean ismilk = intent.getBooleanExtra(AlarmSeting.MilkKey, true);
         Intent alarmIntent;
         KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
         if (km.inKeyguardRestrictedInputMode()) {
-            Log.i("AlarmReceiver", "iskeyguar");
             alarmIntent = new Intent(context, AlarmActivity.class);
         } else {
             alarmIntent = new Intent(context, AlarmFloatActivity.class);
@@ -80,37 +77,4 @@ public class AlarmReceiver extends BroadcastReceiver {
         context.startActivity(alarmIntent);
     }
 
-    private void initFloatWindow(Context context, boolean ismilk) {
-        WindowManager.LayoutParams wmParams = new WindowManager.LayoutParams();
-        mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
-        wmParams.format = PixelFormat.RGBA_8888;
-        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        //调整悬浮窗显示的停靠位置为左侧置顶
-        wmParams.gravity = Gravity.CENTER;
-        wmParams.x = 0;
-        wmParams.y = 0;
-
-        //设置悬浮窗口长宽数据
-        wmParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
-        LayoutInflater inflater = LayoutInflater.from(context);
-        //获取浮动窗口视图所在布局
-        floatView = inflater.inflate(R.layout.alarm_notification, null);
-        FloatView ff = new FloatView(context, floatView, ismilk, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeFloatWindow();
-            }
-        });
-        //添加mFloatLayout
-        mWindowManager.addView(ff.getView(), wmParams);
-    }
-
-    private void removeFloatWindow() {
-        if (mWindowManager == null)
-            return;
-        mWindowManager.removeView(floatView);
-    }
 }

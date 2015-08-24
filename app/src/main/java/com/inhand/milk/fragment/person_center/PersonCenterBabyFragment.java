@@ -24,10 +24,10 @@ import com.inhand.milk.dao.BabyDao;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.fragment.person_center.user_info_settings.UserinfoNameFragment;
+import com.inhand.milk.helper.WeightHelper;
 import com.inhand.milk.ui.DefaultLoadingView;
 import com.inhand.milk.ui.PopupWindowSelected;
 import com.inhand.milk.utils.LocalSaveTask;
-import com.inhand.milk.utils.WeightHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;

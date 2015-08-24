@@ -111,6 +111,11 @@ public class WeightTab extends ObservableHorizonScrollView {
         this.from = from;
         this.to = to;
     }
+
+    //返回有多少个子图
+    public int getViewCount() {
+        return to - from + 1;
+    }
     public void initTabs() {
         TextView textView;
         linearLayout.removeAllViews();
@@ -128,10 +133,12 @@ public class WeightTab extends ObservableHorizonScrollView {
                 if (WeightTab.this.getWidth() == 0) {
                     handler.postDelayed(this, 20);
                 } else {
-                    //从头滑动，好触动下面改变颜色的接口
-                    scrollTo(0, getScrollY());
+
                     int tempX = postionToLocal(to - from);
                     scrollTo(tempX, getScrollY());
+                    //好触动下面改变颜色的接口
+                    onScrollChanged(getScrollX(), getScrollY(),
+                            getScrollX(), getScrollY());
                     handler.removeCallbacks(this);
                 }
             }

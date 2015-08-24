@@ -1,11 +1,11 @@
-package com.inhand.milk.BroadcastReceiver;
+package com.inhand.milk.alarm;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
-import com.inhand.milk.DataHelper.EatingPlanHelper;
+import com.inhand.milk.App;
+import com.inhand.milk.helper.EatingPlanHelper;
 
 /**
  * Created by Administrator on 2015/7/27.
@@ -15,7 +15,10 @@ public class StartingUpReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         AlarmSeting alarmSeting = new AlarmSeting(context);
         EatingPlanHelper eatingPlanHelper = new EatingPlanHelper();
-        alarmSeting.start(eatingPlanHelper.getPlanTime(), eatingPlanHelper.getIsMilk());
-        Log.i("AlarmReceiver", "ffffffffffffffffffffffffffff");
+        if (App.getAlarmOpen() == true) {
+            alarmSeting.start(eatingPlanHelper.getPlanTime(), eatingPlanHelper.getIsMilk());
+        } else {
+            alarmSeting.cancleAlarm();
+        }
     }
 }
