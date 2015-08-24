@@ -63,10 +63,14 @@ public class Calculator {
             InvalidParameterException ee = new InvalidParameterException("宝宝生日解析出问题");
             throw ee;
         }
-        birthCalendar.setTime(birthDay);
-        Calendar todayCalendr = Calendar.getInstance();
-        todayCalendr.setTime(date);
+        return getMonths(birthDay, date);
+    }
 
+    private static int getMonths(Date from, Date to) {
+        Calendar birthCalendar = Calendar.getInstance();
+        birthCalendar.setTime(from);
+        Calendar todayCalendr = Calendar.getInstance();
+        todayCalendr.setTime(to);
         int year1 = birthCalendar.get(Calendar.YEAR);
         int year2 = todayCalendr.get(Calendar.YEAR);
         int month1 = birthCalendar.get(Calendar.MONTH);
@@ -98,7 +102,9 @@ public class Calculator {
         return month;
     }
 
-
+    public static int getBabyCreatedMonths() {
+        return getBabyMonthAge(App.getCurrentBaby().getCreatedAt());
+    }
     /**
      * 计算宝宝的日龄
      * 注意这个方法有个bug，当日期在生日之前时候，也有一些情况可以返回正常值，所以可以先用getbabydayAge来做检查。

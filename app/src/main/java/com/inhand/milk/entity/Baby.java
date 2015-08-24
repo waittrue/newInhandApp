@@ -348,5 +348,4 @@ public class Baby extends Base implements CacheSaving<Baby> {
             e.printStackTrace();
         }
     }
-
 }

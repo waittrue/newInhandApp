@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -22,7 +23,7 @@ import com.inhand.milk.ui.ObservableHorizonScrollView;
  */
 public class WeightTab extends ObservableHorizonScrollView {
     private static final float Alpha_Center = 1f, Alpha_Minor = 0.5f, Alpha_Most = 0.1f;
-    private int num = 0;
+    private int from, to;
     private int textViewWidth;
     private int textColor = Color.WHITE, unUsedTextColor = getResources().getColor(R.color.public_darkin_littlelight_color);
     private int lastX;
@@ -103,14 +104,18 @@ public class WeightTab extends ObservableHorizonScrollView {
     public void setTabNum(int num) {
         if (num < 0)
             num = 0;
-        this.num = num;
+        setTabNum(0, num);
     }
 
+    public void setTabNum(int from, int to) {
+        this.from = from;
+        this.to = to;
+    }
     public void initTabs() {
         TextView textView;
         linearLayout.removeAllViews();
         initEnd();
-        for (int i = 0; i < num; i++) {
+        for (int i = from; i <= to; i++) {
             textView = new TextView(this.getContext());
             initTextView(textView, i);
             linearLayout.addView(textView);
@@ -125,7 +130,7 @@ public class WeightTab extends ObservableHorizonScrollView {
                 } else {
                     //从头滑动，好触动下面改变颜色的接口
                     scrollTo(0, getScrollY());
-                    int tempX = postionToLocal(num - 1);
+                    int tempX = postionToLocal(to - from);
                     scrollTo(tempX, getScrollY());
                     handler.removeCallbacks(this);
                 }
@@ -135,6 +140,7 @@ public class WeightTab extends ObservableHorizonScrollView {
 
     private void handerStop(int x) {
         int position = localToPostion(x);
+        Log.i("weightTab", String.valueOf(position));
         int tempX = postionToLocal(position);
         smoothScrollTo(tempX, getScrollY());
         if (stopLisetner != null)

@@ -55,6 +55,7 @@ public class WeightFragment extends TitleFragment {
     private WeightTab weightTab;
     private WeightHelper weightHelper;
     private TextView leftUp, rightUp;
+    private static int babyCreateMonths;
     //这个主要用来让其他Activity告诉这个页面数据更新完了
     private static WeightFragmentHandler WEIGHT_FRAGMENT_HANDLER ;
     public static WeightFragmentHandler getWeightHander(){
@@ -77,7 +78,7 @@ public class WeightFragment extends TitleFragment {
     public void refresh() {
         initCurrentStander();
         int months = Calculator.getBabyMonthAge(weightHelper.getLastWeightDate());
-        weightTab.setTabNum(months + 1);
+        weightTab.setTabNum(babyCreateMonths, months + 1);
         lastPositon = months;
         weightTab.initTabs();
 
@@ -91,6 +92,7 @@ public class WeightFragment extends TitleFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        babyCreateMonths = Calculator.getBabyCreatedMonths();
         mView = inflater.inflate(R.layout.fragment_weight, container, false);
         initViews(mView);
         WEIGHT_FRAGMENT_HANDLER = new WeightFragmentHandler();
@@ -393,7 +395,7 @@ public class WeightFragment extends TitleFragment {
 
     private void addPoints(WeightExcle weightExcle, int position) {
         weightExcle.clearPoints();
-        Map<Integer, Float> date = weightHelper.getWeights(position);
+        Map<Integer, Float> date = weightHelper.getWeights(babyCreateMonths + position);
         if(date == null || date.isEmpty())
             return;
         for (int key : date.keySet()) {
@@ -409,7 +411,7 @@ public class WeightFragment extends TitleFragment {
     private void initWeightTab(View view) {
         weightTab = (WeightTab) view.findViewById(R.id.weight_tabs);
         int months = Calculator.getBabyMonthAge(new Date());
-        weightTab.setTabNum(months + 1);
+        weightTab.setTabNum(babyCreateMonths, months + 1);
         lastPositon = months;
         weightTab.initTabs();
         weightTab.setStopLisetner(new WeightTab.StopLisetner() {
