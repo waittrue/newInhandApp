@@ -1,6 +1,9 @@
 package com.inhand.milk.entity;
 
 import com.avos.avoscloud.AVClassName;
+import com.avos.avoscloud.AVException;
+
+import java.util.List;
 
 /**
  * FeedItem
@@ -13,7 +16,7 @@ import com.avos.avoscloud.AVClassName;
 @AVClassName(FeedItem.FEED_ITEM_CLASS_KEY)
 public class FeedItem extends Base {
     public static final String FEED_ITEM_CLASS_KEY = "Milk_FeedPlanDetail";
-    public static final String FEED_PLAN_KEY = "feedPlanCate"; // 所属喂养计划
+    public static final String FEED_PLAN_KEY = "feedPlanCate"; // 所属喂养分类
     public static final String TIME_KEY = "time"; // 喂养时间
     public static final String SUPPLEMENT_KEY = "supplement"; // 辅食
     public static final String TYPE_KEY = "type"; // 喂食方式
@@ -29,9 +32,9 @@ public class FeedItem extends Base {
      *
      * @return 该喂养条目所属的喂养计划
      */
-    public FeedPlan getFeedPlan() {
+    public FeedCate getFeedCateobject() {
         try {
-            return this.getAVObject(FEED_PLAN_KEY, FeedPlan.class);
+            return this.getAVObject(FEED_PLAN_KEY, FeedCate.class);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -39,12 +42,27 @@ public class FeedItem extends Base {
     }
 
     /**
+     * 同步的获取 feedcate
+     * @return
+     * @throws AVException
+     */
+    public FeedCate getFeedCate() throws AVException {
+        FeedCate feedCate = getFeedCateobject();
+        try {
+            feedCate.fetch();
+            return feedCate;
+        } catch (AVException e) {
+            throw e;
+        }
+    }
+
+    /**
      * 设置该喂养条目所属的喂养计划
      *
-     * @param feedPlan 设置该喂养条目所属的喂养计划
+     * @param feedCate 设置该喂养条目所属的喂养计划
      */
-    public void setFeedPlan(FeedPlan feedPlan) {
-        this.put(FEED_PLAN_KEY, feedPlan);
+    public void setFeedCateobject(FeedCate feedCate) {
+        this.put(FEED_PLAN_KEY, feedCate);
     }
 
     /**
@@ -70,13 +88,32 @@ public class FeedItem extends Base {
      *
      * @return 辅食
      */
-    public Supplement getSupplement() {
+    public List<Supplement> getSupplementObject() {
         try {
-            return this.getAVObject(SUPPLEMENT_KEY, Supplement.class);
+            return this.getList(SUPPLEMENT_KEY);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * 同步的获取所有的Supplement
+     *
+     * @return 辅食的列表
+     */
+    public List<Supplement> getSupplement() throws AVException {
+        List<Supplement> supplements = getSupplementObject();
+        if (supplements == null)
+            return null;
+        for (Supplement supplement : supplements) {
+            try {
+                supplement.fetch();
+            } catch (AVException e) {
+                throw e;
+            }
+        }
+        return supplements;
     }
 
     /**
@@ -87,7 +124,7 @@ public class FeedItem extends Base {
     public void setSupplement(Supplement supplement) {
         // 设置装填为辅食
         this.put(TYPE_KEY, TYPE_SUPP);
-        this.put(SUPPLEMENT_KEY, supplement);
+        this.addUnique(SUPPLEMENT_KEY, supplement);
     }
 
     /**

@@ -5,8 +5,10 @@ import android.content.Context;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.inhand.milk.entity.Baby;
+import com.inhand.milk.entity.BabyFeedItem;
 import com.inhand.milk.entity.BabyInfo;
 import com.inhand.milk.entity.Device;
+import com.inhand.milk.entity.FeedCate;
 import com.inhand.milk.entity.FeedItem;
 import com.inhand.milk.entity.FeedPlan;
 import com.inhand.milk.entity.OneDay;
@@ -43,16 +45,19 @@ public class LeanCloudHelper {
         AVObject.registerSubclass(OneDay.class);
         AVObject.registerSubclass(Baby.class);
         AVObject.registerSubclass(BabyInfo.class);
+        AVObject.registerSubclass(BabyFeedItem.class);
         AVObject.registerSubclass(Device.class);
         AVObject.registerSubclass(Powder.class);
         AVObject.registerSubclass(PowderTip.class);
         AVObject.registerSubclass(FeedPlan.class);
         AVObject.registerSubclass(FeedItem.class);
+        AVObject.registerSubclass(FeedCate.class);
         AVObject.registerSubclass(Supplement.class);
         AVObject.registerSubclass(Statistics.class);
         AVObject.registerSubclass(PowderBrand.class);
         AVObject.registerSubclass(PowderSerie.class);
         AVObject.registerSubclass(PowderDetail.class);
+
     }
 
     /**

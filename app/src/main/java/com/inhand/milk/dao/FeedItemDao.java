@@ -6,13 +6,11 @@ import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
+import com.inhand.milk.entity.FeedCate;
 import com.inhand.milk.entity.FeedItem;
-import com.inhand.milk.entity.FeedPlan;
 import com.inhand.milk.utils.ACache;
 import com.inhand.milk.utils.LocalFindTask;
 import com.inhand.milk.utils.LocalSaveTask;
-
-import org.json.JSONArray;
 
 import java.util.List;
 
@@ -32,13 +30,13 @@ public class FeedItemDao {
     /**
      * 从云端异步地根据喂养计划获得该计划下所有条目
      *
-     * @param feedPlan 喂养计划
+     * @param feedCate 喂养计划
      * @param callback 回调接口
      */
-    public void findByFeedPlanFromCloud(final FeedPlan feedPlan
+    public void findByFeedPlanFromCloud(final FeedCate feedCate
             , final FindCallback<FeedItem> callback) {
         query.orderByAscending(FIND_ORDER);
-        query.whereEqualTo(FeedItem.FEED_PLAN_KEY, feedPlan);
+        query.whereEqualTo(FeedItem.FEED_PLAN_KEY, feedCate);
         query.findInBackground(callback);
     }
 
@@ -46,12 +44,12 @@ public class FeedItemDao {
     /**
      * 同步地根据喂养计划获得该计划下所有条目
      *
-     * @param feedPlan 喂养计划
+     * @param feedCate 喂养分类
      * @return 喂养计划条目
      */
-    public List<FeedItem> findByFeedPlanFromCloud(final FeedPlan feedPlan) {
+    public List<FeedItem> findByFeedPlanFromCloud(final FeedCate feedCate) {
         query.orderByAscending(FIND_ORDER);
-        query.whereEqualTo(FeedItem.FEED_PLAN_KEY, feedPlan);
+        query.whereEqualTo(FeedItem.FEED_PLAN_KEY, feedCate);
         try {
             return query.find();
         } catch (AVException e) {
@@ -89,13 +87,11 @@ public class FeedItemDao {
      * @param feedItems 待缓存喂养计划条目
      */
     public void cache(Context ctx, List<FeedItem> feedItems) {
+        if (feedItems == null)
+            return;
         ACache aCache = ACache.get(ctx);
-        aCache.remove(FeedItem.CACHE_KEY);
-        JSONArray array = new JSONArray();
-        for (FeedItem item : feedItems) {
-            array.put(item.toJSONObject().toString());
-        }
-        aCache.put(FeedItem.CACHE_KEY, array);
+        String json = JSON.toJSONString(feedItems);
+        aCache.put(FeedItem.CACHE_KEY, json);
     }
 
     /**
@@ -133,7 +129,12 @@ public class FeedItemDao {
     public List<FeedItem> findFromCache(Context ctx) {
         ACache aCache = ACache.get(ctx);
         String json = aCache.getAsString(FeedItem.CACHE_KEY);
-        return json == null ? null : JSON.parseArray(json, FeedItem.class);
+        if (json == null)
+            return null;
+        List<FeedItem> feedItems = JSON.parseArray(json, FeedItem.class);
+        if (feedItems.isEmpty())
+            return null;
+        return feedItems;
     }
 
 

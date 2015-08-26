@@ -70,7 +70,6 @@ public class PowderBrandDao {
             throw e;
         }
     }
-
     public PowderBrand findFromAche() {
         ACache aCache = ACache.get(App.getAppContext());
         String json = aCache.getAsString(PowderBrand.ACHA_KEY);

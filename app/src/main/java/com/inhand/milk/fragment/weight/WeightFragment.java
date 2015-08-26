@@ -75,8 +75,9 @@ public class WeightFragment extends TitleFragment {
 
     @Override
     public void refresh() {
+
         initCurrentStander();
-        int months = Calculator.getBabyMonthAge(weightHelper.getLastWeightDate());
+        int months = Calculator.getBabyMonthAge(new Date());
         if (months - babyCreateMonths + 1 != weightTab.getViewCount()) {
             weightTab.setTabNum(babyCreateMonths, months);
             lastPositon = months - babyCreateMonths;

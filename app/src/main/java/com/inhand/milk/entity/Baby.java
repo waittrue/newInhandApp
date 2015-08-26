@@ -1,6 +1,7 @@
 package com.inhand.milk.entity;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVClassName;
@@ -31,12 +32,12 @@ public class Baby extends Base implements CacheSaving<Baby> {
     public static final String BABY_CLASS = "Baby";
     public static final String NICKNAME_KEY = "nickname"; // 宝宝昵称
     public static final String BIRTHDAY_KEY = "birthday";// 生日
-    public static final String POWDER_KEY = "powder"; // 奶粉
+    public static final String POWDER_KEY = "powderSerie"; // 奶粉
+    public static final String FEEDCATE_KEY = "feedCate";//喂养分类
     public static final String USER_KEY = "user"; // 所属用户
     public static final String SEX_KEY = "sex"; // 性别
     public static final String STATISTICS_KEY = "statistics"; // 统计信息
     public static final String AVATAR_KEY = "avatar"; // 宝宝头像
-    public static final String FEED_PLAN_KEY = "feedPlan"; // 营养计划
     public static final String ACACEAVATAR_KEY = "baby_imageve";
     public static final String CACHE_KEY = "baby";
 
@@ -48,7 +49,6 @@ public class Baby extends Base implements CacheSaving<Baby> {
         super();
         // 首次创建宝宝时，为其自动创建统计信息及喂养计划
         this.setStatistics(new Statistics());
-        this.setFeedPlan(new FeedPlan());
         this.setUser(App.getCurrentUser());
     }
 
@@ -112,12 +112,28 @@ public class Baby extends Base implements CacheSaving<Baby> {
      *
      * @return 宝宝当前所用奶粉
      */
-    public Powder getPowder() {
+    private PowderSerie getPowderSeriesObject() {
         try {
-            return this.getAVObject(POWDER_KEY, Powder.class);
+            return this.getAVObject(POWDER_KEY, PowderSerie.class);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /**
+     * 同步的获取宝宝的奶粉段数
+     * @return 宝宝的段数
+     */
+    public PowderSerie getPowderSerie() throws AVException {
+        PowderSerie powderSerie = getPowderSeriesObject();
+        if (powderSerie == null)
+            return null;
+        try {
+            powderSerie.fetch();
+            return powderSerie;
+        } catch (AVException e) {
+            throw e;
         }
     }
 
@@ -126,8 +142,45 @@ public class Baby extends Base implements CacheSaving<Baby> {
      *
      * @param powder 宝宝当前所用奶粉
      */
-    public void setPowder(Powder powder) {
+    public void setPowderSeries(PowderSerie powder) {
         this.put(POWDER_KEY, powder);
+    }
+
+    /**
+     * 获得一个空的绑定的feedcate的对象
+     * @return 空的绑定的feedcate对象
+     */
+    private FeedCate getFeedCateObject() {
+        try {
+            FeedCate feedCate = getAVObject(FEEDCATE_KEY, FeedCate.class);
+            return feedCate;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public void setFeedCate(FeedCate feedCate) {
+        put(FEEDCATE_KEY, feedCate);
+    }
+
+    /**
+     * 同步的从云端获得feedcate对象
+     *
+     * @return 喂养计划分类表
+     * @throws AVException
+     */
+    public FeedCate getFeedCate() throws AVException {
+        try {
+            FeedCate feedCate = getFeedCateObject();
+            if (feedCate == null)
+                return null;
+            feedCate.fetch();
+            return feedCate;
+        } catch (AVException e) {
+            throw e;
+        }
     }
 
     /**
@@ -247,28 +300,7 @@ public class Baby extends Base implements CacheSaving<Baby> {
         }
     }
 
-    /**
-     * 获得宝宝的喂养计划
-     *
-     * @return
-     */
-    public FeedPlan getFeedPlan() {
-        try {
-            return this.getAVObject(FEED_PLAN_KEY, FeedPlan.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
-    /**
-     * 设置宝宝的默认喂养计划
-     *
-     * @param feedPlan 喂养计划
-     */
-    public void setFeedPlan(FeedPlan feedPlan) {
-        this.put(FEED_PLAN_KEY, feedPlan);
-    }
 
     /**
      * 异步地存储Baby对象，若已存在，则为更新
@@ -336,16 +368,34 @@ public class Baby extends Base implements CacheSaving<Baby> {
     public void sync() {
         AVQuery<Baby> query = AVQuery.getQuery(Baby.class);
         query.whereEqualTo("objectId", this.getObjectId());
-        Baby baby = null;
         try {
             List<Baby> babies = query.find();
             if (babies == null || babies.isEmpty())
                 return;
-            baby = babies.get(0);
+            Baby baby = babies.get(0);
             App.currentBaby = baby;
             baby.saveInCache(App.getAppContext());
         } catch (AVException e) {
             e.printStackTrace();
         }
+    }
+
+    public void saveBabyItemAcache(List<BabyFeedItem> babyFeedItems) {
+        if (babyFeedItems == null)
+            return;
+        String json = JSON.toJSONString(babyFeedItems);
+        ACache aCache = ACache.get(App.getAppContext());
+        aCache.put(BabyFeedItem.ACACHE_KEY, json);
+        Log.i("baby", "savebabyitemache json success");
+    }
+
+    public List<BabyFeedItem> getBabyItemFromAcache() {
+        String json = ACache.get(App.getAppContext()).getAsString(BabyFeedItem.ACACHE_KEY);
+        if (json == null)
+            return null;
+        List<BabyFeedItem> babyFeedItems = JSON.parseArray(json, BabyFeedItem.class);
+        if (babyFeedItems == null || babyFeedItems.isEmpty())
+            return null;
+        return babyFeedItems;
     }
 }

@@ -66,7 +66,7 @@ public class Calculator {
         return getMonths(birthDay, date);
     }
 
-    private static int getMonths(Date from, Date to) {
+    public static int getMonths(Date from, Date to) {
         Calendar birthCalendar = Calendar.getInstance();
         birthCalendar.setTime(from);
         Calendar todayCalendr = Calendar.getInstance();

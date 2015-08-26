@@ -12,13 +12,17 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetDataCallback;
 import com.inhand.milk.App;
+import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.dao.BabyDao;
+import com.inhand.milk.dao.BabyFeedItemDao;
 import com.inhand.milk.dao.BabyInfoDao;
 import com.inhand.milk.dao.OneDayDao;
-import com.inhand.milk.dao.PowderTipDao;
+import com.inhand.milk.dao.PowderDetailDao;
 import com.inhand.milk.utils.ACache;
+import com.inhand.milk.utils.Calculator;
 import com.inhand.milk.utils.LocalGetAvFileCallBack;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -49,9 +53,6 @@ public class User extends AVUser {
     public static final int NETWORK_ERROR = 2;
     public static int FEMALE = 2; // 女性
     public static int MALE = 1; // 男性
-
-    private byte[] imageBytes = null;
-
 
     /**
      * 获得用户昵称
@@ -187,24 +188,36 @@ public class User extends AVUser {
      * @param baby 宝宝
      */
     private void initBaby(final Context ctx, Baby baby) {
-        //  Log.i("user","initBaby");
-        // 缓存奶粉信息
-        Powder powder = baby.getPowder();
-        if (powder != null) {
-            PowderTipDao ptd = new PowderTipDao();
-            List<PowderTip> tips = ptd.findByPowderFromCloud(powder);
-            powder.cacheTips(ctx, tips);
+        //缓存奶粉信息
+        try {
+            PowderSerie powderSerie = baby.getPowderSerie();
+            String birth = baby.getBirthday();
+            Date date = null;
+            try {
+                date = Standar.DATE_FORMAT.parse(birth);
+            } catch (ParseException e) {
+            }
+            int monthAge = Calculator.getMonths(date, new Date());
+            PowderBrand powderBrand = powderSerie.fetchPowderBrand();
+            List<PowderDetail> powderDetails = new PowderDetailDao().findFromCloud(powderSerie);
+            for (PowderDetail p : powderDetails) {
+                if (p.isForAge(monthAge)) {
+                    powderBrand.saveInCache();
+                    p.saveInACache();
+                    powderSerie.saveInAcache();
+                }
+            }
+        } catch (AVException e) {
+            return;
         }
-
         // 缓存喂养计划信息
-        /*
-        FeedPlan feedPlan = baby.getFeedPlan();
-        FeedItemDao fid = new FeedItemDao();
-        List<FeedItem> items = fid.findByFeedPlanFromCloud(feedPlan);
-        feedPlan.cacheItems(ctx, items);
-        */
-
+        List<BabyFeedItem> babyFeedItems = new BabyFeedItemDao().findBabyFeedItemsFromCloud(baby);
+        baby.saveBabyItemAcache(babyFeedItems);
+        Log.i("user", String.valueOf(babyFeedItems.size()));
+        //缓存baby
         baby.saveInCache(ctx);
+
+
         //缓存babyinfo 这部分是大力加的；
       //  Log.d("initBaby", "saveinache_start");
         BabyInfoDao babyInfoDao = new BabyInfoDao();
@@ -239,8 +252,7 @@ public class User extends AVUser {
         try {
             avFile.save();
             setAvatar(avFile);
-            imageBytes = bytes;
-            saveImageInAcache();
+            saveImageInAcache(bytes);
             save();
         } catch (AVException e) {
             e.printStackTrace();
@@ -260,8 +272,6 @@ public class User extends AVUser {
         avFile.getDataInBackground(new GetDataCallback() {
             @Override
             public void done(final byte[] bytes, AVException e) {
-                if (e == null && bytes != null)
-                    imageBytes = bytes;
                 callBack.done(bytes, e);
             }
         });
@@ -270,7 +280,7 @@ public class User extends AVUser {
     /**
      * 同步的得到二进制值
      *
-     * @return
+     * @return 图像的二进制数据
      * @throws AVException 当网络发生异常的时候
      */
     public byte[] getAvatorBytes() throws AVException {
@@ -279,10 +289,8 @@ public class User extends AVUser {
             return null;
         }
         try {
-            imageBytes = avFile.getData();
-            return imageBytes;
+            return avFile.getData();
         } catch (AVException e) {
-            imageBytes = null;
             throw e;
         }
     }
@@ -305,10 +313,10 @@ public class User extends AVUser {
     /**
      * 把头像的二进制缓存起来
      */
-    public void saveImageInAcache() {
+    public void saveImageInAcache(byte[] bytes) {
         ACache aCache = ACache.get(App.getAppContext());
-        if (imageBytes != null)
-            aCache.put(ACACEAVATAR_KEY + this.getObjectId(), JSON.toJSONString(imageBytes));
+        if (bytes != null)
+            aCache.put(ACACEAVATAR_KEY + this.getObjectId(), JSON.toJSONString(bytes));
     }
 
 
@@ -319,6 +327,10 @@ public class User extends AVUser {
             List<User> users = query.find();
             if (users == null || users.isEmpty())
                 return;
+            if (users.get(0).getUpdatedAt().equals(getUpdateAtInAcache())) {
+                Log.i("USer", "时间相同return:");
+                return;
+            }
             copyUser(users.get(0), this);
             this.save();
         } catch (AVException e) {
@@ -328,11 +340,6 @@ public class User extends AVUser {
     }
 
     private void copyUser(User src, User dst) {
-
-        if (src.getUpdatedAt().equals(getUpdateAtInAcache())) {
-            Log.i("USer", "时间相同return:");
-            return;
-        }
         dst.setEmail(src.getEmail());
         dst.setSex(src.getSex());
         dst.setCity(src.getCity());
@@ -340,8 +347,8 @@ public class User extends AVUser {
         dst.setMobilePhoneNumber(src.getMobilePhoneNumber());
         dst.setAvatar(src.getAvatar());
         try {
-            imageBytes = src.getAvatorBytes();
-            saveImageInAcache();
+            byte[] bytes = src.getAvatorBytes();
+            saveImageInAcache(bytes);
         } catch (AVException e) {
             e.printStackTrace();
         }

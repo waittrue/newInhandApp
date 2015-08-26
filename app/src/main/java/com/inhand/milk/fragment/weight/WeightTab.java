@@ -10,10 +10,10 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 
@@ -54,10 +54,8 @@ public class WeightTab extends ObservableHorizonScrollView {
     }
 
     private void initVaribles() {
-        WindowManager wm = (WindowManager) getContext()
-                .getSystemService(Context.WINDOW_SERVICE);
 
-        textViewWidth = wm.getDefaultDisplay().getWidth() / 4;
+        textViewWidth = App.getWindowWidth(getContext()) / 4;
         textSize = textViewWidth / 5;
         lp = new ViewGroup.LayoutParams(textViewWidth, ViewGroup.LayoutParams.MATCH_PARENT);
         linearLayout = new LinearLayout(this.getContext());
@@ -161,25 +159,35 @@ public class WeightTab extends ObservableHorizonScrollView {
         View child;
         position = position + 2;
         child = linearLayout.getChildAt(position);
-        child.setAlpha(Alpha_Center);
-        ((TextView) child).setTextColor(textColor);
+        if (child != null) {
+            child.setAlpha(Alpha_Center);
+            ((TextView) child).setTextColor(textColor);
+        }
 
         child = linearLayout.getChildAt(position - 1);
-        child.setAlpha(Alpha_Minor);
-        ((TextView) child).setTextColor(unUsedTextColor);
+        if (child != null) {
+            child.setAlpha(Alpha_Minor);
+            ((TextView) child).setTextColor(unUsedTextColor);
+        }
 
         child = linearLayout.getChildAt(position + 1);
-        child.setAlpha(Alpha_Minor);
-        ((TextView) child).setTextColor(unUsedTextColor);
+        if (child != null) {
+            child.setAlpha(Alpha_Minor);
+            ((TextView) child).setTextColor(unUsedTextColor);
+        }
+
 
         child = linearLayout.getChildAt(position - 2);
-        child.setAlpha(Alpha_Most);
-        ((TextView) child).setTextColor(unUsedTextColor);
+        if (child != null) {
+            child.setAlpha(Alpha_Most);
+            ((TextView) child).setTextColor(unUsedTextColor);
+        }
 
         child = linearLayout.getChildAt(position + 2);
-        child.setAlpha(Alpha_Most);
-        ((TextView) child).setTextColor(unUsedTextColor);
-
+        if (child != null) {
+            child.setAlpha(Alpha_Most);
+            ((TextView) child).setTextColor(unUsedTextColor);
+        }
     }
 
     //根据x，y算出应该把第几个textview放在中间;

@@ -23,10 +23,13 @@ import android.widget.TextView;
 
 import com.inhand.milk.R;
 import com.inhand.milk.activity.EatingCustomFixActivity;
+import com.inhand.milk.entity.BabyFeedItem;
 import com.inhand.milk.fragment.TitleFragment;
+import com.inhand.milk.helper.FeedPlanHelper;
 import com.inhand.milk.ui.ButtonA;
 import com.inhand.milk.utils.ViewHolder;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,6 +53,7 @@ public class EatingCustomFragment extends TitleFragment {
     private boolean closeAnimationFirstEnd = false;
     private List<Integer> seletedData;
     private float animationTranslate;
+    private List<BabyFeedItem> babyFeedItems;
     private AdapterView.OnItemClickListener listViewListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -65,6 +69,7 @@ public class EatingCustomFragment extends TitleFragment {
             int firstPosition = listView.getFirstVisiblePosition();
             int EndPosition = listView.getLastVisiblePosition();
             for (int position : seletedData) {
+                delectSelect(seletedData);
                 if (position >= firstPosition && position <= EndPosition)
                     closeAniamtion(listView.getChildAt(position));
             }
@@ -108,6 +113,36 @@ public class EatingCustomFragment extends TitleFragment {
         }
     };
 
+    /**
+     * 从babyfeeditem  中删除那些我们选中select
+     *
+     * @param select 需要删除的位置
+     */
+    private void delectSelect(List<Integer> select) {
+        if (select == null || select.isEmpty())
+            return;
+        List<Integer> sort = new ArrayList<>();
+        sort.add(select.get(0));
+        select.remove(0);
+        int loaction = 0;
+        for (int num : select) {
+            for (loaction = sort.size() - 1; loaction >= 0; loaction--) {
+                int temp = sort.get(loaction);
+                if (num > temp) {
+                    continue;
+                } else if (num <= temp) {
+                    sort.add(loaction + 1, num);
+                    break;
+                }
+            }
+            if (loaction < 0) {
+                sort.add(0, num);
+            }
+        }
+        for (int num : sort) {
+            babyFeedItems.remove(num);
+        }
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -132,10 +167,8 @@ public class EatingCustomFragment extends TitleFragment {
     }
 
     private void initViews() {
+        initPlantime();
         listView = (ListView) mView.findViewById(R.id.eating_custom_plan_listview);
-        Intent intent = getActivity().getIntent();
-        isMilk = intent.getBooleanArrayExtra(EatingFragment.IsMilkKey);
-        planTime = (List<int[]>) intent.getSerializableExtra(EatingFragment.PlanTimeKey);
         data = new ArrayList<>();
         for (int i = 0; i < planTime.size(); i++) {
             Map<String, Object> map = new HashMap<>();
@@ -152,6 +185,19 @@ public class EatingCustomFragment extends TitleFragment {
         listView.setOnItemClickListener(listViewListener);
     }
 
+    private void initPlantime() {
+        try {
+            FeedPlanHelper feedPlanHelper = new FeedPlanHelper();
+            babyFeedItems = feedPlanHelper.getBabyFeedItemsFromAcache();
+            if (babyFeedItems == null)
+                return;
+            babyFeedItems = feedPlanHelper.sortBabyfeedItems(babyFeedItems);
+            planTime = feedPlanHelper.getTime(babyFeedItems);
+            isMilk = feedPlanHelper.getType(babyFeedItems);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
     private String formatTime(int[] time) {
         String hour, m, result = "";
         hour = String.valueOf(time[0]);
@@ -334,7 +380,7 @@ public class EatingCustomFragment extends TitleFragment {
                 int endPosition = listView.getLastVisiblePosition();
                 CheckBox checkBox;
                 for (int i = firstPosition; i <= endPosition; i++) {
-                    checkBox = ViewHolder.get(listView.getChildAt(i), R.id.eating_custome_plan_check_box);
+                    checkBox = ViewHolder.get(listView.getChildAt(i - firstPosition), R.id.eating_custome_plan_check_box);
                     checkBox.setTag(i);
                     checkBox.setOnClickListener(checkBoxListener);
                     checkBox.setChecked(false);

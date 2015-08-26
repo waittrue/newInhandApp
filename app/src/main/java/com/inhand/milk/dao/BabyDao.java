@@ -50,7 +50,6 @@ public class BabyDao {
         query.whereEqualTo(Baby.USER_KEY, user);
         query.include(Baby.STATISTICS_KEY);
         query.include(Baby.POWDER_KEY);
-        query.include(Baby.FEED_PLAN_KEY);
     }
 
 

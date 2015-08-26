@@ -7,8 +7,10 @@ import android.preference.PreferenceFragment;
 
 import com.inhand.milk.R;
 import com.inhand.milk.alarm.AlarmSeting;
-import com.inhand.milk.helper.EatingPlanHelper;
+import com.inhand.milk.entity.BabyFeedItem;
+import com.inhand.milk.helper.FeedPlanHelper;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -29,9 +31,20 @@ public class AppSettingFragment extends PreferenceFragment {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 AlarmSeting alarmSeting = new AlarmSeting(getActivity());
                 if ((boolean) newValue == true) {
-                    EatingPlanHelper eatingPlanHelper = new EatingPlanHelper();
-                    List<int[]> planTime = eatingPlanHelper.getPlanTime();
-                    boolean[] isMilk = eatingPlanHelper.getIsMilk();
+                    List<int[]> planTime = null;
+                    boolean[] isMilk = null;
+                    FeedPlanHelper feedPlanHelper = null;
+                    try {
+                        feedPlanHelper = new FeedPlanHelper();
+                    } catch (ParseException e) {
+                        return true;
+                    }
+                    List<BabyFeedItem> babyFeedItems = feedPlanHelper.getBabyFeedItemsFromAcache();
+                    if (babyFeedItems == null)
+                        return true;
+                    babyFeedItems = feedPlanHelper.sortBabyfeedItems(babyFeedItems);
+                    planTime = feedPlanHelper.getTime(babyFeedItems);
+                    isMilk = feedPlanHelper.getType(babyFeedItems);
                     alarmSeting.start(planTime, isMilk);
                 } else {
                     alarmSeting.cancleAlarm();

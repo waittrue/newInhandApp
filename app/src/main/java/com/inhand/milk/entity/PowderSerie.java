@@ -1,11 +1,9 @@
 package com.inhand.milk.entity;
 
-import android.content.Context;
-
 import com.avos.avoscloud.AVClassName;
+import com.avos.avoscloud.AVException;
 import com.inhand.milk.App;
 import com.inhand.milk.utils.ACache;
-import com.inhand.milk.utils.LocalSaveTask;
 
 /**
  * Created by Administrator on 2015/8/20.
@@ -14,7 +12,7 @@ import com.inhand.milk.utils.LocalSaveTask;
  * 描述：
  */
 @AVClassName(PowderSerie.CLASS_NAME)
-public class PowderSerie extends Base implements DBSaving {
+public class PowderSerie extends Base {
     public static final String CLASS_NAME = "Milk_PowderSerie";
     public static final String ISDEL_KEY = "isDel";
     public static final String NAME_KEY = "name";
@@ -24,6 +22,7 @@ public class PowderSerie extends Base implements DBSaving {
     public static final String POWDERBRAND_KEY = "powder";
     public static final String NAMEDOC_KEY = "nameDoc";
     public static final String ACHACE_KEY = "powderSerieAchace";
+    public static final String FEEDPLAN_KEY = "feedPlan";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     public void setIsDel(boolean a) {
@@ -78,10 +77,19 @@ public class PowderSerie extends Base implements DBSaving {
         put(POWDERBRAND_KEY, powderBrand);
     }
 
-    public PowderBrand getPowderBrand() {
+    private PowderBrand getPowderBrandObject() {
         return getAVObject(POWDERBRAND_KEY);
     }
 
+    public PowderBrand fetchPowderBrand() throws AVException {
+        PowderBrand powderBrand = getPowderBrandObject();
+        try {
+            powderBrand.fetch();
+            return powderBrand;
+        } catch (AVException e) {
+            throw e;
+        }
+    }
     public PowderSerie() {
         super();
     }
@@ -92,13 +100,48 @@ public class PowderSerie extends Base implements DBSaving {
         aCache.put(ACHACE_KEY, json);
     }
 
-    @Override
-    public void saveInDB(Context ctx, LocalSaveTask.LocalSaveCallback callback) {
-
+    public void setFeedplan(FeedPlan feedplan) {
+        put(FEEDPLAN_KEY, feedplan);
     }
 
-    @Override
-    public void saveInDB(Context ctx) {
+    private FeedPlan getFeedplanObject() {
+        return getAVObject(FEEDPLAN_KEY);
+    }
 
+    /**
+     * 同步的获取feedPlan
+     *
+     * @return
+     */
+    public FeedPlan getFeedPlan() throws AVException {
+        FeedPlan feedPlan = getFeedplanObject();
+        if (feedPlan == null) {
+            return null;
+        }
+        try {
+            feedPlan.fetch();
+            return feedPlan;
+        } catch (AVException e) {
+            throw e;
+        }
+    }
+
+    public boolean isForAge(int monthAge) {
+        String forage = getForAge();
+        String[] ages = forage.split("-");
+        int min = Integer.parseInt(ages[0]);
+        int max = Integer.parseInt(ages[1]);
+        if (monthAge <= max && monthAge >= min)
+            return true;
+        return false;
+    }
+
+    public boolean needChange(int monthAge) {
+        String forage = getForAge();
+        String[] ages = forage.split("-");
+        int max = Integer.parseInt(ages[1]);
+        if (monthAge > max)
+            return true;
+        return false;
     }
 }

@@ -19,12 +19,13 @@ import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.activity.EatingCustomPlanActivity;
 import com.inhand.milk.alarm.AlarmSeting;
+import com.inhand.milk.entity.BabyFeedItem;
 import com.inhand.milk.fragment.TitleFragment;
-import com.inhand.milk.helper.EatingPlanHelper;
+import com.inhand.milk.helper.FeedPlanHelper;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.RoundImageView;
 
-import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +49,7 @@ public class EatingFragment extends TitleFragment {
     private boolean[] isMilk = new boolean[]{false, false, false, false, true, true, true, true};
     private int eatingTimeout = -1, endingTimeOut;
     private EatingPopUpWindow eatingPopUpWindow;
+    private List<BabyFeedItem> babyFeedItems;
 
     public static int generateViewId() {
         for (; ; ) {
@@ -84,8 +86,6 @@ public class EatingFragment extends TitleFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EatingCustomPlanActivity.class);
-                intent.putExtra(IsMilkKey, isMilk);
-                intent.putExtra(PlanTimeKey, (Serializable) planTime);
                 getActivity().startActivity(intent);
                 eatingPopUpWindow.dismissWithoutAnimation();
                 // Log.i("eatingfragmnet","onclick");
@@ -135,9 +135,18 @@ public class EatingFragment extends TitleFragment {
     }
 
     private void initPlanTime() {
-        EatingPlanHelper eatingPlanHelper = new EatingPlanHelper();
-        planTime = eatingPlanHelper.getPlanTime();
-        isMilk = eatingPlanHelper.getIsMilk();
+        try {
+            FeedPlanHelper feedPlanHelper = new FeedPlanHelper();
+            babyFeedItems = feedPlanHelper.getBabyFeedItemsFromAcache();
+            if (babyFeedItems == null)
+                return;
+            babyFeedItems = feedPlanHelper.sortBabyfeedItems(babyFeedItems);
+            planTime = feedPlanHelper.getTime(babyFeedItems);
+            isMilk = feedPlanHelper.getType(babyFeedItems);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void initNotifacation() {

@@ -1,5 +1,7 @@
 package com.inhand.milk.dao;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
@@ -26,7 +28,6 @@ public class PowderDetailDao {
         query.whereEqualTo(PowderDetail.POWDERSERIER_KEY, powderSerie);
         query.whereEqualTo(PowderDetail.ISDEL_KEY, false);
         //这里吧二级目标feedplan也加载了.
-        query.include(PowderDetail.FEEDPLAN_KEY);
         try {
             List<PowderDetail> powderDetails = query.find();
             if (powderDetails == null || powderDetails.isEmpty())
@@ -37,19 +38,37 @@ public class PowderDetailDao {
         }
     }
 
-    public void findFromCloudByPowderSerie(PowderSerie powderSerie, final FindCallback<PowderDetail> callback
-    ) throws NullPointerException {
+    public void findFromCloudByPowderSerie(PowderSerie powderSerie,
+                                           final FindCallback<PowderDetail> callback) {
         if (powderSerie == null) {
             throw new NullPointerException("powderserie 为空");
         }
         query.whereEqualTo(PowderDetail.POWDERSERIER_KEY, powderSerie);
         query.whereEqualTo(PowderDetail.ISDEL_KEY, false);
         //这里吧二级目标feedplan也加载了.
-        query.include(PowderDetail.FEEDPLAN_KEY);
         query.findInBackground(callback);
 
     }
 
+    public List<PowderDetail> findFromCloud(PowderSerie powderSerie) throws AVException {
+        if (powderSerie == null) {
+            Log.i("powderDetailDao", "canshu powderserie == null");
+            return null;
+        }
+        try {
+            query.whereEqualTo(PowderDetail.POWDERSERIER_KEY, powderSerie);
+            Log.i("powderDetailDao", powderSerie.getObjectId());
+            query.whereEqualTo(PowderDetail.ISDEL_KEY, false);
+            List<PowderDetail> powderDetails = query.find();
+            if (powderDetails == null || powderDetails.isEmpty()) {
+                Log.i("powderDetailDao", "powderserie == null" + String.valueOf(powderDetails == null));
+                return null;
+            }
+            return powderDetails;
+        } catch (AVException e) {
+            throw e;
+        }
+    }
     public PowderDetail findFromAcache() {
         ACache aCache = ACache.get(App.getAppContext());
         String json = aCache.getAsString(PowderDetail.ACHACE_KEY);

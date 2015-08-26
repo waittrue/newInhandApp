@@ -62,7 +62,7 @@ public class AlarmSeting {
     }
 
     public void cancleAlarm() {
-        for (int i = 0; i < 24 * 12; i++) {
+        for (int i = 0; i < 20; i++) {
             Intent intent = new Intent(activity, AlarmReceiver.class);
             PendingIntent sender = PendingIntent.getBroadcast(activity, i, intent, 0);
             alarmManager.cancel(sender);

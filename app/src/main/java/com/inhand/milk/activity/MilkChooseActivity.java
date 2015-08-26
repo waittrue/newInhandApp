@@ -5,17 +5,15 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.FindCallback;
-import com.inhand.milk.dao.PowderBrandDao;
-import com.inhand.milk.dao.PowderDetailDao;
-import com.inhand.milk.dao.PowderSerieDao;
 import com.inhand.milk.entity.PowderBrand;
 import com.inhand.milk.entity.PowderDetail;
 import com.inhand.milk.entity.PowderSerie;
 import com.inhand.milk.fragment.person_center.choose_milk.ChooseMilkFragment;
 import com.inhand.milk.fragment.person_center.choose_milk.ChooseMilkShowFragment;
+import com.inhand.milk.helper.FeedPlanHelper;
+import com.inhand.milk.helper.MilkHelper;
 
-import java.util.List;
+import java.text.ParseException;
 
 /**
  * Created by Administrator on 2015/8/10.
@@ -25,11 +23,11 @@ public class MilkChooseActivity extends SubActivity {
     private PowderSerie powderSerie;
     private PowderDetail powderDetail;
     private static final String TAG = "MilkChooseACtivity";
-
+    private MilkHelper milkHelper = new MilkHelper();
     public MilkChooseActivity() {
-        powderBrand = new PowderBrandDao().findFromAche();
-        powderSerie = new PowderSerieDao().findFromAcache();
-        powderDetail = new PowderDetailDao().findFromAcache();
+        powderBrand = milkHelper.getMilkPowderBrand();
+        powderSerie = milkHelper.getMilkPowderSerie();
+        powderDetail = milkHelper.getMilkPowderDetail();
     }
 
     public PowderDetail getPowderDetail() {
@@ -63,27 +61,30 @@ public class MilkChooseActivity extends SubActivity {
     }
 
     public void save() {
-        Log.i(TAG, "save");
-        if (powderBrand != null)
-            powderBrand.saveInCache();
-        if (powderSerie != null) {
-            Log.i(TAG, "powderserir != null");
-            powderSerie.saveInAcache();
-            PowderDetailDao powderDetailDao = new PowderDetailDao();
-            powderDetailDao.findFromCloudByPowderSerie(powderSerie, new FindCallback<PowderDetail>() {
-                @Override
-                public void done(List<PowderDetail> list, AVException e) {
-                    if (e == null && list != null && list.isEmpty() == false) {
-                        for (PowderDetail p : list) {
-                            p.saveInACache();
-                            powderDetail = p;
-                            Log.i(TAG, "powderDetail success");
-                        }
-                    }
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (milkHelper.saveMilk(powderBrand, powderSerie) == false) {
+                    Log.i("milkchooseActivit", "milk save failed");
+                    return;
                 }
-            });
-        }
+                Log.i("milkchooseActivit", "milk save success");
+                try {
+                    FeedPlanHelper feedPlanHelper = new FeedPlanHelper();
+                    if (powderSerie.getObjectId().equals(milkHelper.getMilkPowderSerie().getObjectId()) == false) {
+                        feedPlanHelper.saveBabyItems(powderSerie);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (AVException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        thread.start();
     }
+
     @Override
     protected Fragment initFragment() {
         // TODO Auto-generated method stub
