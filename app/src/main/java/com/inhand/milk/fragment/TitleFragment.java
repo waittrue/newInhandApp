@@ -86,4 +86,11 @@ public class TitleFragment extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+    protected void finishFragment() {
+        FragmentManager manager = (TitleFragment.this).getActivity().getFragmentManager();
+        manager.popBackStack();
+        FragmentTransaction fragmentTransaction = manager.beginTransaction();
+        fragmentTransaction.commit();
+    }
 }

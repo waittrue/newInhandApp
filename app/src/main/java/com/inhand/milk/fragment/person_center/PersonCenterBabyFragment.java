@@ -78,8 +78,8 @@ public class PersonCenterBabyFragment extends TitleFragment {
                     sex = "男性";
                 name = baby.getNickname();
                 try {
-                    imageBytes = baby.getAvatorBytes();
-                    baby.saveImageInAcache();
+                    imageBytes = baby.fetchAvatorBytes();
+                    baby.saveImageInAcache(imageBytes);
                     Log.i("babyinfo", "save success");
                 } catch (AVException e) {
                     e.printStackTrace();

@@ -432,7 +432,7 @@ public class WeightFragment extends TitleFragment {
         if (baby.getSex() == Baby.FEMALE) {
             weightExcle.setStanderLeft(weightStanderPares.getGirlMin(monthAge), weightStanderPares.getGirlMax(monthAge));
             weightExcle.setStanderRight(weightStanderPares.getGirlMin(monthAge + 1), weightStanderPares.getGirlMax(monthAge + 1));
-        } else if (baby.getSex() == Baby.MALE) {
+        } else {
             weightExcle.setStanderLeft(weightStanderPares.getBoyMin(monthAge), weightStanderPares.getBoyMax(monthAge));
             weightExcle.setStanderRight(weightStanderPares.getBoyMin(monthAge + 1), weightStanderPares.getBoyMax(monthAge));
         }

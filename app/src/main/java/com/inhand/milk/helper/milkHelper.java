@@ -63,7 +63,7 @@ public class MilkHelper {
         Baby baby = App.getCurrentBaby();
         try {
             Log.i(TAG, "ready to save baby");
-            baby.setPowderSeries(powderSerie);
+            baby.setPowderSeriesObject(powderSerie);
             baby.save();
             baby.saveInCache(App.getAppContext());
             powderBrand.saveInCache();

@@ -79,7 +79,7 @@ public class FeedPlanHelper {
     }
 
     public boolean hasAcache() {
-        List<BabyFeedItem> babyFeedItems = App.getCurrentBaby().getBabyItemFromAcache();
+        List<BabyFeedItem> babyFeedItems = new BabyFeedItemDao().getBabyItemFromAcache();
         if (babyFeedItems == null || babyFeedItems.isEmpty())
             return false;
         return true;
@@ -100,7 +100,7 @@ public class FeedPlanHelper {
             //更改缓存
             feedCate = feedCate.changeToNext();
             Baby baby = App.getCurrentBaby();
-            baby.setFeedCate(feedCate);
+            baby.setFeedCateObject(feedCate);
             baby.save();
             return true;
         } catch (AVException e) {
@@ -171,7 +171,7 @@ public class FeedPlanHelper {
             return;
         Baby baby = App.getCurrentBaby();
         try {
-            baby.setFeedCate(feedCate);
+            baby.setFeedCateObject(feedCate);
             baby.save();
             feedCate.saveInCache();
         } catch (AVException e) {
@@ -222,7 +222,7 @@ public class FeedPlanHelper {
         Log.i("FeedPlanHElper", String.valueOf(babyFeedItems1 == null) + " " + String.valueOf(babyFeedItems1.isEmpty()));
         if (babyFeedItems1 != null && babyFeedItems1.isEmpty() == false) {
             try {
-                AVObject.deleteAll(babyFeedItems1);
+                delectAll(babyFeedItems1);
             } catch (AVException e) {
                 return false;
             }
@@ -246,7 +246,7 @@ public class FeedPlanHelper {
     public boolean saveBabyFeedItemAcache(List<BabyFeedItem> babyFeedItems) {
         if (babyFeedItems == null)
             return false;
-        App.getCurrentBaby().saveBabyItemAcache(babyFeedItems);
+        new BabyFeedItemDao().saveBabyItemAcache(babyFeedItems);
         return true;
     }
 
@@ -255,15 +255,28 @@ public class FeedPlanHelper {
      *
      * @param babyFeedItems
      */
-    public void changeSave(List<BabyFeedItem> babyFeedItems) {
+    public void changeSave(List<BabyFeedItem> babyFeedItems) throws AVException {
         try {
             AVObject.saveAll(babyFeedItems);
+            saveBabyFeedItemAcache(babyFeedItems);
         } catch (AVException e) {
-            e.printStackTrace();
-            return;
+            throw e;
         }
     }
 
+    /**
+     * 删除云端的数据，这里并没有更改本地
+     *
+     * @param babyFeedItems
+     * @throws AVException
+     */
+    public void delectAll(List<BabyFeedItem> babyFeedItems) throws AVException {
+        try {
+            AVObject.deleteAll(babyFeedItems);
+        } catch (AVException e) {
+            throw e;
+        }
+    }
     /**
      * 按照时间递增的排序
      *
@@ -340,7 +353,7 @@ public class FeedPlanHelper {
      * 从缓存取所有宝宝的相关条目
      */
     public List<BabyFeedItem> getBabyFeedItemsFromAcache() {
-        List<BabyFeedItem> babyFeedItems = App.getCurrentBaby().getBabyItemFromAcache();
+        List<BabyFeedItem> babyFeedItems = new BabyFeedItemDao().getBabyItemFromAcache();
         if (babyFeedItems == null || babyFeedItems.isEmpty())
             return null;
         return babyFeedItems;

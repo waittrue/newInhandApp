@@ -100,10 +100,6 @@
             android:screenOrientation="portrait"
             android:label="@string/app_name"/>
         <activity
-            android:name=".activity.EatingCustomFixActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name"/>
-        <activity
             android:name=".activity.MilkChooseActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name"/>

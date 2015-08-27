@@ -212,7 +212,7 @@ public class User extends AVUser {
         }
         // 缓存喂养计划信息
         List<BabyFeedItem> babyFeedItems = new BabyFeedItemDao().findBabyFeedItemsFromCloud(baby);
-        baby.saveBabyItemAcache(babyFeedItems);
+        new BabyFeedItemDao().saveBabyItemAcache(babyFeedItems);
         Log.i("user", String.valueOf(babyFeedItems.size()));
         //缓存baby
         baby.saveInCache(ctx);

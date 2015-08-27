@@ -1,9 +1,14 @@
 package com.inhand.milk.dao;
 
+import android.util.Log;
+
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
+import com.inhand.milk.App;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.entity.BabyFeedItem;
+import com.inhand.milk.utils.ACache;
 
 import java.util.List;
 
@@ -26,5 +31,24 @@ public class BabyFeedItemDao {
         } catch (AVException e) {
             return null;
         }
+    }
+
+    public void saveBabyItemAcache(List<BabyFeedItem> babyFeedItems) {
+        if (babyFeedItems == null)
+            return;
+        String json = JSON.toJSONString(babyFeedItems);
+        ACache aCache = ACache.get(App.getAppContext());
+        aCache.put(BabyFeedItem.ACACHE_KEY, json);
+        Log.i("baby", json);
+    }
+
+    public List<BabyFeedItem> getBabyItemFromAcache() {
+        String json = ACache.get(App.getAppContext()).getAsString(BabyFeedItem.ACACHE_KEY);
+        if (json == null)
+            return null;
+        List<BabyFeedItem> babyFeedItems = JSON.parseArray(json, BabyFeedItem.class);
+        if (babyFeedItems == null || babyFeedItems.isEmpty())
+            return null;
+        return babyFeedItems;
     }
 }

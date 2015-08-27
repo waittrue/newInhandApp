@@ -1,7 +1,6 @@
 package com.inhand.milk.entity;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVClassName;
@@ -43,8 +42,6 @@ public class Baby extends Base implements CacheSaving<Baby> {
 
     public static int FEMALE = 2; // 女性
     public static int MALE = 1; // 男性
-    private byte[] imageBytes;
-
     public Baby() {
         super();
         // 首次创建宝宝时，为其自动创建统计信息及喂养计划
@@ -112,7 +109,7 @@ public class Baby extends Base implements CacheSaving<Baby> {
      *
      * @return 宝宝当前所用奶粉
      */
-    private PowderSerie getPowderSeriesObject() {
+    public PowderSerie getPowderSeriesObject() {
         try {
             return this.getAVObject(POWDER_KEY, PowderSerie.class);
         } catch (Exception e) {
@@ -142,7 +139,7 @@ public class Baby extends Base implements CacheSaving<Baby> {
      *
      * @param powder 宝宝当前所用奶粉
      */
-    public void setPowderSeries(PowderSerie powder) {
+    public void setPowderSeriesObject(PowderSerie powder) {
         this.put(POWDER_KEY, powder);
     }
 
@@ -161,7 +158,7 @@ public class Baby extends Base implements CacheSaving<Baby> {
 
     }
 
-    public void setFeedCate(FeedCate feedCate) {
+    public void setFeedCateObject(FeedCate feedCate) {
         put(FEEDCATE_KEY, feedCate);
     }
 
@@ -171,7 +168,7 @@ public class Baby extends Base implements CacheSaving<Baby> {
      * @return 喂养计划分类表
      * @throws AVException
      */
-    public FeedCate getFeedCate() throws AVException {
+    public FeedCate fetchFeedCate() throws AVException {
         try {
             FeedCate feedCate = getFeedCateObject();
             if (feedCate == null)
@@ -252,8 +249,7 @@ public class Baby extends Base implements CacheSaving<Baby> {
         try {
             avFile.save();
             setAvatar(avFile);
-            imageBytes = bytes;
-            saveImageInAcache();
+            saveImageInAcache(bytes);
             save();
         } catch (AVException e) {
             e.printStackTrace();
@@ -266,7 +262,7 @@ public class Baby extends Base implements CacheSaving<Baby> {
      *
      * @param callBack 找到的回调接口
      */
-    public void getAvatorBytes(final LocalGetAvFileCallBack callBack) {
+    public void fetchAvatorBytes(final LocalGetAvFileCallBack callBack) {
         AVFile avFile = getAvatar();
         if (avFile == null)
             return;
@@ -274,8 +270,7 @@ public class Baby extends Base implements CacheSaving<Baby> {
             @Override
             public void done(final byte[] bytes, AVException e) {
                 if (e == null && bytes != null)
-                    imageBytes = bytes;
-                callBack.done(bytes, e);
+                    callBack.done(bytes, e);
             }
         });
     }
@@ -286,16 +281,15 @@ public class Baby extends Base implements CacheSaving<Baby> {
      * @return
      * @throws AVException 当网络发生异常的时候
      */
-    public byte[] getAvatorBytes() throws AVException {
+    public byte[] fetchAvatorBytes() throws AVException {
         AVFile avFile = getAvatar();
         if (avFile == null) {
             return null;
         }
         try {
-            imageBytes = avFile.getData();
-            return imageBytes;
+            return avFile.getData();
+
         } catch (AVException e) {
-            imageBytes = null;
             throw e;
         }
     }
@@ -342,10 +336,9 @@ public class Baby extends Base implements CacheSaving<Baby> {
     /**
      * 把头像的二进制缓存起来
      */
-    public void saveImageInAcache() {
+    public void saveImageInAcache(byte[] bytes) {
         ACache aCache = ACache.get(App.getAppContext());
-        if (imageBytes != null)
-            aCache.put(ACACEAVATAR_KEY + this.getObjectId(), JSON.toJSONString(imageBytes));
+        aCache.put(ACACEAVATAR_KEY + this.getObjectId(), JSON.toJSONString(bytes));
     }
 
     /**
@@ -380,22 +373,5 @@ public class Baby extends Base implements CacheSaving<Baby> {
         }
     }
 
-    public void saveBabyItemAcache(List<BabyFeedItem> babyFeedItems) {
-        if (babyFeedItems == null)
-            return;
-        String json = JSON.toJSONString(babyFeedItems);
-        ACache aCache = ACache.get(App.getAppContext());
-        aCache.put(BabyFeedItem.ACACHE_KEY, json);
-        Log.i("baby", "savebabyitemache json success");
-    }
 
-    public List<BabyFeedItem> getBabyItemFromAcache() {
-        String json = ACache.get(App.getAppContext()).getAsString(BabyFeedItem.ACACHE_KEY);
-        if (json == null)
-            return null;
-        List<BabyFeedItem> babyFeedItems = JSON.parseArray(json, BabyFeedItem.class);
-        if (babyFeedItems == null || babyFeedItems.isEmpty())
-            return null;
-        return babyFeedItems;
-    }
 }

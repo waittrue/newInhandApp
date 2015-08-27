@@ -47,6 +47,7 @@ public class BabyFeedItem extends Base {
         return getInt(TYPE_KEY);
     }
 
+
     public void addSupplement(Supplement supplement) {
         addUnique(SUPPLEMENTS_KEY, supplement);
     }
@@ -57,9 +58,11 @@ public class BabyFeedItem extends Base {
         addAllUnique(SUPPLEMENTS_KEY, supplements);
     }
 
+
     private List<Supplement> getSupplementsObjects() {
         return getList(SUPPLEMENTS_KEY);
     }
+
 
     private void setSupplementsObjects(List<Supplement> supplements) {
         put(SUPPLEMENTS_KEY, supplements);
@@ -71,6 +74,7 @@ public class BabyFeedItem extends Base {
      * @return
      * @throws AVException
      */
+
     public List<Supplement> fechSupplements() throws AVException {
         List<Supplement> supplements = getSupplementsObjects();
         if (supplements == null)
@@ -84,4 +88,5 @@ public class BabyFeedItem extends Base {
             throw e;
         }
     }
+
 }

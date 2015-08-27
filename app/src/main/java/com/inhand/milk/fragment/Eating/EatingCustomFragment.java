@@ -4,7 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -20,9 +20,12 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
+import com.inhand.milk.App;
 import com.inhand.milk.R;
-import com.inhand.milk.activity.EatingCustomFixActivity;
+import com.inhand.milk.activity.EatingCustomPlanActivity;
 import com.inhand.milk.entity.BabyFeedItem;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.helper.FeedPlanHelper;
@@ -54,11 +57,14 @@ public class EatingCustomFragment extends TitleFragment {
     private List<Integer> seletedData;
     private float animationTranslate;
     private List<BabyFeedItem> babyFeedItems;
+    private List<BabyFeedItem> delectBabyFeedItems = new ArrayList<>();
+    public static final String PLAN_ITEM_KEY = "plan_time_key";
+    public static final String PLAN_TYPE_KEY = "plan_type_key";
     private AdapterView.OnItemClickListener listViewListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent(getActivity(), EatingCustomFixActivity.class);
-            getActivity().startActivity(intent);
+            ((EatingCustomPlanActivity) getActivity()).setBabyFeedItem(babyFeedItems.get(position));
+            gotoSpecialFragment(new EatingCustomFixFragment());
         }
     };
     private View.OnClickListener finishListener = new View.OnClickListener() {
@@ -69,17 +75,21 @@ public class EatingCustomFragment extends TitleFragment {
             int firstPosition = listView.getFirstVisiblePosition();
             int EndPosition = listView.getLastVisiblePosition();
             for (int position : seletedData) {
-                delectSelect(seletedData);
                 if (position >= firstPosition && position <= EndPosition)
-                    closeAniamtion(listView.getChildAt(position));
+                    closeAniamtion(listView.getChildAt(position - firstPosition));
+            }
+            for (int position = seletedData.size() - 1; position >= 0; position--) {
+                int location = seletedData.get(position);
+                delectBabyFeedItems.add(babyFeedItems.get(location));
+                babyFeedItems.remove(location);
             }
         }
     };
     private View.OnClickListener addListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), EatingCustomFixActivity.class);
-            getActivity().startActivity(intent);
+            ((EatingCustomPlanActivity) getActivity()).setBabyFeedItem(null);
+            gotoSpecialFragment(new EatingCustomFixFragment());
         }
     };
     private View.OnClickListener cancleListener = new View.OnClickListener() {
@@ -156,7 +166,31 @@ public class EatingCustomFragment extends TitleFragment {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+                AsyncTask task = new AsyncTask() {
+                    @Override
+                    protected Object doInBackground(Object[] params) {
 
+                        try {
+                            FeedPlanHelper feedPlanHelper = new FeedPlanHelper();
+                            feedPlanHelper.changeSave(babyFeedItems);
+                            feedPlanHelper.delectAll(delectBabyFeedItems);
+                        } catch (AVException e) {
+                            return false;
+                        } catch (ParseException e) {
+                            return false;
+                        }
+                        return true;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        if ((boolean) o == false) {
+                            Toast.makeText(App.getAppContext(), "喂养计划修改失败，网络不给力", Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    }
+                };
+                task.execute();
             }
         };
         initViews();
@@ -185,12 +219,43 @@ public class EatingCustomFragment extends TitleFragment {
         listView.setOnItemClickListener(listViewListener);
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden == false) {
+            updateViews();
+        }
+    }
+
+    private void updateViews() {
+        Log.i("eatingCustomFragment", "updateViews");
+        initPlantime();
+        data.clear();
+        for (int i = 0; i < planTime.size(); i++) {
+            Map<String, Object> map = new HashMap<>();
+            int[] time = planTime.get(i);
+            boolean ismilk = isMilk[i];
+            String t = formatTime(time);
+            map.put(TIME, t);
+            map.put(TYPE, ismilk);
+            data.add(map);
+        }
+        delectAdapter.setData(data);
+        delectAdapter.notifyDataSetChanged();
+    }
     private void initPlantime() {
         try {
             FeedPlanHelper feedPlanHelper = new FeedPlanHelper();
-            babyFeedItems = feedPlanHelper.getBabyFeedItemsFromAcache();
+            if (babyFeedItems == null) {
+                babyFeedItems = feedPlanHelper.getBabyFeedItemsFromAcache();
+            }
             if (babyFeedItems == null)
                 return;
+            BabyFeedItem addbabyFeedItem = ((EatingCustomPlanActivity) getActivity()).getAddBabyFeedItem();
+            if (addbabyFeedItem != null) {
+                babyFeedItems.add(addbabyFeedItem);
+                ((EatingCustomPlanActivity) getActivity()).setAddBabyFeedItem(null);
+            }
             babyFeedItems = feedPlanHelper.sortBabyfeedItems(babyFeedItems);
             planTime = feedPlanHelper.getTime(babyFeedItems);
             isMilk = feedPlanHelper.getType(babyFeedItems);
@@ -434,6 +499,9 @@ public class EatingCustomFragment extends TitleFragment {
                 checkBox.setOnClickListener(checkBoxListener);
                 icon.setTranslationX(translate);
                 typeTextView.setTranslationX(translate);
+                if (selected.contains(position)) {
+                    checkBox.setChecked(true);
+                }
             } else {
                 checkBox.setAlpha(0);
                 checkBox.setVisibility(View.GONE);

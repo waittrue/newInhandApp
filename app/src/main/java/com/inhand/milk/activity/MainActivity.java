@@ -66,7 +66,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         thread.start();
-
         /*
         setSlidingMenu();
         onClickListener = new OnClickListener() {
