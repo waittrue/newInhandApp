@@ -30,7 +30,7 @@ import java.util.Map;
  * 过多的内存
  */
 
-public class WeightHelper {
+public class WeightHelper extends ObserableHelper {
     private static final String TAG = "weightAache";
     private static WeightHelper instance;
     private static List<BabyInfo> babyInfos;
@@ -64,9 +64,9 @@ public class WeightHelper {
      */
     private void initData() {
         currentBaby = App.getCurrentBaby();
-        if (babyInfos == null)
-            babyInfos = getAllBabyInfoCache();
+        babyInfos = getAllBabyInfoCache();
         months2Weights();
+        Log.i(TAG, String.valueOf(monthToweights));
     }
 
     /**
@@ -304,13 +304,15 @@ public class WeightHelper {
         if (babyInfosCloud == null || babyInfosCloud.isEmpty())
             return;
         if (equals(currentBabyInfo, babyInfosCloud.get(0))) {
+            Log.i(TAG, "云端数据和本地数据第一个的创造时间相同，不更新");
             return;
         }
+        Log.i(TAG, "云端数据和本地数据第一个的创造时间不相同，更新");
         for (BabyInfo babyInfo : babyInfosCloud) {
             babyInfo.saveInCache(App.getAppContext());
         }
         initData();
-        //   Log.i(TAG,"weight sync success");
+        notifyDataChanged();
     }
 
     /**
@@ -321,8 +323,21 @@ public class WeightHelper {
      * @return 相同返回真
      */
     private boolean equals(BabyInfo a, BabyInfo b) {
-        if (a.getCreatedAt().compareTo(b.getCreatedAt()) != 0)
+        if (a.getAge().equals(b.getAge()) == false) {
             return false;
+        } else {
+            if (a.getWeight() != b.getWeight()) {
+                return false;
+            } else {
+                if (a.getHeight() != b.getHeight())
+                    return false;
+                else {
+                    if (a.getHeadSize() != b.getHeadSize()) {
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
 }

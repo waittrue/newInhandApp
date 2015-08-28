@@ -24,7 +24,7 @@ import java.util.List;
  * Time: 10:05
  */
 public class BabyInfoDao {
-
+    private static final String SROT_BY = "createdAt";
     private AVQuery<BabyInfo> query = AVQuery.getQuery(BabyInfo.class);
 
 
@@ -84,6 +84,7 @@ public class BabyInfoDao {
     public void findByBabyFromCloud(final Baby baby
             , final FindCallback<BabyInfo> callback) {
         query.whereEqualTo(BabyInfo.BABY_KEY, baby);
+        query.orderByDescending(SROT_BY);
         query.findInBackground(callback);
     }
 
@@ -94,6 +95,7 @@ public class BabyInfoDao {
      */
     public List<BabyInfo> findByBabyFromCloud(Baby baby) {
         query.whereEqualTo(BabyInfo.BABY_KEY, baby);
+        query.orderByDescending(SROT_BY);
         try {
             return query.find();
         } catch (AVException e) {

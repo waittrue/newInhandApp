@@ -175,6 +175,7 @@ public class EatingCustomFixFragment extends TitleFragment {
                 //save
                 if (babyFeedItem == null) {
                     babyFeedItem = new BabyFeedItem();
+                    babyFeedItem.setBaby(App.getCurrentBaby());
                     ((EatingCustomPlanActivity) getActivity()).setAddBabyFeedItem(babyFeedItem);
                 } else {
                     ((EatingCustomPlanActivity) getActivity()).setBabyFeedItem(babyFeedItem);

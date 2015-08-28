@@ -26,7 +26,6 @@ public class BabyFeedItemDao {
         query.whereEqualTo(BabyFeedItem.BABY_KEY, baby);
         query.orderByAscending(ORDER_BY);
         try {
-            List<BabyFeedItem> babyFeedItems = query.find();
             return query.find();
         } catch (AVException e) {
             return null;

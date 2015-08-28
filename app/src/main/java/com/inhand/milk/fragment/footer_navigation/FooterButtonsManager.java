@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.inhand.milk.R;
-import com.inhand.milk.fragment.TitleFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +41,6 @@ public class FooterButtonsManager {
                 fragmentTransaction.hide(map.get(mCurrent));
                 fragmentTransaction.show(fragment);
                 fragmentTransaction.commit();
-                ((TitleFragment) fragment).refresh();
                 mCurrent = v;
             }
         });

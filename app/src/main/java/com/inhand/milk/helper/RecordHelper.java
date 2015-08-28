@@ -22,16 +22,14 @@ import java.util.Set;
 /**
  * Created by Administrator on 2015/8/9.
  */
-public class RecordHelper {
+public class RecordHelper extends ObserableHelper {
     private static final String TAG = "RecordHelper";
     private static RecordHelper instance = null;
-    private OneDayDao oneDayDao;
-    private Map<String, OneDay> data;
+    private OneDayDao oneDayDao = new OneDayDao();
+    private Map<String, OneDay> data = new HashMap<>();
     private Record lastRecord;
 
     private RecordHelper() {
-        oneDayDao = new OneDayDao();
-        data = new HashMap<>();
     }
 
     private synchronized static void init() {

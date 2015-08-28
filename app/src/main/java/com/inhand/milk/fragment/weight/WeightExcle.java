@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Shader;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -228,7 +227,6 @@ public class WeightExcle extends View {
         }
         standerLeft[0] = min;
         standerLeft[1] = max;
-        Log.i("weightExcle", "standleft:" + String.valueOf(min) + " " + String.valueOf(max));
         minValue = minValue < standerLeft[0] ? minValue : standerLeft[0];
         maxValue = maxValue > standerLeft[1] ? maxValue : standerLeft[1];
     }
@@ -243,7 +241,6 @@ public class WeightExcle extends View {
         }
         standerRight[0] = min;
         standerRight[1] = max;
-        Log.i("weightExcle", "standright:" + String.valueOf(min) + " " + String.valueOf(max));
         minValue = minValue < standerRight[0] ? minValue : standerRight[0];
         maxValue = maxValue > standerRight[1] ? maxValue : standerRight[1];
     }

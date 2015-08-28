@@ -83,7 +83,9 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
 
         oneDay.setRecords(records);
         oneDay.setBaby(App.getCurrentBaby());
-        RecordHelper.getInstance().saveOneday(oneDay);
+        RecordHelper recordHelper = RecordHelper.getInstance();
+        recordHelper.saveOneday(oneDay);
+        recordHelper.notifyDataChanged();
         return true;
     }
 

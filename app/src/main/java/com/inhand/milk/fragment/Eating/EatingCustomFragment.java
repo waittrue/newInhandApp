@@ -32,7 +32,6 @@ import com.inhand.milk.helper.FeedPlanHelper;
 import com.inhand.milk.ui.ButtonA;
 import com.inhand.milk.utils.ViewHolder;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,19 +46,18 @@ public class EatingCustomFragment extends TitleFragment {
     private static final String TIME = "time", TYPE = "type";
     private static final int time = 300;
     private List<int[]> planTime = new ArrayList<>();
-    private boolean[] isMilk;
+    private boolean[] isMilk = null;
     private ButtonA buttonA, buttonB;
     private ListView listView;
     private DelectAdapter delectAdapter;
     private float itemHeight;
-    private List<Map<String, Object>> data;
+    private List<Map<String, Object>> data = new ArrayList<>();
     private boolean closeAnimationFirstEnd = false;
     private List<Integer> seletedData;
     private float animationTranslate;
     private List<BabyFeedItem> babyFeedItems;
     private List<BabyFeedItem> delectBabyFeedItems = new ArrayList<>();
-    public static final String PLAN_ITEM_KEY = "plan_time_key";
-    public static final String PLAN_TYPE_KEY = "plan_type_key";
+    private FeedPlanHelper feedPlanHelper = FeedPlanHelper.getInstance();
     private AdapterView.OnItemClickListener listViewListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -123,36 +121,7 @@ public class EatingCustomFragment extends TitleFragment {
         }
     };
 
-    /**
-     * 从babyfeeditem  中删除那些我们选中select
-     *
-     * @param select 需要删除的位置
-     */
-    private void delectSelect(List<Integer> select) {
-        if (select == null || select.isEmpty())
-            return;
-        List<Integer> sort = new ArrayList<>();
-        sort.add(select.get(0));
-        select.remove(0);
-        int loaction = 0;
-        for (int num : select) {
-            for (loaction = sort.size() - 1; loaction >= 0; loaction--) {
-                int temp = sort.get(loaction);
-                if (num > temp) {
-                    continue;
-                } else if (num <= temp) {
-                    sort.add(loaction + 1, num);
-                    break;
-                }
-            }
-            if (loaction < 0) {
-                sort.add(0, num);
-            }
-        }
-        for (int num : sort) {
-            babyFeedItems.remove(num);
-        }
-    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -162,6 +131,7 @@ public class EatingCustomFragment extends TitleFragment {
         buttonB = (ButtonA) mView.findViewById(R.id.eating_plan_custom_button_b);
         animationTranslate = getResources().getDimensionPixelOffset(R.dimen.eating_custom_plan_item_animation_long);
         itemHeight = getResources().getDimensionPixelOffset(R.dimen.eating_custom_plan_item_height);
+
         View.OnClickListener rightListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,14 +139,10 @@ public class EatingCustomFragment extends TitleFragment {
                 AsyncTask task = new AsyncTask() {
                     @Override
                     protected Object doInBackground(Object[] params) {
-
                         try {
-                            FeedPlanHelper feedPlanHelper = new FeedPlanHelper();
                             feedPlanHelper.changeSave(babyFeedItems);
                             feedPlanHelper.delectAll(delectBabyFeedItems);
                         } catch (AVException e) {
-                            return false;
-                        } catch (ParseException e) {
                             return false;
                         }
                         return true;
@@ -201,9 +167,16 @@ public class EatingCustomFragment extends TitleFragment {
     }
 
     private void initViews() {
+        babyFeedItems = feedPlanHelper.getBabyFeedItemsFromAcache();
         initPlantime();
+        delectAdapter = new DelectAdapter(getActivity());
+        delectAdapter.setData(data);
         listView = (ListView) mView.findViewById(R.id.eating_custom_plan_listview);
-        data = new ArrayList<>();
+
+        listView.setAdapter(delectAdapter);
+        listView.setOnItemClickListener(listViewListener);
+        if (planTime == null || isMilk == null)
+            return;
         for (int i = 0; i < planTime.size(); i++) {
             Map<String, Object> map = new HashMap<>();
             int[] time = planTime.get(i);
@@ -213,10 +186,6 @@ public class EatingCustomFragment extends TitleFragment {
             map.put(TYPE, ismilk);
             data.add(map);
         }
-        delectAdapter = new DelectAdapter(getActivity());
-        delectAdapter.setData(data);
-        listView.setAdapter(delectAdapter);
-        listView.setOnItemClickListener(listViewListener);
     }
 
     @Override
@@ -227,10 +196,21 @@ public class EatingCustomFragment extends TitleFragment {
         }
     }
 
+    @Override
+    public void refresh() {
+        super.refresh();
+        if (needRefresh()) {
+            updateViews();
+            clearNeedRefresh();
+        }
+    }
+
     private void updateViews() {
         Log.i("eatingCustomFragment", "updateViews");
         initPlantime();
         data.clear();
+        if (planTime == null || isMilk == null)
+            return;
         for (int i = 0; i < planTime.size(); i++) {
             Map<String, Object> map = new HashMap<>();
             int[] time = planTime.get(i);
@@ -240,28 +220,19 @@ public class EatingCustomFragment extends TitleFragment {
             map.put(TYPE, ismilk);
             data.add(map);
         }
-        delectAdapter.setData(data);
         delectAdapter.notifyDataSetChanged();
     }
     private void initPlantime() {
-        try {
-            FeedPlanHelper feedPlanHelper = new FeedPlanHelper();
-            if (babyFeedItems == null) {
-                babyFeedItems = feedPlanHelper.getBabyFeedItemsFromAcache();
-            }
-            if (babyFeedItems == null)
-                return;
-            BabyFeedItem addbabyFeedItem = ((EatingCustomPlanActivity) getActivity()).getAddBabyFeedItem();
-            if (addbabyFeedItem != null) {
-                babyFeedItems.add(addbabyFeedItem);
-                ((EatingCustomPlanActivity) getActivity()).setAddBabyFeedItem(null);
-            }
-            babyFeedItems = feedPlanHelper.sortBabyfeedItems(babyFeedItems);
-            planTime = feedPlanHelper.getTime(babyFeedItems);
-            isMilk = feedPlanHelper.getType(babyFeedItems);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (babyFeedItems == null)
+            babyFeedItems = new ArrayList<>();
+        BabyFeedItem addbabyFeedItem = ((EatingCustomPlanActivity) getActivity()).getAddBabyFeedItem();
+        if (addbabyFeedItem != null) {
+            babyFeedItems.add(addbabyFeedItem);
+            ((EatingCustomPlanActivity) getActivity()).setAddBabyFeedItem(null);
         }
+        babyFeedItems = feedPlanHelper.sortBabyfeedItems(babyFeedItems);
+        planTime = feedPlanHelper.getTime(babyFeedItems);
+        isMilk = feedPlanHelper.getType(babyFeedItems);
     }
     private String formatTime(int[] time) {
         String hour, m, result = "";

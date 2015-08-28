@@ -10,7 +10,6 @@ import com.inhand.milk.alarm.AlarmSeting;
 import com.inhand.milk.entity.BabyFeedItem;
 import com.inhand.milk.helper.FeedPlanHelper;
 
-import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -34,11 +33,7 @@ public class AppSettingFragment extends PreferenceFragment {
                     List<int[]> planTime = null;
                     boolean[] isMilk = null;
                     FeedPlanHelper feedPlanHelper = null;
-                    try {
-                        feedPlanHelper = new FeedPlanHelper();
-                    } catch (ParseException e) {
-                        return true;
-                    }
+                    feedPlanHelper = FeedPlanHelper.getInstance();
                     List<BabyFeedItem> babyFeedItems = feedPlanHelper.getBabyFeedItemsFromAcache();
                     if (babyFeedItems == null)
                         return true;

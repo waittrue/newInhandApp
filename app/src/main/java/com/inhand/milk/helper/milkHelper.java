@@ -24,7 +24,7 @@ import java.util.List;
  * 时间：2015/8/26
  * 描述：这里主要跟换存milk，换milk各种需要的逻辑
  */
-public class MilkHelper {
+public class MilkHelper extends ObserableHelper {
     private static final String TAG = "MILKHELPER";
 
     /**

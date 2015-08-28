@@ -60,10 +60,10 @@ public class MilkAmountFragment extends TitleFragment {
     private int warningHighColor, warningLowColor, normalColor, progressBgColor;
     private List<OneDay> oneDays;
     private RecordHelper recordHelper;
-    private boolean firstEnter = true;
 
     public MilkAmountFragment() {
         recordHelper = RecordHelper.getInstance();
+        recordHelper.registerObserver(mOberver);
         initOnedays();
     }
 
@@ -250,10 +250,6 @@ public class MilkAmountFragment extends TitleFragment {
                     progressBar.setColor((int) map.get(CONTENT_COLOR));
                     progressBar.setMaxNum((float) map.get(CONTENT_SCORE));
 
-
-                    //linearLayout = ViewHolder.get(convertView, R.id.milk_amount_listview_item_divide_temperature_amount);
-                    //linearLayout.setBackgroundColor((int) map.get(CONTENT_COLOR));
-
                     linearLayout = ViewHolder.get(convertView, R.id.milk_amount_listview_item_divider);
                     if (adpter.hasHead(position + 1)) {
                         linearLayout.setVisibility(View.INVISIBLE);
@@ -267,11 +263,11 @@ public class MilkAmountFragment extends TitleFragment {
 
     private void initListViews() {
         initAdpter();
-        getDataFromDB(adpter);
+        getDataFromDB();
     }
 
-    private void getDataFromDB(PinnerListViewAdapter adapter) {
-        adapter.clearData();
+    private void getDataFromDB() {
+        adpter.clearData();
         initOnedays();
         if(oneDays.isEmpty())
             return;
@@ -284,7 +280,7 @@ public class MilkAmountFragment extends TitleFragment {
             for (int j = 0; j < recordSize; j++) {
                 if (i == 0 && j == 0)
                     lastRecord = temp.get(recordSize - 1 - j);
-                adapter.addMap(getHeadData(oneDay), getContentData(temp.get(recordSize - 1 - j)), addCount++);
+                adpter.addMap(getHeadData(oneDay), getContentData(temp.get(recordSize - 1 - j)), addCount++);
             }
         }
         headlistView.setAdapter(adpter);
@@ -327,23 +323,15 @@ public class MilkAmountFragment extends TitleFragment {
 
     @Override
     public void refresh() {
-        if (firstEnter == false) {
-            if (lastRecord != null) {
-                Log.i("milkAmountFragmnet", "!=null" + lastRecord.getBeginTemperature());
-
-                if (recordHelper.needChanged(lastRecord) == false) {
-                    Log.i("milkAmountFragmnet", "false");
-                    return;
-                }
-            }
+        if (needRefresh()) {
+            Log.i("milkAmountFragmnet", "true");
+            getDataFromDB();
+            drinkNum.setText(getResources().getString(R.string.milk_amount_drink_num_doc) + getOneDayDrinkAmount());
+            adviseNum.setText(getResources().getString(R.string.milk_amount_advise_num_doc) + getOneDayAdviseAmount());
+            ringWithText.setMaxSweepAngle(drinkAmount / adviseAmount * 360);
+            startAnimator();
+            clearNeedRefresh();
         }
-        Log.i("milkAmountFragmnet", "true");
-        getDataFromDB(adpter);
-        drinkNum.setText(getResources().getString(R.string.milk_amount_drink_num_doc) + getOneDayDrinkAmount());
-        adviseNum.setText(getResources().getString(R.string.milk_amount_advise_num_doc) + getOneDayAdviseAmount());
-        ringWithText.setMaxSweepAngle(drinkAmount / adviseAmount * 360);
-        startAnimator();
-        firstEnter = false;
     }
 
     private void startAnimator() {

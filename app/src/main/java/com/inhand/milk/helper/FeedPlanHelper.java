@@ -1,7 +1,5 @@
 package com.inhand.milk.helper;
 
-import android.util.Log;
-
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.inhand.milk.App;
@@ -29,7 +27,7 @@ import java.util.List;
  * 时间：2015/8/26
  * 描述：完成feedplan的一些逻辑业务需求
  */
-public class FeedPlanHelper {
+public class FeedPlanHelper extends ObserableHelper {
     private FeedPlanDao feedPlanDao = new FeedPlanDao();
     private FeedCateDao feedCateDao = new FeedCateDao();
     private FeedItemDao feedItemDao = new FeedItemDao();
@@ -37,8 +35,9 @@ public class FeedPlanHelper {
     private FeedPlan feedPlan;
     private FeedItem feedItem;
     private int monthAges;
+    private static FeedPlanHelper feedPlanHelper = null;
 
-    public FeedPlanHelper() throws ParseException {
+    private FeedPlanHelper() throws ParseException {
         try {
             monthAges = getmonthAge();
         } catch (ParseException e) {
@@ -47,9 +46,24 @@ public class FeedPlanHelper {
         }
     }
 
+    private synchronized static void initInstance() {
+        if (feedPlanHelper == null)
+            try {
+                feedPlanHelper = new FeedPlanHelper();
+            } catch (ParseException e) {
+                feedPlanHelper = null;
+            }
+    }
+
+    public static FeedPlanHelper getInstance() {
+        if (feedPlanHelper == null) {
+            initInstance();
+        }
+        return feedPlanHelper;
+    }
+
     /**
      * 获取宝宝的月龄
-     *
      * @return 返回月龄
      * @throws ParseException 解析错误
      */
@@ -219,7 +233,7 @@ public class FeedPlanHelper {
         //删除云端
         List<BabyFeedItem> babyFeedItems1 = new BabyFeedItemDao().
                 findBabyFeedItemsFromCloud(App.getCurrentBaby());
-        Log.i("FeedPlanHElper", String.valueOf(babyFeedItems1 == null) + " " + String.valueOf(babyFeedItems1.isEmpty()));
+        //Log.i("FeedPlanHElper", String.valueOf(babyFeedItems1 == null) + " " + String.valueOf(babyFeedItems1.isEmpty()));
         if (babyFeedItems1 != null && babyFeedItems1.isEmpty() == false) {
             try {
                 delectAll(babyFeedItems1);
@@ -247,6 +261,7 @@ public class FeedPlanHelper {
         if (babyFeedItems == null)
             return false;
         new BabyFeedItemDao().saveBabyItemAcache(babyFeedItems);
+        notifyDataChanged();
         return true;
     }
 
@@ -286,7 +301,7 @@ public class FeedPlanHelper {
     public List<BabyFeedItem> sortBabyfeedItems(List<BabyFeedItem> babyFeedItems) {
         if (babyFeedItems == null || babyFeedItems.isEmpty())
             return null;
-        Log.i("feedPlanHelper", String.valueOf(babyFeedItems.size()));
+        //  Log.i("feedPlanHelper", String.valueOf(babyFeedItems.size()));
         List<BabyFeedItem> result = new ArrayList<>();
         result.add(babyFeedItems.get(0));
         babyFeedItems.remove(0);
@@ -302,7 +317,7 @@ public class FeedPlanHelper {
             if (i < 0)
                 result.add(0, b);
         }
-        Log.i("feedPlanHelper", String.valueOf(result.size()));
+        //  Log.i("feedPlanHelper", String.valueOf(result.size()));
         return result;
     }
 
@@ -359,5 +374,14 @@ public class FeedPlanHelper {
         return babyFeedItems;
     }
 
-
+    /**
+     * 以云端为准，同步云端数据，直接覆盖本地;
+     */
+    public void sync() {
+        List<BabyFeedItem> cloud = new BabyFeedItemDao().findBabyFeedItemsFromCloud(App.getCurrentBaby());
+        if (cloud == null)
+            return;
+        saveBabyFeedItemAcache(cloud);
+        notifyDataChanged();
+    }
 }

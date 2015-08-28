@@ -132,7 +132,7 @@ public class PowderDetail extends Base {
      *
      * @return 奶粉详细
      */
-    public PowderDetail getNextPowderDetail() throws AVException {
+    public PowderDetail fetchNextPowderDetail() throws AVException {
         PowderDetail powderDetail = getNextPowderDetailObject();
         if (powderDetail == null)
             return null;
@@ -183,7 +183,7 @@ public class PowderDetail extends Base {
      */
     public PowderDetail changeToNext() throws AVException {
         try {
-            PowderDetail powderDetail = getNextPowderDetail();
+            PowderDetail powderDetail = fetchNextPowderDetail();
             if (powderDetail == null)
                 return null;
             powderDetail.saveInACache();

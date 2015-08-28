@@ -70,23 +70,25 @@ public class WeightFragment extends TitleFragment {
     private void initData() {
         baby = App.getCurrentBaby();
         weightHelper = weightHelper.getInstance();
+        weightHelper.registerObserver(mOberver);
         initCurrentStander();
     }
 
     @Override
     public void refresh() {
+        if (needRefresh()) {
+            initCurrentStander();
+            int months = Calculator.getBabyMonthAge(new Date());
+            if (months - babyCreateMonths + 1 != weightTab.getViewCount()) {
+                weightTab.setTabNum(babyCreateMonths, months);
+                lastPositon = months - babyCreateMonths;
+                weightTab.initTabs();
+            }
 
-        initCurrentStander();
-        int months = Calculator.getBabyMonthAge(new Date());
-        if (months - babyCreateMonths + 1 != weightTab.getViewCount()) {
-            weightTab.setTabNum(babyCreateMonths, months);
-            lastPositon = months - babyCreateMonths;
-            weightTab.initTabs();
+            monthToWeightExcle(weightExcle, lastPositon + babyCreateMonths);
+            weightExcle.invalidate();
+            updateRelativeTexts();
         }
-
-        monthToWeightExcle(weightExcle, lastPositon + babyCreateMonths);
-        weightExcle.invalidate();
-        updateRelativeTexts();
     }
 
 
@@ -199,6 +201,7 @@ public class WeightFragment extends TitleFragment {
 
         initBottomTextView(mView);
         ringWithText.setTexts(getRingWithTextStrings());
+        ringWithText.invalidate();
 
     }
 
@@ -388,14 +391,15 @@ public class WeightFragment extends TitleFragment {
 
     private void initWeightExcle(View view) {
         weightExcle = (WeightExcle) view.findViewById(R.id.weight_fragment_excle);
-        monthToWeightExcle(weightExcle, lastPositon);
+        monthToWeightExcle(weightExcle, lastPositon + babyCreateMonths);
     }
 
     private void addPoints(WeightExcle weightExcle, int monthAge) {
         weightExcle.clearPoints();
         Map<Integer, Float> date = weightHelper.getWeights(monthAge);
-        if(date == null || date.isEmpty())
+        if (date == null || date.isEmpty()) {
             return;
+        }
         for (int key : date.keySet()) {
             weightExcle.addPoint(key, date.get(key));
         }
@@ -471,8 +475,10 @@ public class WeightFragment extends TitleFragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if(msg.what == WEIGHT_ADD){
-                if(msg.arg1 == 0) //成功
+                if (msg.arg1 == 0) {//成功
+                    enableRefresh();
                     refresh();
+                }
                 else
                     Toast.makeText(getActivity(),"刚刚体重存储云端失败，请检查网络",Toast.LENGTH_SHORT).show();
             }

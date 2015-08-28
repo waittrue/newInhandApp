@@ -8,7 +8,6 @@ import com.inhand.milk.App;
 import com.inhand.milk.entity.BabyFeedItem;
 import com.inhand.milk.helper.FeedPlanHelper;
 
-import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -18,8 +17,7 @@ public class StartingUpReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         AlarmSeting alarmSeting = new AlarmSeting(context);
-        try {
-            FeedPlanHelper feedPlanHelper = new FeedPlanHelper();
+        FeedPlanHelper feedPlanHelper = FeedPlanHelper.getInstance();
             List<BabyFeedItem> babyFeedItems = feedPlanHelper.getBabyFeedItemsFromAcache();
             if (babyFeedItems == null)
                 return;
@@ -30,9 +28,6 @@ public class StartingUpReceiver extends BroadcastReceiver {
             } else {
                 alarmSeting.cancleAlarm();
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
     }
 }

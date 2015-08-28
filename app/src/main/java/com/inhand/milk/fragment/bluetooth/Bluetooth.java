@@ -91,7 +91,6 @@ public class Bluetooth {
     public static Bluetooth getInstance() {
         if (instance == null)
             synInit();
-        instance.ShutConnect();
         return instance;
     }
 
@@ -227,10 +226,8 @@ public class Bluetooth {
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
-
             return;
         }
-
         ShutConnect();
         connectThread = new ConnectThread(paired);
         connectThread.start();
@@ -241,28 +238,24 @@ public class Bluetooth {
             return false;
         if (connectedThread != null) {
             connectedThread.cancel();
-            connectedThread.interrupt();
         }
-
         connectedThread = new ConnectedThread(socket);
         connectedThread.start();
-        Log.i("连入", String.valueOf(socket.isConnected()));
+        // Log.i("连入", String.valueOf(socket.isConnected()));
         return socket.isConnected();
     }
 
 
     public void ShutConnect() {
 
-        if (connectThread != null) {
-            connectThread.cancel();
-            connectThread.interrupt();
-            connectThread = null;
-        }
-
         if (connectedThread != null) {
             connectedThread.cancel();
-            connectedThread.interrupt();
             connectedThread = null;
+        }
+
+        if (connectThread != null) {
+            connectThread.cancel();
+            connectThread = null;
         }
 
     }
@@ -285,19 +278,15 @@ public class Bluetooth {
 
     private class ConnectThread extends Thread {
         private final BluetoothDevice mmDevice;
-        BluetoothSocket socket = null;
-
+        private BluetoothSocket socket = null;
+        private boolean open = true;
         public ConnectThread(BluetoothDevice device) {
-            // Use a temporary object that is later assigned to mmSocket,
-            // because mmSocket is final
             BluetoothSocket tmp = null;
             mmDevice = device;
-
-            // Get a BluetoothSocket to connect with the given BluetoothDevice
             try {
-                // MY_UUID is the app's UUID string, also used by the server code
                 tmp = device.createRfcommSocketToServiceRecord(uuid);
             } catch (IOException e) {
+                e.printStackTrace();
             }
             socket = tmp;
         }
@@ -307,10 +296,16 @@ public class Bluetooth {
             bluetoothAdapter.cancelDiscovery();
             while (true) {
                 try {
+                    if (open == false) {
+                        //   Log.i("bluetooth","open false");
+                        return;
+                    }
+                    // Log.i("bluetooth","open true");
                     socket.connect();
                     break;
                 } catch (IOException connectException) {
-                    //Log.i("bluetooth", "连入" + paired.getName() + "失败");
+                    // Log.i("bluetooth", "连入" + paired.getName() + "失败");
+                    // connectException.printStackTrace();
                 }
             }
             Log.i("bluetooth", "连入" + paired.getName() + ":成功创建了socket");
@@ -324,7 +319,9 @@ public class Bluetooth {
          */
         public void cancel() {
             try {
+                // Log.i("bluetooth","connect cancel");
                 socket.close();
+                open = false;
             } catch (IOException e) {
             }
         }
@@ -337,7 +334,8 @@ public class Bluetooth {
         private final OutputStream mmOutStream;
         private byte[] buffer;
         private int bytes;
-
+        private boolean messageFirst = true;
+        private boolean open = true;
         public ConnectedThread(BluetoothSocket mmsocket) {
             mmSocket = mmsocket;
             InputStream tmpIn = null;
@@ -355,20 +353,25 @@ public class Bluetooth {
 
         public void run() {
             while (true) {
-
+                if (open == false)
+                    return;
                 Log.i("连入", String.valueOf(mmSocket.isConnected()));
                 try {
                     Log.i("bluetooth", "连入成功—等待数据");
-                    Message message = new Message();
-                    message.what = CONNECTED_STATE_CHANGED;
-                    message.arg1 = 1;
-                    myHander.sendMessage(message);
+                    if (messageFirst) {
+                        Message message = new Message();
+                        message.what = CONNECTED_STATE_CHANGED;
+                        message.arg1 = 1;
+                        myHander.sendMessage(message);
+                        messageFirst = false;
+                    }
                     bytes = mmInStream.read(buffer);
                     if (bluetoothData.saveData(buffer, bytes) == false) {
                         bluetoothData.handleMessage();
                         bluetoothData.saveData(buffer, bytes);
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
                     break;
                 }
             }
@@ -377,6 +380,8 @@ public class Bluetooth {
             message.what = CONNECTED_STATE_CHANGED;
             message.arg1 = 0;
             myHander.sendMessage(message);
+            messageFirst = true;
+            ShutConnect();
             connectThread = new ConnectThread(paired);
             connectThread.start();
         }
@@ -394,6 +399,7 @@ public class Bluetooth {
         public void cancel() {
             try {
                 mmSocket.close();
+                open = false;
             } catch (IOException e) {
             }
         }

@@ -13,8 +13,6 @@ import com.inhand.milk.fragment.person_center.choose_milk.ChooseMilkShowFragment
 import com.inhand.milk.helper.FeedPlanHelper;
 import com.inhand.milk.helper.MilkHelper;
 
-import java.text.ParseException;
-
 /**
  * Created by Administrator on 2015/8/10.
  */
@@ -70,12 +68,10 @@ public class MilkChooseActivity extends SubActivity {
                 }
                 Log.i("milkchooseActivit", "milk save success");
                 try {
-                    FeedPlanHelper feedPlanHelper = new FeedPlanHelper();
+                    FeedPlanHelper feedPlanHelper = FeedPlanHelper.getInstance();
                     if (powderSerie.getObjectId().equals(milkHelper.getMilkPowderSerie().getObjectId()) == false) {
                         feedPlanHelper.saveBabyItems(powderSerie);
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 } catch (AVException e) {
                     e.printStackTrace();
                 }

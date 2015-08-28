@@ -25,7 +25,6 @@ import com.inhand.milk.helper.FeedPlanHelper;
 import com.inhand.milk.ui.ObservableHorizonScrollView;
 import com.inhand.milk.ui.RoundImageView;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +49,7 @@ public class EatingFragment extends TitleFragment {
     private int eatingTimeout = -1, endingTimeOut;
     private EatingPopUpWindow eatingPopUpWindow;
     private List<BabyFeedItem> babyFeedItems;
-
+    private FeedPlanHelper feedPlanHelper = FeedPlanHelper.getInstance();
     public static int generateViewId() {
         for (; ; ) {
             final int result = sNextGeneratedId.get();
@@ -66,6 +65,7 @@ public class EatingFragment extends TitleFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        feedPlanHelper.registerObserver(mOberver);
         mView = inflater.inflate(R.layout.eating_fragment, container, false);
         setTitleview(getString(R.string.eating_title), 0);
         width = App.getWindowWidth(getActivity());
@@ -102,10 +102,8 @@ public class EatingFragment extends TitleFragment {
     private void smoothScrollto(int i) {
         if (i < 0 || i > planTime.size() - 1)
             return;
-        // Log.i(TAG,String.valueOf(i));
         ObservableHorizonScrollView observableHorizonScrollView = (ObservableHorizonScrollView) mView.findViewById(R.id.eating_plan_show_scroll);
         observableHorizonScrollView.smoothScrollTo((int) (i * onePlanShowWidth), 0);
-        // Log.i(TAG, String.valueOf(observableHorizonScrollView == null) + String.valueOf(observableHorizonScrollView.getWidth()));
     }
 
     private void smooth2Current() {
@@ -135,18 +133,13 @@ public class EatingFragment extends TitleFragment {
     }
 
     private void initPlanTime() {
-        try {
-            FeedPlanHelper feedPlanHelper = new FeedPlanHelper();
+        feedPlanHelper = FeedPlanHelper.getInstance();
             babyFeedItems = feedPlanHelper.getBabyFeedItemsFromAcache();
             if (babyFeedItems == null)
                 return;
             babyFeedItems = feedPlanHelper.sortBabyfeedItems(babyFeedItems);
             planTime = feedPlanHelper.getTime(babyFeedItems);
             isMilk = feedPlanHelper.getType(babyFeedItems);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
     }
 
     private void initNotifacation() {
@@ -161,7 +154,6 @@ public class EatingFragment extends TitleFragment {
     public void onResume() {
         super.onResume();
         startCount();
-        // Log.i(TAG,"onresume");
     }
 
     @Override
@@ -179,6 +171,16 @@ public class EatingFragment extends TitleFragment {
                     smooth2Current();
                 }
             }, 100);
+        }
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        if (needRefresh()) {
+            initPlanTime();
+            initPlanShow();
+            clearNeedRefresh();
         }
     }
 
@@ -399,6 +401,7 @@ public class EatingFragment extends TitleFragment {
 
     private void initPlanShow() {
         LinearLayout linearLayout = (LinearLayout) mView.findViewById(R.id.eating_plan_show_container);
+        linearLayout.removeAllViews();
         int count = planTime.size();
         for (int i = 0; i < count; i++) {
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);

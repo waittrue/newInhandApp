@@ -30,6 +30,7 @@ public class HomeFragment extends TitleFragment {
 
     public HomeFragment() {
         recordHelper = RecordHelper.getInstance();
+        recordHelper.registerObserver(mOberver);
         initData();
     }
 
@@ -59,7 +60,6 @@ public class HomeFragment extends TitleFragment {
         if (record == null)
             record = tempRecord;
         else if (record.equals(tempRecord)) {
-            Log.d("Record", "true");
             return false;
         }
         record = tempRecord;
@@ -70,7 +70,6 @@ public class HomeFragment extends TitleFragment {
         adviseAmountString = String.valueOf(record.getAdviceVolume()) + "ml";
         adviseTString = "35°C";
         score = record.getScore();
-        Log.i("milkamount", String.valueOf(score));
         return true;
     }
 
@@ -118,8 +117,10 @@ public class HomeFragment extends TitleFragment {
     }
 
     public void refresh() {
-        if (initData() == false)
-            return;
-        updateViews();
+        if (needRefresh()) {
+            initData();
+            updateViews();
+            clearNeedRefresh();
+        }
     }
 }

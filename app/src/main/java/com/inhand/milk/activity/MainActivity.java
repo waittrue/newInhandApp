@@ -20,6 +20,7 @@ import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
 import com.inhand.milk.fragment.footer_navigation.FooterNavigation;
+import com.inhand.milk.helper.FeedPlanHelper;
 import com.inhand.milk.helper.RecordHelper;
 import com.inhand.milk.helper.WeightHelper;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -58,45 +59,30 @@ public class MainActivity extends BaseActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                //用户同步
                 App.getCurrentUser().sync();
+                //宝宝升高头围体重同步
                 WeightHelper.getInstance().sync();
+                //宝宝饮奶数据同步
                 RecordHelper.getInstance().syncRecord();
+                //宝宝同步
                 App.getCurrentBaby().sync();
+                //喂养计划同步
+                FeedPlanHelper.getInstance().sync();
 
             }
         });
         thread.start();
-        /*
-        setSlidingMenu();
-        onClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                menu.toggle();
-            }
-        };
-        */
     }
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == Bluetooth.REQUEST_ENABLE_BT){
-            if(resultCode == RESULT_OK){
-                bluetooth.asClient();
-            }
-        }
-    }
-    */
 
     @Override
     protected void onStart() {
         super.onStart();
         if(first){
-        bluetooth = Bluetooth.getInstance();
-        bluetooth.setActivity(MainActivity.this);
-        bluetooth.openBlue();
-        bluetooth.asClient();
+            bluetooth = Bluetooth.getInstance();
+            bluetooth.setActivity(MainActivity.this);
+            bluetooth.openBlue();
+            bluetooth.asClient();
         }
         first = false;
     }
