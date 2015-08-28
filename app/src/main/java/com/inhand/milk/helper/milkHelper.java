@@ -1,7 +1,6 @@
 package com.inhand.milk.helper;
 
 import android.util.Log;
-
 import com.avos.avoscloud.AVException;
 import com.inhand.milk.App;
 import com.inhand.milk.STANDAR.Standar;
