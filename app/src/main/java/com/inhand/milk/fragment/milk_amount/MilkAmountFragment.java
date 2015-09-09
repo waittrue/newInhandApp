@@ -25,6 +25,7 @@ import com.inhand.milk.entity.OneDay;
 import com.inhand.milk.entity.Record;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
+import com.inhand.milk.fragment.bluetooth.UniversalBluetoothLE;
 import com.inhand.milk.helper.RecordHelper;
 import com.inhand.milk.ui.MultiLayerCircle;
 import com.inhand.milk.ui.PinnerListView;
@@ -101,16 +102,19 @@ public class MilkAmountFragment extends TitleFragment {
                 }
             }
         });
-        Bluetooth.getInstance().addBluetoothStateChanggedListener(new Bluetooth.ConnectedChanggedListener() {
-            @Override
-            public void connectedChangged(boolean connect) {
-                if (connect) {
-                    leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_true_icon));
-                } else {
-                    leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_false_icon));
+        UniversalBluetoothLE bluetoothLE = UniversalBluetoothLE.getInistance();
+        if(bluetoothLE != null) {
+            bluetoothLE.addBluetoothStateChanggedListener(new UniversalBluetoothLE.ConnectedChanggedListener() {
+                @Override
+                public void connectedChangged(boolean connect) {
+                    if (connect) {
+                        leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_true_icon));
+                    } else {
+                        leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_false_icon));
+                    }
                 }
-            }
-        });
+            });
+        }
 
     }
 

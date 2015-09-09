@@ -153,8 +153,8 @@ public class PowderDetail extends Base {
     public boolean needChange(int monthAge) {
         String forage = getForAge();
         String[] ages = forage.split("-");
-        int min = Integer.parseInt(ages[0]);
-        int max = Integer.parseInt(ages[1]);
+        float min = Float.parseFloat(ages[0]);
+        float max = Float.parseFloat(ages[1]);
         if (monthAge > max)
             return true;
         return false;
@@ -169,8 +169,8 @@ public class PowderDetail extends Base {
     public boolean isForAge(int monthAge) {
         String forage = getForAge();
         String[] ages = forage.split("-");
-        int min = Integer.parseInt(ages[0]);
-        int max = Integer.parseInt(ages[1]);
+        float min = Float.parseFloat(ages[0]);
+        float max = Float.parseFloat(ages[1]);
         if (monthAge <= max && monthAge >= min)
             return true;
         return false;

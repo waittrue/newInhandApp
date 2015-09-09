@@ -13,7 +13,6 @@ public class BluetoothData {
     private static SimpleDateFormat simpleDateFormat;
     private static BluetoothData bluetoothData;
 
-    ;
     private BluetoothData() {
         this.buf = new byte[MAXLEN];
         this.location = 0;

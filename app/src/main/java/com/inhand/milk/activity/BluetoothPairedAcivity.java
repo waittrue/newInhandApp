@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
+import com.inhand.milk.fragment.bluetooth.UniversalBluetoothLE;
 import com.inhand.milk.ui.BluetoothPairedViewGroup;
 
 import java.util.ArrayList;
@@ -36,18 +37,47 @@ public class BluetoothPairedAcivity extends BaseActivity {
     private static final int SEARCHTIME = 12000;
     private static final int TIMESCALE = 1000;
     private static final float SCALE = 0.8f;
-    private static final int MessagWhat = 4;
+    private static final int PAIRED_SUCCESS = 4;
+    private static final int FOUND_DEVICE = 5;
     private BluetoothPairedViewGroup bluetoothPairedViewGroup;
     private ListView listview;
     private List<Map<String, Object>> listItems;
-    private Bluetooth bluetooth;
+    //private Bluetooth bluetooth = Bluetooth.getInstance();
+    //这里我们硬件只支持4.0ble，所以我这里的bluetooth这从这个类出来，上面屏蔽的那个代码是经典bluetooth的
+    private UniversalBluetoothLE bluetooth = UniversalBluetoothLE.getInistance();
     private TextView bluetoothText;
-    private List<BluetoothDevice> devices;
+    private List<BluetoothDevice> devices = new ArrayList<>();
     private View currentChild;
-    private Handler handler;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            //super.handleMessage(msg);
+            if (msg.what == PAIRED_SUCCESS) {
+                pairedSuccess();
+            }
+            else if(msg.what  == FOUND_DEVICE){
+                if (devices.size() == 0 && bluetoothPairedViewGroup.getScaleX() == 1) {
+                    animationScaleTranslation(bluetoothPairedViewGroup);
+                    listview.setVisibility(View.VISIBLE);
+                    animatorAlpha(listview);
+                }
+                BluetoothDevice device = (BluetoothDevice)msg.obj;
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("left", device.getName());
+                map.put("right", "未连接");
+                Log.i("bluetoothPairedActivity", device.getName());
+                listItems.add(map);
+                devices.add(device);
+                Log.i(TAG, String.valueOf(devices.size()));
+                listview.setAdapter(listview.getAdapter());
+            }
+        }
+    };
+    private static String TAG = "BluetoothPairedActivity";
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Log.i(TAG,"onclick");
             if (!bluetooth.isEnabled()) {
                 bluetooth.openBlue();
             } else
@@ -60,25 +90,13 @@ public class BluetoothPairedAcivity extends BaseActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_paired);
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                //super.handleMessage(msg);
-                if (msg.what == MessagWhat) {
-                    pairedSuccess();
-                }
-            }
-        };
         initViews();
     }
 
     private void initViews() {
-        devices = new ArrayList<>();
         bluetoothPairedViewGroup = (BluetoothPairedViewGroup) findViewById(R.id.bloothPairedViewGroup);
         bluetoothPairedViewGroup.setOnClickListener(listener);
-
-        bluetooth = Bluetooth.getInstance();
-        bluetooth.setActivity(this);
+        //bluetooth.setActivity(this);
         setBluetoothListener();
         bluetoothText = (TextView) findViewById(R.id.bluetoot_paired_unable_text);
 
@@ -93,7 +111,8 @@ public class BluetoothPairedAcivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 bluetooth.setPaired(devices.get(position));
                 currentChild = listview.getChildAt(position);
-                bluetooth.asClient();
+                //bluetooth.asClient();
+                bluetooth.getConnectGatt(true);
             }
         });
         refreshViews();
@@ -128,24 +147,37 @@ public class BluetoothPairedAcivity extends BaseActivity {
     }
 
     private void setBluetoothListener() {
-        bluetooth.setDiscoverListener(new Bluetooth.bluetoothDiscoverListener() {
+        bluetooth.setDiscoverListener(new UniversalBluetoothLE.BluetoothDiscoverListener() {
             @Override
             public void discoverFound(BluetoothDevice device) {
+                Log.i("universalBluetoothLe", "discoverFound");
+                /*
                 if (devices.size() == 0 && bluetoothPairedViewGroup.getScaleX() == 1) {
                     animationScaleTranslation(bluetoothPairedViewGroup);
                     listview.setVisibility(View.VISIBLE);
                     animatorAlpha(listview);
                 }
+                Message message = new Message();
+                message.what = FOUND_DEVICE;
+                handler.sendMessage(message);
+
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("left", device.getName());
                 map.put("right", "未连接");
+                Log.i("bluetoothPairedActivity", device.getName());
                 listItems.add(map);
                 devices.add(device);
+                Log.i(TAG, String.valueOf(devices.size()));
                 listview.setAdapter(listview.getAdapter());
+                */
+                Message message = new Message();
+                message.what = FOUND_DEVICE;
+                message.obj = device;
+                handler.sendMessage(message);
             }
 
             @Override
-            public void discoverFiished() {
+            public void discoverFinished() {
                 bluetoothPairedViewGroup.animatorSmoothEnd();
                 if (devices.size() == 0)
                     Toast.makeText(getApplicationContext(), "请将奶瓶靠近，点击图标重新搜索", Toast.LENGTH_LONG).show();
@@ -164,10 +196,9 @@ public class BluetoothPairedAcivity extends BaseActivity {
             @Override
             public void pairedSuccess() {
                 Message message = new Message();
-                message.what = MessagWhat;
+                message.what = PAIRED_SUCCESS;
                 handler.sendMessage(message);
             }
-
         });
     }
 
@@ -186,7 +217,6 @@ public class BluetoothPairedAcivity extends BaseActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         (currentChild.findViewById(R.id.bluetooth_paired_listview_icon)).setBackgroundResource(R.drawable.bluetooth_link_yes_ico);
-
     }
 
     private void refreshViews() {
@@ -264,5 +294,6 @@ public class BluetoothPairedAcivity extends BaseActivity {
         intent.setClass(this, MainActivity.class);
         // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        this.finish();
     }
 }

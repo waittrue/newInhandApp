@@ -26,6 +26,7 @@ import com.inhand.milk.entity.Device;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -38,7 +39,8 @@ public class Bluetooth {
     private static final String ACTION_DISCOVERY_FINISHED = BluetoothAdapter.ACTION_DISCOVERY_FINISHED;
     private static Bluetooth instance = null;
     private static BluetoothDevice paired = null;
-    private static UUID uuid = new UUID(511024l, 19910808l);
+    //private static UUID uuid = new UUID(511024l, 19910808l);
+    private static UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private BluetoothAdapter bluetoothAdapter;
     private Activity activity = null;
     private BluetoothData bluetoothData;
@@ -62,9 +64,10 @@ public class Bluetooth {
                 Toast.makeText(activity.getApplicationContext(), device.getName(), Toast.LENGTH_LONG).show();
             } else if (ACTION_DISCOVERY_FINISHED.equals(action)) {
                 // Toast.makeText(activity.getApplicationContext(), "finish_discover", Toast.LENGTH_SHORT).show();
-                activity.unregisterReceiver(mReceiver);
+                if(activity != null)
+                    activity.unregisterReceiver(mReceiver);
                 if (mListener != null)
-                    mListener.discoverFiished();
+                    mListener.discoverFinished();
             } else if (bluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 // Toast.makeText(activity, "discover start", Toast.LENGTH_SHORT).show();
                 if (mListener != null)
@@ -129,7 +132,6 @@ public class Bluetooth {
             activity.registerReceiver(mReceiver, filter3);
             Toast.makeText(activity, "准备发现模块", Toast.LENGTH_SHORT).show();
         }
-        ;
         if (bluetoothAdapter.isDiscovering() == true) {
             if (activity != null)
                 Toast.makeText(activity, "正在搜索中", Toast.LENGTH_SHORT).show();
@@ -139,7 +141,6 @@ public class Bluetooth {
         if (result == false && activity != null) {
             Toast.makeText(activity, "蓝牙没有开启", Toast.LENGTH_SHORT).show();
         }
-
         return result;
     }
 
@@ -269,7 +270,7 @@ public class Bluetooth {
     public interface bluetoothDiscoverListener {
         void discoverFound(BluetoothDevice device);
 
-        void discoverFiished();
+        void discoverFinished();
 
         void discoverStarted();
 

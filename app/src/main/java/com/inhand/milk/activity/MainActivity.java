@@ -19,6 +19,7 @@ import android.widget.SimpleAdapter;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
+import com.inhand.milk.fragment.bluetooth.UniversalBluetoothLE;
 import com.inhand.milk.fragment.footer_navigation.FooterNavigation;
 import com.inhand.milk.helper.FeedPlanHelper;
 import com.inhand.milk.helper.RecordHelper;
@@ -39,7 +40,7 @@ import java.util.Map;
 public class MainActivity extends BaseActivity {
 
     private FooterNavigation buttons;
-    private Bluetooth bluetooth;
+    private UniversalBluetoothLE bluetooth;
     private SlidingMenu menu;
     private OnClickListener onClickListener;
     private boolean first = true;
@@ -79,7 +80,7 @@ public class MainActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         if(first){
-            bluetooth = Bluetooth.getInstance();
+            bluetooth = UniversalBluetoothLE.getInistance();
             bluetooth.setActivity(MainActivity.this);
             bluetooth.openBlue();
             bluetooth.asClient();
@@ -159,7 +160,7 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public Bluetooth getBluetooth() {
+    public UniversalBluetoothLE getBluetooth() {
         return bluetooth;
     }
 

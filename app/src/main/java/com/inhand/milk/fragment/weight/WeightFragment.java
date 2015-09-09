@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.inhand.milk.STANDAR.Standar;
 import com.inhand.milk.entity.Baby;
 import com.inhand.milk.fragment.TitleFragment;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
+import com.inhand.milk.fragment.bluetooth.UniversalBluetoothLE;
 import com.inhand.milk.helper.WeightHelper;
 import com.inhand.milk.ui.RingWithText;
 import com.inhand.milk.utils.Calculator;
@@ -129,16 +131,20 @@ public class WeightFragment extends TitleFragment {
                 }
             }
         });
-        Bluetooth.getInstance().addBluetoothStateChanggedListener(new Bluetooth.ConnectedChanggedListener() {
-            @Override
-            public void connectedChangged(boolean connect) {
-                if (connect) {
-                    leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_true_icon));
-                } else {
-                    leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_false_icon));
+        //这个地方植入到蓝牙状态的变化图标变化的代码，这个标题理论上只能由那个5个主页面生成,不能有其他页面生成
+        UniversalBluetoothLE bluetoothLE = UniversalBluetoothLE.getInistance();
+        if(bluetoothLE != null) {
+            bluetoothLE.addBluetoothStateChanggedListener(new UniversalBluetoothLE.ConnectedChanggedListener() {
+                @Override
+                public void connectedChangged(boolean connect) {
+                    if (connect) {
+                        leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_true_icon));
+                    } else {
+                        leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_false_icon));
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     private void initAdder(View view) {
         adder = (Adder) view.findViewById(R.id.weight_fragment_adder);
@@ -335,7 +341,6 @@ public class WeightFragment extends TitleFragment {
             currentStanderMax = (nextMaxStandermax - currentStanderMax) / 30 * diffDay + currentStanderMax;
             currentStanderMin = (nextStandermin - currentStanderMin) / 30 * diffDay + currentStanderMin;
         }
-
     }
 
     private String getCurrentStander() {

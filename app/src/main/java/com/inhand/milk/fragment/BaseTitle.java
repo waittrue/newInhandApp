@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
+import com.inhand.milk.fragment.bluetooth.UniversalBluetoothLE;
 
 
 public class BaseTitle {
@@ -55,17 +56,19 @@ public class BaseTitle {
 
 
         //这个地方植入到蓝牙状态的变化图标变化的代码，这个标题理论上只能由那个5个主页面生成,不能有其他页面生成
-        Bluetooth.getInstance().addBluetoothStateChanggedListener(new Bluetooth.ConnectedChanggedListener() {
-            @Override
-            public void connectedChangged(boolean connect) {
-                if (connect) {
-                    leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_true_icon));
-                } else {
-                    leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_false_icon));
+        UniversalBluetoothLE bluetoothLE = UniversalBluetoothLE.getInistance();
+        if(bluetoothLE != null) {
+            bluetoothLE.addBluetoothStateChanggedListener(new UniversalBluetoothLE.ConnectedChanggedListener() {
+                @Override
+                public void connectedChangged(boolean connect) {
+                    if (connect) {
+                        leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_true_icon));
+                    } else {
+                        leftIcon.setImageDrawable(App.getAppContext().getResources().getDrawable(R.drawable.header_connect_false_icon));
+                    }
                 }
-            }
-        });
-
+            });
+        }
         return view;
     }
 
