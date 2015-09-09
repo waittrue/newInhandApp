@@ -15,8 +15,6 @@ public class BaseRecieveMessage {
         return value;
     }
 
-    ;
-
     protected DATASTATUS checkData(byte[] buf, int start) {
         if ((buf[start] & (byte) 0x02) != (byte) 0) {
             if ((buf[start] & (byte) 0x01) == (byte) 0)

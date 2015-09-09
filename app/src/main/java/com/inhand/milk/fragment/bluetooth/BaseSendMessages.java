@@ -11,7 +11,7 @@ public class BaseSendMessages {
     private static int MAXLEN = 1024;
     private byte[] buf;
     private int bufLen;
-
+    private static final byte[] HEAD = new byte[]{(byte)0x51};
     BaseSendMessages() {
         buf = new byte[MAXLEN];
         bufLen = 0;

@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import android.widget.SimpleAdapter;
 import com.inhand.milk.App;
 import com.inhand.milk.R;
 import com.inhand.milk.fragment.bluetooth.Bluetooth;
+import com.inhand.milk.fragment.bluetooth.InitMessage;
 import com.inhand.milk.fragment.bluetooth.UniversalBluetoothLE;
 import com.inhand.milk.fragment.footer_navigation.FooterNavigation;
 import com.inhand.milk.helper.FeedPlanHelper;
@@ -84,6 +86,27 @@ public class MainActivity extends BaseActivity {
             bluetooth.setActivity(MainActivity.this);
             bluetooth.openBlue();
             bluetooth.asClient();
+
+            Handler handler = new Handler();
+            Runnable runnable  = new Runnable() {
+                @Override
+                public void run() {
+                    InitMessage initMessage = new InitMessage();
+                    initMessage.factorySetting(false);
+                    initMessage.adjusting(true);
+                    byte[] data = new byte[100];
+                    int len = initMessage.message2Bytes(data);
+
+                    StringBuilder builder = new StringBuilder(len);
+                    for(int i=0;i<len;i++) {
+                        byte byteChar = data[i];
+                        builder.append(String.format("%02X ", byteChar));
+                    }
+                    Log.i("Mainactivity",String.valueOf(len)+"data:"+builder.toString());
+                    bluetooth.sendStream(data,len);
+                }
+            };
+            handler.postDelayed(runnable,10000);
         }
         first = false;
     }

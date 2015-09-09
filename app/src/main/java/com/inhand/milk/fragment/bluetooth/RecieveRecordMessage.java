@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class RecieveRecordMessage extends BaseRecieveMessage {
     private static final String TAG = "recordMessage";
-
+    private static final int LENGTH = 26;
     public RecieveRecordMessage() {
 
     }
@@ -37,7 +37,8 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
 
     public int isRecordMessage(byte[] bytes, int len) {
         if (isMessage(bytes, len) == true)
-            return 28;
+            return 26;
+            //return 28;
         else
             return -1;
     }
@@ -48,7 +49,7 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
         Record record;
         List<Record> records = new ArrayList<>();
         OneDay oneDay = new OneDay();
-        if (len < 28)
+        if (len < LENGTH)
             return false;
         if (buf[0] != 1)
             return false;
@@ -110,9 +111,11 @@ public class RecieveRecordMessage extends BaseRecieveMessage {
             return false;
         if (checkData(buf, 21) != DATASTATUS.DATAVAILD)
             return false;
+        /**
         if (checkCRC(buf, 25) == false)
             return false;
-        if (buf[27] != (byte) 0xff)
+         */
+        if (buf[25] != (byte) 0xff)
             return false;
         return true;
     }

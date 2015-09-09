@@ -1,5 +1,7 @@
 package com.inhand.milk.fragment.bluetooth;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 
 /**
@@ -11,7 +13,9 @@ public class BluetoothData {
     private static byte[] buf;
     private static int location;
     private static SimpleDateFormat simpleDateFormat;
+    private static final String TAG = "BluetoothData";
     private static BluetoothData bluetoothData;
+    //这个是蓝牙模块那边发送加上的头
 
     private BluetoothData() {
         this.buf = new byte[MAXLEN];
@@ -30,13 +34,21 @@ public class BluetoothData {
     }
 
     //这个没有进行多线程保护的。。。但是我觉得应该不会，也没有必要的。。除非你开两个蓝牙的接收线程。
-    public boolean saveData(byte[] buf, int len) {
+    public synchronized boolean saveData(byte[] buf, int len) {
         if (len + location > MAXLEN)
             return false;
         for (int i = 0; i < len; i++) {
             this.buf[i + location] = buf[i];
         }
         location = len + location;
+        //打印出来我们存储的数据
+        StringBuilder builder = new StringBuilder(location);
+        for(int i=0;i<location;i++) {
+            byte byteChar = (this.buf)[i];
+            builder.append(String.format("%02X ", byteChar));
+        }
+        Log.i(TAG,"data:"+builder.toString());
+
         handleMessage();
         return true;
     }

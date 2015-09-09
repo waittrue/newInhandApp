@@ -28,6 +28,7 @@ import com.inhand.milk.activity.BluetoothPairedAcivity;
 import com.inhand.milk.dao.DeviceDao;
 import com.inhand.milk.entity.Device;
 
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -49,7 +50,6 @@ public class UniversalBluetoothLE {
     //UniversalBluetoothLE
     public static UniversalBluetoothLE universalBluetoothLE;
 
-    private Context context;
     //BluetoothAdapter
     private BluetoothAdapter mBluetoothAdapter;
     //BluetoothManager
@@ -83,16 +83,19 @@ public class UniversalBluetoothLE {
     public final static UUID UUID_HEART_RATE_MEASUREMENT = null;
 
     private Activity activity = null;
-    //该设备所有的服务，目前绑定的服务，该服务的所有character，目前绑定的character
-    private List<BluetoothGattService> services = null;
+    //目前绑定的服务,目前绑定的character,该服务的uuid，改character的uuid
     private BluetoothGattService mCurrentService = null;
-    private List<BluetoothGattCharacteristic> characteristics = null;
     private BluetoothGattCharacteristic mCurrentCharacteristic = null;
+    private static final UUID SERVICE_UUID = UUID.fromString("00001000-0000-1000-8000-00805f9b34fb");
+    private static final UUID CHARACTERISTIC_UUID = UUID.fromString("00001002-0000-1000-8000-00805f9b34fb");
+
+    //这个是奶瓶的蓝牙模块每次发送数据都会加的头，我们处理的时候要把这个头去掉
+    private static byte[] HEAD = new byte[]{(byte) 0x51,(byte)0x1b};
     private BluetoothGattCallback callback = new BluetoothGattCallback() {
         //在这个回调里面我们不要做处理时间很长的事情
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            Log.i(TAG,"onConnectionStateChange:"+String.valueOf(newState));
+            Log.i(TAG, "onConnectionStateChange:" + String.valueOf(newState));
             if(newState == BluetoothProfile.STATE_CONNECTED){
                 Message message = new Message();
                 message.what = CONNECTED_STATE_CHANGED;
@@ -119,29 +122,6 @@ public class UniversalBluetoothLE {
             //完成绑定我们需要的服务和相关的characteristic
             if( bindService())
                 bindCharacteristic();
-            for(BluetoothGattService service:gatt.getServices()){
-                Log.i(TAG,"onServicesDiscovered:"+String.valueOf(service.getUuid()));
-            }
-        }
-
-        @Override
-        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            Log.i(TAG,"oncharacteristicRead:"+String.valueOf(characteristic.getValue()));
-            if(status == BluetoothGatt.GATT_SUCCESS){
-                final byte[] data = characteristic.getValue();
-                if (data != null && data.length > 0) {
-                    Log.i("universalBluetoothLe",String.valueOf(data));
-                    final StringBuilder stringBuilder = new StringBuilder(data.length);
-                    for(byte byteChar : data)
-                        stringBuilder.append(String.format("%02X ", byteChar));
-                    Log.i("universalBluetoothLe",stringBuilder.toString());
-                    if (bluetoothData.saveData(data, data.length) == false) {
-                        bluetoothData.handleMessage();
-                        bluetoothData.saveData(data, data.length);
-                    }
-                }
-            }
-            super.onCharacteristicRead(gatt, characteristic, status);
         }
 
         @Override
@@ -152,13 +132,40 @@ public class UniversalBluetoothLE {
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             super.onCharacteristicChanged(gatt, characteristic);
-            Log.i(TAG, "oncharacteristicChanged:" + String.valueOf(characteristic.getValue()));
+            byte[] data = characteristic.getValue();
+            //处理data
+            StringBuilder builder = new StringBuilder(data.length);
+            for(byte byteChar : data)
+                builder.append(String.format("%02X ", byteChar));
+            Log.i(TAG,"data:"+builder.toString());
+
+            data = handleHead(data);
+            if(data == null)
+                return;
+            if (bluetoothData.saveData(data, data.length) == false) {
+                bluetoothData.handleMessage();
+                bluetoothData.saveData(data, data.length);
+            }
+
         }
 
 
     };
+
+    /**
+     * 处理接受到的数据的头部，吧头部去掉
+     */
+    private byte[]  handleHead(byte[] data){
+        if(data == null || data.length <=3)
+            return null;
+        //减去两个字节的头部， 一个字节代表长度
+        byte[] result = new byte[data.length-3];
+        for(int i=0 ;i<result.length;i++){
+            result[i] = data[i+3];
+        }
+        return result;
+    }
     private UniversalBluetoothLE(Context context) {
-        this.context = context;
         //得到BluetoothManager
         this.bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
         //得到BluetoothAdapter
@@ -236,10 +243,10 @@ public class UniversalBluetoothLE {
      */
     public void openBlue() {
         //判断蓝牙是否开启
-        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+        if (mBluetoothAdapter != null && !mBluetoothAdapter.isEnabled() &&activity != null) {
             //打开蓝牙
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            context.startActivity(enableIntent);
+            activity.startActivity(enableIntent);
         }
     }
 
@@ -367,7 +374,8 @@ public class UniversalBluetoothLE {
      */
     public void startSearch() {
         if(mScanning == true) {
-            Toast.makeText(context,"正在搜索中",Toast.LENGTH_SHORT).show();
+            if(activity != null)
+                Toast.makeText(activity,"正在搜索中",Toast.LENGTH_SHORT).show();
             return;
         }
         scanLeDevice(true);
@@ -383,9 +391,16 @@ public class UniversalBluetoothLE {
         if(mCurrentCharacteristic == null||mBluetoothGatt == null
                 ||bytes == null || len<=0 )
             return false;
-        byte[] sendData = new byte[len];
+        byte[] sendData = new byte[len+1];
+        //这个是发送给奶瓶的所有报文都必须加的头部
+        sendData[0] = (byte)0x51;
         for(int i=0;i<len;i++)
-            sendData[i] = bytes[i];
+            sendData[i+1] = bytes[i];
+
+        StringBuilder builder = new StringBuilder(sendData.length);
+        for(byte byteChar : sendData)
+            builder.append(String.format("%02X ", byteChar));
+        Log.i(TAG,"sendStrea-data:"+builder.toString());
         mCurrentCharacteristic.setValue(sendData);
         mBluetoothGatt.writeCharacteristic(mCurrentCharacteristic);
         return true;
@@ -429,7 +444,7 @@ public class UniversalBluetoothLE {
      * @param autoConnect 是否自动链接
      */
     public BluetoothGatt getConnectGatt(BluetoothDevice device,boolean autoConnect){
-        mBluetoothGatt = device.connectGatt(context, autoConnect, callback);
+        mBluetoothGatt = device.connectGatt(App.getAppContext(), autoConnect, callback);
         return mBluetoothGatt;
     }
 
@@ -444,10 +459,11 @@ public class UniversalBluetoothLE {
      * @return  是否绑定成功
      */
     private boolean bindService(){
-        if(services == null || services.isEmpty())
-            return  false;
-        mCurrentService = services.get(0);
-        characteristics = mCurrentService.getCharacteristics();
+        if(mBluetoothGatt == null)
+            return false;
+        mCurrentService = mBluetoothGatt.getService(SERVICE_UUID);
+        if(mCurrentService == null)
+            return false;
         return true;
     }
 
@@ -458,12 +474,12 @@ public class UniversalBluetoothLE {
      * @return 是否绑定成功
      */
     private boolean bindCharacteristic(){
-        if(mCurrentService == null || characteristics == null
-                    ||characteristics.isEmpty() ||mBluetoothGatt == null)
+        if(mCurrentService == null)
             return false;
-        mCurrentCharacteristic = characteristics.get(0);
+        mCurrentCharacteristic = mCurrentService.getCharacteristic(CHARACTERISTIC_UUID);
+        if(mCurrentCharacteristic == null)
+            return false;
         mBluetoothGatt.setCharacteristicNotification(mCurrentCharacteristic,true);
-
         return true;
     }
     /**
@@ -500,7 +516,6 @@ public class UniversalBluetoothLE {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == CONNECTED_STATE_CHANGED) {
-                Log.i("universalBluetoothLe","connected_state_changed");
                 if (msg.arg1 == 0)
                     dispatchConnectChangge(false);
                 else
